@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}{{ wettkampf.name }} {{ wettkampf.von|date:"Y" }}{% endblock %}
+{% block breadcrumbs %}
+<a href="{% url wettkaempfe_get %}">Home</a>
+/ <a href="{% url wettkampf_get wettkampf.slug %}">{{ wettkampf.name }}</a>
+{% endblock %}
+{% block content %}
+<table cellpadding="0" cellspacing="1" border="0">
+    <tr>
+        <th>Name:</th>
+        <td>{{ wettkampf.name }}</td>
+    </tr>
+    <tr>
+        <th>Von:</th>
+        <td>{{ wettkampf.von }}</td>
+    </tr>
+    <tr>
+        <th>Bis:</th>
+        <td>{{ wettkampf.bis|default_if_none:"-" }}</td>
+    </tr>
+    <tr>
+        <th>Disziplinen:</th>
+        <td>
+{% if disziplinen %}
+  {% for i in disziplinen %}
+  <a href="{% url disziplin_get wettkampf.slug, i.name %}">{{ i.name }}</a><br/>
+  {% endfor %}
+{% else %}
+-
+{% endif %}
+        </td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <th></th>
+        <td>
+<a href="{% url wettkampf_update wettkampf.slug %}">Wettkampf aendern</a>
+|
+<a href="{% url disziplinen_add wettkampf.slug %}">Disziplin hinzufuegen</a>
+</td>
+    </tr>
+</table>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}{{ wettkampf.name }} {{ wettkampf.von|date:"Y" }}{% endblock %}
+{% block breadcrumbs %}
+<a href="{% url wettkaempfe_get %}">Home</a>
+/ <a href="{% url wettkampf_get wettkampf.slug %}">{{ wettkampf.name }}</a>
+{% endblock %}
+{% block content %}
+<form action="{% url wettkampf_delete_confirm wettkampf.slug %}" method="POST">
+    <p>
+    Den gesamten <b>{{ wettkampf.name }}</b>, inklusive seinen Disziplinen
+    und den erfassten Noten loeschen?
+    </p>
+<input type="submit" value="Ja" />
+</form>
+{% endblock %}

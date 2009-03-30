@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}{{ wettkampf.name }} {{ wettkampf.von|date:"Y" }}{% endblock %}
+{% block breadcrumbs %}
+<a href="{% url wettkaempfe_get %}">Home</a>
+/ <a href="{% url wettkampf_get wettkampf.slug %}">{{ wettkampf.name }}</a>
+{% endblock %}
+{% block content %}
+<form action="{% url wettkampf_update wettkampf.slug %}" method="POST">
+    <table cellpadding="0" cellspacing="0" border="0">
+    {{ form.as_table }}
+    <tr>
+        <th>Disziplinen:</th>
+        <td>
+{% if disziplinen %}
+  {% for i in disziplinen %}
+  <a href="{% url disziplin_update wettkampf.slug, i.name %}">{{ i.name }}</a><br/>
+  {% endfor %}
+{% else %}
+-
+{% endif %}
+        </td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>
+            <input type="submit" value="Wettkampf aendern"/>
+            |
+            <a href="{% url wettkampf_delete_confirm wettkampf.slug %}">Wettkampf loeschen</a>
+        </td>
+    </tr>
+    </table>
+</form>
+{% endblock %}

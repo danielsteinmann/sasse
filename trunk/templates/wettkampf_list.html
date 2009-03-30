@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block breadcrumbs %}
+<a href="{% url wettkaempfe_get %}">Home</a>
+{% endblock %}
+{% block content %}
+{% if liste %}
+<table cellpadding="2" cellspacing="2" border="1">
+<tr>
+<th>Jahr</th>
+<th>Name</th>
+<th>Disziplinen</th>
+</tr>
+{% for i in liste %}
+<tr>
+    <td>{{ i.von|date:"Y" }}</td>
+    <td><a href="{% url wettkampf_get i.slug %}">{{ i.name }}</a></td>
+    <td>
+        {% for d in i.disziplin_set.all %}
+        <a href="{% url disziplin_get i.slug, d.name %}">{{ d.name }}</a>
+        <br />
+        {% endfor %}
+    </td>
+</tr>
+{% endfor %}
+<tr>
+    <td colspan="3">
+        <a href="{% url wettkaempfe_add %}">Wettkampf hinzufuegen</a>
+    </td>
+</tr>
+</table>
+{% else %}
+<p>Es sind noch keine Wettkaempfe vorhanden.</p>
+<p><a href="{% url wettkaempfe_add %}">Wettkampf hinzufuegen</a>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,27 @@
+ul.errorlist {
+    margin: 0;
+    padding: 0;
+}
+.errorlist li {
+    background-color: red;
+    color: white;
+    display: block;
+    margin: 0 0 2px;
+    padding: 2px 2px;
+}
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+li {
+    float: left;
+    margin-right: 1em;
+}
+td {
+    padding: 2px;
+    margin: 0;
+}
+th {
+    text-align: right;
+}
