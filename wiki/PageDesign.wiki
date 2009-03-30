@@ -1,4 +1,4 @@
-Ein Vorschlag, wie die Webseiten inklusive URLs aussehen werden.
+Aktueller Stand des Denkens, wie die Webseiten aussehen werden.
 
 <wiki:toc max_depth="3" />
 
