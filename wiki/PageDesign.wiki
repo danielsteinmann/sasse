@@ -1,5 +1,7 @@
 Ein Vorschlag, wie die Webseiten inklusive URLs aussehen werden.
 
+<wiki:toc max_depth="3" />
+
 == URLs ==
 
 {{{
@@ -30,7 +32,8 @@ pontonier.ch/wettkaempfe/disziplinart/<name>/
 pontonier.ch/wettkaempfe/postenart/<name>/
 }}}
 
-== Seiten ==
+== Home ==
+
 {{{
 Wettkampfprogramm                                        (Admin)Daniel | Logout
 -------------------------------------------------------------------------------
@@ -53,9 +56,10 @@ Stammdaten:
 - <Kategorien>
 - <Disziplinarten>
 - <Postenarten>
+}}}
 
-
-
+== Wettkampf hinzufügen ==
+{{{
 Wettkampfprogramm                                        (Admin)Daniel | Logout
 -------------------------------------------------------------------------------
 <Home> / Wettkampf hinzufügen
@@ -75,9 +79,9 @@ Disziplinen:
 
 
              [Wettkampf speichern]
-
-
-
+}}}
+Nach eine Klick auf Disziplin hinzufügen:
+{{{
 Wettkampfprogramm                                        (Admin)Daniel | Logout
 -------------------------------------------------------------------------------
 <Home> / Wettkampf hinzufügen
@@ -102,8 +106,9 @@ Disziplinen:
 
 
              [Wettkampf speichern]
-
-
+}}}
+Nach einem Klick auf Wettkampf speichern:
+{{{
 Wettkampfprogramm                                        (Admin)Daniel | Logout
 -------------------------------------------------------------------------------
 <Home> / <Fällbaumcup>
@@ -115,8 +120,10 @@ Disziplinen: <Einzelfahren I>
              <Einzelfahren II,III,C,D,F>
 
              <ändern> | <löschen>
+}}}
 
-
+== Wettkampf ändern ==
+{{{
 Wettkampfprogramm                                        (Admin)Daniel | Logout
 -------------------------------------------------------------------------------
 <Home> / <Fällbaumcup> / ändern
@@ -145,18 +152,20 @@ Disziplinen:
              [Disziplin hinzufügen]
 
 
-
              [Wettkampf speichern]
+}}}
 
-
+== Disziplin Home ==
+{{{
 Wettkampfprogramm                                        (Admin)Daniel | Logout
 -------------------------------------------------------------------------------
 <Fällbaumcup> / <Einzelfahren II,III,C,D,F>
 
 Tabs: <Posten> | <Startliste> | <Bewertung> | <Rangliste>
+}}}
 
-
-
+== Posten ==
+{{{
 Wettkampfprogramm                                        (Admin)Daniel | Logout
 -------------------------------------------------------------------------------
 <Fällbaumcup> / <Einzelfahren II,III,C,D,F> / Posten
@@ -171,11 +180,12 @@ Posten  Art          Punkte
 [____]  [________]v  hinzufügen
 
 Total: 30 Punkte
-
+}}}
 Reihenfolge änderbar in der Edit Sicht
 
 
-
+== Startliste ==
+{{{
 Wettkampfprogramm                                        (Admin)Daniel | Logout
 -------------------------------------------------------------------------------
 <Fällbaumcup> / <Einzelfahren II,III,C,D,F> / Startliste
@@ -192,11 +202,11 @@ Startnr  Steuermann   Vorderfahrer  Sektion     Kat
 Export: CSV, Drucken: PDF
 
 Startliste importieren: [________] [File Suchen]
-
-
+}}}
 Mann kann entweder die Mitgliedernummer oder den Namen für Steuermann oder Vorderfahrer eingeben. Wird nichts gefunden, erhält man die Möglichkeit, gleich das Mitglied zu suchen oder ein neues Mitglied zu erfassen
 
-
+== Teilnehmer ==
+{{{
 Wettkampfprogramm                                        (Admin)Daniel | Logout
 -------------------------------------------------------------------------------
 <Fällbaumcup> / <Einzelfahren II,III,C,D,F> / Teilnehmer 1
@@ -214,7 +224,10 @@ disqualifiziert: nein
                  ändern | löschen
 
 <Notenblatt>
+}}}
 
+== Postenblatt ==
+{{{
 
 Wettkampfprogramm                                        (Admin)Daniel | Logout
 -------------------------------------------------------------------------------
