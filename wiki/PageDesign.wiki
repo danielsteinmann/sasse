@@ -2,7 +2,7 @@ Ein Vorschlag, wie die Webseiten inklusive URLs aussehen werden.
 
 <wiki:toc max_depth="3" />
 
-== URLs ==
+= URLs =
 
 {{{
 pontonier.ch/wettkaempfe/<jahr>/<wettkampf>/<disziplin>/
@@ -32,7 +32,7 @@ pontonier.ch/wettkaempfe/disziplinart/<name>/
 pontonier.ch/wettkaempfe/postenart/<name>/
 }}}
 
-== Home ==
+= Wettkampf =
 
 {{{
 Wettkampfprogramm                                        (Admin)Daniel | Logout
@@ -155,7 +155,7 @@ Disziplinen:
              [Wettkampf speichern]
 }}}
 
-== Disziplin Home ==
+= Disziplin =
 {{{
 Wettkampfprogramm                                        (Admin)Daniel | Logout
 -------------------------------------------------------------------------------
@@ -228,7 +228,6 @@ disqualifiziert: nein
 
 == Postenblatt ==
 {{{
-
 Wettkampfprogramm                                        (Admin)Daniel | Logout
 -------------------------------------------------------------------------------
 <Fällbaumcup> / <Einzelfahren II,III,C,D,F> / Postenblatt A0
@@ -246,16 +245,15 @@ Startnr:    1     2      3      4     6     7
   Abzug: [  0] [  0] [ 1.0] [   0] [___] [___]
 
          <ändern>
-
-
+}}}
 Falls noch keine Werte in der Datenbank existieren, wird die Zelle in Rot dargestellt.
 
 Vielleicht könnte man auch noch einen Filter 'Blatt [_________]v' einführen. Dort würde der Name der Sektion stehen. Falls eine Sektion mehr als 15 Startnummern, steht im DropDown "Bremgarten-I" und "Bremgarten-II". Es müssten dann aber auch ein Blatt "Doppelstarter-I" oder "Nachzügler-I" geben.
 
 Um die richtigen Startnummern für ein Blatt zu erkennen, müsste z.B. in den Stammdaten hinterlegt sein, dass die Nachzügler Startnummern von 900-999 haben und die Doppelstarter von 800-899. Das würde nicht nur bei der Erfassung des Postenblatt helfen, sondern auch bei der Validierung der Startlisteneingabe.
 
-
-
+== Notenliste ==
+{{{
 Wettkampfprogramm                                        (Admin)Daniel | Logout
 -------------------------------------------------------------------------------
 <Fällbaumcup> / <Einzelfahren II,III,C,D,F> / Notenliste
@@ -275,10 +273,12 @@ Export: CSV, Drucken: PDF
 Richtzeiten:
 E-F: 1:10
 C-D: 2:30
+}}}
 
 Fehlende Noten werden in Rot dargestellt.
 
-
+== Rangliste ==
+{{{
 Wettkampfprogramm                                        (Admin)Daniel | Logout
 -------------------------------------------------------------------------------
 <Fällbaumcup> / <Einzelfahren II,III,C,D,F>	
@@ -314,8 +314,10 @@ Export: CSV, Drucken: PDF
 
 Kranzlimite: 131.5 Punkte (25.3%) <ändern>
 Fahrerpaare: 235
+}}}
 
-
+== Bestzeiten ==
+{{{
 Wettkampfprogramm                                        (Admin)Daniel | Logout
 -------------------------------------------------------------------------------
 <Fällbaumcup> / <Einzelfahren II,III,C,D,F>	
