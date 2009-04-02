@@ -131,8 +131,15 @@ def disziplin_put(request, jahr, wettkampf, disziplin):
     return render_to_response('disziplin_add.html',
             {'form': form, 'wettkampf': w})
 
+import re
+name_re = re.compile(r'^[-\w]+$', re.UNICODE)
 
 class WettkampfForm(ModelForm):
+
+    name = forms.RegexField(regex=name_re,
+            help_text="Z.B. 'Faellbaumcup' oder 'Wallbach'",
+            error_messages={'invalid': "Bitte nur Buchstaben und Ziffern "
+            "(inklusive Bindestrich) eingeben"})
 
     class Meta:
         model = Wettkampf
