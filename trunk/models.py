@@ -118,91 +118,144 @@ class Kategorie(models.Model):
 
 
 class Wettkampf(models.Model):
-    name = models.CharField(max_length=50, unique=True)
-    slug = models.SlugField(unique=True)
-    von = models.DateField()
-    bis = models.DateField(blank=True, null=True)
+    name = models.SlugField(max_length=50, unique_for_year='von',
+            help_text="Z.B. 'Faellbaumcup' oder 'Wallbach'")
+    zusatz = models.CharField(max_length=100, null=True, blank=True,
+            help_text="""Z.B. 'Bremgarten, 15. Mai 2007'
+            oder 'Einzelfahren, 17.-18. Juni 2008'""")
+    von = models.DateField(help_text="Format: YYYY-MM-DD")
+    bis = models.DateField(null=True, blank=True, help_text="Optional")
+
+    class Meta:
+        ordering = ['-von']
 
     def __unicode__(self):
         return u'%s' % (self.name,)
 
 
 class Disziplin(models.Model):
-    wettkampf = models.ForeignKey('Wettkampf', editable=False)
+    """
+    Mit Hilfe der Kategorien kann man bei der Startliste prüfen, dass kein
+    falscher Teilnehmer mitmacht. Zudem kann man den Namen dieser Disziplin
+    basierend auf diesen Kategorien zusammenstellen.
+
+    Der Name ist z.B. "Einzelfahren II/III/C/D/F", "Einzelfahren II/III",
+    "Einzelfahren Plausch" oder "Sektionsfahren". Default ist der Name der
+    Disziplin plus Kategorien (falls vorhanden).
+    """
+    wettkampf = models.ForeignKey('Wettkampf')
     disziplinart = models.ForeignKey('Disziplinart', blank=False, default=1)
-    # z.B. "Einzelfahren II/III/C/D/F" oder "Einzelfahren II/III" oder
-    # "Sektionsfahren". Default ist der Name der Disziplin.
-    name = models.CharField(max_length=20)
-    # Mit den hier angegebenen Kategorien kann man bei der Startliste prüfen,
-    # dass kein falscher Teilnehmer mitmacht. Zudem kann man den Namen
-    # dieser Disziplin basierend auf diesen Kategorien zusammenstellen.
-    kategorien = models.ManyToManyField('Kategorie')
+    kategorien = models.ManyToManyField('Kategorie', null=True, blank=True)
+    name = models.SlugField(max_length=50)
 
     def __unicode__(self):
         return u'%s' % (self.name,)
+
+    class Meta:
+        unique_together = ['wettkampf', 'disziplinart', 'name']
 
 
 class Posten(models.Model):
     disziplin = models.ForeignKey('Disziplin')
     postenart = models.ForeignKey('Postenart')
-    bezeichnung = models.CharField(max_length=20)
+    name = models.CharField(max_length=10)
+
+    class Meta:
+        unique_together = ['disziplin', 'postenart', 'name']
 
 
 class Bewertung(models.Model):
+    """
+    Wert ist entweder Anzahl Punkte oder Zeit in Hundertstel Sekunden.
+    """
     bewertungsart = models.ForeignKey('Bewertungsart')
     posten = models.ForeignKey('Posten')
     teilnehmer = models.ForeignKey('Teilnehmer')
-    wert = models.DecimalField(max_digits=4, decimal_places=2) # punkte | zeit
+    wert = models.DecimalField(max_digits=4, decimal_places=2)
 
 
 class Teilnehmer(models.Model):
+    """
+    Die gemeinsamen Attribute für einen Teilnehmer an einem Wettkampf.
+    """
     disziplin = models.ForeignKey('Disziplin')
-    startnummer = models.PositiveSmallIntegerField()
+    startnummer = models.PositiveIntegerField()
     disqualifiziert = models.BooleanField(default=False)
     ausgeschieden = models.BooleanField(default=False)
 
+    class Meta:
+        unique_together = ['disziplin', 'startnummer']
+
 
 class Person(Teilnehmer):
-    """Schwimmer/Schnürer"""
+    """
+    Ein Schwimmer oder Schnürer.
+    """
     mitglied = models.ForeignKey('Mitglied')
     sektion = models.ForeignKey('Sektion')
     kategorie = models.ForeignKey('Kategorie')
 
 
 class Gruppe(Teilnehmer):
-    """Schnürgruppe/Bootfähre/Sektion"""
+    """
+    Eine Schnürgruppe, eine Bootfährenbautrupp oder eine Sektion beim
+    Sektionsfahren.
+
+    Beim Erstellen der Startliste für ein Sektionsfahren wird nach Anzahl
+    Booten und Weidlingen gefragt. Diese Zahlen werden beim Speichern benutzt,
+    um die entsprechende Anzahl 'Schiffsektion' Records in der richtigen
+    Schiffsart zu erzeugen. Somit braucht es kein eigenes Feld.
+    
+    Der JP Zuschlag des Sektionsfahren wird ebenfalls beim Speichern als eine
+    'Bewertung' für die Gruppe gespeichert. Darum kein eigenes Feld.
+    
+    """
     chef = models.ForeignKey('Mitglied')
     sektion = models.ForeignKey('Sektion')
     name = models.CharField(max_length=20) # z.B. Bremgarten I
 
 
 class Schiffsektion(Teilnehmer):
-    """Startnummer entspricht position 1,2,3,... innerhalb Gruppe"""
-    # schiffsart abgeleitet von Eingabe Anzahl Boote/Weidlinge
-    schiffsart = models.CharField(max_length=1, choices=SCHIFFS_ART)
+    """
+    Ein Schiff im Sektionsfahren.
+    
+    Die Startnummer entspricht der Position 1,2,3,... innerhalb Gruppe, was bei
+    der Noteneingabe wichtig ist. Dies bedeutet allerdings, dass die
+    Startnummer nicht unique für eine Disziplin sein kann.
+    """
     gruppe = models.ForeignKey('Gruppe')
+    schiffsart = models.CharField(max_length=1, choices=SCHIFFS_ART)
 
 
 class Schiffeinzel(Teilnehmer):
-    """Doppelstarter werden automatisch bei Erstellung der Rangliste gesucht"""
+    """
+    Ein Schiff im Einzelfahren.
+    
+    Doppelstarter werden automatisch bei Erstellung der Rangliste gesucht,
+    entsprechend braucht es kein eigenes Feld.  Die Schiffsart wird von der
+    Kategorie abgeleitet.
+    """
     steuermann = models.ForeignKey('Mitglied', related_name='steuermann')
     vorderfahrer = models.ForeignKey('Mitglied', related_name='vorderfahrer')
     sektion = models.ForeignKey('Sektion')
     kategorie = models.ForeignKey('Kategorie')
-    # schiffsart abgeleitet von Kategorie
     schiffsart = models.CharField(max_length=1, choices=SCHIFFS_ART)
 
 
 # Hilfstabellen für Ranglisten
 
 class Richtzeit(models.Model):
+    """
+    Zeit in Millisekunden, welche 10 Punkte auf dem Notenblatt ergeben.
+    """
     posten = models.ForeignKey('Posten')
     zeit = models.DecimalField(max_digits=4, decimal_places=2)
 
 
 class Kranzlimite(models.Model):
+    """
+    Anzahl Punkte oder die Zeit, mit der der letzte Kranz erreicht wird.
+    """
     disziplin = models.ForeignKey('Disziplin')
     kategorie = models.ForeignKey('Kategorie')
-    # Dieses Attribut ist für das Rechnungsbüro einfacher einzugeben als
-    # ein Prozentsatz. Default ist 25%, falls Wert NULL ist.
-    letzter_kranzrang = models.DecimalField(max_digits=2, decimal_places=0)
+    wert = models.DecimalField(max_digits=2, decimal_places=0)

@@ -9,19 +9,49 @@ ul.errorlist {
     margin: 0 0 2px;
     padding: 2px 2px;
 }
-ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+/* Data as list */
+table.list {
+    border-collapse: collapse;
 }
-li {
-    float: left;
-    margin-right: 1em;
+.list th {
+    padding: 2px 4px 2px 4px;
+    font-weight: normal;
+    background-color: lightgrey;
+    border: thin solid darkgrey;
+    text-align: left;
 }
-td {
-    padding: 2px;
-    margin: 0;
+.list td {
+    padding: 2px 4px 2px 4px;
+    border: thin solid darkgrey;
 }
-th {
+/* Data as entry form */
+table.form {
+    border-collapse: collapse;
+}
+.form th {
+    padding: 2px 4px 10px 4px;
+    border-top: thin solid darkgrey;
+    background-color: lightgrey;
+    font-weight: normal;
     text-align: right;
+    vertical-align: top;
+}
+.form td {
+    padding: 2px 4px 10px 4px;
+    border-top: thin solid darkgrey;
+}
+/* Data as display form */
+table.display {
+    border-collapse: collapse;
+}
+.display th {
+    padding: 2px 4px 2px 4px;
+    border-top: thin solid darkgrey;
+    text-align: right;
+    background-color: lightgrey;
+    font-weight: normal;
+}
+.display td {
+    padding: 2px 4px 2px 4px;
+    border-top: thin solid darkgrey;
 }
