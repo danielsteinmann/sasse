@@ -132,7 +132,6 @@ Wettkampf:
 
        Jahr: [2007]
        Name: [Fällbaumcup]
-       Slug: [faellbaumcup]
      Zusatz: [Bremgarten, 25.5.2007]
 
 Disziplinen: 
@@ -140,13 +139,11 @@ Disziplinen:
         Art: [Einzelfahren][v]
  Kategorien: [ ] I   [x] II   [x] III   [x] C   [x] D   [x] F
        Name: [Einzelfahren II,III,C,D,F]
-       Slug: [einzelfahren-II-III-C-D-F]
              [Disziplin löschen]
 
         Art: [Einzelfahren][v]
  Kategorien: [X] I   [ ] II   [ ] III   [ ] C   [ ] D   [ ] F
        Name: [Einzelfahren I]
-       Slug: [einzelfahren-I]
              [Disziplin löschen]
  
              [Disziplin hinzufügen]
@@ -161,7 +158,13 @@ Wettkampfprogramm                                        (Admin)Daniel | Logout
 -------------------------------------------------------------------------------
 <Fällbaumcup> / <Einzelfahren II,III,C,D,F>
 
-Tabs: <Posten> | <Startliste> | <Bewertung> | <Rangliste>
+Tabs: Info | <Posten> | <Startliste> | <Bewertung> | <Rangliste>
+
+Disziplinart: Einzelfahren
+        Name: Einzelfahren-I
+  Kategorien: [X] I   [ ] II   [ ] III   [ ] C   [ ] D   [ ] F
+
+             <ändern> | <löschen>
 }}}
 
 == Posten ==
@@ -170,7 +173,7 @@ Wettkampfprogramm                                        (Admin)Daniel | Logout
 -------------------------------------------------------------------------------
 <Fällbaumcup> / <Einzelfahren II,III,C,D,F> / Posten
 
-Tabs: Posten | <Startliste> | <Bewertung> | <Rangliste>
+Tabs: <Info> | Posten | <Startliste> | <Bewertung> | <Rangliste>
 
 Posten  Art          Punkte
 ------  -----------  ------
@@ -190,7 +193,7 @@ Wettkampfprogramm                                        (Admin)Daniel | Logout
 -------------------------------------------------------------------------------
 <Fällbaumcup> / <Einzelfahren II,III,C,D,F> / Startliste
 
-Tabs: <Posten> | Startliste | <Bewertung> | <Rangliste>
+Tabs: <Info> | <Posten> | Startliste | <Bewertung> | <Rangliste>
 
 Sektion [_________]v  und/oder Startnummern [_________] (z.B. "1-15") [anzeigen]
 
@@ -211,7 +214,7 @@ Wettkampfprogramm                                        (Admin)Daniel | Logout
 -------------------------------------------------------------------------------
 <Fällbaumcup> / <Einzelfahren II,III,C,D,F> / Teilnehmer 1
 
-Tabs: <Posten> | <Startliste> | <Bewertung> | <Rangliste>
+Tabs: <Info> | <Posten> | <Startliste> | <Bewertung> | <Rangliste>
 
     Startnummer: 1
      Steuermann: Steinmann Daniel, 1967, Bremgarten, Kat C
@@ -232,7 +235,7 @@ Wettkampfprogramm                                        (Admin)Daniel | Logout
 -------------------------------------------------------------------------------
 <Fällbaumcup> / <Einzelfahren II,III,C,D,F> / Postenblatt A0
 
-Tabs: <Posten> | <Startliste> | Bewertung | <Rangliste>
+Tabs: <Info> | <Posten> | <Startliste> | Bewertung | <Rangliste>
 Tabs: Postenblatt | <Notenliste>
 Tabs: A0 | <B> | <C> | <F> | <D> | <C-F> | <F-D>
 
@@ -258,7 +261,7 @@ Wettkampfprogramm                                        (Admin)Daniel | Logout
 -------------------------------------------------------------------------------
 <Fällbaumcup> / <Einzelfahren II,III,C,D,F> / Notenliste
 
-Tabs: <Posten> | <Startliste> | Bewertung | <Rangliste>
+Tabs: <Info> | <Posten> | <Startliste> | Bewertung | <Rangliste>
 Tabs: <Postenblatt> | Notenliste
 
 Sektion [_________]v  oder Startnummern [_________] [anzeigen]
@@ -283,7 +286,7 @@ Wettkampfprogramm                                        (Admin)Daniel | Logout
 -------------------------------------------------------------------------------
 <Fällbaumcup> / <Einzelfahren II,III,C,D,F>	
 
-Tabs: <Posten> | <Startliste> | <Postenblatt> | Rangliste
+Tabs: <Info> | <Posten> | <Startliste> | <Postenblatt> | Rangliste
 
 <Alle> | <II> | <III> | C | <D> | <F> | <Bestzeiten>
 
@@ -322,7 +325,7 @@ Wettkampfprogramm                                        (Admin)Daniel | Logout
 -------------------------------------------------------------------------------
 <Fällbaumcup> / <Einzelfahren II,III,C,D,F>	
 
-Tabs: <Posten> | <Startliste> | <Postenblatt> | Rangliste
+Tabs: <Info> | <Posten> | <Startliste> | <Postenblatt> | Rangliste
 
 <II> | <III> | <C> | <D> | <F> | Bestzeiten
 
