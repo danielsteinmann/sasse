@@ -119,11 +119,9 @@ class Kategorie(models.Model):
 
 class Wettkampf(models.Model):
     name = models.CharField(max_length=50, unique_for_year='von')
-    zusatz = models.CharField(max_length=100, null=True, blank=True,
-            help_text="""Z.B. 'Bremgarten, 15. Mai 2007'
-            oder 'Einzelfahren, 17.-18. Juni 2008'""")
-    von = models.DateField(help_text="Format: YYYY-MM-DD")
-    bis = models.DateField(null=True, blank=True, help_text="Optional")
+    zusatz = models.CharField(max_length=100)
+    von = models.DateField(help_text="Format: JJJJ-MM-DD")
+    bis = models.DateField(null=True, blank=True, help_text="(optional)")
 
     class Meta:
         ordering = ['-von']

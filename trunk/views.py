@@ -133,13 +133,18 @@ def disziplin_put(request, jahr, wettkampf, disziplin):
 
 import re
 name_re = re.compile(r'^[-\w]+$', re.UNICODE)
+invalid_name_message = \
+"Bitte nur Buchstaben und Ziffern (inklusive Bindestrich) eingeben"
 
 class WettkampfForm(ModelForm):
-
     name = forms.RegexField(regex=name_re,
-            help_text="Z.B. 'Faellbaumcup' oder 'Wallbach'",
-            error_messages={'invalid': "Bitte nur Buchstaben und Ziffern "
-            "(inklusive Bindestrich) eingeben"})
+            help_text="Beispiele: 'Faellbaumcup' oder 'Wallbach'",
+            error_messages={'invalid': invalid_name_message})
+    zusatz = forms.CharField(
+            help_text="Beispiele: 'Bremgarten, 15. Mai 2007' "
+                "oder 'Einzelfahren, 17.-18. Juni 2008'",
+            widget=forms.TextInput(attrs={'size':'40'}))
+
 
     class Meta:
         model = Wettkampf
@@ -170,27 +175,30 @@ class DisziplinForm(ModelForm):
     wettkampf = forms.ModelChoiceField(
             queryset=Wettkampf.objects.all(),
             widget=forms.HiddenInput)
-    name = forms.CharField(initial='(Wird automatisch gefuellt)')
+    name = forms.RegexField(regex=name_re,
+            initial='automatisch-gefuellt',
+            error_messages={'invalid': invalid_name_message})
 
     class Meta:
         model = Disziplin
 
     def clean(self):
         cleaned_data = self.cleaned_data
-        if self.instance.id is None:
-            cleaned_data['name'] = self._default_name()
+        name = cleaned_data.get('name')
+        if self.instance.id is None and name == 'automatisch-gefuellt':
+             cleaned_data['name']= self._default_name()
         q = Disziplin.objects.filter(
                 wettkampf=cleaned_data['wettkampf'],
                 disziplinart=cleaned_data['disziplinart'],
-                name=cleaned_data['name'])
+                name=cleaned_data.get('name'))
         # Remove current object from queryset
         q = q.exclude(id=self.instance.id)
         if q.count() > 0:
             # Make sure newly created name is displayed
             self.data['name'] = cleaned_data['name']
             raise ValidationError(
-                    "Name '%s' fuer Disziplinart '%s' bereits vergeben"
-                    % (cleaned_data['name'], cleaned_data['disziplinart']))
+                    "Fuer die Disziplinart '%s' ist der Name '%s' bereits vergeben"
+                        % (cleaned_data['disziplinart'], cleaned_data['name']))
         return cleaned_data
 
     def _default_name(self):
@@ -198,6 +206,6 @@ class DisziplinForm(ModelForm):
         default_name = disziplinart.name
         if disziplinart.pk == 1: # Einzelfahren
             for k in self.cleaned_data['kategorien']:
-                default_name += '_%s' % (k.name,)
+                default_name += '-%s' % (k.name,)
         return default_name
 

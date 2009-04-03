@@ -31,7 +31,7 @@
   <a href="{% url disziplin_get wettkampf.von|date:"Y", wettkampf.name, i.name %}">{{ i.name }}</a><br/>
   {% endfor %}
 {% else %}
--
+<a href="{% url disziplinen_add wettkampf.von|date:"Y", wettkampf.name %}">Disziplin hinzufuegen</a>
 {% endif %}
         </td>
     </tr>
