@@ -161,8 +161,8 @@ Wettkampfprogramm                                        (Admin)Daniel | Logout
 Tabs: Info | <Posten> | <Startliste> | <Bewertung> | <Rangliste>
 
 Disziplinart: Einzelfahren
-        Name: Einzelfahren-I
-  Kategorien: [X] I   [ ] II   [ ] III   [ ] C   [ ] D   [ ] F
+        Name: Einzelfahren II,III,C,D,F
+  Kategorien: [ ] I   [X] II   [X] III   [X] C   [X] D   [X] F
 
              <ändern> | <löschen>
 }}}
