@@ -1,47 +1,49 @@
 {% extends "base.html" %}
 {% block title %}{{ wettkampf.name }} {{ wettkampf.von|date:"Y" }}{% endblock %}
+
 {% block breadcrumbs %}
 <a href="{% url wettkaempfe_get %}">Home</a>
 / <a href="{% url wettkaempfe_by_year wettkampf.von|date:"Y" %}">{{ wettkampf.von|date:"Y" }}</a>
 / <a href="{% url wettkampf_get wettkampf.von|date:"Y", wettkampf.name %}">{{ wettkampf.name }}</a>
 {% endblock %}
+
 {% block content %}
 <table class="display">
-    <tr>
-        <th>Name:</th>
-        <td>{{ wettkampf.name }}</td>
-    </tr>
-    <tr>
-        <th>Zusatz:</th>
-        <td>{{ wettkampf.zusatz }}</td>
-    </tr>
-    <tr>
-        <th>Von:</th>
-        <td>{{ wettkampf.von }}</td>
-    </tr>
-    <tr>
-        <th>Bis:</th>
-        <td>{{ wettkampf.bis|default_if_none:"-" }}</td>
-    </tr>
-    <tr>
-        <th>Disziplinen:</th>
-        <td>
-{% if disziplinen %}
-  {% for i in disziplinen %}
-  <a href="{% url disziplin_get wettkampf.von|date:"Y", wettkampf.name, i.name %}">{{ i.name }}</a><br/>
-  {% endfor %}
-{% else %}
-<a href="{% url disziplinen_add wettkampf.von|date:"Y", wettkampf.name %}">Disziplin hinzufuegen</a>
-{% endif %}
-        </td>
-    </tr>
-    <tr>
-        <td></td>
-        <td><br />
-<a href="{% url wettkampf_update wettkampf.von|date:"Y", wettkampf.name %}">aendern</a>
-|
-<a href="{% url wettkampf_delete_confirm wettkampf.von|date:"Y", wettkampf.name %}">loeschen</a>
-</td>
-    </tr>
+  <tr>
+    <th>Name:</th>
+    <td>{{ wettkampf.name }}</td>
+  </tr>
+  <tr>
+    <th>Zusatz:</th>
+    <td>{{ wettkampf.zusatz }}</td>
+  </tr>
+  <tr>
+    <th>Von:</th>
+    <td>{{ wettkampf.von }}</td>
+  </tr>
+  <tr>
+    <th>Bis:</th>
+    <td>{{ wettkampf.bis|default_if_none:"-" }}</td>
+  </tr>
+  <tr>
+    <th>Disziplinen:</th>
+    <td>
+      {% if disziplinen %}
+      {% for i in disziplinen %}
+      <a href="{% url disziplin_get wettkampf.von|date:"Y", wettkampf.name, i.name %}">{{ i.name }}</a><br/>
+      {% endfor %}
+      {% else %}
+      <a href="{% url disziplinen_add wettkampf.von|date:"Y", wettkampf.name %}">Disziplin hinzufügen</a>
+      {% endif %}
+    </td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>
+      <br />
+      <a href="{% url wettkampf_update wettkampf.von|date:"Y", wettkampf.name %}">Ändern</a>
+      | <a href="{% url wettkampf_delete_confirm wettkampf.von|date:"Y", wettkampf.name %}">Löschen</a>
+    </td>
+  </tr>
 </table>
 {% endblock %}

@@ -1,43 +1,45 @@
 {% extends "base.html" %}
 {% block title %}{{ wettkampf.name }} {{ wettkampf.von|date:"Y" }}{% endblock %}
+
 {% block breadcrumbs %}
 <a href="{% url wettkaempfe_get %}">Home</a>
 / <a href="{% url wettkaempfe_by_year wettkampf.von|date:"Y" %}">{{ wettkampf.von|date:"Y" }}</a>
 / <a href="{% url wettkampf_get wettkampf.von|date:"Y", wettkampf.name %}">{{ wettkampf.name }}</a>
 {% endblock %}
+
 {% block content %}
-<form action="{% url wettkampf_update wettkampf.von|date:"Y", wettkampf.name %}" method="POST">
-<table class="form">
+<form action="" method="POST">
+  <table class="form">
     {% if form.non_field_errors %}
     <tr><td colspan="2">{{ form.non_field_errors }}</td></tr>
     {% endif %}
     {% for field in form %}
     <tr>
-        <th>{{ field.label_tag }}</th>
-        <td>{{ field.errors }} {{ field }}<br />
-            <font size="-1"> {{ field.help_text }}</font></td>
+      <th>{{ field.label_tag }}</th>
+      <td>{{ field.errors }} {{ field }}<br />
+        <font size="-1"> {{ field.help_text }}</font></td>
     </tr>
     {% endfor %}
     <tr>
-        <th>Disziplinen:</th>
-        <td>
-{% if disziplinen %}
-  {% for i in disziplinen %}
-  <a href="{% url disziplin_update wettkampf.von|date:"Y", wettkampf.name, i.name %}">{{ i.name }}</a><br/>
-  {% endfor %}
-{% else %}
-Noch keine Disziplin erfasst.
-{% endif %}
-<br />
-<a href="{% url disziplinen_add wettkampf.von|date:"Y", wettkampf.name %}">Disziplin hinzufuegen</a>
-        </td>
+      <th>Disziplinen:</th>
+      <td>
+        {% if disziplinen %}
+        {% for i in disziplinen %}
+        <a href="{% url disziplin_update wettkampf.von|date:"Y", wettkampf.name, i.name %}">{{ i.name }}</a><br/>
+        {% endfor %}
+        {% else %}
+        Noch keine Disziplin erfasst.
+        {% endif %}
+        <br />
+        <a href="{% url disziplinen_add wettkampf.von|date:"Y", wettkampf.name %}">Disziplin hinzufügen</a>
+      </td>
     </tr>
     <tr>
-        <td></td>
-        <td>
-            <input type="submit" value="Wettkampf aendern"/>
-        </td>
+      <td></td>
+      <td>
+        <input type="submit" value="Wettkampf ändern"/>
+      </td>
     </tr>
-    </table>
+  </table>
 </form>
 {% endblock %}

@@ -5,16 +5,13 @@
 <a href="{% url wettkaempfe_get %}">Home</a>
 / <a href="{% url wettkaempfe_by_year wettkampf.von|date:"Y" %}">{{ wettkampf.von|date:"Y" }}</a>
 / <a href="{% url wettkampf_get wettkampf.von|date:"Y", wettkampf.name %}">{{ wettkampf.name }}</a>
+/ <a href="{% url disziplin_get wettkampf.von|date:"Y", wettkampf.name, disziplin.name %}">{{ disziplin.name }}</a>
 {% endblock %}
 
 {% block content %}
 <form action="" method="POST">
-  <table class="form">
-    {{ form.as_table }}
-    <tr>
-      <td></td>
-      <td><input type="submit" value="Disziplin hinzufügen"/></td>
-    </tr>
-  </table>
+  <p>Die gesamte Disziplin <b>{{ disziplin.name }}</b>, inklusive Startliste
+  und den erfassten Noten löschen?</p>
+  <input type="submit" value="Ja" />
 </form>
 {% endblock %}

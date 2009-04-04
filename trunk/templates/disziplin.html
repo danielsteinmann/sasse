@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}{{ wettkampf.name }} {{ wettkampf.von|date:"Y" }}{% endblock %}
+
+{% block breadcrumbs %}
+<a href="{% url wettkaempfe_get %}">Home</a>
+/ <a href="{% url wettkaempfe_by_year wettkampf.von|date:"Y" %}">{{ wettkampf.von|date:"Y" }}</a>
+/ <a href="{% url wettkampf_get wettkampf.von|date:"Y", wettkampf.name %}">{{ wettkampf.name }}</a>
+/ Info
+{% endblock %}
+
+{% block content %}
+<table class="display">
+  <tr>
+    <th>Disziplinart:</th>
+    <td>{{ disziplin.disziplinart }}</td>
+  </tr>
+  <tr>
+    <th>Name:</th>
+    <td>{{ disziplin.name }}</td>
+  </tr>
+  <tr>
+    <th>Kategorien:</th>
+    <td>
+      {% for k in disziplin.kategorien.all %}
+      {{ k }}{% if not forloop.last %},{% endif %}
+      {% endfor %}
+    </td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>
+      <br />
+      <a href="{% url disziplin_update wettkampf.von|date:"Y", wettkampf.name, disziplin.name %}">Ändern</a>
+      | <a href="{% url disziplin_delete_confirm wettkampf.von|date:"Y", wettkampf.name, disziplin.name %}">Löschen</a>
+    </td>
+  </tr>
+</table>
+{% endblock %}

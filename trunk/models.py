@@ -1,4 +1,4 @@
-# -*- coding: latin-1 -*-
+# -*- coding: utf-8 -*-
 
 from django.db import models
 
@@ -23,7 +23,7 @@ class Mitglied(models.Model):
     geburtsdatum = models.DateField()
     geschlecht = models.CharField(max_length=1, choices=GESCHLECHT_ART)
     sektion = models.ForeignKey('Sektion')
-    # Für Vater/Sohn respektive Parent/Child Rangliste
+    # FÃ¼r Vater/Sohn respektive Parent/Child Rangliste
     parent = models.ForeignKey('Mitglied')
 
 
@@ -32,9 +32,9 @@ class Mitglied(models.Model):
 DISZIPLIN_ART = (
         (1, 'Einzelfahren'),
         (2, 'Sektionsfahren'),
-        (3, 'Bootsfährenbau'),
-        (4, 'Einzelschnüren'),
-        (5, 'Gruppenschnüren'),
+        (3, 'BootsfÃ¤hrenbau'),
+        (4, 'EinzelschnÃ¼ren'),
+        (5, 'GruppenschnÃ¼ren'),
         (6, 'Schwimmen'),
         )
 
@@ -52,22 +52,22 @@ POSTEN_ART = (
         (3, 'Abfahrt unterhalb eines markierten Felsens'),
         (4, 'Umfahren eines markierten Felsens'),
         (5, 'Landung auf bestimmtes Ziel'),
-        (6, 'Landung auf höchstes Ziel (Einzelfahren)'),
-        (7, 'Einfahren in die Brückenlinie'),
+        (6, 'Landung auf hÃ¶chstes Ziel (Einzelfahren)'),
+        (7, 'Einfahren in die BrÃ¼ckenlinie'),
         (8, 'Durchfahrt'),
         (9, 'Zeitnote'), # Ruderfahrt, Stachelfahrt
         (10, 'Anmeldung (Sektionsfahren)'), # Bewertung: JP_Gutschrift
         (11, 'Gemeinsame Stachelfahrt'),
-        (13, 'Landung auf höchstes Ziel (Sektionsfahren)'),
-        (18, 'Abfahrt und Überfahrt in Linie'),
+        (13, 'Landung auf hÃ¶chstes Ziel (Sektionsfahren)'),
+        (18, 'Abfahrt und Ãœberfahrt in Linie'),
         (19, 'Landung in Linie'),
         (20, 'Abmeldung'),
         (21, 'Stachelfahrt'),
         # Neu: Fixe Posten
-        (50, 'Bootsfährenbau'), # Bewertung: Einbauzeit, Ausbauzeit, Zeitzuschlag
+        (50, 'BootsfÃ¤hrenbau'), # Bewertung: Einbauzeit, Ausbauzeit, Zeitzuschlag
         (51, 'Schwimmen'), # Bewertung: Zeit
-        (52, 'Einzelschnüren'), # Bewertung: Zeit, Zeitzuschlag
-        (53, 'Gruppenschnüren'), # Bewertung: Zeit, Zeitzuschlag
+        (52, 'EinzelschnÃ¼ren'), # Bewertung: Zeit, Zeitzuschlag
+        (53, 'GruppenschnÃ¼ren'), # Bewertung: Zeit, Zeitzuschlag
         )
 
 class Postenart(models.Model):
@@ -101,7 +101,7 @@ class Kategorie(models.Model):
     GESCHLECHT_ART = (
             ('g', 'Gemischt'),
             ('f', 'Frauen'),
-            ('m', 'Männer'),
+            ('m', 'MÃ¤nner'),
             )
     disziplinart = models.ForeignKey('Disziplinart')
     name = models.CharField(max_length=10)
@@ -132,7 +132,7 @@ class Wettkampf(models.Model):
 
 class Disziplin(models.Model):
     """
-    Mit Hilfe der Kategorien kann man bei der Startliste prüfen, dass kein
+    Mit Hilfe der Kategorien kann man bei der Startliste prÃ¼fen, dass kein
     falscher Teilnehmer mitmacht. Zudem kann man den Namen dieser Disziplin
     basierend auf diesen Kategorien zusammenstellen.
 
@@ -173,7 +173,7 @@ class Bewertung(models.Model):
 
 class Teilnehmer(models.Model):
     """
-    Die gemeinsamen Attribute für einen Teilnehmer an einem Wettkampf.
+    Die gemeinsamen Attribute fÃ¼r einen Teilnehmer an einem Wettkampf.
     """
     disziplin = models.ForeignKey('Disziplin')
     startnummer = models.PositiveIntegerField()
@@ -186,7 +186,7 @@ class Teilnehmer(models.Model):
 
 class Person(Teilnehmer):
     """
-    Ein Schwimmer oder Schnürer.
+    Ein Schwimmer oder SchnÃ¼rer.
     """
     mitglied = models.ForeignKey('Mitglied')
     sektion = models.ForeignKey('Sektion')
@@ -195,16 +195,16 @@ class Person(Teilnehmer):
 
 class Gruppe(Teilnehmer):
     """
-    Eine Schnürgruppe, eine Bootfährenbautrupp oder eine Sektion beim
+    Eine SchnÃ¼rgruppe, eine BootfÃ¤hrenbautrupp oder eine Sektion beim
     Sektionsfahren.
 
-    Beim Erstellen der Startliste für ein Sektionsfahren wird nach Anzahl
+    Beim Erstellen der Startliste fÃ¼r ein Sektionsfahren wird nach Anzahl
     Booten und Weidlingen gefragt. Diese Zahlen werden beim Speichern benutzt,
     um die entsprechende Anzahl 'Schiffsektion' Records in der richtigen
     Schiffsart zu erzeugen. Somit braucht es kein eigenes Feld.
     
     Der JP Zuschlag des Sektionsfahren wird ebenfalls beim Speichern als eine
-    'Bewertung' für die Gruppe gespeichert. Darum kein eigenes Feld.
+    'Bewertung' fÃ¼r die Gruppe gespeichert. Darum kein eigenes Feld.
     
     """
     chef = models.ForeignKey('Mitglied')
@@ -218,7 +218,7 @@ class Schiffsektion(Teilnehmer):
     
     Die Startnummer entspricht der Position 1,2,3,... innerhalb Gruppe, was bei
     der Noteneingabe wichtig ist. Dies bedeutet allerdings, dass die
-    Startnummer nicht unique für eine Disziplin sein kann.
+    Startnummer nicht unique fÃ¼r eine Disziplin sein kann.
     """
     gruppe = models.ForeignKey('Gruppe')
     schiffsart = models.CharField(max_length=1, choices=SCHIFFS_ART)
@@ -239,7 +239,7 @@ class Schiffeinzel(Teilnehmer):
     schiffsart = models.CharField(max_length=1, choices=SCHIFFS_ART)
 
 
-# Hilfstabellen für Ranglisten
+# Hilfstabellen fÃ¼r Ranglisten
 
 class Richtzeit(models.Model):
     """

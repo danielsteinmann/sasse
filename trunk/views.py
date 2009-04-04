@@ -1,14 +1,15 @@
+# -*- coding: utf-8 -*-
+
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
-from django.http import Http404
-from django.forms import ModelForm, ValidationError
 from django import forms
-from django.shortcuts import get_object_or_404, get_list_or_404
+from django.forms import ModelForm
+from django.forms import ValidationError
 from django.shortcuts import render_to_response
+
 from models import Wettkampf
 from models import Disziplin
 from models import Kategorie
-from django.shortcuts import render_to_response
 
 
 def wettkaempfe_get(request):
@@ -106,9 +107,7 @@ def disziplin_get(request, jahr, wettkampf, disziplin):
     assert request.method == 'GET'
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
-    form = DisziplinForm()
-    return render_to_response('disziplin.html',
-            {'form': form, 'wettkampf': w})
+    return render_to_response('disziplin.html', {'wettkampf': w, 'disziplin': d})
 
 def disziplin_update(request, jahr, wettkampf, disziplin):
     if request.method == 'POST':
@@ -117,8 +116,8 @@ def disziplin_update(request, jahr, wettkampf, disziplin):
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
     form = DisziplinForm(instance=d)
-    return render_to_response('disziplin_add.html',
-            {'form': form, 'wettkampf': w})
+    return render_to_response('disziplin_update.html',
+            {'form': form, 'wettkampf': w, 'disziplin': d})
 
 def disziplin_put(request, jahr, wettkampf, disziplin):
     assert request.method == 'POST'
@@ -127,9 +126,25 @@ def disziplin_put(request, jahr, wettkampf, disziplin):
     form = DisziplinForm(request.POST.copy(), instance=d)
     if form.is_valid():
         form.save()
-        return HttpResponseRedirect(reverse(wettkampf_update, args=[jahr, wettkampf]))
-    return render_to_response('disziplin_add.html',
-            {'form': form, 'wettkampf': w})
+        return HttpResponseRedirect(reverse(disziplin_get,
+            args=[jahr, wettkampf, disziplin]))
+    return render_to_response('disziplin_update.html',
+            {'form': form, 'wettkampf': w, 'disziplin': d})
+
+def disziplin_delete_confirm(request, jahr, wettkampf, disziplin):
+    if request.method == 'POST':
+        return disziplin_delete(request, jahr, wettkampf, disziplin)
+    assert request.method == 'GET'
+    w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
+    d = Disziplin.objects.get(wettkampf=w, name=disziplin)
+    return render_to_response('disziplin_delete.html', {'wettkampf': w, 'disziplin': d})
+
+def disziplin_delete(request, jahr, wettkampf, disziplin):
+    assert request.method == 'POST'
+    w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
+    d = Disziplin.objects.get(wettkampf=w, name=disziplin)
+    d.delete()
+    return HttpResponseRedirect(reverse(wettkampf_get, args=[jahr, wettkampf]))
 
 import re
 name_re = re.compile(r'^[-\w]+$', re.UNICODE)
@@ -138,7 +153,7 @@ invalid_name_message = \
 
 class WettkampfForm(ModelForm):
     name = forms.RegexField(regex=name_re,
-            help_text="Beispiele: 'Faellbaumcup' oder 'Wallbach'",
+            help_text=u"Beispiele: 'Fällbaumcup' oder 'Wallbach'",
             error_messages={'invalid': invalid_name_message})
     zusatz = forms.CharField(
             help_text="Beispiele: 'Bremgarten, 15. Mai 2007' "
@@ -158,7 +173,7 @@ class WettkampfForm(ModelForm):
 
         if von and bis:
             if bis < von:
-                raise ValidationError("Von muss aelter als bis sein")
+                raise ValidationError("Von muss älter als bis sein")
 
         if von and name:
             q = Wettkampf.objects.filter(name=name, von__year=von.year)
@@ -172,11 +187,12 @@ class WettkampfForm(ModelForm):
 
 
 class DisziplinForm(ModelForm):
+    INITIAL_NAME = u'automatisch-gefüllt'
     wettkampf = forms.ModelChoiceField(
             queryset=Wettkampf.objects.all(),
             widget=forms.HiddenInput)
     name = forms.RegexField(regex=name_re,
-            initial='automatisch-gefuellt',
+            initial=INITIAL_NAME,
             error_messages={'invalid': invalid_name_message})
 
     class Meta:
@@ -185,11 +201,11 @@ class DisziplinForm(ModelForm):
     def clean(self):
         cleaned_data = self.cleaned_data
         name = cleaned_data.get('name')
-        if self.instance.id is None and name == 'automatisch-gefuellt':
+        if self.instance.id is None and name == self.INITIAL_NAME:
              cleaned_data['name']= self._default_name()
         q = Disziplin.objects.filter(
                 wettkampf=cleaned_data['wettkampf'],
-                disziplinart=cleaned_data['disziplinart'],
+                disziplinart=cleaned_data.get('disziplinart'),
                 name=cleaned_data.get('name'))
         # Remove current object from queryset
         q = q.exclude(id=self.instance.id)
@@ -197,7 +213,7 @@ class DisziplinForm(ModelForm):
             # Make sure newly created name is displayed
             self.data['name'] = cleaned_data['name']
             raise ValidationError(
-                    "Fuer die Disziplinart '%s' ist der Name '%s' bereits vergeben"
+                    u"Für die Disziplinart '%s' ist der Name '%s' bereits vergeben"
                         % (cleaned_data['disziplinart'], cleaned_data['name']))
         return cleaned_data
 
