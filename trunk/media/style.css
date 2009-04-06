@@ -55,3 +55,38 @@ table.display {
     padding: 2px 4px 2px 4px;
     border-top: thin solid darkgrey;
 }
+/* tab navigation */
+ul.tabnav {
+    text-align: left
+    margin: 1em 0 1em 0;
+    font-weight: bolder;
+    font-size: 80%;
+    border-bottom: 1px solid darkgrey;
+    list-style-type: none;
+    padding: 3px 10px 3px 10px;
+}
+ul.tabnav li {
+    display: inline;
+    border-bottom: 1px solid #fff;
+    background-color: #fff;
+}
+ul.tabnav li.selected a {
+    background-color: #fff;
+    color: #000;
+    position: relative;
+    top: 1px;
+    padding-top: 4px;
+}
+ul.tabnav li a {
+    padding: 3px 4px;
+    border: 1px solid darkgrey;
+    background-color: lightblue;
+    color: #666;
+    margin-right: 5px; /* space between tabs */
+    text-decoration: none;
+    border-bottom: none;
+}
+ul.tabnav li a:hover {
+    background: #fff;
+    color: #000;
+}

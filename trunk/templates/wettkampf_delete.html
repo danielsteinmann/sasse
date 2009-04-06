@@ -9,8 +9,9 @@
 
 {% block content %}
 <form action="{% url wettkampf_delete_confirm wettkampf.von|date:"Y", wettkampf.name %}" method="POST">
-  <p>Den gesamten <b>{{ wettkampf.name }} {{wettkampf.von|date:"Y"}}</b>,
-  inklusive seinen Disziplinen und den erfassten Noten löschen?</p>
+  <p>Den gesamten Wettkampf <b>{{ wettkampf.name }}
+    {{wettkampf.von|date:"Y"}}</b>, inklusive seinen Disziplinen und den
+  erfassten Noten löschen?</p>
   <input type="submit" value="Ja" />
 </form>
 {% endblock %}

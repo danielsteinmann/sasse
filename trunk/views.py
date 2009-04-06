@@ -99,13 +99,14 @@ def disziplinen_post(request, jahr, wettkampf):
     form = DisziplinForm(request.POST.copy())
     if form.is_valid():
         form.save()
-        return HttpResponseRedirect(reverse(wettkampf_update, args=[jahr, wettkampf]))
+        return HttpResponseRedirect(reverse(wettkampf_get, args=[jahr, wettkampf]))
     return render_to_response('disziplin_add.html',
             {'form': form, 'wettkampf': w})
 
 def disziplin_get(request, jahr, wettkampf, disziplin):
     assert request.method == 'GET'
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
+    # TODO: Auch noch Disziplinart in die Query nehmen
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
     return render_to_response('disziplin.html', {'wettkampf': w, 'disziplin': d})
 
