@@ -38,16 +38,13 @@ pontonier.ch/wettkaempfe/postenart/<name>/
 Wettkampfprogramm                                        (Admin)Daniel | Logout
 -------------------------------------------------------------------------------
 
-<Wettkampf hinzufügen>
 Jahr  Name           Disziplinen
 ----  -------------  -------------------------------
-2008  <Wallbach>     Einzelfahren II,III,C,D,F 
-                     Einzelfahren I
-                     Sektionsfahren
-2008  <Oldie Cup>    Einzelfahren II,III,C,D,F
-                     Einzelfahren I
-2007  <Fällbaumcup>  Einzelfahren II,III,C,D,F
-                     Einzelfahren I
+2008  <Wallbach>     Einzelfahren, 28. - 29. Juni
+2008  <Oldie Cup>    Brugg
+2007  <Fällbaumcup>  Bremgarten, 25. Mai 2007
+
+<Wettkampf hinzufügen>
 
 
 Stammdaten:
