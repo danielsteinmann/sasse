@@ -15,7 +15,7 @@
     {% endif %}
     {% for field in form %}
     <tr>
-      <th>{{ field.label_tag }}</th>
+      <th>{{ field.label_tag }}:</th>
       <td>{{ field.errors }} {{ field }}<br />
         <font size="-1"> {{ field.help_text }}</font></td>
     </tr>
@@ -30,14 +30,12 @@
         {% else %}
         Noch keine Disziplin erfasst.
         {% endif %}
-        <br />
-        <a href="{% url disziplinen_add wettkampf.von|date:"Y", wettkampf.name %}">Disziplin hinzufügen</a>
       </td>
     </tr>
     <tr>
       <td></td>
       <td>
-        <input type="submit" value="Wettkampf ändern"/>
+        <input type="submit" value="Änderungen speichern"/>
       </td>
     </tr>
   </table>

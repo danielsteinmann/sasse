@@ -127,6 +127,7 @@ def disziplin_put(request, jahr, wettkampf, disziplin):
     form = DisziplinForm(request.POST.copy(), instance=d)
     if form.is_valid():
         form.save()
+        disziplin = form.cleaned_data['name']
         return HttpResponseRedirect(reverse(disziplin_get,
             args=[jahr, wettkampf, disziplin]))
     return render_to_response('disziplin_update.html',

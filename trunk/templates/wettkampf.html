@@ -32,9 +32,9 @@
       {% for i in disziplinen %}
       <a href="{% url disziplin_get wettkampf.von|date:"Y", wettkampf.name, i.name %}">{{ i.name }}</a><br/>
       {% endfor %}
-      <br />
+      {% else %}
+      Noch keine Disziplin erfasst.
       {% endif %}
-      <a href="{% url disziplinen_add wettkampf.von|date:"Y", wettkampf.name %}">Disziplin hinzufügen</a>
     </td>
   </tr>
   <tr>
@@ -43,6 +43,7 @@
       <br />
       <a href="{% url wettkampf_update wettkampf.von|date:"Y", wettkampf.name %}">Ändern</a>
       | <a href="{% url wettkampf_delete_confirm wettkampf.von|date:"Y", wettkampf.name %}">Löschen</a>
+      | <a href="{% url disziplinen_add wettkampf.von|date:"Y", wettkampf.name %}">Disziplin hinzufügen</a>
     </td>
   </tr>
 </table>

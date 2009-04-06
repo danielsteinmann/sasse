@@ -1,9 +1,10 @@
+/* Form input errors */
 ul.errorlist {
     margin: 0;
     padding: 0;
 }
-.errorlist li {
-    background-color: red;
+ul.errorlist li {
+    background-color: Red;
     color: white;
     display: block;
     margin: 0 0 2px;
@@ -13,80 +14,73 @@ ul.errorlist {
 table.list {
     border-collapse: collapse;
 }
-.list th {
+table.list th {
     padding: 2px 4px 2px 4px;
     font-weight: normal;
-    background-color: lightgrey;
-    border: thin solid darkgrey;
+    background-color: LightGrey;
+    border: thin solid DarkGrey;
     text-align: left;
 }
-.list td {
+table.list td {
     padding: 2px 4px 2px 4px;
-    border: thin solid darkgrey;
+    border: thin solid DarkGrey;
 }
 /* Data as entry form */
 table.form {
     border-collapse: collapse;
 }
-.form th {
+table.form th {
     padding: 2px 4px 10px 4px;
-    border-top: thin solid darkgrey;
-    background-color: lightgrey;
-    font-weight: normal;
+    font-weight: bold;
     text-align: right;
     vertical-align: top;
 }
-.form td {
+table.form td {
     padding: 2px 4px 10px 4px;
-    border-top: thin solid darkgrey;
 }
 /* Data as display form */
 table.display {
     border-collapse: collapse;
 }
-.display th {
+table.display th {
     padding: 2px 4px 2px 4px;
-    border-top: thin solid darkgrey;
+    font-weight: bold;
     text-align: right;
-    background-color: lightgrey;
-    font-weight: normal;
+    vertical-align: top;
 }
-.display td {
+table.display td {
     padding: 2px 4px 2px 4px;
-    border-top: thin solid darkgrey;
 }
 /* tab navigation */
 ul.tabnav {
     text-align: left
     margin: 1em 0 1em 0;
     font-weight: bolder;
-    font-size: 80%;
-    border-bottom: 1px solid darkgrey;
+    font-size: 90%;
+    border-bottom: 1px solid #81BEF7;
     list-style-type: none;
     padding: 3px 10px 3px 10px;
 }
 ul.tabnav li {
     display: inline;
-    border-bottom: 1px solid #fff;
-    background-color: #fff;
 }
 ul.tabnav li.selected a {
-    background-color: #fff;
-    color: #000;
+    border: 1px solid #81BEF7;
+    border-bottom: none;
+    background-color: #81BEF7;
+    color: Black;
     position: relative;
-    top: 1px;
-    padding-top: 4px;
 }
 ul.tabnav li a {
-    padding: 3px 4px;
-    border: 1px solid darkgrey;
-    background-color: lightblue;
-    color: #666;
-    margin-right: 5px; /* space between tabs */
-    text-decoration: none;
+    border: 1px solid #E0ECF8;
     border-bottom: none;
+    background-color: #E0ECF8;
+    color: Black;
+    padding: 3px 4px;
+    text-decoration: none;
+    margin-right: 5px; /* space between tabs */
 }
 ul.tabnav li a:hover {
-    background: #fff;
-    color: #000;
+    background: #81BEF7;
+    color: Black;
 }

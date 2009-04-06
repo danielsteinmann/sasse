@@ -12,7 +12,7 @@
     {% endif %}
     {% for field in form %}
     <tr>
-      <th>{{ field.label_tag }}</th>
+      <th>{{ field.label_tag }}:</th>
       <td>{{ field.errors }} {{ field }}<br />
         <font size="-1"> {{ field.help_text }}</font>
       </td>
