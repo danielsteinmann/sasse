@@ -12,7 +12,7 @@
 
 <ul class="tabnav">
   <li class="selected"><a href="#">Info</a></li>
-  <li><a href="#">Posten</a></li>
+  <li><a href="{% url posten_list wettkampf.von|date:"Y", wettkampf.name, disziplin.name %}">Posten</a></li>
   <li><a href="#">Startliste</a></li>
   <li><a href="#">Bewertungen</a></li>
   <li><a href="#">Rangliste</a></li>
@@ -32,6 +32,15 @@
     <td>
       {% for k in disziplin.kategorien.all %}
       {{ k }}{% if not forloop.last %},{% endif %}
+      {% endfor %}
+    </td>
+  </tr>
+  <tr>
+    <th>Posten:</th>
+    <td>
+      {% for p in disziplin.posten_set.all %}
+      <a href="{% url posten_get wettkampf.von|date:"Y", wettkampf.name, disziplin.name, p.name %}">{{ p.name}}</a>
+      {% if not forloop.last %},{% endif %}
       {% endfor %}
     </td>
   </tr>

@@ -156,9 +156,12 @@ class Posten(models.Model):
     disziplin = models.ForeignKey('Disziplin')
     postenart = models.ForeignKey('Postenart')
     name = models.CharField(max_length=10)
+    reihenfolge = models.PositiveIntegerField()
 
     class Meta:
         unique_together = ['disziplin', 'postenart', 'name']
+        ordering = ['reihenfolge']
+
 
 
 class Bewertung(models.Model):

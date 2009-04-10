@@ -19,10 +19,14 @@ urlpatterns = patterns('',
         views.disziplinen_add, {}, "disziplinen_add"),
     (r'^(?P<jahr>\d+)/(?P<wettkampf>[-\w]+)/(?P<disziplin>[-\w]+)/$',
         views.disziplin_get, {}, "disziplin_get"),
-    (r'^(?P<jahr>\d+)/(?P<wettkampf>[-\w]+)/(?P<disziplin>[-\w ]+)/update/$',
+    (r'^(?P<jahr>\d+)/(?P<wettkampf>[-\w]+)/(?P<disziplin>[-\w]+)/update/$',
         views.disziplin_update, {}, "disziplin_update"),
-    (r'^(?P<jahr>\d+)/(?P<wettkampf>[-\w]+)/(?P<disziplin>[-\w ]+)/delete/$',
+    (r'^(?P<jahr>\d+)/(?P<wettkampf>[-\w]+)/(?P<disziplin>[-\w]+)/delete/$',
         views.disziplin_delete_confirm, {}, "disziplin_delete_confirm"),
+    (r'^(?P<jahr>\d+)/(?P<wettkampf>[-\w]+)/(?P<disziplin>[-\w]+)/posten/$',
+        views.posten_list, {}, "posten_list"),
+    (r'^(?P<jahr>\d+)/(?P<wettkampf>[-\w]+)/(?P<disziplin>[-\w]+)/posten/(?P<posten>[-\w]+)$',
+        views.posten_get, {}, "posten_get"),
 )
 
 #---- Wettkaempfe

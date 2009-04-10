@@ -10,6 +10,7 @@ from django.shortcuts import render_to_response
 from models import Wettkampf
 from models import Disziplin
 from models import Kategorie
+from models import Posten
 
 
 def wettkaempfe_get(request):
@@ -148,6 +149,39 @@ def disziplin_delete(request, jahr, wettkampf, disziplin):
     d.delete()
     return HttpResponseRedirect(reverse(wettkampf_get, args=[jahr, wettkampf]))
 
+def posten_list(request, jahr, wettkampf, disziplin):
+    if request.method == 'POST':
+        return posten_post(request, jahr, wettkampf, disziplin)
+    assert request.method == 'GET'
+    w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
+    d = Disziplin.objects.get(wettkampf=w, name=disziplin)
+    form = PostenListForm(initial={'disziplin': d.id,
+        'reihenfolge': d.posten_set.count() + 1})
+    return render_to_response('posten.html',
+        {'wettkampf': w, 'disziplin': d, 'posten': d.posten_set.all(),
+            'form': form, })
+
+def posten_post(request, jahr, wettkampf, disziplin):
+    assert request.method == 'POST'
+    w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
+    d = Disziplin.objects.get(wettkampf=w, name=disziplin)
+    form = PostenListForm(request.POST)
+    if form.is_valid():
+        form.save()
+        return HttpResponseRedirect(reverse(posten_list, args=[jahr, wettkampf, disziplin]))
+    return render_to_response('posten.html',
+        {'wettkampf': w, 'disziplin': d, 'posten': d.posten_set.all(),
+          'form': form, })
+
+def posten_get(request, jahr, wettkampf, disziplin, posten):
+    assert request.method == 'GET'
+    w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
+    d = Disziplin.objects.get(wettkampf=w, name=disziplin)
+    p = Posten.objects.get(disziplin=d, name=posten)
+    return render_to_response('posten_get.html',
+        {'wettkampf': w, 'disziplin': d, 'posten': p, })
+
+
 import re
 name_re = re.compile(r'^[-\w]+$', re.UNICODE)
 invalid_name_message = \
@@ -227,3 +261,28 @@ class DisziplinForm(ModelForm):
                 default_name += '-%s' % (k.name,)
         return default_name
 
+
+class PostenListForm(ModelForm):
+    disziplin = forms.ModelChoiceField(
+            queryset=Disziplin.objects.all(),
+            widget=forms.HiddenInput)
+    reihenfolge = forms.DecimalField(widget=forms.HiddenInput)
+    name = forms.RegexField(regex=name_re,
+            error_messages={'invalid': invalid_name_message},
+            widget=forms.TextInput(attrs={'size':'3'}))
+
+    class Meta:
+        model = Posten
+
+    def clean_name(self):
+        cleaned_data = self.cleaned_data
+        name=cleaned_data.get('name')
+        q = Posten.objects.filter(
+                disziplin=cleaned_data['disziplin'],
+                name=cleaned_data.get('name'))
+        # Remove current object from queryset
+        q = q.exclude(id=self.instance.id)
+        if q.count() > 0:
+            raise ValidationError(
+                    u"Der Name '%s' ist bereits vergeben" % (name))
+        return name

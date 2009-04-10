@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}{{ wettkampf.name }} {{ wettkampf.von|date:"Y" }}{% endblock %}
+
+{% block breadcrumbs %}
+<a href="{% url wettkaempfe_get %}">Home</a>
+/ <a href="{% url wettkaempfe_by_year wettkampf.von|date:"Y" %}">{{ wettkampf.von|date:"Y" }}</a>
+/ <a href="{% url wettkampf_get wettkampf.von|date:"Y", wettkampf.name %}">{{ wettkampf.name }}</a>
+/ <a href="{% url disziplin_get wettkampf.von|date:"Y", wettkampf.name, disziplin.name %}">{{ disziplin.name }}</a>
+{% endblock %}
+
+{% block content %}
+
+<ul class="tabnav">
+  <li><a href="{% url disziplin_get wettkampf.von|date:"Y", wettkampf.name, disziplin.name %}">Info</a></li>
+  <li class="selected"><a href="{% url posten_list wettkampf.von|date:"Y", wettkampf.name, disziplin.name %}">Posten</a></li>
+  <li><a href="#">Startliste</a></li>
+  <li><a href="#">Bewertungen</a></li>
+  <li><a href="#">Rangliste</a></li>
+</ul>
+
+<form action="" method="POST">
+{{ form.disziplin }}
+{{ form.reihenfolge }}
+<table class="list">
+  <tr>
+    <th>Posten</th>
+    <th>Art</th>
+  </tr>
+  {% for p in posten %}
+  <tr>
+    <td><a href="{% url posten_get wettkampf.von|date:"Y", wettkampf.name, disziplin.name, p.name %}">{{ p.name}}</a>
+    <td>{{ p.postenart }}</td>
+  </tr>
+  {% endfor %}
+  {% if form.non_field_errors %}
+  <tr><td colspan="3">{{ form.non_field_errors }}</td></tr>
+  {% endif %}
+  <tr>
+    <td>{{ form.name.errors }}{{ form.name }}</td>
+    <td>{{ form.postenart.errors }}{{ form.postenart }}</td>
+    <td><input type="submit" value="Posten hinzufügen"/></td>
+  </tr>
+</table>
+{% endblock %}
