@@ -154,12 +154,12 @@ class Disziplin(models.Model):
 
 class Posten(models.Model):
     disziplin = models.ForeignKey('Disziplin')
-    postenart = models.ForeignKey('Postenart')
     name = models.CharField(max_length=10)
+    postenart = models.ForeignKey('Postenart')
     reihenfolge = models.PositiveIntegerField()
 
     class Meta:
-        unique_together = ['disziplin', 'postenart', 'name']
+        unique_together = ['disziplin', 'name']
         ordering = ['reihenfolge']
 
 

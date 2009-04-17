@@ -132,7 +132,18 @@
 - model: sasse.Postenart
   pk: 53
   fields:
-    name: Gruppenschnüre
+    name: Gruppenschnüren
+#
+#
+# Postenart <=> Disziplinart
+#
+
+#- model: sasse.Postenart_Disziplinart
+#  pk: 1
+#  fields:
+#    disziplinart_id: 1
+#    postenart_id: 1
+
 #
 # Kategorien
 #

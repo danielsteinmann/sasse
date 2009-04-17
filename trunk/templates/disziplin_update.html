@@ -9,6 +9,15 @@
 {% endblock %}
 
 {% block content %}
+
+<ul class="tabnav">
+  <li class="selected"><a href="{% url disziplin_get wettkampf.von|date:"Y", wettkampf.name, disziplin.name %}">Disziplin</a></li>
+  <li><a href="{% url posten_list wettkampf.von|date:"Y", wettkampf.name, disziplin.name %}">Posten</a></li>
+  <li><a href="#">Startliste</a></li>
+  <li><a href="#">Bewertungen</a></li>
+  <li><a href="#">Rangliste</a></li>
+</ul>
+
 <form action="" method="POST">
   <table class="form">
     {{ form.as_table }}

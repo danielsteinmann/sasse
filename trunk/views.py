@@ -11,6 +11,7 @@ from models import Wettkampf
 from models import Disziplin
 from models import Kategorie
 from models import Posten
+from models import Postenart
 
 
 def wettkaempfe_get(request):
@@ -156,7 +157,8 @@ def posten_list(request, jahr, wettkampf, disziplin):
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
     form = PostenListForm(initial={'disziplin': d.id,
-        'reihenfolge': d.posten_set.count() + 1})
+        'reihenfolge': d.posten_set.count() + 1, })
+    form.fields["postenart"].queryset = Postenart.objects.filter(disziplinarten = d.disziplinart.id)
     return render_to_response('posten.html',
         {'wettkampf': w, 'disziplin': d, 'posten': d.posten_set.all(),
             'form': form, })
@@ -169,6 +171,7 @@ def posten_post(request, jahr, wettkampf, disziplin):
     if form.is_valid():
         form.save()
         return HttpResponseRedirect(reverse(posten_list, args=[jahr, wettkampf, disziplin]))
+    form.fields["postenart"].queryset = Postenart.objects.filter(disziplinarten = d.disziplinart.id)
     return render_to_response('posten.html',
         {'wettkampf': w, 'disziplin': d, 'posten': d.posten_set.all(),
           'form': form, })
@@ -181,6 +184,51 @@ def posten_get(request, jahr, wettkampf, disziplin, posten):
     return render_to_response('posten_get.html',
         {'wettkampf': w, 'disziplin': d, 'posten': p, })
 
+def posten_update(request, jahr, wettkampf, disziplin, posten):
+    if request.method == 'POST':
+        return posten_put(request, jahr, wettkampf, disziplin, posten)
+    assert request.method == 'GET'
+    w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
+    d = Disziplin.objects.get(wettkampf=w, name=disziplin)
+    p = Posten.objects.get(disziplin=d, name=posten)
+    form = PostenEditForm(instance=p)
+    form.fields["postenart"].queryset = Postenart.objects.filter(disziplinarten = d.disziplinart.id)
+    return render_to_response('posten_update.html',
+            {'form': form, 'wettkampf': w, 'disziplin': d, 'posten': p, })
+
+def posten_put(request, jahr, wettkampf, disziplin, posten):
+    assert request.method == 'POST'
+    w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
+    d = Disziplin.objects.get(wettkampf=w, name=disziplin)
+    p = Posten.objects.get(disziplin=d, name=posten)
+    form = PostenEditForm(request.POST.copy(), instance=p)
+    if form.is_valid():
+        form.save()
+        posten = form.cleaned_data['name']
+        return HttpResponseRedirect(reverse(posten_get,
+            args=[jahr, wettkampf, disziplin, posten]))
+    form.fields["postenart"].queryset = Postenart.objects.filter(disziplinarten = d.disziplinart.id)
+    return render_to_response('posten_update.html',
+            {'form': form, 'wettkampf': w, 'disziplin': d, 'posten': p, })
+
+def posten_delete_confirm(request, jahr, wettkampf, disziplin, posten):
+    if request.method == 'POST':
+        return posten_delete(request, jahr, wettkampf, disziplin, posten)
+    assert request.method == 'GET'
+    w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
+    d = Disziplin.objects.get(wettkampf=w, name=disziplin)
+    p = Posten.objects.get(disziplin=d, name=posten)
+    return render_to_response('posten_delete.html',
+            {'wettkampf': w, 'disziplin': d, 'posten': p, })
+
+def posten_delete(request, jahr, wettkampf, disziplin, posten):
+    assert request.method == 'POST'
+    w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
+    d = Disziplin.objects.get(wettkampf=w, name=disziplin)
+    p = Posten.objects.get(disziplin=d, name=posten)
+    p.delete()
+    return HttpResponseRedirect(reverse(posten_list,
+        args=[jahr, wettkampf, disziplin]))
 
 import re
 name_re = re.compile(r'^[-\w]+$', re.UNICODE)
@@ -266,10 +314,38 @@ class PostenListForm(ModelForm):
     disziplin = forms.ModelChoiceField(
             queryset=Disziplin.objects.all(),
             widget=forms.HiddenInput)
-    reihenfolge = forms.DecimalField(widget=forms.HiddenInput)
     name = forms.RegexField(regex=name_re,
             error_messages={'invalid': invalid_name_message},
             widget=forms.TextInput(attrs={'size':'3'}))
+    reihenfolge = forms.DecimalField(widget=forms.HiddenInput)
+
+
+    class Meta:
+        model = Posten
+
+    def clean_name(self):
+        cleaned_data = self.cleaned_data
+        name=cleaned_data.get('name')
+        q = Posten.objects.filter(
+                disziplin=cleaned_data['disziplin'],
+                name=cleaned_data.get('name'))
+        # Remove current object from queryset
+        q = q.exclude(id=self.instance.id)
+        if q.count() > 0:
+            raise ValidationError(
+                    u"Der Name '%s' ist bereits vergeben" % (name))
+        return name
+
+
+class PostenEditForm(ModelForm):
+    disziplin = forms.ModelChoiceField(
+            queryset=Disziplin.objects.all(),
+            widget=forms.HiddenInput)
+    name = forms.RegexField(regex=name_re,
+            error_messages={'invalid': invalid_name_message},
+            widget=forms.TextInput(attrs={'size':'3'}))
+    reihenfolge = forms.DecimalField(
+            widget=forms.TextInput(attrs={'size':'2'}))
 
     class Meta:
         model = Posten

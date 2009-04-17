@@ -6,12 +6,13 @@
 / <a href="{% url wettkaempfe_by_year wettkampf.von|date:"Y" %}">{{ wettkampf.von|date:"Y" }}</a>
 / <a href="{% url wettkampf_get wettkampf.von|date:"Y", wettkampf.name %}">{{ wettkampf.name }}</a>
 / <a href="{% url disziplin_get wettkampf.von|date:"Y", wettkampf.name, disziplin.name %}">{{ disziplin.name }}</a>
+/ <a href="{% url posten_list wettkampf.von|date:"Y", wettkampf.name, disziplin.name %}">Posten</a>
 {% endblock %}
 
 {% block content %}
 
 <ul class="tabnav">
-  <li><a href="{% url disziplin_get wettkampf.von|date:"Y", wettkampf.name, disziplin.name %}">Info</a></li>
+  <li><a href="{% url disziplin_get wettkampf.von|date:"Y", wettkampf.name, disziplin.name %}">Disziplin</a></li>
   <li class="selected"><a href="{% url posten_list wettkampf.von|date:"Y", wettkampf.name, disziplin.name %}">Posten</a></li>
   <li><a href="#">Startliste</a></li>
   <li><a href="#">Bewertungen</a></li>
@@ -25,11 +26,13 @@
   <tr>
     <th>Posten</th>
     <th>Art</th>
+    <th>Reihenfolge</th>
   </tr>
   {% for p in posten %}
-  <tr>
+  <tr class="{% cycle 'odd' 'even' as rowcolors %}">
     <td><a href="{% url posten_get wettkampf.von|date:"Y", wettkampf.name, disziplin.name, p.name %}">{{ p.name}}</a>
     <td>{{ p.postenart }}</td>
+    <td>{{ p.reihenfolge }}</td>
   </tr>
   {% endfor %}
   {% if form.non_field_errors %}

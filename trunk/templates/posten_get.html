@@ -6,12 +6,14 @@
 / <a href="{% url wettkaempfe_by_year wettkampf.von|date:"Y" %}">{{ wettkampf.von|date:"Y" }}</a>
 / <a href="{% url wettkampf_get wettkampf.von|date:"Y", wettkampf.name %}">{{ wettkampf.name }}</a>
 / <a href="{% url disziplin_get wettkampf.von|date:"Y", wettkampf.name, disziplin.name %}">{{ disziplin.name }}</a>
+/ <a href="{% url posten_list wettkampf.von|date:"Y", wettkampf.name, disziplin.name %}">Posten</a>
+/ <a href="{% url posten_get wettkampf.von|date:"Y", wettkampf.name, disziplin.name, posten.name %}">{{ posten.name}}</a>
 {% endblock %}
 
 {% block content %}
 
 <ul class="tabnav">
-  <li><a href="{% url disziplin_get wettkampf.von|date:"Y", wettkampf.name, disziplin.name %}">Info</a></li>
+  <li><a href="{% url disziplin_get wettkampf.von|date:"Y", wettkampf.name, disziplin.name %}">Disziplin</a></li>
   <li class="selected"><a href="{% url posten_list wettkampf.von|date:"Y", wettkampf.name, disziplin.name %}">Posten</a></li>
   <li><a href="#">Startliste</a></li>
   <li><a href="#">Bewertungen</a></li>
@@ -20,16 +22,24 @@
 
 <table class="display">
   <tr>
-    <th>Reihenfolge:</th>
-    <td>{{ posten.reihenfolge }}</td>
-  </tr>
-  <tr>
     <th>Name:</th>
     <td>{{ posten.name }}</td>
   </tr>
   <tr>
-    <th>Art:</th>
+    <th>Postenart:</th>
     <td>{{ posten.postenart }}</td>
+  </tr>
+  <tr>
+    <th>Reihenfolge:</th>
+    <td>{{ posten.reihenfolge }}</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>
+      <br />
+      <a href="{% url posten_update wettkampf.von|date:"Y", wettkampf.name, disziplin.name, posten.name %}">Ändern</a>
+      | <a href="{% url posten_delete_confirm wettkampf.von|date:"Y", wettkampf.name, disziplin.name, posten.name %}">Löschen</a>
+    </td>
   </tr>
 </table>
 {% endblock %}
