@@ -1,16 +1,9 @@
-{% extends "base.html" %}
-{% block title %}{{ wettkampf.name }} {{ wettkampf.von|date:"Y" }}{% endblock %}
-
-{% block breadcrumbs %}
-<a href="{% url wettkaempfe_get %}">Home</a>
-/ <a href="{% url wettkaempfe_by_year wettkampf.von|date:"Y" %}">{{ wettkampf.von|date:"Y" }}</a>
-/ <a href="{% url wettkampf_get wettkampf.von|date:"Y", wettkampf.name %}">{{ wettkampf.name }}</a>
-{% endblock %}
+{% extends "base_wettkampf.html" %}
 
 {% block content %}
-<form action="{% url wettkampf_delete_confirm wettkampf.von|date:"Y", wettkampf.name %}" method="POST">
-  <p>Den gesamten Wettkampf <b>{{ wettkampf.name }}
-    {{wettkampf.von|date:"Y"}}</b>, inklusive seinen Disziplinen und den
+<form action="{% url wettkampf_delete_confirm wettkampf.jahr, wettkampf.name %}" method="POST">
+  <p>Den gesamten Wettkampf <b>{{ wettkampf.name }}</b>
+  des Jahres <b>{{wettkampf.jahr}}</b>, inklusive seinen Disziplinen und den
   erfassten Noten löschen?</p>
   <input type="submit" value="Ja" />
 </form>

@@ -1,7 +1,7 @@
 {% extends "base_posten.html" %}
 
 {% block content %}
-<form action="" method="POST">
+<form id="myform" name="myform" action="" method="POST">
 {{ form.disziplin }}
 {{ form.reihenfolge }}
 <table class="list">
@@ -12,7 +12,7 @@
   </tr>
   {% for p in posten %}
   <tr class="{% cycle 'odd' 'even' as rowcolors %}">
-    <td><a href="{% url posten_get wettkampf.von|date:"Y", wettkampf.name, disziplin.name, p.name %}">{{ p.name}}</a>
+    <td><a href="{% url posten_get wettkampf.jahr, wettkampf.name, disziplin.name, p.name %}">{{ p.name}}</a>
     <td>{{ p.postenart }}</td>
     <td>{{ p.reihenfolge }}</td>
   </tr>
@@ -26,4 +26,10 @@
     <td><input type="submit" value="Posten hinzufügen"/></td>
   </tr>
 </table>
+</form>
+<script type="text/javascript">
+  var first_field = document.getElementById('id_name');
+  first_field.focus();
+  first_field.select();
+</script>
 {% endblock %}

@@ -4,26 +4,26 @@
 {% block content %}
 <table class="display">
   <tr>
-    <th>Disziplinart:</th>
-    <td>{{ disziplin.disziplinart }}</td>
-  </tr>
-  <tr>
     <th>Name:</th>
     <td>{{ disziplin.name }}</td>
   </tr>
   <tr>
+    <th>Disziplinart:</th>
+    <td>{{ disziplin.disziplinart }}</td>
+  </tr>
+  <tr>
     <th>Kategorien:</th>
     <td>
-      {% for k in disziplin.kategorien.all %}
-      {{ k }}{% if not forloop.last %},{% endif %}
+      {% for kategorie in disziplin.kategorien.all %}
+      {{ kategorie }}{% if not forloop.last %},{% endif %}
       {% endfor %}
     </td>
   </tr>
   <tr>
     <th>Posten:</th>
     <td>
-      {% for p in disziplin.posten_set.all %}
-      <a href="{% url posten_get wettkampf.von|date:"Y", wettkampf.name, disziplin.name, p.name %}">{{ p.name}}</a>
+      {% for posten in disziplin.posten_set.all %}
+      <a href="{% url posten_get wettkampf.jahr, wettkampf.name, disziplin.name, posten.name %}">{{ posten.name}}</a>
       {% if not forloop.last %},{% endif %}
       {% endfor %}
     </td>
@@ -32,8 +32,8 @@
     <td></td>
     <td>
       <br />
-      <a href="{% url disziplin_update wettkampf.von|date:"Y", wettkampf.name, disziplin.name %}">Ändern</a>
-      | <a href="{% url disziplin_delete_confirm wettkampf.von|date:"Y", wettkampf.name, disziplin.name %}">Löschen</a>
+      <a href="{% url disziplin_update wettkampf.jahr, wettkampf.name, disziplin.name %}">Ändern</a>
+      | <a href="{% url disziplin_delete_confirm wettkampf.jahr, wettkampf.name, disziplin.name %}">Löschen</a>
     </td>
   </tr>
 </table>

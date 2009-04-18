@@ -129,6 +129,9 @@ class Wettkampf(models.Model):
     def __unicode__(self):
         return u'%s' % (self.name,)
 
+    def jahr(self):
+        return self.von.year
+
 
 class Disziplin(models.Model):
     """
@@ -141,15 +144,16 @@ class Disziplin(models.Model):
     Disziplin plus Kategorien (falls vorhanden).
     """
     wettkampf = models.ForeignKey('Wettkampf')
+    name = models.SlugField(max_length=50)
     disziplinart = models.ForeignKey('Disziplinart', blank=False, default=1)
     kategorien = models.ManyToManyField('Kategorie', null=True, blank=True)
-    name = models.SlugField(max_length=50)
 
     def __unicode__(self):
         return u'%s' % (self.name,)
 
     class Meta:
-        unique_together = ['wettkampf', 'disziplinart', 'name']
+        unique_together = ['wettkampf', 'name']
+        ordering = ['name']
 
 
 class Posten(models.Model):

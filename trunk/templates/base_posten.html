@@ -2,7 +2,7 @@
 
 {% block breadcrumbs %}
 {{ block.super }}
-/ <a href="{% url posten_list wettkampf.von|date:"Y", wettkampf.name, disziplin.name %}">Postenliste</a>
+/ <a href="{% url posten_list wettkampf.jahr, wettkampf.name, disziplin.name %}">Postenliste</a>
 {% endblock %}
 
 {% block nav_posten %}selected{% endblock %}

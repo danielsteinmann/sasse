@@ -1,10 +1,10 @@
 {% extends "base.html" %}
-{% block title %}{{ wettkampf.name }} {{ wettkampf.von|date:"Y" }}{% endblock %}
+{% block title %}{{ wettkampf.name }} {{ wettkampf.jahr }}{% endblock %}
 
 {% block breadcrumbs %}
 <a href="{% url wettkaempfe_get %}">Home</a>
-/ <a href="{% url wettkaempfe_by_year wettkampf.von|date:"Y" %}">{{ wettkampf.von|date:"Y" }}</a>
-/ <a href="{% url wettkampf_get wettkampf.von|date:"Y", wettkampf.name %}">{{ wettkampf.name }}</a>
+/ <a href="{% url wettkaempfe_by_year wettkampf.jahr %}">{{ wettkampf.jahr }}</a>
+/ <a href="{% url wettkampf_get wettkampf.jahr, wettkampf.name %}">{{ wettkampf.name }}</a>
 {% endblock %}
 
 {% block content %}

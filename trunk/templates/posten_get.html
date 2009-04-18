@@ -18,8 +18,9 @@
     <td></td>
     <td>
       <br />
-      <a href="{% url posten_update wettkampf.von|date:"Y", wettkampf.name, disziplin.name, posten.name %}">Ändern</a>
-      | <a href="{% url posten_delete_confirm wettkampf.von|date:"Y", wettkampf.name, disziplin.name, posten.name %}">Löschen</a>
+      <a href="{% url posten_update wettkampf.jahr, wettkampf.name, disziplin.name, posten.name %}">Ändern</a>
+      | <a href="{% url posten_delete_confirm wettkampf.jahr, wettkampf.name, disziplin.name, posten.name %}">Löschen</a>
+      | <a href="{% url posten_list wettkampf.jahr, wettkampf.name, disziplin.name %}">Postenliste</a>
     </td>
   </tr>
 </table>

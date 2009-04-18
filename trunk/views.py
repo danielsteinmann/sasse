@@ -16,8 +16,9 @@ from models import Postenart
 
 def wettkaempfe_get(request):
     assert request.method == 'GET'
-    liste = Wettkampf.objects.all()
-    return render_to_response('wettkampf_list.html', {'liste': liste})
+    wettkaempfe = Wettkampf.objects.all()
+    return render_to_response('wettkampf_list.html',
+            {'wettkaempfe': wettkaempfe})
 
 def wettkaempfe_add(request):
     if request.method == 'POST':
@@ -39,9 +40,9 @@ def wettkaempfe_post(request):
 
 def wettkaempfe_by_year(request, jahr):
     assert request.method == 'GET'
-    liste = Wettkampf.objects.filter(von__year=jahr)
+    wettkaempfe = Wettkampf.objects.filter(von__year=jahr)
     return render_to_response('wettkampf_list.html',
-            {'liste': liste, 'year': jahr})
+            {'wettkaempfe': wettkaempfe, 'year': jahr})
 
 def wettkampf_get(request, jahr, wettkampf):
     assert request.method == 'GET'
@@ -108,7 +109,6 @@ def disziplinen_post(request, jahr, wettkampf):
 def disziplin_get(request, jahr, wettkampf, disziplin):
     assert request.method == 'GET'
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
-    # TODO: Auch noch Disziplinart in die Query nehmen
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
     return render_to_response('disziplin.html', {'wettkampf': w, 'disziplin': d})
 
@@ -289,7 +289,6 @@ class DisziplinForm(ModelForm):
              cleaned_data['name']= self._default_name()
         q = Disziplin.objects.filter(
                 wettkampf=cleaned_data['wettkampf'],
-                disziplinart=cleaned_data.get('disziplinart'),
                 name=cleaned_data.get('name'))
         # Remove current object from queryset
         q = q.exclude(id=self.instance.id)
@@ -297,14 +296,14 @@ class DisziplinForm(ModelForm):
             # Make sure newly created name is displayed
             self.data['name'] = cleaned_data['name']
             raise ValidationError(
-                    u"Für die Disziplinart '%s' ist der Name '%s' bereits vergeben"
-                        % (cleaned_data['disziplinart'], cleaned_data['name']))
+                    u"Für den Wettkampf '%s' ist der Name '%s' bereits vergeben"
+                        % (cleaned_data['wettkampf'], cleaned_data['name']))
         return cleaned_data
 
     def _default_name(self):
         disziplinart = self.cleaned_data['disziplinart']
         default_name = disziplinart.name
-        if disziplinart.pk == 1: # Einzelfahren
+        if disziplinart.id == 1: # Einzelfahren
             for k in self.cleaned_data['kategorien']:
                 default_name += '-%s' % (k.name,)
         return default_name
@@ -327,7 +326,7 @@ class PostenListForm(ModelForm):
         cleaned_data = self.cleaned_data
         name=cleaned_data.get('name')
         q = Posten.objects.filter(
-                disziplin=cleaned_data['disziplin'],
+                disziplin=cleaned_data.get('disziplin'),
                 name=cleaned_data.get('name'))
         # Remove current object from queryset
         q = q.exclude(id=self.instance.id)
@@ -337,28 +336,6 @@ class PostenListForm(ModelForm):
         return name
 
 
-class PostenEditForm(ModelForm):
-    disziplin = forms.ModelChoiceField(
-            queryset=Disziplin.objects.all(),
-            widget=forms.HiddenInput)
-    name = forms.RegexField(regex=name_re,
-            error_messages={'invalid': invalid_name_message},
-            widget=forms.TextInput(attrs={'size':'3'}))
+class PostenEditForm(PostenListForm):
     reihenfolge = forms.DecimalField(
             widget=forms.TextInput(attrs={'size':'2'}))
-
-    class Meta:
-        model = Posten
-
-    def clean_name(self):
-        cleaned_data = self.cleaned_data
-        name=cleaned_data.get('name')
-        q = Posten.objects.filter(
-                disziplin=cleaned_data['disziplin'],
-                name=cleaned_data.get('name'))
-        # Remove current object from queryset
-        q = q.exclude(id=self.instance.id)
-        if q.count() > 0:
-            raise ValidationError(
-                    u"Der Name '%s' ist bereits vergeben" % (name))
-        return name

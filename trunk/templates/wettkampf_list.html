@@ -8,18 +8,18 @@
 {% endblock %}
 
 {% block content %}
-{% if liste %}
+{% if wettkaempfe %}
 <table class="list">
   <tr>
     <th>Jahr</th>
     <th>Name</th>
     <th>Zusatzinfo</th>
   </tr>
-  {% for i in liste %}
+  {% for wettkampf in wettkaempfe %}
   <tr>
-    <td><a href="{% url wettkaempfe_by_year i.von|date:"Y" %}">{{ i.von|date:"Y"}}</a></td>
-    <td><a href="{% url wettkampf_get i.von|date:"Y", i.name %}">{{ i.name }}</a></td>
-    <td>{{ i.zusatz }}</td>
+    <td><a href="{% url wettkaempfe_by_year wettkampf.jahr %}">{{ wettkampf.jahr}}</a></td>
+    <td><a href="{% url wettkampf_get wettkampf.jahr, wettkampf.name %}">{{ wettkampf.name }}</a></td>
+    <td>{{ wettkampf.zusatz }}</td>
   </tr>
   {% endfor %}
 </table>

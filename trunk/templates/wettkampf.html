@@ -1,11 +1,4 @@
-{% extends "base.html" %}
-{% block title %}{{ wettkampf.name }} {{ wettkampf.von|date:"Y" }}{% endblock %}
-
-{% block breadcrumbs %}
-<a href="{% url wettkaempfe_get %}">Home</a>
-/ <a href="{% url wettkaempfe_by_year wettkampf.von|date:"Y" %}">{{ wettkampf.von|date:"Y" }}</a>
-/ <a href="{% url wettkampf_get wettkampf.von|date:"Y", wettkampf.name %}">{{ wettkampf.name }}</a>
-{% endblock %}
+{% extends "base_wettkampf.html" %}
 
 {% block content %}
 <table class="display">
@@ -29,8 +22,8 @@
     <th>Disziplinen:</th>
     <td>
       {% if disziplinen %}
-      {% for i in disziplinen %}
-      <a href="{% url disziplin_get wettkampf.von|date:"Y", wettkampf.name, i.name %}">{{ i.name }}</a><br/>
+      {% for disziplin in disziplinen %}
+      <a href="{% url disziplin_get wettkampf.jahr, wettkampf.name, disziplin.name %}">{{ disziplin.name }}</a><br/>
       {% endfor %}
       {% else %}
       Noch keine Disziplin erfasst.
@@ -41,9 +34,9 @@
     <td></td>
     <td>
       <br />
-      <a href="{% url wettkampf_update wettkampf.von|date:"Y", wettkampf.name %}">Ändern</a>
-      | <a href="{% url wettkampf_delete_confirm wettkampf.von|date:"Y", wettkampf.name %}">Löschen</a>
-      | <a href="{% url disziplinen_add wettkampf.von|date:"Y", wettkampf.name %}">Disziplin hinzufügen</a>
+      <a href="{% url wettkampf_update wettkampf.jahr, wettkampf.name %}">Ändern</a>
+      | <a href="{% url wettkampf_delete_confirm wettkampf.jahr, wettkampf.name %}">Löschen</a>
+      | <a href="{% url disziplinen_add wettkampf.jahr, wettkampf.name %}">Disziplin hinzufügen</a>
     </td>
   </tr>
 </table>
