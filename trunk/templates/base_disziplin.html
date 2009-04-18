@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ wettkampf.name }} {{ wettkampf.von|date:"Y" }}
+{% endblock %}
+
+{% block breadcrumbs %}
+<a href="{% url wettkaempfe_get %}">Home</a>
+/ <a href="{% url wettkaempfe_by_year wettkampf.von|date:"Y" %}">{{ wettkampf.von|date:"Y" }}</a>
+/ <a href="{% url wettkampf_get wettkampf.von|date:"Y", wettkampf.name %}">{{ wettkampf.name }}</a>
+/ <a href="{% url disziplin_get wettkampf.von|date:"Y", wettkampf.name, disziplin.name %}">{{ disziplin.name }}</a>
+{% endblock %}
+
+{% block nav %}
+<ul class="tabnav">
+<li class="{% block nav_disziplin %}{% endblock %}">
+  <a href="{% url disziplin_get wettkampf.von|date:"Y", wettkampf.name, disziplin.name %}">Disziplin</a>
+</li>
+<li class="{% block nav_posten %}{% endblock %}">
+<a href="{% url posten_list wettkampf.von|date:"Y", wettkampf.name, disziplin.name %}">Postenliste</a>
+</li>
+<li class="{% block nav_startliste %}{% endblock %}">
+<a href="#">Startliste</a>
+</li>
+<li class="{% block nav_bewertungen %}{% endblock %}">
+<a href="#">Bewertungen</a>
+</li>
+<li class="{% block nav_rangliste %}{% endblock %}">
+<a href="#">Rangliste</a>
+</li>
+</ul>
+{% endblock %}

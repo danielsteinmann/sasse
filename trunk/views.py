@@ -205,8 +205,8 @@ def posten_put(request, jahr, wettkampf, disziplin, posten):
     if form.is_valid():
         form.save()
         posten = form.cleaned_data['name']
-        return HttpResponseRedirect(reverse(posten_get,
-            args=[jahr, wettkampf, disziplin, posten]))
+        return HttpResponseRedirect(reverse(posten_list,
+            args=[jahr, wettkampf, disziplin]))
     form.fields["postenart"].queryset = Postenart.objects.filter(disziplinarten = d.disziplinart.id)
     return render_to_response('posten_update.html',
             {'form': form, 'wettkampf': w, 'disziplin': d, 'posten': p, })

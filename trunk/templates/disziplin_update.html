@@ -1,23 +1,7 @@
-{% extends "base.html" %}
-{% block title %}{{ wettkampf.name }} {{ wettkampf.von|date:"Y" }}{% endblock %}
-
-{% block breadcrumbs %}
-<a href="{% url wettkaempfe_get %}">Home</a>
-/ <a href="{% url wettkaempfe_by_year wettkampf.von|date:"Y" %}">{{ wettkampf.von|date:"Y" }}</a>
-/ <a href="{% url wettkampf_get wettkampf.von|date:"Y", wettkampf.name %}">{{ wettkampf.name }}</a>
-/ <a href="{% url disziplin_get wettkampf.von|date:"Y", wettkampf.name, disziplin.name %}">{{ disziplin.name }}</a>
-{% endblock %}
+{% extends "base_disziplin.html" %}
+{% block nav_disziplin %}selected{% endblock %}
 
 {% block content %}
-
-<ul class="tabnav">
-  <li class="selected"><a href="{% url disziplin_get wettkampf.von|date:"Y", wettkampf.name, disziplin.name %}">Disziplin</a></li>
-  <li><a href="{% url posten_list wettkampf.von|date:"Y", wettkampf.name, disziplin.name %}">Posten</a></li>
-  <li><a href="#">Startliste</a></li>
-  <li><a href="#">Bewertungen</a></li>
-  <li><a href="#">Rangliste</a></li>
-</ul>
-
 <form action="" method="POST">
   <table class="form">
     {{ form.as_table }}
