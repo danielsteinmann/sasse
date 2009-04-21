@@ -76,6 +76,9 @@ class Postenart(models.Model):
     einzelfahren = models.BooleanField(default=False)
     sektionsfahren = models.BooleanField(default=False)
 
+    class Meta:
+        ordering = ['name']
+
     def __unicode__(self):
         return u'%s' % (self.name,)
 

@@ -23,8 +23,7 @@
     <th>Posten:</th>
     <td>
       {% for posten in disziplin.posten_set.all %}
-      <a href="{% url posten_get wettkampf.jahr, wettkampf.name, disziplin.name, posten.name %}">{{ posten.name}}</a>
-      {% if not forloop.last %},{% endif %}
+      <a href="{% url posten_get wettkampf.jahr, wettkampf.name, disziplin.name, posten.name %}">{{ posten.name }}</a>{% if not forloop.last %},{% endif %}
       {% endfor %}
     </td>
   </tr>

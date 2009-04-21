@@ -233,7 +233,7 @@ def posten_delete(request, jahr, wettkampf, disziplin, posten):
 import re
 name_re = re.compile(r'^[-\w]+$', re.UNICODE)
 invalid_name_message = \
-"Bitte nur Buchstaben und Ziffern (inklusive Bindestrich) eingeben"
+u"Bitte nur Buchstaben und Ziffern (inklusive Bindestrich) eingeben"
 
 class WettkampfForm(ModelForm):
     name = forms.RegexField(regex=name_re,
@@ -257,14 +257,15 @@ class WettkampfForm(ModelForm):
 
         if von and bis:
             if bis < von:
-                raise ValidationError("Von muss älter als bis sein")
+                raise ValidationError(u"Von muss älter als bis sein")
 
         if von and name:
             q = Wettkampf.objects.filter(name=name, von__year=von.year)
-            # Remove current Wettkampf from queryset
+            # Wenn ein persistenter Wettkampf editiert wird, muss dieser hier
+            # rausgefiltert werden, damit die Validierungsmeldung stimmt.
             q = q.exclude(id=self.instance.id)
             if q.count() > 0:
-                raise ValidationError("Der Name '%s' ist im Jahr '%d' "
+                raise ValidationError(u"Der Name '%s' ist im Jahr '%d' "
                         "bereits vergeben" % (name, von.year))
 
         return cleaned_data
