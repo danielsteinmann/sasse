@@ -1,0 +1,270 @@
+[
+  {
+    "pk": 1, 
+    "model": "sasse.disziplinart", 
+    "fields": {
+      "name": "Einzelfahren"
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "sasse.disziplinart", 
+    "fields": {
+      "name": "Sektionsfahren"
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "sasse.disziplinart", 
+    "fields": {
+      "name": "Bootsf\u00e4hrenbau"
+    }
+  }, 
+  {
+    "pk": 4, 
+    "model": "sasse.disziplinart", 
+    "fields": {
+      "name": "Einzelschn\u00fcren"
+    }
+  }, 
+  {
+    "pk": 5, 
+    "model": "sasse.disziplinart", 
+    "fields": {
+      "name": "Gruppenschn\u00fcren"
+    }
+  }, 
+  {
+    "pk": 6, 
+    "model": "sasse.disziplinart", 
+    "fields": {
+      "name": "Schwimmen"
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [1], 
+      "name": "Allgemeines und Antreten (Einzelfahren)"
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [1, 2], 
+      "name": "Abfahrt bei einer Stange"
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [1, 2], 
+      "name": "Abfahrt unterhalb eines markierten Felsens"
+    }
+  }, 
+  {
+    "pk": 4, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [1, 2], 
+      "name": "Umfahren eines markierten Felsens"
+    }
+  }, 
+  {
+    "pk": 5, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [1, 2], 
+      "name": "Landung auf bestimmtes Ziel"
+    }
+  }, 
+  {
+    "pk": 6, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [1], 
+      "name": "Landung auf h\u00f6chstes Ziel (Einzelfahren)"
+    }
+  }, 
+  {
+    "pk": 7, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [1, 2], 
+      "name": "Einfahren in die Br\u00fcckenlinie"
+    }
+  }, 
+  {
+    "pk": 8, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [1, 2], 
+      "name": "Durchfahrt"
+    }
+  }, 
+  {
+    "pk": 9, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [1, 2, 3, 4, 5, 6], 
+      "name": "Zeitnote"
+    }
+  }, 
+  {
+    "pk": 10, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [2], 
+      "name": "Anmeldung (Sektionsfahren)"
+    }
+  }, 
+  {
+    "pk": 11, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [2], 
+      "name": "Gemeinsame Stachelfahrt"
+    }
+  }, 
+  {
+    "pk": 13, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [2], 
+      "name": "Landung auf h\u00f6chstes Ziel (Sektionsfahren)"
+    }
+  }, 
+  {
+    "pk": 18, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [2], 
+      "name": "Abfahrt und Ueberfahrt in Linie"
+    }
+  }, 
+  {
+    "pk": 19, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [2], 
+      "name": "Landung in Linie"
+    }
+  }, 
+  {
+    "pk": 20, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [2], 
+      "name": "Abmeldung"
+    }
+  }, 
+  {
+    "pk": 21, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [1], 
+      "name": "Stachelfahrt"
+    }
+  }, 
+  {
+    "pk": 50, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [3], 
+      "name": "Bootsf\u00e4hrenbau"
+    }
+  }, 
+  {
+    "pk": 51, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [6], 
+      "name": "Schwimmen"
+    }
+  }, 
+  {
+    "pk": 52, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [4], 
+      "name": "Einzelschn\u00fcren"
+    }
+  }, 
+  {
+    "pk": 53, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [5], 
+      "name": "Gruppenschn\u00fcren"
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "sasse.kategorie", 
+    "fields": {
+      "geschlecht": "g", 
+      "alter_von": 0, 
+      "disziplinart": 1, 
+      "alter_bis": 14, 
+      "name": "I"
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "sasse.kategorie", 
+    "fields": {
+      "geschlecht": "g", 
+      "alter_von": 15, 
+      "disziplinart": 1, 
+      "alter_bis": 17, 
+      "name": "II"
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "sasse.kategorie", 
+    "fields": {
+      "geschlecht": "g", 
+      "alter_von": 18, 
+      "disziplinart": 1, 
+      "alter_bis": 20, 
+      "name": "III"
+    }
+  }, 
+  {
+    "pk": 4, 
+    "model": "sasse.kategorie", 
+    "fields": {
+      "geschlecht": "g", 
+      "alter_von": 21, 
+      "disziplinart": 1, 
+      "alter_bis": 42, 
+      "name": "C"
+    }
+  }, 
+  {
+    "pk": 5, 
+    "model": "sasse.kategorie", 
+    "fields": {
+      "geschlecht": "g", 
+      "alter_von": 43, 
+      "disziplinart": 1, 
+      "alter_bis": 99, 
+      "name": "D"
+    }
+  }, 
+  {
+    "pk": 6, 
+    "model": "sasse.kategorie", 
+    "fields": {
+      "geschlecht": "f", 
+      "alter_von": 21, 
+      "disziplinart": 1, 
+      "alter_bis": 99, 
+      "name": "F"
+    }
+  }
+]
