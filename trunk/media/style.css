@@ -4,8 +4,7 @@ ul.errorlist {
     padding: 0;
 }
 ul.errorlist li {
-    background-color: Red;
-    color: white;
+    color: red;
     display: block;
     margin: 0 0 2px;
     padding: 2px 2px;
