@@ -12,12 +12,16 @@ SCHIFFS_ART = (
 class Sektion(models.Model):
     name = models.CharField(max_length=50)
 
+    def __unicode__(self):
+        return u'%s' % (self.name,)
+
 
 class Mitglied(models.Model):
     GESCHLECHT_ART = (
             ('f', 'Frau'),
             ('m', 'Mann'),
             )
+    nummer = models.CharField(max_length=5)
     name = models.CharField(max_length=50)
     vorname = models.CharField(max_length=50)
     geburtsdatum = models.DateField()
@@ -25,6 +29,9 @@ class Mitglied(models.Model):
     sektion = models.ForeignKey('Sektion')
     # Für Vater/Sohn respektive Parent/Child Rangliste
     parent = models.ForeignKey('Mitglied')
+
+    def __unicode__(self):
+        return u'%s %s %s' % (self.name, self.vorname, self.sektion)
 
 
 # Stammdaten/Konfigurationsdaten
@@ -73,8 +80,6 @@ POSTEN_ART = (
 class Postenart(models.Model):
     name = models.CharField(max_length=50)
     disziplinarten = models.ManyToManyField('Disziplinart')
-    einzelfahren = models.BooleanField(default=False)
-    sektionsfahren = models.BooleanField(default=False)
 
     class Meta:
         ordering = ['name']
