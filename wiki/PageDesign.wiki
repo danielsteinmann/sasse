@@ -291,7 +291,7 @@ Rangliste Kategorie C
 
 Rang  Startnr  Fahrerpaar         Sektion        Zeit  Punkte
 ----  -------  -----------------  ----------  -------  ------
-   1       43  Foo/Bar            Muster      3:33:12   132.5  (Total ist Link auf Notenblatt)
+   1       43  Foo/Bar            Muster      3:33:12   132.5  (Punkte ist Link auf Notenblatt)
    2      234  Foo/Bar            Muster      3:33:12   132.5
    3      124  Foo/Bar            Muster      3:33:12   132.5
    4        6  Foo/Bar            Muster      3:33:12   132.5
