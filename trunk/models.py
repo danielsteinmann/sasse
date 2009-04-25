@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import datetime
 from django.db import models
 
 SCHIFFS_ART = (
@@ -32,6 +33,12 @@ class Mitglied(models.Model):
 
     def __unicode__(self):
         return u'%s %s %s' % (self.name, self.vorname, self.sektion)
+
+    def kategorie(self):
+        # TODO Needs testing
+        current_year = datetime.date.today().year
+        alter = current_year - self.geburtsdatum.year
+        return Kategorie.objects.get(alter_von__lte=alter, alter_bis__gte=alter)
 
 
 # Stammdaten/Konfigurationsdaten
@@ -270,4 +277,4 @@ class Kranzlimite(models.Model):
     """
     disziplin = models.ForeignKey('Disziplin')
     kategorie = models.ForeignKey('Kategorie')
-    wert = models.DecimalField(max_digits=2, decimal_places=0)
+    wert = models.DecimalField(max_digits=4, decimal_places=2)

@@ -1,0 +1,53 @@
+{% extends "base_startliste.html" %}
+
+{% block content %}
+<form id="searchform" name="searchform" action="" method="GET">
+<p>
+{% if searchform.non_field_errors %}
+{{ searchform.non_field_errors }}
+{% endif %}
+{{ searchform.errors }}
+Sektion {{ searchform.sektion }} oder
+Startnummern {{ searchform.startnummern }} (z.B. '1-15')
+<input type="submit" value="filtern"/>
+</p>
+</form>
+<form id="myform" name="myform" action="" method="POST">
+<table class="list">
+  <tr>
+    <th>Startnr</th>
+    <th colspan="2">Steuermann</th>
+    <th colspan="2">Vorderfahrer</th>
+    <th>Sektion</th>
+    <th>Kategorie</th>
+  </tr>
+  {% for teilnehmer in startliste %}
+  <tr class="{% cycle 'odd' 'even' as rowcolors %}">
+    <td>{{ teilnehmer.startnummer }}</td>
+    <td>{{ teilnehmer.steuermann.name }} {{ teilnehmer.steuermann.vorname }}</td>
+    <td>{{ teilnehmer.steuermann.geburtsdatum.year }}, {{ teilnehmer.steuermann.kategorie }}</td>
+    <td>{{ teilnehmer.vorderfahrer.name }} {{ teilnehmer.vorderfahrer.vorname }}</td>
+    <td>{{ teilnehmer.vorderfahrer.geburtsdatum.year }}, {{ teilnehmer.vorderfahrer.kategorie }}</td>
+    <td>{{ teilnehmer.sektion }}</td>
+    <td>{{ teilnehmer.kategorie }}</td>
+  </tr>
+  {% endfor %}
+  <tr>
+    <td>{{ form.startnummer }}{{ form.startnummer.errors }}</td>
+    <td colspan="2">{{ form.steuermann }}{{ form.steuermann.errors }}</td>
+    <td colspan="2">{{ form.vorderfahrer }}{{ form.vorderfahrer.errors }}</td>
+    <td colspan="2"><input type="submit" value="Teilnehmer hinzufügen"/></td>
+  </tr>
+  {% if form.non_field_errors %}
+  <tr><td colspan="7">{{ form.non_field_errors }}</td></tr>
+  {% endif %}
+</table>
+<p>
+<a href="#Noch-nicht-implementiert">Mitglied erfassen</a>
+<script type="text/javascript">
+  var first_field = document.getElementById('id_steuermann');
+  first_field.focus();
+  first_field.select();
+</script>
+</form>
+{% endblock %}
