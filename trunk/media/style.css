@@ -23,7 +23,6 @@ table.list th {
 table.list td {
     padding: 2px 4px 2px 4px;
     border: thin solid DarkGrey;
-    vertical-align: top;
 }
 /* Data as entry form */
 table.form {

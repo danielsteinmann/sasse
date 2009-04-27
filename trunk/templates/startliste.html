@@ -2,52 +2,50 @@
 
 {% block content %}
 <form id="searchform" name="searchform" action="" method="GET">
-<p>
 {% if searchform.non_field_errors %}
 {{ searchform.non_field_errors }}
 {% endif %}
-{{ searchform.errors }}
+{{ searchform.startnummern.errors }}
 Sektion {{ searchform.sektion }} oder
-Startnummern {{ searchform.startnummern }} (z.B. '1-15')
-<input type="submit" value="filtern"/>
-</p>
+Startnummern {{ searchform.startnummern }} <small>(z.B. '1,4-15' oder '800-')</small>
+<input type="submit" value="Startliste filtern"/>
 </form>
+{% if not searchform.errors %}
 <form id="myform" name="myform" action="" method="POST">
 <table class="list">
   <tr>
     <th>Startnr</th>
-    <th colspan="2">Steuermann</th>
-    <th colspan="2">Vorderfahrer</th>
+    <th>Steuermann</th>
+    <th>Vorderfahrer</th>
     <th>Sektion</th>
     <th>Kategorie</th>
   </tr>
   {% for teilnehmer in startliste %}
   <tr class="{% cycle 'odd' 'even' as rowcolors %}">
-    <td>{{ teilnehmer.startnummer }}</td>
-    <td>{{ teilnehmer.steuermann.name }} {{ teilnehmer.steuermann.vorname }}</td>
-    <td>{{ teilnehmer.steuermann.geburtsdatum.year }}, {{ teilnehmer.steuermann.kategorie }}</td>
-    <td>{{ teilnehmer.vorderfahrer.name }} {{ teilnehmer.vorderfahrer.vorname }}</td>
-    <td>{{ teilnehmer.vorderfahrer.geburtsdatum.year }}, {{ teilnehmer.vorderfahrer.kategorie }}</td>
+    <td><a href="{% url teilnehmer_get wettkampf.jahr, wettkampf.name, disziplin.name, teilnehmer.startnummer %}">{{ teilnehmer.startnummer }}</a>
+    <td><a href="/mitglied/{{ teilnehmer.steuermann.nummer }}#Not-Yet-Implemented" title="Sektion {{ teilnehmer.steuermann.sektion }}, Jahrgang {{ teilnehmer.steuermann.geburtsdatum.year }}, Kategorie {{ teilnehmer.steuermann.kategorie }}">{{ teilnehmer.steuermann.name }}&nbsp;{{ teilnehmer.steuermann.vorname }}</a></td>
+    <td><a href="/mitglied/{{ teilnehmer.vorderfahrer.nummer }}#Not-Yet-Implemented" title="Sektion {{ teilnehmer.vorderfahrer.sektion }}, Jahrgang {{ teilnehmer.vorderfahrer.geburtsdatum.year }}, Kategorie {{ teilnehmer.vorderfahrer.kategorie }}">{{ teilnehmer.vorderfahrer.name }}&nbsp;{{ teilnehmer.vorderfahrer.vorname }}</a></td>
     <td>{{ teilnehmer.sektion }}</td>
     <td>{{ teilnehmer.kategorie }}</td>
   </tr>
   {% endfor %}
+  {% if form.non_field_errors %}
+  <tr><td colspan="5">{{ form.non_field_errors }}</td></tr>
+  {% endif %}
   <tr>
-    <td>{{ form.startnummer }}{{ form.startnummer.errors }}</td>
-    <td colspan="2">{{ form.steuermann }}{{ form.steuermann.errors }}</td>
-    <td colspan="2">{{ form.vorderfahrer }}{{ form.vorderfahrer.errors }}</td>
+    <td>{{ form.startnummer.errors }}{{ form.startnummer }}</td>
+    <td>{{ form.steuermann.errors }}{{ form.steuermann }}</td>
+    <td>{{ form.vorderfahrer.errors }}{{ form.vorderfahrer }}</td>
     <td colspan="2"><input type="submit" value="Teilnehmer hinzufügen"/></td>
   </tr>
-  {% if form.non_field_errors %}
-  <tr><td colspan="7">{{ form.non_field_errors }}</td></tr>
-  {% endif %}
 </table>
 <p>
 <a href="#Noch-nicht-implementiert">Mitglied erfassen</a>
 <script type="text/javascript">
-  var first_field = document.getElementById('id_steuermann');
+  var first_field = document.getElementById('id_startnummer');
   first_field.focus();
   first_field.select();
 </script>
 </form>
+{% endif %}
 {% endblock %}

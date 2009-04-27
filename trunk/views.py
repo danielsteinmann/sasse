@@ -236,35 +236,50 @@ def posten_delete(request, jahr, wettkampf, disziplin, posten):
     return HttpResponseRedirect(reverse(posten_list,
         args=[jahr, wettkampf, disziplin]))
 
+# TODO Nur für Einzelfahren gültig
 def startliste(request, jahr, wettkampf, disziplin):
     if request.method == 'POST':
         return startliste_post(request, jahr, wettkampf, disziplin)
     assert request.method == 'GET'
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
-    s = Schiffeinzel.objects.filter(disziplin=d)
-    searchform = StartListSearchForm(request.GET)
+    searchform = StartlisteFilterForm(request.GET)
     searchform.disziplin = d
     if searchform.is_valid():
         sektion = searchform.cleaned_data.get('sektion')
         startnummern = searchform.cleaned_data.get('startnummern_list')
+        s = Schiffeinzel.objects.filter(disziplin=d)
         if startnummern is not None:
             s = s.filter(startnummer__in=startnummern)
         if sektion is not None:
             s = s.filter(sektion=sektion)
-    form = StartListForm(initial={
-        'startnummer': d.teilnehmer_set.count() + 1,
+        # Neue Startnummer ist die zuletzt dargestellte Nummer plus 1
+        anzahl_total = d.teilnehmer_set.count()
+        if anzahl_total == 0:
+            naechste_nummer = 1
+        else:
+            anzahl_sichtbar = s.count()
+            if anzahl_sichtbar == 0:
+                naechste_nummer = None
+            else:
+                letzter_sichtbar = s[anzahl_sichtbar - 1]
+                naechste_nummer = letzter_sichtbar.startnummer + 1
+        form = StartlisteEntryForm(initial={'startnummer': naechste_nummer})
+    else:
+        s = []
+        form = None
+    return render_to_response('startliste.html', {
+        'wettkampf': w, 'disziplin': d, 'searchform': searchform,
+        'startliste': s, 'form': form,
         })
-    return render_to_response('startliste.html',
-            {'wettkampf': w, 'disziplin': d, 'startliste': s, 'form': form,
-                'searchform': searchform})
 
 def startliste_post(request, jahr, wettkampf, disziplin):
     assert request.method == 'POST'
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
     s = Schiffeinzel.objects.filter(disziplin=d)
-    form = StartListForm(request.POST)
+    form = StartlisteEntryForm(request.POST)
+    form.disziplin = d
     if form.is_valid():
         schiff = Schiffeinzel.objects.create(
                 disziplin=d,
@@ -276,13 +291,12 @@ def startliste_post(request, jahr, wettkampf, disziplin):
                 )
         schiff.save()
         url = reverse(startliste, args=[jahr, wettkampf, disziplin])
-        sektion_filter = request.GET.get('sektion')
-        if sektion_filter:
-            # 'startnummern' Filter nicht berücksichtigen, weil sonst die neu
-            # erfasste Zeile nicht erscheinen würde
-            url = "%s?sektion=%s" % (url, sektion_filter)
+        query = request.META.get('QUERY_STRING')
+        if query:
+            url = "%s?%s" % (url, query)
         return HttpResponseRedirect(url)
-    searchform = StartListSearchForm(request.GET)
+    searchform = StartlisteFilterForm(request.GET)
+    searchform.disziplin = d
     if searchform.is_valid():
         sektion = searchform.cleaned_data.get('sektion')
         startnummern = searchform.cleaned_data.get('startnummern_list')
@@ -293,6 +307,48 @@ def startliste_post(request, jahr, wettkampf, disziplin):
     return render_to_response('startliste.html',
             {'wettkampf': w, 'disziplin': d, 'startliste': s, 'form': form,
                 'searchform': searchform})
+
+def teilnehmer_get(request, jahr, wettkampf, disziplin, startnummer):
+    assert request.method == 'GET'
+    w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
+    d = Disziplin.objects.get(wettkampf=w, name=disziplin)
+    t = Schiffeinzel.objects.get(disziplin=d, startnummer=startnummer)
+    return render_to_response('schiffeinzel.html',
+            {'wettkampf': w, 'disziplin': d, 'teilnehmer': t})
+
+def teilnehmer_update(request, jahr, wettkampf, disziplin, startnummer):
+    if request.method == 'POST':
+        return teilnehmer_put(request, jahr, wettkampf, disziplin, startnummer)
+    assert request.method == 'GET'
+    w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
+    d = Disziplin.objects.get(wettkampf=w, name=disziplin)
+    t = Schiffeinzel.objects.get(disziplin=d, startnummer=startnummer)
+    form = SchiffeinzelEditForm(instance=t)
+    return render_to_response('schiffeinzel_update.html',
+            {'wettkampf': w, 'disziplin': d, 'form': form, 'teilnehmer': t})
+
+def teilnehmer_put(request, jahr, wettkampf, disziplin, startnummer):
+    assert request.method == 'POST'
+    # TODO
+
+def teilnehmer_delete_confirm(request, jahr, wettkampf, disziplin, startnummer):
+    if request.method == 'POST':
+        return teilnehmer_delete(request, jahr, wettkampf, disziplin, startnummer)
+    assert request.method == 'GET'
+    w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
+    d = Disziplin.objects.get(wettkampf=w, name=disziplin)
+    t = Schiffeinzel.objects.get(disziplin=d, startnummer=startnummer)
+    return render_to_response('schiffeinzel_delete.html',
+            {'wettkampf': w, 'disziplin': d, 'teilnehmer': t})
+
+def teilnehmer_delete(request, jahr, wettkampf, disziplin, startnummer):
+    assert request.method == 'POST'
+    w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
+    d = Disziplin.objects.get(wettkampf=w, name=disziplin)
+    t = Schiffeinzel.objects.get(disziplin=d, startnummer=startnummer)
+    t.delete()
+    url = reverse(startliste, args=[jahr, wettkampf, disziplin])
+    return HttpResponseRedirect(url)
 
 import re
 name_re = re.compile(r'^[-\w]+$', re.UNICODE)
@@ -406,11 +462,8 @@ class PostenEditForm(PostenListForm):
             widget=forms.TextInput(attrs={'size':'2'}))
 
 
-class StartListSearchForm(Form):
-    disziplin = forms.ModelChoiceField(
-            queryset=Disziplin.objects.all(),
-            required=False,
-            widget=forms.HiddenInput)
+class StartlisteFilterForm(Form):
+    disziplin = None
     sektion = forms.ModelChoiceField(
             required=False,
             queryset=Sektion.objects.all(),
@@ -425,6 +478,34 @@ class StartListSearchForm(Form):
                 },
             )
 
+    # TODO Nur den Startnummern String parsen, kein Database Lookup:
+    #
+    #   input = '1,3,5,1-20,30-50,-100,500-'
+    #   [
+    #      ('in', [1,3,5]),
+    #      ('range', [1,20]),
+    #      ('range', [30,50]),
+    #      ('gte', 100),
+    #      ('lte', 500),
+    #   ]
+    #
+    # Mehrfache Eingabe von 'lte' und 'gte' ergeben ValidationError. 
+    #  (Beispiel: '50-,80-' => ValidationError, nur ein gte erlaubt)
+    #  (Beispiel: '-50-,-80' => ValidationError, nur ein lte erlaubt)
+    #  (Beispiel: '50-,-80' => ValidationError, nur lte oder gte erlaubt. Range verwenden)
+    #
+    # Mehrfache Eingabe von einzelnen Startnummer erzeugen ein einziges 'in'
+    #  (Beispiel: '1,2,5-10,12' => [('in', [1,2,5,12]), ('range', [5,10])])
+    #
+    # Ein Bereich kann mehrfach vorkommen
+    #  (Beispiel: '5-10,13-15' => [('range', [5,10]), ('range', [13,15])])
+    #
+    # Example of dynamic or query with Q object:
+    #   q = Q( tag__name=first_tag )
+    #   for tag in other_tags:
+    #       q = q | Q( tag__name=tag )
+    #   Model.objects.filter( q )
+    #
     def clean_startnummern(self):
         cleaned_data = self.cleaned_data
         startnummern = cleaned_data.get('startnummern')
@@ -469,12 +550,25 @@ class StartListSearchForm(Form):
         return startnummern
 
 
-class StartListForm(Form):
+class StartlisteEntryForm(Form):
+    disziplin = None
     startnummer = forms.DecimalField(
             widget=forms.TextInput(attrs={'size':'2'})
             )
     steuermann = forms.CharField()
     vorderfahrer = forms.CharField()
+
+    def clean_startnummer(self):
+        cleaned_data = self.cleaned_data
+        startnummer = cleaned_data.get('startnummer')
+        q = Teilnehmer.objects.filter(
+                disziplin=self.disziplin,
+                startnummer=startnummer,
+                )
+        if q.count() > 0:
+            raise ValidationError(
+                    u"Startnummer '%s' ist bereits vergeben" % (startnummer))
+        return startnummer
 
     def clean_vorderfahrer(self):
         return self.clean_mitglied('vorderfahrer', 'vorderfahrer_obj')
@@ -493,15 +587,15 @@ class StartListForm(Form):
             nummer = int(query)
             q = Mitglied.objects.filter(nummer__contains=query)
         except ValueError:
-            namen = query.split()
-            if len(namen) == 1:
-                q = Mitglied.objects.filter(name__icontains=namen[0])
-            elif len(namen) == 2:
+            items = query.split()
+            if len(items) == 1:
+                q = Mitglied.objects.filter(name__icontains=items[0])
+            elif len(items) == 2:
                 q = Mitglied.objects.filter(
-                        name__icontains=namen[0],
-                        vorname__icontains=namen[1])
+                        name__icontains=items[0],
+                        vorname__icontains=items[1])
         if q.count() == 0:
-            text = u"Mitglied '%s' nicht gefunden. Bitte 'Name', 'Name Vorname' oder 'Mitgliedernummer' eingeben" % (query,)
+            text = u"Mitglied '%s' nicht gefunden. Bitte 'Name' oder 'Mitgliedernummer' eingeben" % (query,)
             raise ValidationError(text)
         elif q.count() > 1:
             text = u"Mitglied '%s' ist nicht eindeutig (%d mal gefunden)" % (query, q.count())
@@ -516,12 +610,26 @@ class StartListForm(Form):
             if steuermann.sektion != vorderfahrer.sektion:
                 text = u"Steuermann und Vorderfahrer sind nicht in der gleichen Sektion"
                 raise ValidationError(text)
+            if steuermann == vorderfahrer:
+                text = u"Gleicher Steuermann und Vorderfahrer nicht erlaubt"
+                raise ValidationError(text)
             cleaned_data['sektion_obj'] = steuermann.sektion
-            if steuermann.kategorie() != vorderfahrer.kategorie():
-                # TODO: Korrekte Startkategorie automatisch ermittelt
-                pass
+            # TODO: Korrekte Startkategorie automatisch ermittelt
+            cleaned_data['kategorie_obj'] = steuermann.kategorie()
+            #if steuermann.kategorie() != vorderfahrer.kategorie():
                 #raise ValidationError(
                 #        u"Steuermann und Vorderfahrer sind nicht in der \
                 #                gleichen Kategorie")
-            cleaned_data['kategorie_obj'] = steuermann.kategorie()
         return cleaned_data
+
+
+# TODO Ueberlegen, wie 'Vorderfahrer' und 'Steuermann' dargestellt werden
+# Wahrscheinlich das gleiche Eingabefeld wie bei der Startliste verwenden
+class SchiffeinzelEditForm(ModelForm):
+    disziplin = forms.ModelChoiceField(
+            queryset=Disziplin.objects.all(),
+            widget=forms.HiddenInput)
+
+    class Meta:
+        model = Schiffeinzel
+

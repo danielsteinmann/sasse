@@ -1,0 +1,9 @@
+{% extends "base_startliste.html" %}
+
+{% block breadcrumbs %}
+{{ block.super }}
+/ <a href="{% url teilnehmer_get wettkampf.jahr, wettkampf.name, disziplin.name, teilnehmer.startnummer %}">{{ teilnehmer.startnummer }}</a>
+{% endblock %}
+
+{% block nav_startliste %}selected{% endblock %}
+

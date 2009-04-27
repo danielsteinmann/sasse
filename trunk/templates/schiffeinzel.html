@@ -1,0 +1,42 @@
+{% extends "base_teilnehmer.html" %}
+
+{% block content %}
+<table class="display">
+  <tr>
+    <th>Startnummer:</th>
+    <td>{{ teilnehmer.startnummer }}</td>
+  </tr>
+  <tr>
+    <th>Steuermann:</th>
+    <td>{{ teilnehmer.steuermann }}</td>
+  </tr>
+  <tr>
+    <th>Vorderfahrer:</th>
+    <td>{{ teilnehmer.vorderfahrer }}</td>
+  </tr>
+  <tr>
+    <th>Sektion:</th>
+    <td>{{ teilnehmer.sektion }}</td>
+  </tr>
+  <tr>
+    <th>Kategorie:</th>
+    <td>{{ teilnehmer.kategorie }}</td>
+  </tr>
+  <tr>
+    <th>Disqualifiziert:</th>
+    <td>{{ teilnehmer.disqualifiziert }}</td>
+  </tr>
+  <tr>
+    <th>Ausgeschieden:</th>
+    <td>{{ teilnehmer.ausgeschieden }}</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>
+      <br />
+      <a href="{% url teilnehmer_update wettkampf.jahr, wettkampf.name, disziplin.name, teilnehmer.startnummer %}">Ändern</a>
+      | <a href="{% url teilnehmer_delete_confirm wettkampf.jahr, wettkampf.name, disziplin.name, teilnehmer.startnummer %}">Löschen</a>
+    </td>
+  </tr>
+</table>
+{% endblock %}

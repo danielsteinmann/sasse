@@ -32,7 +32,9 @@ class Mitglied(models.Model):
     parent = models.ForeignKey('Mitglied')
 
     def __unicode__(self):
-        return u'%s %s %s' % (self.name, self.vorname, self.sektion)
+        return u'%s %s, %s, Nummer %s, Jahrgang %d, Kategorie %s' % (
+            self.name, self.vorname, self.sektion, self.nummer,
+            self.geburtsdatum.year, self.kategorie())
 
     def kategorie(self):
         # TODO Needs testing
@@ -204,6 +206,7 @@ class Teilnehmer(models.Model):
 
     class Meta:
         unique_together = ['disziplin', 'startnummer']
+        ordering = ['startnummer']
 
 
 class Person(Teilnehmer):
