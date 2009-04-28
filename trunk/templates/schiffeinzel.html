@@ -8,11 +8,11 @@
   </tr>
   <tr>
     <th>Steuermann:</th>
-    <td>{{ teilnehmer.steuermann }}</td>
+    <td>{{teilnehmer.steuermann.nummer }}, <a href="/mitglied/{{ teilnehmer.steuermann.nummer }}#Not-Yet-Implemented" title="Sektion {{ teilnehmer.steuermann.sektion }}, Jahrgang {{ teilnehmer.steuermann.geburtsdatum.year }}, Kategorie {{ teilnehmer.steuermann.kategorie }}">{{ teilnehmer.steuermann.name }}&nbsp;{{ teilnehmer.steuermann.vorname }}</a>, {{ teilnehmer.steuermann.sektion }}, {{ teilnehmer.steuermann.geburtsdatum.year }}, Kat {{ teilnehmer.steuermann.kategorie }}</td>
   </tr>
   <tr>
     <th>Vorderfahrer:</th>
-    <td>{{ teilnehmer.vorderfahrer }}</td>
+    <td>{{teilnehmer.vorderfahrer.nummer }}, <a href="/mitglied/{{ teilnehmer.vorderfahrer.nummer }}#Not-Yet-Implemented" title="Sektion {{ teilnehmer.vorderfahrer.sektion }}, Jahrgang {{ teilnehmer.vorderfahrer.geburtsdatum.year }}, Kategorie {{ teilnehmer.vorderfahrer.kategorie }}">{{ teilnehmer.vorderfahrer.name }}&nbsp;{{ teilnehmer.vorderfahrer.vorname }}</a>, {{ teilnehmer.vorderfahrer.sektion }}, {{ teilnehmer.vorderfahrer.geburtsdatum.year }}, Kat {{ teilnehmer.vorderfahrer.kategorie }}</td>
   </tr>
   <tr>
     <th>Sektion:</th>

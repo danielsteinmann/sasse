@@ -9,8 +9,8 @@
     {% for field in form %}
     <tr>
       <th>{{ field.label_tag }}:</th>
-      <td>{{ field.errors }} {{ field }}<br />
-        <font size="-1"> {{ field.help_text }}</font></td>
+      <td>{{ field.errors }} {{ field }}<br>
+        <small> {{ field.help_text }}</small></td>
     </tr>
     {% endfor %}
     <tr>

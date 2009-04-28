@@ -8,6 +8,11 @@ SCHIFFS_ART = (
         ('w', 'Weidling'),
         )
 
+GESCHLECHT_ART = (
+        ('f', 'Frau'),
+        ('m', 'Mann'),
+        )
+
 # Stammdaten (importiert)
 
 class Sektion(models.Model):
@@ -18,29 +23,34 @@ class Sektion(models.Model):
 
 
 class Mitglied(models.Model):
-    GESCHLECHT_ART = (
-            ('f', 'Frau'),
-            ('m', 'Mann'),
-            )
     nummer = models.CharField(max_length=5)
     name = models.CharField(max_length=50)
     vorname = models.CharField(max_length=50)
     geburtsdatum = models.DateField()
     geschlecht = models.CharField(max_length=1, choices=GESCHLECHT_ART)
     sektion = models.ForeignKey('Sektion')
-    # Für Vater/Sohn respektive Parent/Child Rangliste
-    parent = models.ForeignKey('Mitglied')
+    # Für Vater/Sohn Rangliste
+    parent = models.ForeignKey('Mitglied', null=True)
 
     def __unicode__(self):
-        return u'%s %s, %s, Nummer %s, Jahrgang %d, Kategorie %s' % (
+        return u'%s %s, %s, Nummer %s, Jahrgang %d' % (
             self.name, self.vorname, self.sektion, self.nummer,
-            self.geburtsdatum.year, self.kategorie())
+            self.geburtsdatum.year)
 
+    # TODO Kategorie mit Jahr des Wettkampfes ermitteln, damit
+    # diese auch noch stimmt, wenn die Applikation in einem anderen
+    # Jahr dargestellt wird. Eventuell statische Methode der 'Kategorie'
+    # machen: Kategorie(basisjahr, geburtsjahr, geschlecht, disziplin)
     def kategorie(self):
-        # TODO Needs testing
+        # TODO Tests fehlen
         current_year = datetime.date.today().year
         alter = current_year - self.geburtsdatum.year
-        return Kategorie.objects.get(alter_von__lte=alter, alter_bis__gte=alter)
+        # TODO Hack mit Kategorie Frauen (hohes Alter) entfernen
+        if self.geschlecht == 'f' and alter >= 20:
+            return Kategorie.objects.get(name='F')
+        else:
+            return Kategorie.objects.get(
+                    alter_von__lte=alter, alter_bis__gte=alter)
 
 
 # Stammdaten/Konfigurationsdaten
@@ -115,17 +125,11 @@ class Bewertungsart(models.Model):
 
 
 class Kategorie(models.Model):
-    GESCHLECHT_ART = (
-            ('g', 'Gemischt'),
-            ('f', 'Frauen'),
-            ('m', 'Männer'),
-            )
     disziplinart = models.ForeignKey('Disziplinart')
     name = models.CharField(max_length=10)
     alter_von = models.PositiveSmallIntegerField()
     alter_bis = models.PositiveSmallIntegerField()
-    geschlecht = models.CharField(max_length=1, choices=GESCHLECHT_ART,
-                                  default='g')
+    geschlecht = models.CharField(max_length=1, choices=GESCHLECHT_ART)
 
     def __unicode__(self):
         return u'%s' % (self.name,)

@@ -6,10 +6,13 @@
 {{ searchform.non_field_errors }}
 {% endif %}
 {{ searchform.startnummern.errors }}
-Sektion {{ searchform.sektion }} oder
-Startnummern {{ searchform.startnummern }} <small>(z.B. '1,4-15' oder '800-')</small>
-<input type="submit" value="Startliste filtern"/>
+Nach Sektion {{ searchform.sektion }} oder
+Startnummern {{ searchform.startnummern }}
+<input type="submit" value="filtern">
+| <a href="#" title="Startnummern '1,4-15' zeigt Startnummern 1,4,5,...,15.
+'800-' zeigt Startnummern ab 800">Filter Tipps</a>
 </form>
+
 {% if not searchform.errors %}
 <form id="myform" name="myform" action="" method="POST">
 <table class="list">
@@ -30,13 +33,20 @@ Startnummern {{ searchform.startnummern }} <small>(z.B. '1,4-15' oder '800-')</s
   </tr>
   {% endfor %}
   {% if form.non_field_errors %}
-  <tr><td colspan="5">{{ form.non_field_errors }}</td></tr>
+  <tr>
+    <td colspan="5">{{ form.non_field_errors }}</td>
+    <!--
+    <td><input type="checkbox" value="id_einverstanden"/> einverstanden</td>
+    -->
+  </tr>
   {% endif %}
   <tr>
     <td>{{ form.startnummer.errors }}{{ form.startnummer }}</td>
     <td>{{ form.steuermann.errors }}{{ form.steuermann }}</td>
     <td>{{ form.vorderfahrer.errors }}{{ form.vorderfahrer }}</td>
-    <td colspan="2"><input type="submit" value="Teilnehmer hinzufügen"/></td>
+    <td></td>
+    <td></td>
+    <td><input type="submit" value="Teilnehmer hinzufügen"/></td>
   </tr>
 </table>
 <p>

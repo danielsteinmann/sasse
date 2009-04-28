@@ -499,7 +499,7 @@
     "pk": 1, 
     "model": "sasse.kategorie", 
     "fields": {
-      "geschlecht": "g", 
+      "geschlecht": "m", 
       "alter_von": 0, 
       "disziplinart": 1, 
       "alter_bis": 14, 
@@ -510,7 +510,7 @@
     "pk": 2, 
     "model": "sasse.kategorie", 
     "fields": {
-      "geschlecht": "g", 
+      "geschlecht": "m", 
       "alter_von": 15, 
       "disziplinart": 1, 
       "alter_bis": 17, 
@@ -521,7 +521,7 @@
     "pk": 3, 
     "model": "sasse.kategorie", 
     "fields": {
-      "geschlecht": "g", 
+      "geschlecht": "m", 
       "alter_von": 18, 
       "disziplinart": 1, 
       "alter_bis": 20, 
@@ -532,7 +532,7 @@
     "pk": 4, 
     "model": "sasse.kategorie", 
     "fields": {
-      "geschlecht": "g", 
+      "geschlecht": "m", 
       "alter_von": 21, 
       "disziplinart": 1, 
       "alter_bis": 42, 
@@ -543,7 +543,7 @@
     "pk": 5, 
     "model": "sasse.kategorie", 
     "fields": {
-      "geschlecht": "g", 
+      "geschlecht": "m", 
       "alter_von": 43, 
       "disziplinart": 1, 
       "alter_bis": 99, 
@@ -555,9 +555,9 @@
     "model": "sasse.kategorie", 
     "fields": {
       "geschlecht": "f", 
-      "alter_von": 21, 
+      "alter_von": 105, 
       "disziplinart": 1, 
-      "alter_bis": 99, 
+      "alter_bis": 106, 
       "name": "F"
     }
   }

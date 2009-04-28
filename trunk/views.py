@@ -253,7 +253,7 @@ def startliste(request, jahr, wettkampf, disziplin):
             s = s.filter(startnummer__in=startnummern)
         if sektion is not None:
             s = s.filter(sektion=sektion)
-        # Neue Startnummer ist die zuletzt dargestellte Nummer plus 1
+        # Nächste Startnummer ist die zuletzt dargestellte Nummer plus 1
         anzahl_total = d.teilnehmer_set.count()
         if anzahl_total == 0:
             naechste_nummer = 1
@@ -323,7 +323,11 @@ def teilnehmer_update(request, jahr, wettkampf, disziplin, startnummer):
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
     t = Schiffeinzel.objects.get(disziplin=d, startnummer=startnummer)
-    form = SchiffeinzelEditForm(instance=t)
+    form = SchiffeinzelEditForm(initial={
+        'steuermann_search': t.steuermann.nummer,
+        'vorderfahrer_search': t.vorderfahrer.nummer,
+        },
+        instance=t)
     return render_to_response('schiffeinzel_update.html',
             {'wettkampf': w, 'disziplin': d, 'form': form, 'teilnehmer': t})
 
@@ -576,6 +580,9 @@ class StartlisteEntryForm(Form):
     def clean_steuermann(self):
         return self.clean_mitglied('steuermann', 'steuermann_obj')
 
+    # TODO Doppelstarter Info darstellen, falls gleicher Fahrer mit frühere Startnr existiert
+    # TODO Doppelstarter Warnung darstellen, falls gleicher Fahrer mit *späterer* Startnr existiert
+    #      => Eventuell Hilfstabelle führen, welche Startnummernblöcke definiert
     def clean_mitglied(self, attribute, attribute_obj):
         cleaned_data = self.cleaned_data
         query = cleaned_data.get(attribute)
@@ -608,18 +615,16 @@ class StartlisteEntryForm(Form):
         vorderfahrer = cleaned_data.get('vorderfahrer_obj')
         if steuermann and vorderfahrer:
             if steuermann.sektion != vorderfahrer.sektion:
-                text = u"Steuermann und Vorderfahrer sind nicht in der gleichen Sektion"
+                # TODO: Dies als Warnung darstellen, die der Benutzer quittieren muss
+                text = u"Steuermann fährt für '%s', Vorderfahrer für '%s'. Soll das Schiff für die Sektion des Steuermann fahren?" % (steuermann.sektion, vorderfahrer.sektion)
                 raise ValidationError(text)
             if steuermann == vorderfahrer:
-                text = u"Gleicher Steuermann und Vorderfahrer nicht erlaubt"
+                text = u"Steuermann kann nicht gleichzeitig Vorderfahrer sein"
                 raise ValidationError(text)
             cleaned_data['sektion_obj'] = steuermann.sektion
-            # TODO: Korrekte Startkategorie automatisch ermittelt
+            # TODO: Korrekte Startkategorie ermittelt und ValidationError darstellen,
+            # falls Kategorie nicht ermittelt werden kann
             cleaned_data['kategorie_obj'] = steuermann.kategorie()
-            #if steuermann.kategorie() != vorderfahrer.kategorie():
-                #raise ValidationError(
-                #        u"Steuermann und Vorderfahrer sind nicht in der \
-                #                gleichen Kategorie")
         return cleaned_data
 
 
@@ -629,6 +634,8 @@ class SchiffeinzelEditForm(ModelForm):
     disziplin = forms.ModelChoiceField(
             queryset=Disziplin.objects.all(),
             widget=forms.HiddenInput)
+    steuermann_search = forms.CharField()
+    vorderfahrer_search = forms.CharField()
 
     class Meta:
         model = Schiffeinzel
