@@ -2,7 +2,6 @@
 
 {% block content %}
 <form action="" method="POST">
-  {{ form.disziplin }}
   <table class="form">
     {% if form.non_field_errors %}
     <tr><td colspan="2">{{ form.non_field_errors }}</td></tr>
@@ -14,14 +13,14 @@
     <tr>
       <th>Steuermann:</th>
       <td>
-        {{ form.steuermann_search.errors }}{{ form.steuermann_search }}
+        {{ form.steuermann.errors }}{{ form.steuermann }}
         <a href="/mitglied/{{ teilnehmer.steuermann.nummer }}#Not-Yet-Implemented" title="Sektion {{ teilnehmer.steuermann.sektion }}, Jahrgang {{ teilnehmer.steuermann.geburtsdatum.year }}, Kategorie {{ teilnehmer.steuermann.kategorie }}">{{ teilnehmer.steuermann.name }}&nbsp;{{ teilnehmer.steuermann.vorname }}</a>
       </td>
     </tr>
     <tr>
       <th>Vorderfahrer:</th>
       <td>
-        {{ form.vorderfahrer_search.errors }}{{ form.vorderfahrer_search }}
+        {{ form.vorderfahrer.errors }}{{ form.vorderfahrer }}
         <a href="/mitglied/{{ teilnehmer.vorderfahrer.nummer }}#Not-Yet-Implemented" title="Sektion {{ teilnehmer.vorderfahrer.sektion }}, Jahrgang {{ teilnehmer.vorderfahrer.geburtsdatum.year }}, Kategorie {{ teilnehmer.vorderfahrer.kategorie }}">{{ teilnehmer.vorderfahrer.name }}&nbsp;{{ teilnehmer.vorderfahrer.vorname }}</a>
       </td>
     </tr>
