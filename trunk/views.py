@@ -264,7 +264,7 @@ def startliste(request, jahr, wettkampf, disziplin):
             else:
                 letzter_sichtbar = s[anzahl_sichtbar - 1]
                 naechste_nummer = letzter_sichtbar.startnummer + 1
-        form = StartlisteEntryForm(initial={'startnummer': naechste_nummer})
+        form = StartlisteEntryForm(d, initial={'startnummer': naechste_nummer})
     else:
         s = []
         form = None
@@ -278,18 +278,9 @@ def startliste_post(request, jahr, wettkampf, disziplin):
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
     s = Schiffeinzel.objects.filter(disziplin=d)
-    form = StartlisteEntryForm(request.POST)
-    form.disziplin = d
+    form = StartlisteEntryForm(d, request.POST.copy())
     if form.is_valid():
-        schiff = Schiffeinzel.objects.create(
-                disziplin=d,
-                startnummer=form.cleaned_data['startnummer'],
-                vorderfahrer=form.cleaned_data['vorderfahrer_obj'],
-                steuermann=form.cleaned_data['steuermann_obj'],
-                sektion=form.cleaned_data['sektion_obj'],
-                kategorie=form.cleaned_data['kategorie_obj'],
-                )
-        schiff.save()
+        form.save()
         url = reverse(startliste, args=[jahr, wettkampf, disziplin])
         query = request.META.get('QUERY_STRING')
         if query:
@@ -323,9 +314,9 @@ def teilnehmer_update(request, jahr, wettkampf, disziplin, startnummer):
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
     t = Schiffeinzel.objects.get(disziplin=d, startnummer=startnummer)
-    form = SchiffeinzelEditForm(initial={
-        'steuermann_search': t.steuermann.nummer,
-        'vorderfahrer_search': t.vorderfahrer.nummer,
+    form = SchiffeinzelEditForm(d, initial={
+        'steuermann': t.steuermann.nummer,
+        'vorderfahrer': t.vorderfahrer.nummer,
         },
         instance=t)
     return render_to_response('schiffeinzel_update.html',
@@ -333,7 +324,17 @@ def teilnehmer_update(request, jahr, wettkampf, disziplin, startnummer):
 
 def teilnehmer_put(request, jahr, wettkampf, disziplin, startnummer):
     assert request.method == 'POST'
-    # TODO
+    w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
+    d = Disziplin.objects.get(wettkampf=w, name=disziplin)
+    t = Schiffeinzel.objects.get(disziplin=d, startnummer=startnummer)
+    form = SchiffeinzelEditForm(d, request.POST.copy(), instance=t)
+    if form.is_valid():
+        form.save()
+        startnummer = form.cleaned_data['startnummer']
+        url = reverse(teilnehmer_get, args=[jahr, wettkampf, disziplin, startnummer])
+        return HttpResponseRedirect(url)
+    return render_to_response('schiffeinzel_update.html',
+            {'wettkampf': w, 'disziplin': d, 'form': form, 'teilnehmer': t})
 
 def teilnehmer_delete_confirm(request, jahr, wettkampf, disziplin, startnummer):
     if request.method == 'POST':
@@ -554,47 +555,28 @@ class StartlisteFilterForm(Form):
         return startnummern
 
 
-class StartlisteEntryForm(Form):
-    disziplin = None
-    startnummer = forms.DecimalField(
-            widget=forms.TextInput(attrs={'size':'2'})
-            )
-    steuermann = forms.CharField()
-    vorderfahrer = forms.CharField()
+class MitgliedSearchField(forms.ModelChoiceField):
 
-    def clean_startnummer(self):
-        cleaned_data = self.cleaned_data
-        startnummer = cleaned_data.get('startnummer')
-        q = Teilnehmer.objects.filter(
-                disziplin=self.disziplin,
-                startnummer=startnummer,
-                )
-        if q.count() > 0:
-            raise ValidationError(
-                    u"Startnummer '%s' ist bereits vergeben" % (startnummer))
-        return startnummer
+    def __init__(self, *args, **kwargs):
+        kwargs['widget'] = kwargs.pop('widget', forms.widgets.TextInput)
+        super(MitgliedSearchField, self).__init__(*args, **kwargs)
 
-    def clean_vorderfahrer(self):
-        return self.clean_mitglied('vorderfahrer', 'vorderfahrer_obj')
-
-    def clean_steuermann(self):
-        return self.clean_mitglied('steuermann', 'steuermann_obj')
-
-    # TODO Doppelstarter Info darstellen, falls gleicher Fahrer mit frühere Startnr existiert
-    # TODO Doppelstarter Warnung darstellen, falls gleicher Fahrer mit *späterer* Startnr existiert
-    #      => Eventuell Hilfstabelle führen, welche Startnummernblöcke definiert
-    def clean_mitglied(self, attribute, attribute_obj):
-        cleaned_data = self.cleaned_data
-        query = cleaned_data.get(attribute)
-        cleaned_data[attribute_obj] = self.search_teilnehmer(query)
-        return query
-
-    def search_teilnehmer(self, query):
+    #
+    # TODO Doppelstarter Info darstellen, falls gleicher Fahrer mit frühere
+    # Startnr existiert
+    #
+    # TODO Doppelstarter Warnung darstellen, falls gleicher Fahrer mit
+    # *späterer* Startnr existiert => Eventuell Hilfstabelle führen, welche
+    # Startnummernblöcke definiert
+    #
+    def clean(self, value):
+        if self.required and not value:
+            raise ValidationError(self.error_messages['required'])
         try:
-            nummer = int(query)
-            q = Mitglied.objects.filter(nummer__contains=query)
+            nummer = int(value)
+            q = Mitglied.objects.filter(nummer__contains=value)
         except ValueError:
-            items = query.split()
+            items = value.split()
             if len(items) == 1:
                 q = Mitglied.objects.filter(name__icontains=items[0])
             elif len(items) == 2:
@@ -602,17 +584,49 @@ class StartlisteEntryForm(Form):
                         name__icontains=items[0],
                         vorname__icontains=items[1])
         if q.count() == 0:
-            text = u"Mitglied '%s' nicht gefunden. Bitte 'Name' oder 'Mitgliedernummer' eingeben" % (query,)
+            text = u"Mitglied '%s' nicht gefunden. Bitte 'Name' oder 'Mitgliedernummer' eingeben" % (value,)
             raise ValidationError(text)
         elif q.count() > 1:
-            text = u"Mitglied '%s' ist nicht eindeutig (%d mal gefunden)" % (query, q.count())
+            text = u"Mitglied '%s' ist nicht eindeutig (%d mal gefunden)" % (value, q.count())
             raise ValidationError(text)
         return q[0]
 
-    def clean(self):
+
+class StartlisteEntryForm(ModelForm):
+    steuermann = MitgliedSearchField(queryset=Teilnehmer.objects.all())
+    vorderfahrer = MitgliedSearchField(queryset=Teilnehmer.objects.all())
+
+    def __init__(self, disziplin, *args, **kwargs):
+        super(StartlisteEntryForm, self).__init__(*args, **kwargs)
+        self.data['disziplin'] = disziplin.id
+        self.fields['startnummer'].widget = forms.TextInput(attrs={'size':'2'})
+        # Folgende Felder werden in clean() gesetzt, deshalb nicht required
+        self.fields['sektion'].required = False
+        self.fields['kategorie'].required = False
+        self.fields['schiffsart'].required = False
+
+    class Meta:
+        model = Schiffeinzel
+
+    def clean_startnummer(self):
         cleaned_data = self.cleaned_data
-        steuermann = cleaned_data.get('steuermann_obj')
-        vorderfahrer = cleaned_data.get('vorderfahrer_obj')
+        startnummer = cleaned_data.get('startnummer')
+        disziplin = cleaned_data.get('disziplin')
+        q = Teilnehmer.objects.filter(
+                disziplin=disziplin,
+                startnummer=startnummer,
+                )
+        q = q.exclude(id=self.instance.id)
+        if q.count() > 0:
+            raise ValidationError(
+                    u"Startnummer '%s' ist bereits vergeben" % (startnummer))
+        return startnummer
+
+    def clean(self):
+        super(ModelForm, self).clean()
+        cleaned_data = self.cleaned_data
+        steuermann = cleaned_data.get('steuermann')
+        vorderfahrer = cleaned_data.get('vorderfahrer')
         if steuermann and vorderfahrer:
             if steuermann.sektion != vorderfahrer.sektion:
                 # TODO: Dies als Warnung darstellen, die der Benutzer quittieren muss
@@ -621,22 +635,17 @@ class StartlisteEntryForm(Form):
             if steuermann == vorderfahrer:
                 text = u"Steuermann kann nicht gleichzeitig Vorderfahrer sein"
                 raise ValidationError(text)
-            cleaned_data['sektion_obj'] = steuermann.sektion
+            cleaned_data['sektion'] = steuermann.sektion
             # TODO: Korrekte Startkategorie ermittelt und ValidationError darstellen,
             # falls Kategorie nicht ermittelt werden kann
-            cleaned_data['kategorie_obj'] = steuermann.kategorie()
+            cleaned_data['kategorie'] = steuermann.kategorie()
         return cleaned_data
 
 
-# TODO Ueberlegen, wie 'Vorderfahrer' und 'Steuermann' dargestellt werden
-# Wahrscheinlich das gleiche Eingabefeld wie bei der Startliste verwenden
-class SchiffeinzelEditForm(ModelForm):
-    disziplin = forms.ModelChoiceField(
-            queryset=Disziplin.objects.all(),
-            widget=forms.HiddenInput)
-    steuermann_search = forms.CharField()
-    vorderfahrer_search = forms.CharField()
+class SchiffeinzelEditForm(StartlisteEntryForm):
 
-    class Meta:
-        model = Schiffeinzel
+    def __init__(self, disziplin, *args, **kwargs):
+        super(SchiffeinzelEditForm, self).__init__(disziplin, *args, **kwargs)
+        self.fields['sektion'].required = True
+        self.fields['kategorie'].required = True
 
