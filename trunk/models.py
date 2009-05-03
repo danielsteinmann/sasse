@@ -33,9 +33,7 @@ class Mitglied(models.Model):
     parent = models.ForeignKey('Mitglied', null=True)
 
     def __unicode__(self):
-        return u'%s %s, %s, Nummer %s, Jahrgang %d' % (
-            self.name, self.vorname, self.sektion, self.nummer,
-            self.geburtsdatum.year)
+        return u'%s %s' % (self.name, self.vorname)
 
     # TODO Kategorie mit Jahr des Wettkampfes ermitteln, damit
     # diese auch noch stimmt, wenn die Applikation in einem anderen
@@ -209,7 +207,7 @@ class Teilnehmer(models.Model):
     ausgeschieden = models.BooleanField(default=False)
 
     class Meta:
-        unique_together = ['disziplin', 'startnummer']
+        unique_together = ('disziplin', 'startnummer')
         ordering = ['startnummer']
 
 

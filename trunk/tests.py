@@ -27,23 +27,20 @@ class WettkampfFormTest(TestCase):
 
     def test_invalid_name(self):
         self.form.data['name'] = u'Fällbaum Cup'
-        nameError = self.form.errors.get('name')
-        self.failIf(nameError is None)
-        self.assertEquals(nameError[0], views.invalid_name_message)
+        self.failUnless(self.form.errors.has_key('name'))
+        self.failUnless(views.invalid_name_message in self.form.errors['name'])
 
     def test_earlier_bis_than_von(self):
         self.form.data['bis'] = '2009-04-09'
-        nonFieldErrors = self.form.non_field_errors()
-        self.failIf(len(nonFieldErrors) == 0)
-        self.assertEquals(nonFieldErrors[0], u"Von muss älter als bis sein")
+        self.failUnless(u"Von muss älter als bis sein"
+                in self.form.non_field_errors())
 
     def test_duplicate_name_for_new_wettkampf(self):
         self.form.data['von'] = '2007-01-01'
-        nonFieldErrors = self.form.non_field_errors()
-        self.failIf(len(nonFieldErrors) == 0)
-        self.assertEquals(nonFieldErrors[0], u"Der Name 'Test-Cup' ist im Jahr '2007' bereits vergeben")
+        self.failUnless(u"Der Name 'Test-Cup' ist im Jahr '2007' bereits vergeben"
+                in self.form.non_field_errors())
 
-    def test_duplicate_name_for_existing_wettkampf(self):
+    def test_update_no_errors(self):
         w2009 = self.form.save()
         self.form = views.WettkampfForm(data={
             'name': w2009.name,
@@ -106,3 +103,47 @@ class WettkampfTest(TestCase):
         self.failUnlessEqual(response.status_code, 200)
         response = self.client.post('/2009/Test-Cup/delete/')
         self.assertRedirects(response, '/')
+
+
+class get_startkatgorie_Test(TestCase):
+    def setUp(self):
+        self.kat_I = models.Kategorie.objects.get(name='I')
+        self.kat_II = models.Kategorie.objects.get(name='II')
+        self.kat_III = models.Kategorie.objects.get(name='III')
+        self.kat_C = models.Kategorie.objects.get(name='C')
+        self.kat_D = models.Kategorie.objects.get(name='D')
+        self.kat_F = models.Kategorie.objects.get(name='F')
+
+    def assertKategorie(self, expected, a, b):
+        self.assertEquals(expected, views.get_startkategorie(a, b))
+        self.assertEquals(expected, views.get_startkategorie(b, a))
+
+    def testGleicheKategorie(self):
+        for k in models.Kategorie.objects.all():
+            self.assertEquals(k, views.get_startkategorie(k, k))
+
+    def testKatIIandI(self):
+        self.assertKategorie(self.kat_II, self.kat_I, self.kat_II)
+
+    def testKatIIIandI(self):
+        self.assertKategorie(self.kat_III, self.kat_I, self.kat_III)
+
+    def testKatIIIandII(self):
+        self.assertKategorie(self.kat_III, self.kat_II, self.kat_III)
+
+    def testKatCandIII(self):
+        self.assertKategorie(self.kat_C, self.kat_C, self.kat_III)
+
+    def testKatCandD(self):
+        self.assertKategorie(self.kat_C, self.kat_C, self.kat_D)
+
+    def testKatCandF(self):
+        self.assertKategorie(self.kat_C, self.kat_C, self.kat_F)
+
+    def testKatDandF(self):
+        self.assertKategorie(self.kat_C, self.kat_D, self.kat_F)
+
+    def testUnbekannteKombination(self):
+        self.assertKategorie(None, self.kat_II, self.kat_C)
+        self.assertKategorie(None, self.kat_I, self.kat_D)
+        self.assertKategorie(None, self.kat_I, self.kat_F)

@@ -2,16 +2,17 @@
 
 from django.core.urlresolvers import reverse
 from django.db.models import Q
-from django.http import HttpResponseRedirect
+from django.http import Http404, HttpResponseRedirect
 from django import forms
 from django.forms import ModelForm
 from django.forms import Form
 from django.forms import ValidationError
 from django.shortcuts import render_to_response
 
-from models import Postenart
 from models import Mitglied
 from models import Sektion
+from models import Kategorie
+from models import Postenart
 
 from models import Wettkampf
 from models import Disziplin
@@ -382,7 +383,7 @@ class WettkampfForm(ModelForm):
 
         if von and bis:
             if bis < von:
-                raise ValidationError(u"Von muss Ã¤lter als bis sein")
+                raise ValidationError(u"Von muss älter als bis sein")
 
         if von and name:
             q = Wettkampf.objects.filter(name=name, von__year=von.year)
@@ -400,9 +401,11 @@ class DisziplinForm(ModelForm):
     INITIAL_NAME = u'automatisch-gefüllt'
     wettkampf = forms.ModelChoiceField(
             queryset=Wettkampf.objects.all(),
+            label='Wettkampf',
             widget=forms.HiddenInput)
     name = forms.RegexField(regex=name_re,
             initial=INITIAL_NAME,
+            label='Namen',
             error_messages={'invalid': invalid_name_message})
 
     class Meta:
@@ -558,7 +561,7 @@ class StartlisteFilterForm(Form):
 class MitgliedSearchField(forms.ModelChoiceField):
 
     def __init__(self, *args, **kwargs):
-        kwargs['widget'] = kwargs.pop('widget', forms.widgets.TextInput)
+        kwargs['widget'] = kwargs.pop('widget', forms.TextInput)
         super(MitgliedSearchField, self).__init__(*args, **kwargs)
 
     #
@@ -608,6 +611,8 @@ class StartlisteEntryForm(ModelForm):
     class Meta:
         model = Schiffeinzel
 
+    # TODO super.validate_unique() wird nicht aufgerufen, weil es eine
+    # Subklasse ist: Wahrscheinlich ein Fehler
     def clean_startnummer(self):
         cleaned_data = self.cleaned_data
         startnummer = cleaned_data.get('startnummer')
@@ -628,17 +633,22 @@ class StartlisteEntryForm(ModelForm):
         steuermann = cleaned_data.get('steuermann')
         vorderfahrer = cleaned_data.get('vorderfahrer')
         if steuermann and vorderfahrer:
-            if steuermann.sektion != vorderfahrer.sektion:
-                # TODO: Dies als Warnung darstellen, die der Benutzer quittieren muss
-                text = u"Steuermann fährt für '%s', Vorderfahrer für '%s'. Soll das Schiff für die Sektion des Steuermann fahren?" % (steuermann.sektion, vorderfahrer.sektion)
-                raise ValidationError(text)
             if steuermann == vorderfahrer:
                 text = u"Steuermann kann nicht gleichzeitig Vorderfahrer sein"
                 raise ValidationError(text)
+            if steuermann.sektion != vorderfahrer.sektion:
+                # TODO: Als Warnung darstellen, die der Benutzer quittieren muss
+                text = u"Steuermann fährt für '%s', Vorderfahrer für '%s'. Soll das Schiff für die Sektion des Steuermann fahren?" % (steuermann.sektion, vorderfahrer.sektion)
+                raise ValidationError(text)
             cleaned_data['sektion'] = steuermann.sektion
-            # TODO: Korrekte Startkategorie ermittelt und ValidationError darstellen,
-            # falls Kategorie nicht ermittelt werden kann
-            cleaned_data['kategorie'] = steuermann.kategorie()
+            steuermann_kat = steuermann.kategorie()
+            vorderfahrer_kat = vorderfahrer.kategorie()
+            startkategorie = get_startkategorie(steuermann_kat, vorderfahrer_kat)
+            if startkategorie is None:
+                # TODO: Als Warnung darstellen, die der Benutzer quittieren muss
+                text = u"Steuermann hat Kategorie '%s', Vorderfahrer Kategorie '%s'. Das eine unbekannte Kombination. Bitte manuell eine Kategorie wählen." % (steuermann_kat, vorderfahrer_kat)
+                raise ValidationError(text)
+            cleaned_data['kategorie'] = startkategorie
         return cleaned_data
 
 
@@ -649,3 +659,20 @@ class SchiffeinzelEditForm(StartlisteEntryForm):
         self.fields['sektion'].required = True
         self.fields['kategorie'].required = True
 
+
+def get_startkategorie(steuermann, vorderfahrer):
+    if steuermann == vorderfahrer:
+        return steuermann
+    kat_I = Kategorie.objects.get(name='I')
+    kat_II = Kategorie.objects.get(name='II')
+    kat_III = Kategorie.objects.get(name='III')
+    kat_C = Kategorie.objects.get(name='C')
+    kat_D = Kategorie.objects.get(name='D')
+    kat_F = Kategorie.objects.get(name='F')
+    if steuermann in (kat_I, kat_II) and vorderfahrer in (kat_I, kat_II):
+        return kat_II
+    if steuermann in (kat_I, kat_II, kat_III) and vorderfahrer in (kat_I, kat_II, kat_III):
+        return kat_III
+    if steuermann in (kat_III, kat_C, kat_D, kat_F) and vorderfahrer in (kat_III, kat_C, kat_D, kat_F):
+        return kat_C
+    return None
