@@ -14,14 +14,12 @@
       <th>Steuermann:</th>
       <td>
         {{ form.steuermann.errors }}{{ form.steuermann }}
-        <a href="/mitglied/{{ teilnehmer.steuermann.nummer }}#Not-Yet-Implemented" title="Sektion {{ teilnehmer.steuermann.sektion }}, Jahrgang {{ teilnehmer.steuermann.geburtsdatum.year }}, Kategorie {{ teilnehmer.steuermann.kategorie }}">{{ teilnehmer.steuermann.name }}&nbsp;{{ teilnehmer.steuermann.vorname }}</a>
       </td>
     </tr>
     <tr>
       <th>Vorderfahrer:</th>
       <td>
         {{ form.vorderfahrer.errors }}{{ form.vorderfahrer }}
-        <a href="/mitglied/{{ teilnehmer.vorderfahrer.nummer }}#Not-Yet-Implemented" title="Sektion {{ teilnehmer.vorderfahrer.sektion }}, Jahrgang {{ teilnehmer.vorderfahrer.geburtsdatum.year }}, Kategorie {{ teilnehmer.vorderfahrer.kategorie }}">{{ teilnehmer.vorderfahrer.name }}&nbsp;{{ teilnehmer.vorderfahrer.vorname }}</a>
       </td>
     </tr>
     <tr>

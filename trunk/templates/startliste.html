@@ -26,8 +26,8 @@ Startnummern {{ searchform.startnummern }}
   {% for teilnehmer in startliste %}
   <tr class="{% cycle 'odd' 'even' as rowcolors %}">
     <td><a href="{% url teilnehmer_get wettkampf.jahr, wettkampf.name, disziplin.name, teilnehmer.startnummer %}">{{ teilnehmer.startnummer }}</a>
-    <td><a href="/mitglied/{{ teilnehmer.steuermann.nummer }}#Not-Yet-Implemented" title="Sektion {{ teilnehmer.steuermann.sektion }}, Jahrgang {{ teilnehmer.steuermann.geburtsdatum.year }}, Kategorie {{ teilnehmer.steuermann.kategorie }}">{{ teilnehmer.steuermann.name }}&nbsp;{{ teilnehmer.steuermann.vorname }}</a></td>
-    <td><a href="/mitglied/{{ teilnehmer.vorderfahrer.nummer }}#Not-Yet-Implemented" title="Sektion {{ teilnehmer.vorderfahrer.sektion }}, Jahrgang {{ teilnehmer.vorderfahrer.geburtsdatum.year }}, Kategorie {{ teilnehmer.vorderfahrer.kategorie }}">{{ teilnehmer.vorderfahrer.name }}&nbsp;{{ teilnehmer.vorderfahrer.vorname }}</a></td>
+    <td><a href="#/mitglied/{{ teilnehmer.steuermann.nummer }}" title="Sektion {{ teilnehmer.steuermann.sektion }}, Jahrgang {{ teilnehmer.steuermann.geburtsdatum.year }}, Mitglied {{ teilnehmer.steuermann.nummer }}">{{ teilnehmer.steuermann.name }}&nbsp;{{ teilnehmer.steuermann.vorname }}</a></td>
+    <td><a href="#/mitglied/{{ teilnehmer.vorderfahrer.nummer }}" title="Sektion {{ teilnehmer.vorderfahrer.sektion }}, Jahrgang {{ teilnehmer.vorderfahrer.geburtsdatum.year }}, Mitglied {{ teilnehmer.vorderfahrer.nummer }}">{{ teilnehmer.vorderfahrer.name }}&nbsp;{{ teilnehmer.vorderfahrer.vorname }}</a></td>
     <td>{{ teilnehmer.sektion }}</td>
     <td>{{ teilnehmer.kategorie }}</td>
   </tr>

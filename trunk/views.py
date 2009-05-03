@@ -316,8 +316,8 @@ def teilnehmer_update(request, jahr, wettkampf, disziplin, startnummer):
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
     t = Schiffeinzel.objects.get(disziplin=d, startnummer=startnummer)
     form = SchiffeinzelEditForm(d, initial={
-        'steuermann': t.steuermann.nummer,
-        'vorderfahrer': t.vorderfahrer.nummer,
+        'steuermann': t.steuermann.get_edit_text(),
+        'vorderfahrer': t.vorderfahrer.get_edit_text(),
         },
         instance=t)
     return render_to_response('schiffeinzel_update.html',
@@ -332,7 +332,8 @@ def teilnehmer_put(request, jahr, wettkampf, disziplin, startnummer):
     if form.is_valid():
         form.save()
         startnummer = form.cleaned_data['startnummer']
-        url = reverse(teilnehmer_get, args=[jahr, wettkampf, disziplin, startnummer])
+        args = [jahr, wettkampf, disziplin, startnummer]
+        url = reverse(teilnehmer_get, args=args)
         return HttpResponseRedirect(url)
     return render_to_response('schiffeinzel_update.html',
             {'wettkampf': w, 'disziplin': d, 'form': form, 'teilnehmer': t})
@@ -575,14 +576,14 @@ class MitgliedSearchField(forms.ModelChoiceField):
     def clean(self, value):
         if self.required and not value:
             raise ValidationError(self.error_messages['required'])
+        items = value.split()
         try:
-            nummer = int(value)
-            q = Mitglied.objects.filter(nummer__contains=value)
+            nummer = int(items[0])
+            q = Mitglied.objects.filter(nummer__contains=items[0])
         except ValueError:
-            items = value.split()
             if len(items) == 1:
                 q = Mitglied.objects.filter(name__icontains=items[0])
-            elif len(items) == 2:
+            else:
                 q = Mitglied.objects.filter(
                         name__icontains=items[0],
                         vorname__icontains=items[1])
@@ -592,7 +593,8 @@ class MitgliedSearchField(forms.ModelChoiceField):
         elif q.count() > 1:
             text = u"Mitglied '%s' ist nicht eindeutig (%d mal gefunden)" % (value, q.count())
             raise ValidationError(text)
-        return q[0]
+        else:
+            return q[0]
 
 
 class StartlisteEntryForm(ModelForm):
@@ -612,7 +614,7 @@ class StartlisteEntryForm(ModelForm):
         model = Schiffeinzel
 
     # TODO super.validate_unique() wird nicht aufgerufen, weil es eine
-    # Subklasse ist: Wahrscheinlich ein Fehler
+    # Subklasse ist: Wahrscheinlich ein Fehler in Django in Django
     def clean_startnummer(self):
         cleaned_data = self.cleaned_data
         startnummer = cleaned_data.get('startnummer')
@@ -632,6 +634,10 @@ class StartlisteEntryForm(ModelForm):
         cleaned_data = self.cleaned_data
         steuermann = cleaned_data.get('steuermann')
         vorderfahrer = cleaned_data.get('vorderfahrer')
+        if steuermann:
+            self.data['steuermann'] = steuermann.get_edit_text()
+        if vorderfahrer:
+            self.data['vorderfahrer'] = vorderfahrer.get_edit_text()
         if steuermann and vorderfahrer:
             if steuermann == vorderfahrer:
                 text = u"Steuermann kann nicht gleichzeitig Vorderfahrer sein"

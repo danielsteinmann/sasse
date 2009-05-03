@@ -50,6 +50,8 @@ class Mitglied(models.Model):
             return Kategorie.objects.get(
                     alter_von__lte=alter, alter_bis__gte=alter)
 
+    def get_edit_text(self):
+        return u" ".join([self.nummer, self.name, self.vorname])
 
 # Stammdaten/Konfigurationsdaten
 
