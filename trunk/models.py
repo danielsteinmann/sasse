@@ -188,7 +188,6 @@ class Posten(models.Model):
         ordering = ['reihenfolge']
 
 
-
 class Bewertung(models.Model):
     """
     Wert ist entweder Anzahl Punkte oder Zeit in Hundertstel Sekunden.

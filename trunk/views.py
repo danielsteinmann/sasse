@@ -99,14 +99,14 @@ def disziplinen_add(request, jahr, wettkampf):
         return disziplinen_post(request, jahr, wettkampf)
     assert request.method == 'GET'
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
-    form = DisziplinForm(initial={'wettkampf': w.id})
+    form = DisziplinForm(w)
     return render_to_response('disziplin_add.html',
             {'form': form, 'wettkampf': w})
 
 def disziplinen_post(request, jahr, wettkampf):
     assert request.method == 'POST'
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
-    form = DisziplinForm(request.POST.copy())
+    form = DisziplinForm(w, request.POST.copy())
     if form.is_valid():
         form.save()
         return HttpResponseRedirect(reverse(wettkampf_get, args=[jahr, wettkampf]))
@@ -125,7 +125,7 @@ def disziplin_update(request, jahr, wettkampf, disziplin):
     assert request.method == 'GET'
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
-    form = DisziplinForm(instance=d)
+    form = DisziplinForm(w, instance=d)
     return render_to_response('disziplin_update.html',
             {'form': form, 'wettkampf': w, 'disziplin': d})
 
@@ -133,7 +133,7 @@ def disziplin_put(request, jahr, wettkampf, disziplin):
     assert request.method == 'POST'
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
-    form = DisziplinForm(request.POST.copy(), instance=d)
+    form = DisziplinForm(w, request.POST.copy(), instance=d)
     if form.is_valid():
         form.save()
         disziplin = form.cleaned_data['name']
@@ -163,9 +163,7 @@ def posten_list(request, jahr, wettkampf, disziplin):
     assert request.method == 'GET'
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
-    form = PostenListForm(initial={'disziplin': d.id,
-        'reihenfolge': d.posten_set.count() + 1, })
-    form.fields["postenart"].queryset = Postenart.objects.filter(disziplinarten = d.disziplinart.id)
+    form = PostenListForm(d)
     return render_to_response('posten.html',
         {'wettkampf': w, 'disziplin': d, 'posten': d.posten_set.all(),
             'form': form, })
@@ -174,7 +172,7 @@ def posten_post(request, jahr, wettkampf, disziplin):
     assert request.method == 'POST'
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
-    form = PostenListForm(request.POST)
+    form = PostenListForm(d, request.POST.copy())
     if form.is_valid():
         form.save()
         return HttpResponseRedirect(reverse(posten_list, args=[jahr, wettkampf, disziplin]))
@@ -198,7 +196,7 @@ def posten_update(request, jahr, wettkampf, disziplin, posten):
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
     p = Posten.objects.get(disziplin=d, name=posten)
-    form = PostenEditForm(instance=p)
+    form = PostenEditForm(d, instance=p)
     form.fields["postenart"].queryset = Postenart.objects.filter(disziplinarten = d.disziplinart.id)
     return render_to_response('posten_update.html',
             {'form': form, 'wettkampf': w, 'disziplin': d, 'posten': p, })
@@ -208,7 +206,7 @@ def posten_put(request, jahr, wettkampf, disziplin, posten):
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
     p = Posten.objects.get(disziplin=d, name=posten)
-    form = PostenEditForm(request.POST.copy(), instance=p)
+    form = PostenEditForm(d, request.POST.copy(), instance=p)
     if form.is_valid():
         form.save()
         posten = form.cleaned_data['name']
@@ -357,6 +355,9 @@ def teilnehmer_delete(request, jahr, wettkampf, disziplin, startnummer):
     url = reverse(startliste, args=[jahr, wettkampf, disziplin])
     return HttpResponseRedirect(url)
 
+# NOTE: Kann nicht SlugField nehmen, da dieses keine Unicode Zeichen versteht
+# TODO Ein 'UnicodeSlugField' einführen, das von RegexField ableitet
+# (siehe django.forms.fields.SlugField)
 import re
 name_re = re.compile(r'^[-\w]+$', re.UNICODE)
 invalid_name_message = \
@@ -371,10 +372,8 @@ class WettkampfForm(ModelForm):
                 "oder 'Einzelfahren, 17.-18. Juni 2008'",
             widget=forms.TextInput(attrs={'size':'40'}))
 
-
     class Meta:
         model = Wettkampf
-
 
     def clean(self):
         cleaned_data = self.cleaned_data
@@ -400,10 +399,6 @@ class WettkampfForm(ModelForm):
 
 class DisziplinForm(ModelForm):
     INITIAL_NAME = u'automatisch-gefüllt'
-    wettkampf = forms.ModelChoiceField(
-            queryset=Wettkampf.objects.all(),
-            label='Wettkampf',
-            widget=forms.HiddenInput)
     name = forms.RegexField(regex=name_re,
             initial=INITIAL_NAME,
             label='Namen',
@@ -411,6 +406,11 @@ class DisziplinForm(ModelForm):
 
     class Meta:
         model = Disziplin
+
+    def __init__(self, wettkampf, *args, **kwargs):
+        super(DisziplinForm, self).__init__(*args, **kwargs)
+        self.data['wettkampf'] = wettkampf.id
+        self.fields['wettkampf'].widget = forms.HiddenInput()
 
     def clean(self):
         cleaned_data = self.cleaned_data
@@ -440,17 +440,21 @@ class DisziplinForm(ModelForm):
 
 
 class PostenListForm(ModelForm):
-    disziplin = forms.ModelChoiceField(
-            queryset=Disziplin.objects.all(),
-            widget=forms.HiddenInput)
     name = forms.RegexField(regex=name_re,
             error_messages={'invalid': invalid_name_message},
             widget=forms.TextInput(attrs={'size':'3'}))
-    reihenfolge = forms.DecimalField(widget=forms.HiddenInput)
-
 
     class Meta:
         model = Posten
+
+    def __init__(self, disziplin, *args, **kwargs):
+        super(PostenListForm, self).__init__(*args, **kwargs)
+        self.data['disziplin'] = disziplin.id
+        self.fields['disziplin'].widget = forms.HiddenInput()
+        self.fields['reihenfolge'].required = False
+        self.fields["postenart"].queryset = Postenart.objects.filter(
+                disziplinarten = disziplin.disziplinart.id
+                )
 
     def clean_name(self):
         cleaned_data = self.cleaned_data
@@ -465,10 +469,20 @@ class PostenListForm(ModelForm):
                     u"Der Name '%s' ist bereits vergeben" % (name))
         return name
 
+    def clean(self):
+        super(ModelForm, self).clean()
+        cleaned_data = self.cleaned_data
+        disziplin = cleaned_data.get('disziplin')
+        reihenfolge = cleaned_data.get('reihenfolge')
+        if not reihenfolge:
+            cleaned_data['reihenfolge'] = disziplin.posten_set.count() + 1
+        return cleaned_data
+
 
 class PostenEditForm(PostenListForm):
-    reihenfolge = forms.DecimalField(
-            widget=forms.TextInput(attrs={'size':'2'}))
+    def __init__(self, disziplin, *args, **kwargs):
+        super(PostenEditForm, self).__init__(disziplin, *args, **kwargs)
+        self.fields['reihenfolge'].widget = forms.TextInput(attrs={'size':'2'})
 
 
 class StartlisteFilterForm(Form):
