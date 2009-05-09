@@ -39,10 +39,9 @@ def wettkaempfe_post(request):
     assert request.method == 'POST'
     form = WettkampfForm(request.POST)
     if form.is_valid():
-        form.save()
-        jahr = form.cleaned_data['von'].year
-        name = form.cleaned_data['name']
-        return HttpResponseRedirect(reverse(wettkampf_get, args=[jahr, name]))
+        w = form.save()
+        url = reverse(wettkampf_get, args=[w.jahr(), w.name])
+        return HttpResponseRedirect(url)
     return render_to_response('wettkampf_add.html', {'form': form,})
 
 def wettkaempfe_by_year(request, jahr):
@@ -73,10 +72,9 @@ def wettkampf_put(request, jahr, wettkampf):
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
     form = WettkampfForm(request.POST, instance=w)
     if form.is_valid():
-        form.save()
-        jahr = form.cleaned_data['von'].year
-        name = form.cleaned_data['name']
-        return HttpResponseRedirect(reverse(wettkampf_get, args=[jahr, name]))
+        w = form.save()
+        url = reverse(wettkampf_get, args=[w.jahr(), w.name])
+        return HttpResponseRedirect(url)
     d = w.disziplin_set.all()
     return render_to_response('wettkampf_update.html',
             {'wettkampf': w, 'disziplinen': d, 'form': form})
@@ -109,7 +107,8 @@ def disziplinen_post(request, jahr, wettkampf):
     form = DisziplinForm(w, request.POST.copy())
     if form.is_valid():
         form.save()
-        return HttpResponseRedirect(reverse(wettkampf_get, args=[jahr, wettkampf]))
+        url = reverse(wettkampf_get, args=[jahr, wettkampf])
+        return HttpResponseRedirect(url)
     return render_to_response('disziplin_add.html',
             {'form': form, 'wettkampf': w})
 
@@ -135,10 +134,9 @@ def disziplin_put(request, jahr, wettkampf, disziplin):
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
     form = DisziplinForm(w, request.POST.copy(), instance=d)
     if form.is_valid():
-        form.save()
-        disziplin = form.cleaned_data['name']
-        return HttpResponseRedirect(reverse(disziplin_get,
-            args=[jahr, wettkampf, disziplin]))
+        d = form.save()
+        url = reverse(disziplin_get, args=[jahr, wettkampf, d.name])
+        return HttpResponseRedirect(url)
     return render_to_response('disziplin_update.html',
             {'form': form, 'wettkampf': w, 'disziplin': d})
 
@@ -148,7 +146,8 @@ def disziplin_delete_confirm(request, jahr, wettkampf, disziplin):
     assert request.method == 'GET'
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
-    return render_to_response('disziplin_delete.html', {'wettkampf': w, 'disziplin': d})
+    return render_to_response('disziplin_delete.html',
+            {'wettkampf': w, 'disziplin': d})
 
 def disziplin_delete(request, jahr, wettkampf, disziplin):
     assert request.method == 'POST'
@@ -176,7 +175,6 @@ def posten_post(request, jahr, wettkampf, disziplin):
     if form.is_valid():
         form.save()
         return HttpResponseRedirect(reverse(posten_list, args=[jahr, wettkampf, disziplin]))
-    form.fields["postenart"].queryset = Postenart.objects.filter(disziplinarten = d.disziplinart.id)
     return render_to_response('posten.html',
         {'wettkampf': w, 'disziplin': d, 'posten': d.posten_set.all(),
           'form': form, })
