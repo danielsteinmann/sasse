@@ -32,8 +32,11 @@ class Mitglied(models.Model):
     # Für Vater/Sohn Rangliste
     parent = models.ForeignKey('Mitglied', null=True)
 
+    class Meta:
+        ordering = ['sektion', 'name', 'vorname']
+
     def __unicode__(self):
-        return u'%s %s' % (self.name, self.vorname)
+        return u'%s %s, %s' % (self.name, self.vorname, self.sektion)
 
     # TODO Kategorie mit Jahr des Wettkampfes ermitteln, damit
     # diese auch noch stimmt, wenn die Applikation in einem anderen

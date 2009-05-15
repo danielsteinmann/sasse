@@ -602,8 +602,11 @@ class MitgliedSearchField(forms.ModelChoiceField):
             raise ValidationError(self.error_messages['required'])
         items = value.split()
         try:
-            nummer = int(items[0])
-            q = Mitglied.objects.filter(nummer__contains=items[0])
+            zahl = int(items[0])
+            q = Mitglied.objects.filter(nummer=zahl)
+            if q.count() == 0:
+                # Falls Benutzer aus einer Liste von Mitgliedern gewählt hat
+                q = Mitglied.objects.filter(id=zahl)
         except ValueError:
             if len(items) == 1:
                 q = Mitglied.objects.filter(name__icontains=items[0])
@@ -615,15 +618,19 @@ class MitgliedSearchField(forms.ModelChoiceField):
             text = u"Mitglied '%s' nicht gefunden. Bitte 'Name' oder 'Mitgliedernummer' eingeben" % (value,)
             raise ValidationError(text)
         elif q.count() > 1:
-            text = u"Mitglied '%s' ist nicht eindeutig (%d mal gefunden)" % (value, q.count())
+            text = u"Mitglied '%s' ist nicht eindeutig, bitte auswählen" % (value,)
+            self.widget = forms.Select()
+            self.queryset = q
             raise ValidationError(text)
         else:
+            self.widget = forms.Select()
+            self.queryset = q
             return q[0]
 
 
 class StartlisteEntryForm(ModelForm):
-    steuermann = MitgliedSearchField(queryset=Teilnehmer.objects.all())
-    vorderfahrer = MitgliedSearchField(queryset=Teilnehmer.objects.all())
+    steuermann = MitgliedSearchField(queryset=Mitglied.objects.all())
+    vorderfahrer = MitgliedSearchField(queryset=Mitglied.objects.all())
 
     def __init__(self, disziplin, *args, **kwargs):
         super(StartlisteEntryForm, self).__init__(*args, **kwargs)
@@ -653,15 +660,18 @@ class StartlisteEntryForm(ModelForm):
                     u"Startnummer '%s' ist bereits vergeben" % (startnummer))
         return startnummer
 
+    def _select_first_mitglied(self, field_name):
+        field = self.fields[field_name]
+        if isinstance(field.widget, forms.Select):
+            self.data[field_name] = field.queryset[0].id
+
     def clean(self):
         super(ModelForm, self).clean()
         cleaned_data = self.cleaned_data
         steuermann = cleaned_data.get('steuermann')
         vorderfahrer = cleaned_data.get('vorderfahrer')
-        if steuermann:
-            self.data['steuermann'] = steuermann.get_edit_text()
-        if vorderfahrer:
-            self.data['vorderfahrer'] = vorderfahrer.get_edit_text()
+        self._select_first_mitglied('steuermann')
+        self._select_first_mitglied('vorderfahrer')
         if steuermann and vorderfahrer:
             if steuermann == vorderfahrer:
                 text = u"Steuermann kann nicht gleichzeitig Vorderfahrer sein"
