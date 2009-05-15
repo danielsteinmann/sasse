@@ -10,6 +10,7 @@ import views
 from views import WettkampfForm
 from models import Wettkampf
 from models import Disziplinart
+from models import Postenart
 from models import Kategorie
 
 class WettkampfFormTest(TestCase):
@@ -198,6 +199,60 @@ class DisziplinPageTest(TestCase):
         self.assertRedirects(response, listURL)
         response = self.client.get(listURL)
         self.assertNotContains(response, 'Einzelfahren-I')
+
+
+class PostenPageTest(TestCase):
+
+    def setUp(self):
+        einzel = Disziplinart.objects.get(name="Einzelfahren")
+        w = Wettkampf.objects.create(name="Test-Cup", von="2009-04-04")
+        d = w.disziplin_set.create(name="klein", disziplinart=einzel)
+        d.kategorien.add(Kategorie.objects.get(name="I"))
+        durchfahrt = Postenart.objects.get(name="Durchfahrt")
+        p = d.posten_set.create(name="D", postenart=durchfahrt, reihenfolge=3)
+
+    def test_list(self):
+        response = self.client.get('/2009/Test-Cup/klein/posten/')
+        self.failUnlessEqual(response.status_code, 200)
+        self.failUnlessEqual(len(response.context[-1]['posten']), 1)
+
+    def test_add(self):
+        addURL = '/2009/Test-Cup/klein/posten/'
+        response = self.client.get(addURL)
+        self.failUnlessEqual(response.status_code, 200)
+        response = self.client.post(addURL, {})
+        self.assertContains(response, 'This field is required')
+        antreten = Postenart.objects.get(name="Allgemeines und Antreten (Einzelfahren)")
+        response = self.client.post(addURL, {
+            'name': u'A0',
+            'postenart': antreten.id,
+            })
+        self.assertRedirects(response, addURL)
+        response = self.client.get('/2009/Test-Cup/klein/posten/A0')
+        self.failUnlessEqual(response.status_code, 200)
+
+    def test_update(self):
+        updateURL = '/2009/Test-Cup/klein/posten/D/update/'
+        response = self.client.post(updateURL, {})
+        self.assertContains(response, 'This field is required')
+        response = self.client.get(updateURL)
+        self.failUnlessEqual(response.status_code, 200)
+        durchfahrt = Postenart.objects.get(name="Durchfahrt")
+        response = self.client.post(updateURL, {
+            'name': u'ZZ',
+            'postenart': durchfahrt.id,
+            'reihenfolge': '9',
+            })
+        self.assertRedirects(response, '/2009/Test-Cup/klein/posten/')
+
+    def test_delete(self):
+        listURL = '/2009/Test-Cup/klein/posten/'
+        getURL = '/2009/Test-Cup/klein/posten/D'
+        deleteURL = '/2009/Test-Cup/klein/posten/D/delete/'
+        response = self.client.get(deleteURL)
+        self.failUnlessEqual(response.status_code, 200)
+        response = self.client.post(deleteURL)
+        self.assertRedirects(response, listURL)
 
 
 class get_startkatgorie_Test(unittest.TestCase):

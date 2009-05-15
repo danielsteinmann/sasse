@@ -118,6 +118,7 @@ class Bewertungsart(models.Model):
     wertebereich = models.CharField(max_length=50) # 1,2-10 oder ganze/gebrochene Sekunden
     defaultwert = models.DecimalField(max_digits=4, decimal_places=2)
     maximalwert = models.DecimalField(max_digits=4, decimal_places=2)
+    reihenfolge = models.SmallIntegerField(default=1) # Was kommt auf GUI zuerst
     postenarten = models.ForeignKey('Postenart')
 
     def __unicode__(self):

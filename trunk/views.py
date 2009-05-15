@@ -20,6 +20,12 @@ from models import Posten
 from models import Teilnehmer
 from models import Schiffeinzel
 
+# TODO: Mögliche Apps:
+#  - basis: Stammdaten
+#  - event: Wettkampf, Disziplin, Posten, Bewertung, Teilnehmer, Richtzeit, Kranzlimite
+#  - einzelfahren: Startliste
+#  - sektionsfahren: Startliste
+#  - spezialwettkaempfe: Schnüren, Schwimmen, Bootfährenbau
 
 def wettkaempfe_get(request):
     assert request.method == 'GET'
@@ -520,6 +526,12 @@ class StartlisteFilterForm(Form):
     #
     # Ein Bereich kann mehrfach vorkommen
     #  (Beispiel: '5-10,13-15' => [('range', [5,10]), ('range', [13,15])])
+    #
+    # Reihenfolge beibehalten. 
+    #  (Beispiel: '1,3,2,5' => [('range', [1,3,2,5]))
+    #  Wichtig ist hier, dass die Datenbank die Startnummern in zufälliger
+    #  Reihenfolge sendet, aber der Benutzer die Nummern in spezifischer
+    #  Reihenfolge haben möchte.
     #
     # Example of dynamic or query with Q object:
     #   q = Q( tag__name=first_tag )
