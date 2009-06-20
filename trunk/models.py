@@ -33,7 +33,7 @@ class Mitglied(models.Model):
     parent = models.ForeignKey('Mitglied', null=True)
 
     class Meta:
-        ordering = ['sektion', 'name', 'vorname']
+        ordering = ['name', 'vorname', 'sektion']
 
     def __unicode__(self):
         return u'%s %s, %s' % (self.name, self.vorname, self.sektion)

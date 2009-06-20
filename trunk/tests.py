@@ -7,11 +7,17 @@ from django.core.urlresolvers import reverse
 from django.test import TestCase
 
 import views
-from views import WettkampfForm
-from models import Wettkampf
+
+from forms import get_startkategorie
+from forms import WettkampfForm
+
 from models import Disziplinart
-from models import Postenart
 from models import Kategorie
+from models import Postenart
+from models import Wettkampf
+
+from fields import UnicodeSlugField
+
 
 class WettkampfFormTest(TestCase):
     def setUp(self):
@@ -33,7 +39,7 @@ class WettkampfFormTest(TestCase):
     def test_invalid_name(self):
         self.form.data['name'] = u'No Spaces'
         self.failUnless(self.form.errors.has_key('name'))
-        expected = views.invalid_name_message
+        expected = UnicodeSlugField.default_error_messages['invalid']
         self.failUnless(expected in self.form.errors['name'])
 
     def test_earlier_bis_than_von(self):
@@ -255,7 +261,7 @@ class PostenPageTest(TestCase):
         self.assertRedirects(response, listURL)
 
 
-class get_startkatgorie_Test(unittest.TestCase):
+class get_startkategorie_Test(unittest.TestCase):
     def setUp(self):
         self.kat_I = Kategorie.objects.get(name='I')
         self.kat_II = Kategorie.objects.get(name='II')
@@ -265,12 +271,12 @@ class get_startkatgorie_Test(unittest.TestCase):
         self.kat_F = Kategorie.objects.get(name='F')
 
     def _assert_kat(self, expected, a, b):
-        self.assertEquals(expected, views.get_startkategorie(a, b))
-        self.assertEquals(expected, views.get_startkategorie(b, a))
+        self.assertEquals(expected, get_startkategorie(a, b))
+        self.assertEquals(expected, get_startkategorie(b, a))
 
     def testGleicheKategorie(self):
         for k in Kategorie.objects.all():
-            self.assertEquals(k, views.get_startkategorie(k, k))
+            self.assertEquals(k, get_startkategorie(k, k))
 
     def testKatIIandI(self):
         self._assert_kat(self.kat_II, self.kat_I, self.kat_II)
