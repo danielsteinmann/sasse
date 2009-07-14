@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import datetime
 import re
 
 from django.db.models import Q
@@ -26,23 +27,35 @@ from models import Wettkampf
 from fields import MitgliedSearchField
 from fields import UnicodeSlugField
 
-
-def get_startkategorie(steuermann, vorderfahrer):
-    if steuermann == vorderfahrer:
-        return steuermann
+def get_startkategorie(a, b):
+    if a == b:
+        return a
     kat_I = Kategorie.objects.get(name='I')
     kat_II = Kategorie.objects.get(name='II')
     kat_III = Kategorie.objects.get(name='III')
     kat_C = Kategorie.objects.get(name='C')
     kat_D = Kategorie.objects.get(name='D')
     kat_F = Kategorie.objects.get(name='F')
-    if steuermann in (kat_I, kat_II) and vorderfahrer in (kat_I, kat_II):
+    if a in (kat_I, kat_II) and b in (kat_I, kat_II):
         return kat_II
-    if steuermann in (kat_I, kat_II, kat_III) and vorderfahrer in (kat_I, kat_II, kat_III):
+    if a in (kat_I, kat_II, kat_III) and b in (kat_I, kat_II, kat_III):
         return kat_III
-    if steuermann in (kat_III, kat_C, kat_D, kat_F) and vorderfahrer in (kat_III, kat_C, kat_D, kat_F):
+    if a in (kat_III, kat_C, kat_D, kat_F) and b in (kat_III, kat_C, kat_D, kat_F):
         return kat_C
     return None
+
+def get_kategorie(aktuelles_jahr, mitglied):
+    alter = aktuelles_jahr - mitglied.geburtsdatum.year
+    try:
+        return Kategorie.objects.get(
+                geschlecht=mitglied.geschlecht,
+                alter_von__lte=alter, alter_bis__gte=alter)
+    except Kategorie.DoesNotExist:
+        # Passiert, wenn das Mitglied eine Frau ist, welche das Alter für die
+        # Kategorie 'F' noch nicht erreicht hat.
+        return Kategorie.objects.get(
+                geschlecht='m',
+                alter_von__lte=alter, alter_bis__gte=alter)
 
 
 class WettkampfForm(ModelForm):
@@ -308,6 +321,7 @@ class StartlisteEntryForm(ModelForm):
     def clean(self):
         super(ModelForm, self).clean()
         cleaned_data = self.cleaned_data
+        disziplin = cleaned_data.get('disziplin')
         steuermann = cleaned_data.get('steuermann')
         vorderfahrer = cleaned_data.get('vorderfahrer')
         self._set_data(steuermann, 'steuermann')
@@ -321,8 +335,9 @@ class StartlisteEntryForm(ModelForm):
                 text = u"Steuermann fährt für '%s', Vorderfahrer für '%s'. Soll das Schiff für die Sektion des Steuermann fahren?" % (steuermann.sektion, vorderfahrer.sektion)
                 raise ValidationError(text)
             cleaned_data['sektion'] = steuermann.sektion
-            steuermann_kat = steuermann.kategorie()
-            vorderfahrer_kat = vorderfahrer.kategorie()
+            jahr = disziplin.wettkampf.jahr()
+            steuermann_kat = get_kategorie(jahr, steuermann)
+            vorderfahrer_kat = get_kategorie(jahr, vorderfahrer)
             startkategorie = get_startkategorie(steuermann_kat, vorderfahrer_kat)
             if startkategorie is None:
                 # TODO: Als Warnung darstellen, die der Benutzer quittieren muss

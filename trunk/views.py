@@ -2,10 +2,12 @@
 
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
+from django.http import Http404
 from django.shortcuts import render_to_response
 
 from models import Wettkampf
 from models import Disziplin
+from models import Disziplinart
 from models import Posten
 from models import Schiffeinzel
 
@@ -119,7 +121,14 @@ def disziplin_get(request, jahr, wettkampf, disziplin):
     assert request.method == 'GET'
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
-    return render_to_response('disziplin.html', {'wettkampf': w, 'disziplin': d})
+    template = None
+    if d.disziplinart == Disziplinart.objects.get(name="Einzelfahren"):
+        template = "einzelfahren.html"
+    elif d.disziplinart == Disziplinart.objects.get(name="Sektionsfahren"):
+        template = "einzelfahren.html"
+    else:
+        raise Http404(u"Disziplin %s noch nicht implementiert" % d.disziplinart)
+    return render_to_response(template, {'wettkampf': w, 'disziplin': d})
 
 def disziplin_update(request, jahr, wettkampf, disziplin):
     if request.method == 'POST':
@@ -234,10 +243,28 @@ def posten_delete(request, jahr, wettkampf, disziplin, posten):
     return HttpResponseRedirect(reverse(posten_list,
         args=[jahr, wettkampf, disziplin]))
 
-# TODO Nur für Einzelfahren gültig
 def startliste(request, jahr, wettkampf, disziplin):
     if request.method == 'POST':
         return startliste_post(request, jahr, wettkampf, disziplin)
+    w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
+    d = Disziplin.objects.get(wettkampf=w, name=disziplin)
+    if d.disziplinart == Disziplinart.objects.get(name="Einzelfahren"):
+        return startliste_einzelfahren(request, jahr, wettkampf, disziplin)
+    else:
+        raise Http404(u"Startliste für %s noch nicht implementiert"
+                % d.disziplinart)
+
+def startliste_post(request, jahr, wettkampf, disziplin):
+    assert request.method == 'POST'
+    w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
+    d = Disziplin.objects.get(wettkampf=w, name=disziplin)
+    if d.disziplinart == Disziplinart.objects.get(name="Einzelfahren"):
+        return startliste_einzelfahren_post(request, jahr, wettkampf, disziplin)
+    else:
+        raise Http404(u"Mutieren der Startliste für %s noch nicht implementiert"
+                % d.disziplinart)
+
+def startliste_einzelfahren(request, jahr, wettkampf, disziplin):
     assert request.method == 'GET'
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
@@ -266,12 +293,12 @@ def startliste(request, jahr, wettkampf, disziplin):
     else:
         s = []
         form = None
-    return render_to_response('startliste.html', {
+    return render_to_response('startliste_einzelfahren.html', {
         'wettkampf': w, 'disziplin': d, 'searchform': searchform,
         'startliste': s, 'form': form,
         })
 
-def startliste_post(request, jahr, wettkampf, disziplin):
+def startliste_einzelfahren_post(request, jahr, wettkampf, disziplin):
     assert request.method == 'POST'
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
@@ -293,7 +320,7 @@ def startliste_post(request, jahr, wettkampf, disziplin):
             s = s.filter(startnummer__in=startnummern)
         if sektion is not None:
             s = s.filter(sektion=sektion)
-    return render_to_response('startliste.html',
+    return render_to_response('startliste_einzelfahren.html',
             {'wettkampf': w, 'disziplin': d, 'startliste': s, 'form': form,
                 'searchform': searchform})
 

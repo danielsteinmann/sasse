@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import datetime
 from django.db import models
 
 SCHIFFS_ART = (
@@ -38,23 +37,9 @@ class Mitglied(models.Model):
     def __unicode__(self):
         return u'%s %s, %s' % (self.name, self.vorname, self.sektion)
 
-    # TODO Kategorie mit Jahr des Wettkampfes ermitteln, damit
-    # diese auch noch stimmt, wenn die Applikation in einem anderen
-    # Jahr dargestellt wird. Eventuell statische Methode der 'Kategorie'
-    # machen: Kategorie(basisjahr, geburtsjahr, geschlecht, disziplin)
-    def kategorie(self):
-        # TODO Tests fehlen
-        current_year = datetime.date.today().year
-        alter = current_year - self.geburtsdatum.year
-        # TODO Hack mit Kategorie Frauen (hohes Alter) entfernen
-        if self.geschlecht == 'f' and alter >= 20:
-            return Kategorie.objects.get(name='F')
-        else:
-            return Kategorie.objects.get(
-                    alter_von__lte=alter, alter_bis__gte=alter)
-
     def get_edit_text(self):
         return u" ".join([self.nummer, self.name, self.vorname])
+
 
 # Stammdaten/Konfigurationsdaten
 
@@ -248,12 +233,15 @@ class Schiffsektion(Teilnehmer):
     """
     Ein Schiff im Sektionsfahren.
     
-    Die Startnummer entspricht der Position 1,2,3,... innerhalb Gruppe, was bei
-    der Noteneingabe wichtig ist. Dies bedeutet allerdings, dass die
-    Startnummer nicht unique für eine Disziplin sein kann.
+    Position 1, 2, etc innerhalb der Gruppe ist bei der Noteneingabe wichtig.
     """
     gruppe = models.ForeignKey('Gruppe')
+    position = models.PositiveSmallIntegerField()
     schiffsart = models.CharField(max_length=1, choices=SCHIFFS_ART)
+
+    class Meta:
+        unique_together = ['gruppe', 'position']
+        ordering = ['gruppe', 'position']
 
 
 class Schiffeinzel(Teilnehmer):

@@ -8,6 +8,7 @@ from django.test import TestCase
 
 import views
 
+from forms import get_kategorie
 from forms import get_startkategorie
 from forms import WettkampfForm
 
@@ -15,6 +16,8 @@ from models import Disziplinart
 from models import Kategorie
 from models import Postenart
 from models import Wettkampf
+from models import Mitglied
+from models import Sektion
 
 from fields import UnicodeSlugField
 
@@ -259,6 +262,96 @@ class PostenPageTest(TestCase):
         self.failUnlessEqual(response.status_code, 200)
         response = self.client.post(deleteURL)
         self.assertRedirects(response, listURL)
+
+
+class EinzelfahrenStartlistePageTest(TestCase):
+
+    def setUp(self):
+        einzel = Disziplinart.objects.get(name="Einzelfahren")
+        w = Wettkampf.objects.create(name="Test-Cup", von="2009-04-04")
+        d = w.disziplin_set.create(name="klein", disziplinart=einzel)
+        d.kategorien.add(Kategorie.objects.get(name="I"))
+        bremgarten = Sektion.objects.create(name="Bremgarten")
+        Mitglied.objects.create(
+                name="Steinmann", vorname="Daniel", geschlecht="m",
+                geburtsdatum=datetime.date(1967, 4, 30),
+                sektion=bremgarten)
+        Mitglied.objects.create(
+                name="Kohler", vorname="Bernhard", geschlecht="m",
+                geburtsdatum=datetime.date(1978, 1, 1),
+                sektion=bremgarten)
+
+    def test_list(self):
+        response = self.client.get('/2009/Test-Cup/klein/startliste/')
+        self.failUnlessEqual(response.status_code, 200)
+
+    def test_add(self):
+        addURL = '/2009/Test-Cup/klein/startliste/'
+        response = self.client.get(addURL)
+        self.failUnlessEqual(response.status_code, 200)
+        response = self.client.post(addURL, {})
+        self.assertContains(response, 'This field is required')
+        response = self.client.post(addURL, {
+            'startnummer': u'1',
+            'steuermann': u'stein',
+            'vorderfahrer': u'kohler b',
+            })
+        self.assertRedirects(response, addURL)
+        response = self.client.get('/2009/Test-Cup/klein/startliste/')
+        self.failUnlessEqual(response.status_code, 200)
+        self.assertContains(response, 'Steinmann')
+
+    def test_show_teilnehmer(self):
+        addURL = '/2009/Test-Cup/klein/startliste/'
+        response = self.client.post(addURL, {
+            'startnummer': u'1',
+            'steuermann': u'stein',
+            'vorderfahrer': u'kohler b',
+            })
+        updateURL = '/2009/Test-Cup/klein/teilnehmer/1/'
+        response = self.client.get(updateURL)
+        self.assertContains(response, 'Steinmann')
+
+#TODO: TeilneherSchiffeinzelPageTest(unittest.TestCase):
+
+class get_kategorie_Test(TestCase):
+    def setUp(self):
+        self.jahr = 2009
+        self.kat_I = Kategorie.objects.get(name='I')
+        self.kat_II = Kategorie.objects.get(name='II')
+        self.kat_III = Kategorie.objects.get(name='III')
+        self.kat_C = Kategorie.objects.get(name='C')
+        self.kat_D = Kategorie.objects.get(name='D')
+        self.kat_F = Kategorie.objects.get(name='F')
+        bremgarten = Sektion.objects.create(name="Bremgarten")
+        self.mann_C = Mitglied.objects.create(
+                name="Steinmann", vorname="Daniel", geschlecht="m",
+                geburtsdatum=datetime.date(1967, 4, 30),
+                sektion=bremgarten)
+        self.mann_D = Mitglied.objects.create(
+                name="Wendel", vorname="René", geschlecht="m",
+                geburtsdatum=datetime.date(1958, 1, 1),
+                sektion=bremgarten)
+        self.frau_F = Mitglied.objects.create(
+                name="Honegger", vorname="Patricia", geschlecht="f",
+                geburtsdatum=datetime.date(1977, 1, 1),
+                sektion=bremgarten)
+        self.frau_II = Mitglied.objects.create(
+                name="Leemann", vorname="Sarah", geschlecht="f",
+                geburtsdatum=datetime.date(1993, 1, 1),
+                sektion=bremgarten)
+
+    def testFrauNichtInKatF(self):
+        self.assertEquals(self.kat_II, get_kategorie(self.jahr, self.frau_II))
+
+    def testFrau(self):
+        self.assertEquals(self.kat_F, get_kategorie(self.jahr, self.frau_F))
+
+    def testMannKatC(self):
+        self.assertEquals(self.kat_C, get_kategorie(self.jahr, self.mann_C))
+
+    def testMannKatD(self):
+        self.assertEquals(self.kat_D, get_kategorie(self.jahr, self.mann_D))
 
 
 class get_startkategorie_Test(unittest.TestCase):
