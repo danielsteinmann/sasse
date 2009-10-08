@@ -38,11 +38,11 @@ class MitgliedSearchField(ModelChoiceField):
             raise ValidationError(self.error_messages['required'])
         items = value.split()
         try:
-            zahl = int(items[0])
-            q = Mitglied.objects.filter(nummer=zahl)
+            q = Mitglied.objects.filter(nummer=items[0])
             if q.count() == 0:
                 # Falls Benutzer aus einer Liste von Mitgliedern gewählt hat
-                q = Mitglied.objects.filter(id=zahl)
+                primary_key = int(items[0])
+                q = Mitglied.objects.filter(id=primary_key)
         except ValueError:
             if len(items) == 1:
                 q = Mitglied.objects.filter(name__icontains=items[0])
