@@ -268,61 +268,37 @@ def startliste_einzelfahren(request, jahr, wettkampf, disziplin):
     assert request.method == 'GET'
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
-    searchform = StartlisteFilterForm(request.GET)
-    searchform.disziplin = d
+    s = []
+    entryform = None
+    searchform = StartlisteFilterForm(d, request.GET)
     if searchform.is_valid():
-        sektion = searchform.cleaned_data.get('sektion')
-        startnummern = searchform.cleaned_data.get('startnummern_list')
-        s = Schiffeinzel.objects.filter(disziplin=d)
-        if startnummern is not None:
-            s = s.filter(startnummer__in=startnummern)
-        if sektion is not None:
-            s = s.filter(sektion=sektion)
-        # Nächste Startnummer ist die zuletzt dargestellte Nummer plus 1
-        anzahl_total = d.teilnehmer_set.count()
-        if anzahl_total == 0:
-            naechste_nummer = 1
-        else:
-            anzahl_sichtbar = s.count()
-            if anzahl_sichtbar == 0:
-                naechste_nummer = None
-            else:
-                letzter_sichtbar = s[anzahl_sichtbar - 1]
-                naechste_nummer = letzter_sichtbar.startnummer + 1
-        form = StartlisteEntryForm(d, initial={'startnummer': naechste_nummer})
-    else:
-        s = []
-        form = None
+        s = searchform.anzeigeliste()
+        nummer = searchform.naechste_nummer(s)
+        entryform = StartlisteEntryForm(d, initial={'startnummer': nummer})
     return render_to_response('startliste_einzelfahren.html', {
         'wettkampf': w, 'disziplin': d, 'searchform': searchform,
-        'startliste': s, 'form': form,
+        'startliste': s, 'form': entryform,
         })
 
 def startliste_einzelfahren_post(request, jahr, wettkampf, disziplin):
     assert request.method == 'POST'
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
-    s = Schiffeinzel.objects.filter(disziplin=d)
-    form = StartlisteEntryForm(d, request.POST.copy())
-    if form.is_valid():
-        form.save()
+    entryform = StartlisteEntryForm(d, request.POST.copy())
+    if entryform.is_valid():
+        entryform.save()
         url = reverse(startliste, args=[jahr, wettkampf, disziplin])
         query = request.META.get('QUERY_STRING')
         if query:
             url = "%s?%s" % (url, query)
         return HttpResponseRedirect(url)
-    searchform = StartlisteFilterForm(request.GET)
-    searchform.disziplin = d
+    searchform = StartlisteFilterForm(d, request.GET)
     if searchform.is_valid():
-        sektion = searchform.cleaned_data.get('sektion')
-        startnummern = searchform.cleaned_data.get('startnummern_list')
-        if startnummern is not None:
-            s = s.filter(startnummer__in=startnummern)
-        if sektion is not None:
-            s = s.filter(sektion=sektion)
-    return render_to_response('startliste_einzelfahren.html',
-            {'wettkampf': w, 'disziplin': d, 'startliste': s, 'form': form,
-                'searchform': searchform})
+        s = searchform.anzeigeliste()
+    return render_to_response('startliste_einzelfahren.html', {
+        'wettkampf': w, 'disziplin': d, 'searchform': searchform,
+        'startliste': s, 'form': entryform,
+        })
 
 def teilnehmer_get(request, jahr, wettkampf, disziplin, startnummer):
     assert request.method == 'GET'

@@ -192,6 +192,10 @@ class StartlisteFilterForm(Form):
                 },
             )
 
+    def __init__(self, disziplin, *args, **kwargs):
+        super(StartlisteFilterForm, self).__init__(*args, **kwargs)
+        self.disziplin = disziplin
+
     # TODO Nur den Startnummern String parsen, kein Database Lookup:
     #
     #   input = '1,3,5,1-20,30-50,-100,500-'
@@ -268,6 +272,32 @@ class StartlisteFilterForm(Form):
             cleaned_data['startnummern_list'] = result
 
         return startnummern
+
+    def anzeigeliste(self, visible=10):
+        sektion = self.cleaned_data.get('sektion')
+        startnummern = self.cleaned_data.get('startnummern_list')
+        result = Schiffeinzel.objects.filter(disziplin=self.disziplin)
+        if startnummern is None and sektion is None:
+            # Performance: Nur die letzten n Eintraege darstellen
+            last = result.count()
+            almostlast = last - visible
+            if almostlast > 0:
+                result = result.filter()[almostlast:last]
+        if startnummern is not None:
+            result = result.filter(startnummer__in=startnummern)
+        if sektion is not None:
+            result = result.filter(sektion=sektion)
+        return result
+
+    def naechste_nummer(self, startliste):
+        """Nächste Startnummer ist die zuletzt dargestellte Nummer plus 1"""
+        anzahl_sichtbar = startliste.count()
+        if anzahl_sichtbar == 0:
+            result = 1
+        else:
+            letzter_sichtbar = startliste[anzahl_sichtbar - 1]
+            result = letzter_sichtbar.startnummer + 1
+        return result
 
 
 class StartlisteEntryForm(ModelForm):
