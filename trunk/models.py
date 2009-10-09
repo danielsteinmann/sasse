@@ -192,7 +192,7 @@ class Teilnehmer(models.Model):
     Die gemeinsamen Attribute für einen Teilnehmer an einem Wettkampf.
     """
     disziplin = models.ForeignKey('Disziplin')
-    startnummer = models.PositiveIntegerField()
+    startnummer = models.PositiveIntegerField(unique=True)
     disqualifiziert = models.BooleanField(default=False)
     ausgeschieden = models.BooleanField(default=False)
 

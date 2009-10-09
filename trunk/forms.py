@@ -176,7 +176,7 @@ class PostenEditForm(PostenListForm):
         self.fields['reihenfolge'].widget = TextInput(attrs={'size':'2'})
 
 
-class StartlisteFilterForm(Form):
+class SchiffeinzelFilterForm(Form):
     disziplin = None
     sektion = ModelChoiceField(
             required=False,
@@ -193,7 +193,7 @@ class StartlisteFilterForm(Form):
             )
 
     def __init__(self, disziplin, *args, **kwargs):
-        super(StartlisteFilterForm, self).__init__(*args, **kwargs)
+        super(SchiffeinzelFilterForm, self).__init__(*args, **kwargs)
         self.disziplin = disziplin
 
     # TODO Nur den Startnummern String parsen, kein Database Lookup:
@@ -300,45 +300,45 @@ class StartlisteFilterForm(Form):
         return result
 
 
-class StartlisteEntryForm(ModelForm):
+class SchiffeinzelEditForm(ModelForm):
     steuermann = MitgliedSearchField(queryset=Mitglied.objects.all())
     vorderfahrer = MitgliedSearchField(queryset=Mitglied.objects.all())
-
-    def __init__(self, disziplin, *args, **kwargs):
-        super(StartlisteEntryForm, self).__init__(*args, **kwargs)
-        self.data['disziplin'] = disziplin.id
-        self.fields['startnummer'].widget = TextInput(attrs={'size':'2'})
-        # Folgende Felder werden in clean() gesetzt, deshalb nicht required
-        self.fields['sektion'].required = False
-        self.fields['kategorie'].required = False
-        self.fields['schiffsart'].required = False
 
     class Meta:
         model = Schiffeinzel
 
-    # TODO super.validate_unique() wird nicht aufgerufen, weil es eine
-    # Subklasse ist: Wahrscheinlich ein Fehler in Django
-    def clean_startnummer(self):
-        cleaned_data = self.cleaned_data
-        startnummer = cleaned_data.get('startnummer')
-        disziplin = cleaned_data.get('disziplin')
-        q = Teilnehmer.objects.filter(
-                disziplin=disziplin,
-                startnummer=startnummer,
-                )
-        q = q.exclude(id=self.instance.id)
-        if q.count() > 0:
-            raise ValidationError(
-                    u"Startnummer '%s' ist bereits vergeben" % (startnummer))
-        return startnummer
+    def __init__(self, disziplin, *args, **kwargs):
+        super(SchiffeinzelEditForm, self).__init__(*args, **kwargs)
+        self.data['disziplin'] = disziplin.id
+        self.fields['schiffsart'].required = False
 
-    def _set_data(self, mitglied, field_name):
+    def set_display_value(self, mitglied, field_name):
         if mitglied:
             self.data[field_name] = mitglied.get_edit_text()
         else:
             field = self.fields[field_name]
             if isinstance(field.widget, Select):
                 self.data[field_name] = field.queryset[0].id
+
+    def clean(self):
+        super(ModelForm, self).clean()
+        cleaned_data = self.cleaned_data
+        steuermann = cleaned_data.get('steuermann')
+        vorderfahrer = cleaned_data.get('vorderfahrer')
+        self.set_display_value(steuermann, 'steuermann')
+        self.set_display_value(vorderfahrer, 'vorderfahrer')
+        return cleaned_data
+
+
+class SchiffeinzelListForm(SchiffeinzelEditForm):
+
+    def __init__(self, disziplin, *args, **kwargs):
+        super(SchiffeinzelListForm, self).__init__(disziplin, *args, **kwargs)
+        self.fields['startnummer'].widget = TextInput(attrs={'size':'2'})
+        self.fields['sektion'].widget = HiddenInput()
+        # Folgende Felder werden in clean() gesetzt, deshalb nicht required
+        self.fields['sektion'].required = False
+        self.fields['kategorie'].required = False
 
     #
     # TODO Doppelstarter Info darstellen, falls gleicher Fahrer mit frühere
@@ -349,20 +349,19 @@ class StartlisteEntryForm(ModelForm):
     # Startnummernblöcke definiert
     #
     def clean(self):
-        super(ModelForm, self).clean()
+        super(SchiffeinzelListForm, self).clean()
         cleaned_data = self.cleaned_data
         disziplin = cleaned_data.get('disziplin')
         steuermann = cleaned_data.get('steuermann')
         vorderfahrer = cleaned_data.get('vorderfahrer')
-        self._set_data(steuermann, 'steuermann')
-        self._set_data(vorderfahrer, 'vorderfahrer')
+        sektion = cleaned_data.get('sektion')
         if steuermann and vorderfahrer:
             if steuermann == vorderfahrer:
                 text = u"Steuermann kann nicht gleichzeitig Vorderfahrer sein"
                 raise ValidationError(text)
-            if steuermann.sektion != vorderfahrer.sektion:
-                # TODO: Als Warnung darstellen, die der Benutzer quittieren muss
-                text = u"Steuermann fährt für '%s', Vorderfahrer für '%s'. Soll das Schiff für die Sektion des Steuermann fahren?" % (steuermann.sektion, vorderfahrer.sektion)
+            if steuermann.sektion != vorderfahrer.sektion and not sektion:
+                text = u"Steuermann fährt für '%s', Vorderfahrer für '%s'. Das Schiff wird für '%s' fahren" % (steuermann.sektion, vorderfahrer.sektion, steuermann.sektion)
+                self.data['sektion'] = steuermann.sektion.id
                 raise ValidationError(text)
             cleaned_data['sektion'] = steuermann.sektion
             jahr = disziplin.wettkampf.jahr()
@@ -370,16 +369,7 @@ class StartlisteEntryForm(ModelForm):
             vorderfahrer_kat = get_kategorie(jahr, vorderfahrer)
             startkategorie = get_startkategorie(steuermann_kat, vorderfahrer_kat)
             if startkategorie is None:
-                # TODO: Als Warnung darstellen, die der Benutzer quittieren muss
-                text = u"Steuermann hat Kategorie '%s', Vorderfahrer Kategorie '%s'. Das eine unbekannte Kombination. Bitte manuell eine Kategorie wählen." % (steuermann_kat, vorderfahrer_kat)
+                text = u"Steuermann hat Kategorie '%s', Vorderfahrer Kategorie '%s'. Das ist eine unerlaubte Kombination." % (steuermann_kat, vorderfahrer_kat)
                 raise ValidationError(text)
             cleaned_data['kategorie'] = startkategorie
         return cleaned_data
-
-
-class SchiffeinzelEditForm(StartlisteEntryForm):
-
-    def __init__(self, disziplin, *args, **kwargs):
-        super(SchiffeinzelEditForm, self).__init__(disziplin, *args, **kwargs)
-        self.fields['sektion'].required = True
-        self.fields['kategorie'].required = True

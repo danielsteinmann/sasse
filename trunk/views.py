@@ -15,8 +15,8 @@ from forms import DisziplinForm
 from forms import PostenEditForm
 from forms import PostenListForm
 from forms import SchiffeinzelEditForm
-from forms import StartlisteEntryForm
-from forms import StartlisteFilterForm
+from forms import SchiffeinzelListForm
+from forms import SchiffeinzelFilterForm
 from forms import WettkampfForm
 
 
@@ -270,11 +270,11 @@ def startliste_einzelfahren(request, jahr, wettkampf, disziplin):
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
     s = []
     entryform = None
-    searchform = StartlisteFilterForm(d, request.GET)
+    searchform = SchiffeinzelFilterForm(d, request.GET)
     if searchform.is_valid():
         s = searchform.anzeigeliste()
         nummer = searchform.naechste_nummer(s)
-        entryform = StartlisteEntryForm(d, initial={'startnummer': nummer})
+        entryform = SchiffeinzelListForm(d, initial={'startnummer': nummer})
     return render_to_response('startliste_einzelfahren.html', {
         'wettkampf': w, 'disziplin': d, 'searchform': searchform,
         'startliste': s, 'form': entryform,
@@ -284,7 +284,7 @@ def startliste_einzelfahren_post(request, jahr, wettkampf, disziplin):
     assert request.method == 'POST'
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
-    entryform = StartlisteEntryForm(d, request.POST.copy())
+    entryform = SchiffeinzelListForm(d, request.POST.copy())
     if entryform.is_valid():
         entryform.save()
         url = reverse(startliste, args=[jahr, wettkampf, disziplin])
@@ -292,7 +292,7 @@ def startliste_einzelfahren_post(request, jahr, wettkampf, disziplin):
         if query:
             url = "%s?%s" % (url, query)
         return HttpResponseRedirect(url)
-    searchform = StartlisteFilterForm(d, request.GET)
+    searchform = SchiffeinzelFilterForm(d, request.GET)
     if searchform.is_valid():
         s = searchform.anzeigeliste()
     return render_to_response('startliste_einzelfahren.html', {

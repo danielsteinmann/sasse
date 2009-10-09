@@ -35,18 +35,13 @@ Startnummern {{ searchform.startnummern }}
   {% if form.non_field_errors %}
   <tr>
     <td colspan="5">{{ form.non_field_errors }}</td>
-    <!--
-    <td><input type="checkbox" value="id_einverstanden"/> einverstanden</td>
-    -->
   </tr>
   {% endif %}
   <tr>
     <td>{{ form.startnummer.errors }}{{ form.startnummer }}</td>
     <td>{{ form.steuermann.errors }}{{ form.steuermann }}</td>
     <td>{{ form.vorderfahrer.errors }}{{ form.vorderfahrer }}</td>
-    <td></td>
-    <td></td>
-    <td><input type="submit" value="Teilnehmer hinzufügen"/></td>
+    <td colspan="2">{{ form.sektion }}<input type="submit" value="Teilnehmer hinzufügen"/></td>
   </tr>
 </table>
 <p>
