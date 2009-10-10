@@ -109,15 +109,15 @@ class DisziplinForm(ModelForm):
         cleaned_data = self.cleaned_data
         name = cleaned_data.get('name')
         if self.instance.id is None and name == self.INITIAL_NAME:
-             cleaned_data['name'] = self._default_name()
+            cleaned_data['name'] = self._default_name()
+            # Display newly created name in case of ValidationError
+            self.data['name'] = cleaned_data['name']
         q = Disziplin.objects.filter(
                 wettkampf=cleaned_data['wettkampf'],
                 name=cleaned_data.get('name'))
         # Remove current object from queryset
         q = q.exclude(id=self.instance.id)
         if q.count() > 0:
-            # Make sure newly created name is displayed
-            self.data['name'] = cleaned_data['name']
             raise ValidationError(
                     u"Für den Wettkampf '%s' ist der Name '%s' bereits vergeben"
                         % (cleaned_data['wettkampf'], cleaned_data['name']))

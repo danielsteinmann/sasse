@@ -8,7 +8,9 @@ from django.test import TestCase
 from sasse.forms import get_kategorie
 from sasse.forms import get_startkategorie
 from sasse.forms import WettkampfForm
+from sasse.forms import DisziplinForm
 
+from sasse.models import Disziplinart
 from sasse.models import Kategorie
 from sasse.models import Wettkampf
 from sasse.models import Mitglied
@@ -69,6 +71,70 @@ class WettkampfFormTest(TestCase):
             }, instance=w2009)
         self.failUnless(self.form.is_valid(), self.form.errors)
 
+
+class DisziplinFormTest(TestCase):
+    def setUp(self):
+        wettkampf = Wettkampf.objects.create(
+                name="Test-Cup",
+                zusatz="Bremgarten",
+                von="2009-04-04"
+                )
+        art = Disziplinart.objects.get(name="Einzelfahren")
+        Disziplin.objects.create(name="Einzelfahren-test", disziplinart=art)
+        self.form = DisziplinForm(wettkampf, data={
+            'name': 'Einzelfahren-I',
+            'disziplinart': art.id
+            })
+
+    def test_valid(self):
+        self.failUnless(self.form.is_valid(), self.form.errors)
+
+    def test_invalid_name(self):
+        self.form.data['name'] = u'No Spaces'
+        self.failUnless(self.form.errors.has_key('name'))
+        expected = UnicodeSlugField.default_error_messages['invalid']
+        self.failUnless(expected in self.form.errors['name'])
+
+    def test_default_name(self):
+        art = Disziplinart.objects.get(name="Einzelfahren")
+        k1 = Kategorie.objects.get(name='I')
+        k2 = Kategorie.objects.get(name='II')
+        self.form.data['name'] = DisziplinForm.INITIAL_NAME
+        self.form.data['kategorien'] = (k1.id, k2.id)
+        self.failUnless(self.form.is_valid(), self.form.errors)
+        self.assertEquals(self.form.data['name'], "Einzelfahren-I-II")
+
+    def test_duplicate_name_for_new_disziplin(self):
+        saved_disziplin = self.form.save()
+        newform = DisziplinForm(saved_disziplin.wettkampf, data={
+            'name': saved_disziplin.name,
+            'disziplinart': saved_disziplin.id,
+            })
+        expected = u"Für den Wettkampf 'Test-Cup' ist der Name 'Einzelfahren-I' bereits vergeben"
+        errors = newform.non_field_errors()
+        self.failUnless(expected in errors, errors)
+
+    def test_duplicate_name_for_existing_disziplin(self):
+        saved_disziplin = self.form.save()
+        new_disziplin = DisziplinForm(saved_disziplin.wettkampf, data={
+            'name': 'neuer-name',
+            'disziplinart': saved_disziplin.id,
+            }).save()
+        newform = DisziplinForm(saved_disziplin.wettkampf, data={
+            'name': saved_disziplin.name,
+            'disziplinart': saved_disziplin.id,
+            }, instance=new_disziplin)
+        expected = u"Für den Wettkampf 'Test-Cup' ist der Name 'Einzelfahren-I' bereits vergeben"
+        errors = newform.non_field_errors()
+        self.failUnless(expected in errors, errors)
+
+    def test_update_existing_disziplin(self):
+        saved_disziplin = self.form.save()
+        newform = DisziplinForm(saved_disziplin.wettkampf, data={
+            'name': 'some-new-name',
+            'disziplinart': saved_disziplin.id,
+            }, instance=saved_disziplin)
+        self.failUnless(self.form.is_valid(), self.form.errors)
 
 class get_kategorie_Test(TestCase):
     def setUp(self):
