@@ -80,7 +80,6 @@ class DisziplinFormTest(TestCase):
                 von="2009-04-04"
                 )
         art = Disziplinart.objects.get(name="Einzelfahren")
-        Disziplin.objects.create(name="Einzelfahren-test", disziplinart=art)
         self.form = DisziplinForm(wettkampf, data={
             'name': 'Einzelfahren-I',
             'disziplinart': art.id
