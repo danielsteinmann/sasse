@@ -2,6 +2,7 @@
 
 import datetime
 import re
+from decimal import Decimal
 
 from django.db.models import Q
 from django.forms import CharField
@@ -14,6 +15,7 @@ from django.forms import Select
 from django.forms import TextInput
 from django.forms import ValidationError
 
+from models import Bewertung
 from models import Disziplin
 from models import Kategorie
 from models import Mitglied
@@ -26,6 +28,7 @@ from models import Wettkampf
 
 from fields import MitgliedSearchField
 from fields import UnicodeSlugField
+
 
 def get_startkategorie(a, b):
     if a == b:
@@ -109,18 +112,11 @@ class DisziplinForm(ModelForm):
         cleaned_data = self.cleaned_data
         name = cleaned_data.get('name')
         if self.instance.id is None and name == self.INITIAL_NAME:
-            cleaned_data['name'] = self._default_name()
-            # Display newly created name in case of ValidationError
-            self.data['name'] = cleaned_data['name']
-        q = Disziplin.objects.filter(
-                wettkampf=cleaned_data['wettkampf'],
-                name=cleaned_data.get('name'))
-        # Remove current object from queryset
-        q = q.exclude(id=self.instance.id)
-        if q.count() > 0:
-            raise ValidationError(
-                    u"Für den Wettkampf '%s' ist der Name '%s' bereits vergeben"
-                        % (cleaned_data['wettkampf'], cleaned_data['name']))
+            name = self._default_name()
+            cleaned_data['name'] = name
+            # Zeige generierten Name falls ein ValidationError auftritt
+            self.data['name'] = name
+        super(DisziplinForm, self).clean()
         return cleaned_data
 
     def _default_name(self):
@@ -133,7 +129,7 @@ class DisziplinForm(ModelForm):
 
 
 class PostenListForm(ModelForm):
-    name = UnicodeSlugField(widget=TextInput(attrs={'size':'3'}))
+    name = UnicodeSlugField(widget=TextInput(attrs={'size':'3'}), label='Name')
 
     class Meta:
         model = Posten
@@ -146,19 +142,6 @@ class PostenListForm(ModelForm):
         self.fields["postenart"].queryset = Postenart.objects.filter(
                 disziplinarten = disziplin.disziplinart.id
                 )
-
-    def clean_name(self):
-        cleaned_data = self.cleaned_data
-        name = cleaned_data.get('name')
-        q = Posten.objects.filter(
-                disziplin=cleaned_data.get('disziplin'),
-                name=cleaned_data.get('name'))
-        # Remove current object from queryset
-        q = q.exclude(id=self.instance.id)
-        if q.count() > 0:
-            raise ValidationError(
-                    u"Der Name '%s' ist bereits vergeben" % (name))
-        return name
 
     def clean(self):
         super(ModelForm, self).clean()
@@ -373,3 +356,34 @@ class SchiffeinzelListForm(SchiffeinzelEditForm):
                 raise ValidationError(text)
             cleaned_data['kategorie'] = startkategorie
         return cleaned_data
+
+
+# TODO: Problem mit Abzug lösen, wo man z.B. 3 Punkte Abzug eingibt, aber auf
+# der Datenbank eine 7 speichern muss (10 ist das Maximum, 3 ist der Abzug).
+# Das gilt für die meisten Posten, ausser die Anmeldung.
+class BewertungForm(ModelForm):
+
+    class Meta:
+        model = Bewertung
+
+    def __init__(self, teilnehmer, posten, bewertungsart, *args, **kwargs):
+        super(BewertungForm, self).__init__(*args, **kwargs)
+        self.data['teilnehmer'] = teilnehmer.id
+        self.data['posten'] = posten.id
+        self.data['bewertungsart'] = bewertungsart.id
+        if self.instance.id:
+            self.initial['wert'] = self.instance.wert * bewertungsart.signum
+        else:
+            if self.initial.get('wert') is None:
+                self.initial['wert'] = bewertungsart.defaultwert
+        self.bewertungsart = bewertungsart
+
+    def clean_wert(self):
+        wert = self.cleaned_data.get('wert')
+        # TODO: Richtiger Wertebereich überprüfen
+        if self.bewertungsart.einheit == 'PUNKT' and wert % 1 not in (0, Decimal('0.5')):
+            msg = u'%d muss entweder eine ganze Zahl oder eine ganze Zahl plus 0.5 sein' % wert
+            raise ValidationError(msg)
+        # Wert wird wenn nötig als negative Zahl gespeichert, damit man
+        # einfacher mit SQL sum() arbeiten kann.
+        return wert * self.bewertungsart.signum

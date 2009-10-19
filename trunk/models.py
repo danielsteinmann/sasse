@@ -105,9 +105,8 @@ class Bewertungsart(models.Model):
     einheit = models.CharField(max_length=1, choices=EINHEIT_TYP)
     wertebereich = models.CharField(max_length=50) # 1,2-10 oder ganze/gebrochene Sekunden
     defaultwert = models.DecimalField(max_digits=4, decimal_places=2)
-    maximalwert = models.DecimalField(max_digits=4, decimal_places=2)
     reihenfolge = models.SmallIntegerField(default=1) # Was kommt auf GUI zuerst
-    postenarten = models.ForeignKey('Postenart')
+    postenart = models.ForeignKey('Postenart')
 
     def __unicode__(self):
         return u'%s' % (self.name,)
@@ -181,9 +180,9 @@ class Bewertung(models.Model):
     """
     Wert ist entweder Anzahl Punkte oder Zeit in Hundertstel Sekunden.
     """
-    bewertungsart = models.ForeignKey('Bewertungsart')
-    posten = models.ForeignKey('Posten')
     teilnehmer = models.ForeignKey('Teilnehmer')
+    posten = models.ForeignKey('Posten')
+    bewertungsart = models.ForeignKey('Bewertungsart')
     wert = models.DecimalField(max_digits=4, decimal_places=2)
 
 
