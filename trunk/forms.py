@@ -6,6 +6,8 @@ from decimal import Decimal
 
 from django.db.models import Q
 from django.forms import CharField
+from django.forms import DecimalField
+from django.forms import IntegerField
 from django.forms import Form
 from django.forms import HiddenInput
 from django.forms import ModelChoiceField
@@ -15,7 +17,11 @@ from django.forms import Select
 from django.forms import TextInput
 from django.forms import ValidationError
 
+from django.forms.formsets import BaseFormSet
+from django.forms.formsets import formset_factory
+
 from models import Bewertung
+from models import Bewertungsart
 from models import Disziplin
 from models import Kategorie
 from models import Mitglied
@@ -361,29 +367,96 @@ class SchiffeinzelListForm(SchiffeinzelEditForm):
 # TODO: Problem mit Abzug lösen, wo man z.B. 3 Punkte Abzug eingibt, aber auf
 # der Datenbank eine 7 speichern muss (10 ist das Maximum, 3 ist der Abzug).
 # Das gilt für die meisten Posten, ausser die Anmeldung.
-class BewertungForm(ModelForm):
+class BewertungForm(Form):
+    id = IntegerField(required=False, widget=HiddenInput())
+    teilnehmer = IntegerField(widget=HiddenInput())
+    wert = DecimalField(max_digits=4, decimal_places=2,
+            widget=TextInput(attrs={'size': '1'}))
 
-    class Meta:
-        model = Bewertung
-
-    def __init__(self, teilnehmer, posten, bewertungsart, *args, **kwargs):
+    def __init__(self, *args, **kwargs):
+        self.posten = kwargs.pop("posten")
+        self.bewertungsart = kwargs.pop("bewertungsart")
         super(BewertungForm, self).__init__(*args, **kwargs)
-        self.data['teilnehmer'] = teilnehmer.id
-        self.data['posten'] = posten.id
-        self.data['bewertungsart'] = bewertungsart.id
-        if self.instance.id:
-            self.initial['wert'] = self.instance.wert * bewertungsart.signum
-        else:
-            if self.initial.get('wert') is None:
-                self.initial['wert'] = bewertungsart.defaultwert
-        self.bewertungsart = bewertungsart
+        wert = self.bewertungsart.defaultwert
+        if self.initial.get('id') is not None:
+            wert = self.initial['wert'] * self.bewertungsart.signum
+        self.initial['wert'] = wert
 
     def clean_wert(self):
         wert = self.cleaned_data.get('wert')
         # TODO: Richtiger Wertebereich überprüfen
         if self.bewertungsart.einheit == 'PUNKT' and wert % 1 not in (0, Decimal('0.5')):
-            msg = u'%d muss entweder eine ganze Zahl oder eine ganze Zahl plus 0.5 sein' % wert
+            msg = u'Nur ganze Zahlen oder Vielfaches von 0.5 erlaubt' % wert
             raise ValidationError(msg)
         # Wert wird wenn nötig als negative Zahl gespeichert, damit man
         # einfacher mit SQL sum() arbeiten kann.
         return wert * self.bewertungsart.signum
+
+    def has_changed(self):
+        """
+        Mit diesem Trick liefert form.cleaned_data.get('wert') *immer* einen
+        Wert zurück, auch wenn der Benutzer nichts ändert und somit den
+        Default Wert speichern möchte.
+
+        Das ist nötig für die Erstellung der Rangliste, weil für jeden
+        Teilnehmer/Posten/Bewertungsart ein Record in Bewertung stehen muss.
+        """
+        if self.initial.get('id') is None:
+            return True
+        else:
+            return super(BewertungForm, self).has_changed()
+
+    def save(self):
+        if self.has_changed():
+            b = Bewertung()
+            b.id = self.cleaned_data['id']
+            b.teilnehmer_id = self.cleaned_data['teilnehmer']
+            b.wert = self.cleaned_data['wert']
+            b.posten_id = self.posten.id
+            b.bewertungsart_id = self.bewertungsart.id
+            b.save()
+            return b
+
+
+class BewertungBaseFormSet(BaseFormSet):
+    def __init__(self, *args, **kwargs):
+        self.posten = kwargs.pop("posten")
+        self.bewertungsart = kwargs.pop("bewertungsart")
+        self.startliste = kwargs.pop("startliste")
+        self.extra = len(self.startliste)
+        # Mit Hilfe eines einzigen Select (Performance) sich merken, zu
+        # welchem Teilnehmer bereits eine Bewertung existiert
+        self.bewertung = {}
+        ids = [t.id for t in self.startliste]
+        for b in Bewertung.objects.filter(posten=self.posten,
+                bewertungsart=self.bewertungsart, teilnehmer__id__in=ids):
+            self.bewertung[b.teilnehmer.id] = b
+        super(BewertungBaseFormSet, self).__init__(*args, **kwargs)
+
+    def _construct_form(self, i, **kwargs):
+        kwargs["posten"] = self.posten
+        kwargs["bewertungsart"] = self.bewertungsart
+        initial = {}
+        teilnehmer = self.startliste[i]
+        instance = self.bewertung.get(teilnehmer.id)
+        if instance is not None:
+            initial['id'] = instance.id
+            initial['wert'] = instance.wert
+        initial['teilnehmer'] = teilnehmer.id
+        kwargs["initial"] = initial
+        return super(BewertungBaseFormSet, self)._construct_form(i, **kwargs)
+
+    def save(self):
+        for form in self.forms:
+            form.save()
+
+
+def create_postenblatt_formsets(posten, startliste=None, data=None):
+    FormSet = formset_factory(form=BewertungForm, formset=BewertungBaseFormSet)
+    result = []
+    for art in Bewertungsart.objects.filter(postenart=posten.postenart):
+        formset = FormSet(posten=posten, bewertungsart=art, prefix=art.name,
+                startliste=startliste, data=data)
+        result.append(formset)
+    return result
+

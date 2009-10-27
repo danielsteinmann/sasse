@@ -108,6 +108,9 @@ class Bewertungsart(models.Model):
     reihenfolge = models.SmallIntegerField(default=1) # Was kommt auf GUI zuerst
     postenart = models.ForeignKey('Postenart')
 
+    class Meta:
+        ordering = ['reihenfolge']
+
     def __unicode__(self):
         return u'%s' % (self.name,)
 
@@ -171,6 +174,9 @@ class Posten(models.Model):
     postenart = models.ForeignKey('Postenart')
     reihenfolge = models.PositiveIntegerField()
 
+    def __unicode__(self):
+        return u'%s' % (self.name,)
+
     class Meta:
         unique_together = ['disziplin', 'name']
         ordering = ['reihenfolge']
@@ -185,6 +191,9 @@ class Bewertung(models.Model):
     bewertungsart = models.ForeignKey('Bewertungsart')
     wert = models.DecimalField(max_digits=4, decimal_places=2)
 
+    class Meta:
+        unique_together = ('teilnehmer', 'posten', 'bewertungsart')
+
 
 class Teilnehmer(models.Model):
     """
@@ -194,6 +203,9 @@ class Teilnehmer(models.Model):
     startnummer = models.PositiveIntegerField()
     disqualifiziert = models.BooleanField(default=False)
     ausgeschieden = models.BooleanField(default=False)
+
+    def __unicode__(self):
+        return u'%d' % (self.startnummer,)
 
     class Meta:
         unique_together = ('disziplin', 'startnummer')

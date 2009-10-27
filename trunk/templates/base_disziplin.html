@@ -20,7 +20,7 @@
   <li class="{% block nav_startliste %}{% endblock %}">
     <a href="{% url startliste wettkampf.jahr, wettkampf.name, disziplin.name %}">Startliste</a></li>
   <li class="{% block nav_bewertungen %}{% endblock %}">
-    <a href="#">Bewertungen</a></li>
+    <a href="{% url bewertungen wettkampf.jahr, wettkampf.name, disziplin.name %}">Bewertungen</a></li>
   <li class="{% block nav_rangliste %}{% endblock %}">
     <a href="#">Rangliste</a></li>
 </ul>

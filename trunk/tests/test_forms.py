@@ -175,8 +175,9 @@ class BewertungFormTest(TestCase):
                 reihenfolge=1)
 
     def test_valid(self):
-        form = BewertungForm(self.startnr_1, self.posten_a,
-                self.antreten_abzug, data={'wert': '1.0',})
+        form = BewertungForm(posten=self.posten_a,
+                bewertungsart=self.antreten_abzug, data={'wert': '1.0',
+                    'teilnehmer': self.startnr_1.id,})
         self.failUnless(form.is_valid(), form.errors)
         b = form.save()
         # Die IDs müssen richtig verdrahtet sein
@@ -185,27 +186,33 @@ class BewertungFormTest(TestCase):
         self.assertEquals(self.antreten_abzug, b.bewertungsart)
 
     def test_valid_halbe_zahl(self):
-        form = BewertungForm(self.startnr_1, self.posten_a,
-                self.antreten_abzug, data={'wert': '1.5',})
+        form = BewertungForm(posten=self.posten_a,
+                bewertungsart=self.antreten_abzug, data={'wert': '1.5',
+                    'teilnehmer': self.startnr_1.id,})
         self.failUnless(form.is_valid(), form.errors)
 
     def test_invalid_wert(self):
-        form = BewertungForm(self.startnr_1, self.posten_a,
-                self.antreten_abzug, data={'wert': '1.9',})
+        form = BewertungForm(posten=self.posten_a,
+                bewertungsart=self.antreten_abzug, data={'wert': '1.9',
+                    'teilnehmer': self.startnr_1.id,})
         self.failUnless(form.errors.has_key('wert'))
 
     def test_default_wert(self):
-        form = BewertungForm(self.startnr_1, self.posten_a,
-                self.antreten_abzug)
+        form = BewertungForm(posten=self.posten_a,
+                bewertungsart=self.antreten_abzug, data={'teilnehmer':
+                    self.startnr_1.id,})
         expected = self.antreten_abzug.defaultwert
         self.assertEquals(expected, form.initial.get('wert'))
 
     def test_signum(self):
-        create_form = BewertungForm(self.startnr_1, self.posten_a,
-                self.antreten_abzug, data={'wert': '1.0',})
+        create_form = BewertungForm(posten=self.posten_a,
+                bewertungsart=self.antreten_abzug, data={'wert': '1.0',
+                    'teilnehmer': self.startnr_1.id,})
+        self.failUnless(create_form.is_valid(), create_form.errors)
         saved = create_form.save()
         self.assertEquals(-1, saved.wert)
-        edit_form = BewertungForm(self.startnr_1, self.posten_a,
-                self.antreten_abzug, instance=saved)
+        edit_form = BewertungForm(posten=self.posten_a,
+                bewertungsart=self.antreten_abzug, initial={'id': saved.id,
+                    'wert': saved.wert,})
         self.assertEquals(+1, edit_form.initial['wert'])
 

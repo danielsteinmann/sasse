@@ -39,6 +39,10 @@ urlpatterns = patterns('',
         views.teilnehmer_update, {}, "teilnehmer_update"),
     (r'^(?P<jahr>\d+)/(?P<wettkampf>[-\w]+)/(?P<disziplin>[-\w]+)/teilnehmer/(?P<startnummer>\d+)/delete/$',
         views.teilnehmer_delete_confirm, {}, "teilnehmer_delete_confirm"),
+    (r'^(?P<jahr>\d+)/(?P<wettkampf>[-\w]+)/(?P<disziplin>[-\w]+)/bewertungen/$',
+        views.bewertungen, {}, "bewertungen"),
+    (r'^(?P<jahr>\d+)/(?P<wettkampf>[-\w]+)/(?P<disziplin>[-\w]+)/postenblatt/(?P<posten>[-\w]+)/$',
+        views.postenblatt, {}, "postenblatt"),
 )
 
 #---- Wettkaempfe

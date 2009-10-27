@@ -1,0 +1,49 @@
+{% extends "base_bewertungen.html" %}
+
+{% block content %}
+
+Postenblatt:{% for p in disziplin.posten_set.all %}
+{% ifequal p.id posten.id %}<b>{{ p.name }}</b>
+{% else %}<a href="{% url postenblatt wettkampf.jahr, wettkampf.name, disziplin.name, p.name %}">{{ p.name }}</a>
+{% endifequal %}{% if not forloop.last %} | {% endif %}{% endfor %}
+<p>
+<b>{{ posten.name }} - {{ posten.postenart.name }}</b>
+<p>
+<form id="myform" name="myform" action="" method="POST">
+  {% for set in formset %}{{ set.management_form }}
+  {% endfor %}
+  <table class="list">
+      <tr>
+          <td>Startnr</td>
+          {% for t in startliste %}
+          <th>{{ t.startnummer }}</th>
+          {% endfor %}
+      </tr>
+      {% for set in formset %}
+      <tr>
+          <th>{{ set.bewertungsart.name }}</th>
+          {% for form in set.forms %}
+          <td>{{ form.wert.errors }}{{ form.wert }} {{ form.teilnehmer }}{{ form.id }}</td>
+          {% endfor %}
+      </tr>
+      {% endfor %}
+  </table>
+  <p>
+  <input type="submit" value="Speichern und Weiter">
+</form>
+<script type="text/javascript">
+  (function() {
+     var forms = document.forms || [];
+     for (var i=0; i<forms.length; i++) {
+       for (var j=0; j<forms[i].length; j++) {
+          if (forms[i][j].type != "hidden" && forms[i][j].disabled != true
+              && forms[i][j].style.display != 'none') {
+           forms[i][j].focus();
+           forms[i][j].select();
+           return;
+         }
+       }
+     }
+   })();
+</script>
+{% endblock %}

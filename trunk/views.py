@@ -1,15 +1,20 @@
 # -*- coding: utf-8 -*-
 
+from decimal import Decimal
+
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.http import Http404
 from django.shortcuts import render_to_response
+from django.forms.formsets import all_valid
 
 from models import Wettkampf
 from models import Disziplin
 from models import Disziplinart
 from models import Posten
+from models import Teilnehmer
 from models import Schiffeinzel
+from models import Bewertung
 
 from forms import DisziplinForm
 from forms import PostenEditForm
@@ -18,7 +23,7 @@ from forms import SchiffeinzelEditForm
 from forms import SchiffeinzelListForm
 from forms import SchiffeinzelFilterForm
 from forms import WettkampfForm
-
+from forms import create_postenblatt_formsets
 
 # TODO: Mögliche Apps:
 #  - basis: Stammdaten
@@ -356,3 +361,51 @@ def teilnehmer_delete(request, jahr, wettkampf, disziplin, startnummer):
     t.delete()
     url = reverse(startliste, args=[jahr, wettkampf, disziplin])
     return HttpResponseRedirect(url)
+
+def bewertungen(request, jahr, wettkampf, disziplin):
+    assert request.method == 'GET'
+    w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
+    d = Disziplin.objects.get(wettkampf=w, name=disziplin)
+    if d.posten_set.count() == 0:
+        raise Http404(u"Es sind noch keine Posten definiert")
+    posten = d.posten_set.all()[0]
+    url = reverse(postenblatt, args=[jahr, wettkampf, disziplin, posten.name])
+    return HttpResponseRedirect(url)
+
+def postenblatt(request, jahr, wettkampf, disziplin, posten):
+    if request.method == 'POST':
+        return postenblatt_post(request, jahr, wettkampf, disziplin, posten)
+    assert request.method == 'GET'
+    w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
+    d = Disziplin.objects.get(wettkampf=w, name=disziplin)
+    p = Posten.objects.get(disziplin=d, name=posten)
+    # TODO: Extrahiere Startliste aus Filter Form. Falls nicht vorhanden,
+    # suche ersten Teilnehmer ohne Bewertungen für den aktuellen Posten.
+    s = Teilnehmer.objects.filter(disziplin=d).order_by('startnummer')
+    s = s[:min(15, s.count())]
+    sets = create_postenblatt_formsets(posten=p, startliste=s)
+    return render_to_response('postenblatt.html', {'wettkampf': w, 'disziplin':
+        d, 'posten': p, 'startliste': s, 'formset': sets})
+
+def postenblatt_post(request, jahr, wettkampf, disziplin, posten):
+    assert request.method == 'POST'
+    w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
+    d = Disziplin.objects.get(wettkampf=w, name=disziplin)
+    p = Posten.objects.get(disziplin=d, name=posten)
+    # TODO: Extrahiere Startliste aus request.POST
+    s = Teilnehmer.objects.filter(disziplin=d).order_by('startnummer')
+    s = s[:min(15, s.count())]
+    sets = create_postenblatt_formsets(posten=p, startliste=s, data=request.POST)
+    if all_valid(sets):
+        for formset in sets:
+            formset.save()
+        posten_name = posten
+        postenset = Posten.objects.filter(disziplin=d, reihenfolge__gte=p.reihenfolge)
+        for p in postenset:
+            if p.name != posten_name:
+                posten_name = p.name
+                break
+        url = reverse(postenblatt, args=[jahr, wettkampf, disziplin, posten_name])
+        return HttpResponseRedirect(url)
+    return render_to_response('postenblatt.html', {'wettkampf': w, 'disziplin':
+        d, 'posten': p, 'startliste': s, 'formset': sets})
