@@ -425,7 +425,6 @@ class BewertungForm(Form):
             b.posten_id = self.posten.id
             b.bewertungsart_id = self.bewertungsart.id
             b.save()
-            print "Save", b.id, b.wert
             return b
 
 
