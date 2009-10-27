@@ -179,7 +179,7 @@ class Posten(models.Model):
 
     class Meta:
         unique_together = ['disziplin', 'name']
-        ordering = ['reihenfolge']
+        ordering = ['reihenfolge', 'name']
 
 
 class Bewertung(models.Model):

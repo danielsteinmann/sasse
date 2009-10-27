@@ -560,5 +560,213 @@
       "alter_bis": 99, 
       "name": "F"
     }
+  },
+  {
+    "pk": 1, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "name": "Abzug", 
+      "defaultwert": "0", 
+      "reihenfolge": 1, 
+      "postenart": 1, 
+      "signum": -1, 
+      "wertebereich": "TODO", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "name": "Abzug", 
+      "defaultwert": "0", 
+      "reihenfolge": 1, 
+      "postenart": 2, 
+      "signum": -1, 
+      "wertebereich": "TODO", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "name": "Note", 
+      "defaultwert": "10", 
+      "reihenfolge": 2, 
+      "postenart": 2, 
+      "signum": 1, 
+      "wertebereich": "TODO", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 4, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "name": "Abzug", 
+      "defaultwert": "0", 
+      "reihenfolge": 1, 
+      "postenart": 3, 
+      "signum": -1, 
+      "wertebereich": "TODO", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 5, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "name": "Note", 
+      "defaultwert": "10", 
+      "reihenfolge": 2, 
+      "postenart": 3, 
+      "signum": 1, 
+      "wertebereich": "TODO", 
+      "einheit": "PUNKT"
+    }
+  },
+  {
+    "pk": 6, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "name": "Abzug", 
+      "defaultwert": "0", 
+      "reihenfolge": 1, 
+      "postenart": 4, 
+      "signum": -1, 
+      "wertebereich": "TODO", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 7, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "name": "Note", 
+      "defaultwert": "10", 
+      "reihenfolge": 2, 
+      "postenart": 4, 
+      "signum": 1, 
+      "wertebereich": "TODO", 
+      "einheit": "PUNKT"
+    }
+  },
+  {
+    "pk": 8, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "name": "Abzug", 
+      "defaultwert": "0", 
+      "reihenfolge": 1, 
+      "postenart": 5, 
+      "signum": -1, 
+      "wertebereich": "TODO", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 9, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "name": "Note", 
+      "defaultwert": "10", 
+      "reihenfolge": 2, 
+      "postenart": 5, 
+      "signum": 1, 
+      "wertebereich": "TODO", 
+      "einheit": "PUNKT"
+    }
+  },
+  {
+    "pk": 10, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "name": "Abzug", 
+      "defaultwert": "0", 
+      "reihenfolge": 1, 
+      "postenart": 6, 
+      "signum": -1, 
+      "wertebereich": "TODO", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 11, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "name": "Note", 
+      "defaultwert": "15", 
+      "reihenfolge": 2, 
+      "postenart": 6, 
+      "signum": 1, 
+      "wertebereich": "TODO", 
+      "einheit": "PUNKT"
+    }
+  },
+  {
+    "pk": 12, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "name": "Abzug", 
+      "defaultwert": "0", 
+      "reihenfolge": 1, 
+      "postenart": 7, 
+      "signum": -1, 
+      "wertebereich": "TODO", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 13, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "name": "Note", 
+      "defaultwert": "10", 
+      "reihenfolge": 2, 
+      "postenart": 7, 
+      "signum": 1, 
+      "wertebereich": "TODO", 
+      "einheit": "PUNKT"
+    }
+  },
+  {
+    "pk": 14, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "name": "Abzug", 
+      "defaultwert": "0", 
+      "reihenfolge": 1, 
+      "postenart": 8, 
+      "signum": -1, 
+      "wertebereich": "TODO", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 15, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "name": "Note", 
+      "defaultwert": "10", 
+      "reihenfolge": 2, 
+      "postenart": 8, 
+      "signum": 1, 
+      "wertebereich": "TODO", 
+      "einheit": "PUNKT"
+    }
+  },
+  {
+    "pk": 16, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "name": "Zeit", 
+      "defaultwert": "0", 
+      "reihenfolge": 1, 
+      "postenart": 9, 
+      "signum": 1, 
+      "wertebereich": "TODO", 
+      "einheit": "ZEIT"
+    }
   }
 ]

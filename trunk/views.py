@@ -379,13 +379,19 @@ def postenblatt(request, jahr, wettkampf, disziplin, posten):
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
     p = Posten.objects.get(disziplin=d, name=posten)
-    # TODO: Extrahiere Startliste aus Filter Form. Falls nicht vorhanden,
-    # suche ersten Teilnehmer ohne Bewertungen für den aktuellen Posten.
-    s = Teilnehmer.objects.filter(disziplin=d).order_by('startnummer')
-    s = s[:min(15, s.count())]
-    sets = create_postenblatt_formsets(posten=p, startliste=s)
+    query = None
+    s = []
+    sets = []
+    searchform = SchiffeinzelFilterForm(d, request.GET)
+    if searchform.is_valid():
+        s = searchform.anzeigeliste(visible=15)
+        # TODO: Extrahiere Startliste aus Filter Form. Falls nicht vorhanden,
+        # suche ersten Teilnehmer ohne Bewertungen für den aktuellen Posten.
+        sets = create_postenblatt_formsets(posten=p, startliste=s)
+        query = request.META.get('QUERY_STRING')
     return render_to_response('postenblatt.html', {'wettkampf': w, 'disziplin':
-        d, 'posten': p, 'startliste': s, 'formset': sets})
+        d, 'posten': p, 'startliste': s, 'searchform': searchform, 'formset':
+        sets, 'query': query, })
 
 def postenblatt_post(request, jahr, wettkampf, disziplin, posten):
     assert request.method == 'POST'
@@ -393,19 +399,23 @@ def postenblatt_post(request, jahr, wettkampf, disziplin, posten):
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
     p = Posten.objects.get(disziplin=d, name=posten)
     # TODO: Extrahiere Startliste aus request.POST
-    s = Teilnehmer.objects.filter(disziplin=d).order_by('startnummer')
-    s = s[:min(15, s.count())]
+    s = []
+    searchform = SchiffeinzelFilterForm(d, request.GET)
+    if searchform.is_valid():
+        s = searchform.anzeigeliste(visible=15)
     sets = create_postenblatt_formsets(posten=p, startliste=s, data=request.POST)
     if all_valid(sets):
         for formset in sets:
             formset.save()
-        posten_name = posten
-        postenset = Posten.objects.filter(disziplin=d, reihenfolge__gte=p.reihenfolge)
-        for p in postenset:
-            if p.name != posten_name:
-                posten_name = p.name
-                break
+        try:
+            posten_name = d.posten_set.filter(reihenfolge__gt=p.reihenfolge)[0]
+        except IndexError:
+            # Keine weiteren Posten mehr, zurück zum Start
+            posten_name = d.posten_set.all()[0]
         url = reverse(postenblatt, args=[jahr, wettkampf, disziplin, posten_name])
+        query = request.META.get('QUERY_STRING')
+        if query:
+            url = "%s?%s" % (url, query)
         return HttpResponseRedirect(url)
     return render_to_response('postenblatt.html', {'wettkampf': w, 'disziplin':
         d, 'posten': p, 'startliste': s, 'formset': sets})

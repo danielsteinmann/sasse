@@ -8,6 +8,7 @@ from django.db.models import Q
 from django.forms import CharField
 from django.forms import DecimalField
 from django.forms import IntegerField
+from django.forms import TimeField
 from django.forms import Form
 from django.forms import HiddenInput
 from django.forms import ModelChoiceField
@@ -378,19 +379,28 @@ class BewertungForm(Form):
         self.bewertungsart = kwargs.pop("bewertungsart")
         super(BewertungForm, self).__init__(*args, **kwargs)
         wert = self.bewertungsart.defaultwert
-        if self.initial.get('id') is not None:
-            wert = self.initial['wert'] * self.bewertungsart.signum
+        if self.bewertungsart.einheit == 'ZEIT':
+            # TODO Spezialfeld einführen
+            self.fields['wert'].widget = TextInput(attrs={'size': '2'})
+        else:
+            if self.initial.get('id') is not None:
+                wert = self.initial['wert']
+                if wert != 0:
+                    # Vermeide Darstellung von '-0'
+                    wert = wert * self.bewertungsart.signum
         self.initial['wert'] = wert
 
     def clean_wert(self):
         wert = self.cleaned_data.get('wert')
-        # TODO: Richtiger Wertebereich überprüfen
-        if self.bewertungsart.einheit == 'PUNKT' and wert % 1 not in (0, Decimal('0.5')):
-            msg = u'Nur ganze Zahlen oder Vielfaches von 0.5 erlaubt' % wert
-            raise ValidationError(msg)
-        # Wert wird wenn nötig als negative Zahl gespeichert, damit man
-        # einfacher mit SQL sum() arbeiten kann.
-        return wert * self.bewertungsart.signum
+        if self.bewertungsart.einheit == 'PUNKT':
+            # TODO: Richtiger Wertebereich überprüfen
+            if wert % 1 not in (0, Decimal('0.5')):
+                msg = u'Nur ganze Zahlen oder Vielfaches von 0.5 erlaubt'
+                raise ValidationError(msg)
+            # Wert wird wenn nötig als negative Zahl gespeichert, damit man
+            # einfacher mit SQL sum() arbeiten kann.
+            return wert * self.bewertungsart.signum
+        return wert
 
     def has_changed(self):
         """
@@ -415,6 +425,7 @@ class BewertungForm(Form):
             b.posten_id = self.posten.id
             b.bewertungsart_id = self.bewertungsart.id
             b.save()
+            print "Save", b.id, b.wert
             return b
 
 
