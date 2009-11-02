@@ -1,25 +1,19 @@
 {% extends "base_bewertungen.html" %}
 
 {% block content %}
-<form id="searchform" name="searchform" action="" method="GET">
-{% if searchform.non_field_errors %}
-{{ searchform.non_field_errors }}
+<form id="filterform" name="filterform" action="" method="GET">
+{% if filterform.non_field_errors %}
+{{ filterform.non_field_errors }}
 {% endif %}
-{{ searchform.startnummern.errors }}
-Nach Sektion {{ searchform.sektion }} oder
-Startnummern {{ searchform.startnummern }}
-<input type="submit" value="filtern">
-| <a href="#" title="Startnummern '1,4-15' zeigt Startnummern 1,4,5,...,15.
+{{ filterform.startnummern.errors }}
+Startnummern {{ filterform.startnummern }}
+<input type="submit" value="anzeigen">
+| <a href="#" title="'1,4-15' zeigt Startnummern 1,4,5,...,15.
 '800-' zeigt Startnummern ab 800">Filter Tipps</a>
 </form>
-Posten: {% for p in disziplin.posten_set.all %}
-{% ifequal p.id posten.id %}<b>{{ p.name }}</b>
-{% else %}<a href="{% url postenblatt wettkampf.jahr, wettkampf.name, disziplin.name, p.name %}?{{ query }}">{{ p.name }}</a>
-{% endifequal %}{% if not forloop.last %}|{% endif %}
-{% endfor %}
-: <b>{{ posten.postenart.name }}</b>
 <p>
-<form id="myform" name="myform" action="" method="POST">
+<form id="postenblattform" name="postenblattform" action="" method="POST">
+  <b>Posten {{ posten.name }}: {{ posten.postenart.name }}</b>
   {% for set in formset %}{{ set.management_form }}{% endfor %}
   <table class="list">
       <tr>
@@ -39,12 +33,17 @@ Posten: {% for p in disziplin.posten_set.all %}
   </table>
 <p>
 <input type="submit" value="Speichern und Weiter">
+| {% for p in disziplin.posten_set.all %}
+{% ifequal p.id posten.id %}<b>{{ p.name }}</b>
+{% else %}<a href="{% url postenblatt wettkampf.jahr, wettkampf.name, disziplin.name, p.name %}?{{ query }}">{{ p.name }}</a>
+{% endifequal %}{% if not forloop.last %}|{% endif %}
+{% endfor %}
 </form>
 <script type="text/javascript">
   (function() {
      var forms = document.forms || [];
      for (var i=0; i<forms.length; i++) {
-       if (forms[i].name != 'myform') continue;
+       if (forms[i].name != 'postenblattform') continue;
        for (var j=0; j<forms[i].length; j++) {
           if (forms[i][j].type != "hidden" && forms[i][j].disabled != true
               && forms[i][j].style.display != 'none') {

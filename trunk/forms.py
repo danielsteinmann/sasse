@@ -35,6 +35,8 @@ from models import Wettkampf
 
 from fields import MitgliedSearchField
 from fields import UnicodeSlugField
+from fields import ZeitInSekundenField
+from fields import StartnummernSelectionField
 
 
 def get_startkategorie(a, b):
@@ -167,120 +169,36 @@ class PostenEditForm(PostenListForm):
 
 
 class SchiffeinzelFilterForm(Form):
-    disziplin = None
     sektion = ModelChoiceField(
             required=False,
             queryset=Sektion.objects.all(),
             )
-    startnummern = RegexField(
-            regex=re.compile(r'^[-,\d]+$', re.UNICODE),
-            required=False,
-            widget=TextInput(attrs={'size':'5'}),
-            help_text=u"Beispiele: '1-6,9' oder '600-'",
-            error_messages={
-                'invalid': u"Bitte nur ganze Zahlen, Bindestrich oder Komma eingeben"
-                },
-            )
 
     def __init__(self, disziplin, *args, **kwargs):
         super(SchiffeinzelFilterForm, self).__init__(*args, **kwargs)
+        self.fields['startnummern'] = StartnummernSelectionField(disziplin)
         self.disziplin = disziplin
-
-    # TODO Nur den Startnummern String parsen, kein Database Lookup:
-    #
-    #   input = '1,3,5,1-20,30-50,-100,500-'
-    #   [
-    #      ('in', [1,3,5]),
-    #      ('range', [1,20]),
-    #      ('range', [30,50]),
-    #      ('gte', 100),
-    #      ('lte', 500),
-    #   ]
-    #
-    # Mehrfache Eingabe von 'lte' und 'gte' ergeben ValidationError. 
-    #  (Beispiel: '50-,80-' => ValidationError, nur ein gte erlaubt)
-    #  (Beispiel: '-50-,-80' => ValidationError, nur ein lte erlaubt)
-    #  (Beispiel: '50-,-80' => ValidationError, nur lte oder gte erlaubt. Range verwenden)
-    #
-    # Mehrfache Eingabe von einzelnen Startnummer erzeugen ein einziges 'in'
-    #  (Beispiel: '1,2,5-10,12' => [('in', [1,2,5,12]), ('range', [5,10])])
-    #
-    # Ein Bereich kann mehrfach vorkommen
-    #  (Beispiel: '5-10,13-15' => [('range', [5,10]), ('range', [13,15])])
-    #
-    # Reihenfolge beibehalten. 
-    #  (Beispiel: '1,3,2,5' => [('range', [1,3,2,5]))
-    #  Wichtig ist hier, dass die Datenbank die Startnummern in zufälliger
-    #  Reihenfolge sendet, aber der Benutzer die Nummern in spezifischer
-    #  Reihenfolge haben möchte.
-    #
-    # Example of dynamic or query with Q object:
-    #   q = Q( tag__name=first_tag )
-    #   for tag in other_tags:
-    #       q = q | Q( tag__name=tag )
-    #   Model.objects.filter( q )
-    #
-    def clean_startnummern(self):
-        cleaned_data = self.cleaned_data
-        startnummern = cleaned_data.get('startnummern')
-        if startnummern:
-            result=[]
-            commas = startnummern.split(',')
-            for c in commas:
-                if c == '':
-                    text = u"Ein Komma ohne Zahl links und rechts ist nicht gültig."
-                    raise ValidationError(text)
-                dashes = c.split('-')
-                if len(dashes) == 1:
-                    result.append(c)
-                elif len(dashes) > 2:
-                    text = u"'%s' enthält mehr als einen Gedankenstrich." % (c,)
-                    raise ValidationError(text)
-                else:
-                    from_nr = dashes[0]
-                    until_nr = dashes[1]
-                    if from_nr == '' and until_nr == '':
-                        text = u"Ein Gedankenstrich ohne Zahl links oder rechts ist nicht gültig."
-                        raise ValidationError(text)
-                    elif until_nr == '':
-                        q = Teilnehmer.objects.filter(
-                                disziplin=self.disziplin,
-                                startnummer__gte=from_nr
-                                )
-                    elif from_nr == '':
-                        q = Teilnehmer.objects.filter(
-                                disziplin=self.disziplin,
-                                startnummer__lte=until_nr
-                                )
-                    else:
-                        q = Teilnehmer.objects.filter(
-                                disziplin=self.disziplin,
-                                startnummer__range=dashes
-                                )
-                    for t in q:
-                        result.append(t.startnummer)
-            cleaned_data['startnummern_list'] = result
-
-        return startnummern
 
     def anzeigeliste(self, visible=10):
         sektion = self.cleaned_data.get('sektion')
-        startnummern = self.cleaned_data.get('startnummern_list')
+        startnummern = self.fields['startnummern'].startnummern_list
         result = Schiffeinzel.objects.filter(disziplin=self.disziplin)
-        if startnummern is None and sektion is None:
-            # Performance: Nur die letzten n Eintraege darstellen
+        if not startnummern and not sektion:
+            # Nur die letzten n Eintraege darstellen
             last = result.count()
             almostlast = last - visible
             if almostlast > 0:
                 result = result.filter()[almostlast:last]
-        if startnummern is not None:
+        if startnummern:
             result = result.filter(startnummer__in=startnummern)
-        if sektion is not None:
+        if sektion:
             result = result.filter(sektion=sektion)
         return result
 
     def naechste_nummer(self, startliste):
-        """Nächste Startnummer ist die zuletzt dargestellte Nummer plus 1"""
+        """
+        Nächste Startnummer ist die zuletzt dargestellte Nummer plus 1
+        """
         anzahl_sichtbar = startliste.count()
         if anzahl_sichtbar == 0:
             result = 1
@@ -365,6 +283,24 @@ class SchiffeinzelListForm(SchiffeinzelEditForm):
         return cleaned_data
 
 
+class PostenblattFilterForm(Form):
+
+    def __init__(self, disziplin, *args, **kwargs):
+        self.disziplin = disziplin
+        super(PostenblattFilterForm, self).__init__(*args, **kwargs)
+        self.fields['startnummern'] = StartnummernSelectionField(disziplin)
+
+    def selected_startnummern(self, visible=15):
+        # TODO: Falls keine Startnummern eingegeben, suche ersten Teilnehmer
+        # ohne Bewertungen für den aktuellen Posten.
+        nummern = self.fields['startnummern'].startnummern_list
+        result = Schiffeinzel.objects.filter(disziplin=self.disziplin)
+        if nummern:
+            result = result.filter(startnummer__in=nummern)
+        result = result.filter()[:visible]
+        return result
+
+
 # TODO: Problem mit Abzug lösen, wo man z.B. 3 Punkte Abzug eingibt, aber auf
 # der Datenbank eine 7 speichern muss (10 ist das Maximum, 3 ist der Abzug).
 # Das gilt für die meisten Posten, ausser die Anmeldung.
@@ -372,6 +308,7 @@ class BewertungForm(Form):
     id = IntegerField(required=False, widget=HiddenInput())
     teilnehmer = IntegerField(widget=HiddenInput())
     wert = DecimalField(max_digits=4, decimal_places=2,
+            min_value=0, max_value=10,
             widget=TextInput(attrs={'size': '1'}))
 
     def __init__(self, *args, **kwargs):
@@ -379,15 +316,17 @@ class BewertungForm(Form):
         self.bewertungsart = kwargs.pop("bewertungsart")
         super(BewertungForm, self).__init__(*args, **kwargs)
         wert = self.bewertungsart.defaultwert
+        valid_values = self.bewertungsart.wertebereich
+        if valid_values and valid_values != "TODO":
+            self.fields['wert'].max_value = int(valid_values)
         if self.bewertungsart.einheit == 'ZEIT':
-            # TODO Spezialfeld einführen
-            self.fields['wert'].widget = TextInput(attrs={'size': '2'})
-        else:
-            if self.initial.get('id') is not None:
-                wert = self.initial['wert']
-                if wert != 0:
-                    # Vermeide Darstellung von '-0'
-                    wert = wert * self.bewertungsart.signum
+            self.fields['wert'] = ZeitInSekundenField()
+            self.fields['wert'].widget.attrs['size'] = 4
+        if self.initial.get('id') is not None:
+            wert = self.initial['wert']
+            if wert != 0:
+                # Vermeide Darstellung von '-0'
+                wert = wert * self.bewertungsart.signum
         self.initial['wert'] = wert
 
     def clean_wert(self):

@@ -22,6 +22,7 @@ from forms import PostenListForm
 from forms import SchiffeinzelEditForm
 from forms import SchiffeinzelListForm
 from forms import SchiffeinzelFilterForm
+from forms import PostenblattFilterForm
 from forms import WettkampfForm
 from forms import create_postenblatt_formsets
 
@@ -382,15 +383,13 @@ def postenblatt(request, jahr, wettkampf, disziplin, posten):
     query = None
     s = []
     sets = []
-    searchform = SchiffeinzelFilterForm(d, request.GET)
-    if searchform.is_valid():
-        s = searchform.anzeigeliste(visible=15)
-        # TODO: Extrahiere Startliste aus Filter Form. Falls nicht vorhanden,
-        # suche ersten Teilnehmer ohne Bewertungen für den aktuellen Posten.
+    filterform = PostenblattFilterForm(d, request.GET)
+    if filterform.is_valid():
+        s = filterform.selected_startnummern(visible=15)
         sets = create_postenblatt_formsets(posten=p, startliste=s)
         query = request.META.get('QUERY_STRING')
     return render_to_response('postenblatt.html', {'wettkampf': w, 'disziplin':
-        d, 'posten': p, 'startliste': s, 'searchform': searchform, 'formset':
+        d, 'posten': p, 'startliste': s, 'filterform': filterform, 'formset':
         sets, 'query': query, })
 
 def postenblatt_post(request, jahr, wettkampf, disziplin, posten):
@@ -400,9 +399,9 @@ def postenblatt_post(request, jahr, wettkampf, disziplin, posten):
     p = Posten.objects.get(disziplin=d, name=posten)
     # TODO: Extrahiere Startliste aus request.POST
     s = []
-    searchform = SchiffeinzelFilterForm(d, request.GET)
-    if searchform.is_valid():
-        s = searchform.anzeigeliste(visible=15)
+    filterform = PostenblattFilterForm(d, request.GET)
+    if filterform.is_valid():
+        s = filterform.selected_startnummern(visible=15)
     sets = create_postenblatt_formsets(posten=p, startliste=s, data=request.POST)
     if all_valid(sets):
         for formset in sets:
@@ -418,4 +417,5 @@ def postenblatt_post(request, jahr, wettkampf, disziplin, posten):
             url = "%s?%s" % (url, query)
         return HttpResponseRedirect(url)
     return render_to_response('postenblatt.html', {'wettkampf': w, 'disziplin':
-        d, 'posten': p, 'startliste': s, 'formset': sets})
+        d, 'posten': p, 'startliste': s, 'filterform': filterform, 'formset':
+        sets})

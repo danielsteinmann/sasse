@@ -104,7 +104,7 @@ class Bewertungsart(models.Model):
     signum = models.SmallIntegerField(default=1) # positiv: +1, negativ: -1
     einheit = models.CharField(max_length=1, choices=EINHEIT_TYP)
     wertebereich = models.CharField(max_length=50) # 1,2-10 oder ganze/gebrochene Sekunden
-    defaultwert = models.DecimalField(max_digits=4, decimal_places=2)
+    defaultwert = models.DecimalField(max_digits=6, decimal_places=2)
     reihenfolge = models.SmallIntegerField(default=1) # Was kommt auf GUI zuerst
     postenart = models.ForeignKey('Postenart')
 
@@ -189,7 +189,7 @@ class Bewertung(models.Model):
     teilnehmer = models.ForeignKey('Teilnehmer')
     posten = models.ForeignKey('Posten')
     bewertungsart = models.ForeignKey('Bewertungsart')
-    wert = models.DecimalField(max_digits=4, decimal_places=2)
+    wert = models.DecimalField(max_digits=6, decimal_places=2)
 
     class Meta:
         unique_together = ('teilnehmer', 'posten', 'bewertungsart')
@@ -277,7 +277,7 @@ class Richtzeit(models.Model):
     Zeit in Millisekunden, welche 10 Punkte auf dem Notenblatt ergeben.
     """
     posten = models.ForeignKey('Posten')
-    zeit = models.DecimalField(max_digits=4, decimal_places=2)
+    zeit = models.DecimalField(max_digits=6, decimal_places=2)
 
 
 class Kranzlimite(models.Model):
@@ -286,4 +286,4 @@ class Kranzlimite(models.Model):
     """
     disziplin = models.ForeignKey('Disziplin')
     kategorie = models.ForeignKey('Kategorie')
-    wert = models.DecimalField(max_digits=4, decimal_places=2)
+    wert = models.DecimalField(max_digits=6, decimal_places=2)

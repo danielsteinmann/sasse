@@ -161,7 +161,7 @@ class BewertungFormTest(TestCase):
         antreten = Postenart.objects.get(
                 name="Allgemeines und Antreten (Einzelfahren)")
         self.antreten_abzug = Bewertungsart.objects.create(postenart=antreten,
-                name="Abzug", signum=-1, einheit="PUNKT", wertebereich="1,2,3",
+                name="Abzug", signum=-1, einheit="PUNKT", wertebereich="TODO",
                 defaultwert=3)
         # Bewegungsdaten
         testcup = Wettkampf.objects.create(name="Test-Cup",
