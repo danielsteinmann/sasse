@@ -2,7 +2,7 @@
 
 {% block breadcrumbs %}
 {{ block.super }}
-/ <a href="{% url postenblatt wettkampf.jahr, wettkampf.name, disziplin.name, posten.name %}">Bewertungen</a>
+/ <a href="{% url bewertungen wettkampf.jahr, wettkampf.name, disziplin.name %}">Bewertungen</a>
 {% endblock %}
 
 {% block nav_bewertungen %}selected{% endblock %}

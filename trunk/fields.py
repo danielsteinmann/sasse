@@ -119,7 +119,7 @@ class StartnummernSelectionField(RegexField):
     def __init__(self, disziplin, *args, **kwargs):
         super(StartnummernSelectionField, self).__init__(startnummern_re, *args, **kwargs)
         self.disziplin = disziplin
-        self.widget.attrs['size'] = 10
+        self.widget.attrs['size'] = 7
         self.required = False
 
     # TODO Nur den Startnummern String parsen, kein Database Lookup:
