@@ -420,6 +420,6 @@ def postenblatt_post(request, jahr, wettkampf, disziplin):
         if query:
             url = "%s?%s" % (url, query)
         return HttpResponseRedirect(url)
-    return render_to_response('postenblatt.html', {'wettkampf': w, 'disziplin':
-        d, 'posten': p, 'startliste': s, 'filterform': filterform, 'formset':
-        sets})
+    return render_to_response('postenblatt_update.html', {'wettkampf': w,
+        'disziplin': d, 'posten': p, 'startliste': s, 'filterform': filterform,
+        'formset': sets})
