@@ -339,7 +339,7 @@ class BewertungForm(Form):
     teilnehmer = IntegerField(widget=HiddenInput())
     wert = DecimalField(max_digits=4, decimal_places=2,
             min_value=0, max_value=10,
-            widget=TextInput(attrs={'size': '1'}))
+            widget=TextInput(attrs={'size': '2'}))
 
     def __init__(self, *args, **kwargs):
         self.posten = kwargs.pop("posten")
