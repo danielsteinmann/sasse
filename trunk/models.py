@@ -102,7 +102,7 @@ class Bewertungsart(models.Model):
             )
     name = models.CharField(max_length=50) # Note, Abzug, Zeit, Ziel, Distanz
     signum = models.SmallIntegerField(default=1) # positiv: +1, negativ: -1
-    einheit = models.CharField(max_length=1, choices=EINHEIT_TYP)
+    einheit = models.CharField(max_length=6, choices=EINHEIT_TYP)
     wertebereich = models.CharField(max_length=50) # 1,2-10 oder ganze/gebrochene Sekunden
     defaultwert = models.DecimalField(max_digits=6, decimal_places=2)
     reihenfolge = models.SmallIntegerField(default=1) # Was kommt auf GUI zuerst

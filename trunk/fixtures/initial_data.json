@@ -700,7 +700,7 @@
       "reihenfolge": 2, 
       "postenart": 6, 
       "signum": 1, 
-      "wertebereich": "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15", 
+      "wertebereich": "15", 
       "einheit": "PUNKT"
     }
   },
