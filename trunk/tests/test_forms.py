@@ -91,7 +91,7 @@ class DisziplinFormTest(TestCase):
         self.failUnless(self.form.is_valid(), self.form.errors)
 
     def test_invalid_name(self):
-        self.form.data['name'] = u'No Spaces'
+        self.form.data['name'] = u'Spaces Not Allowed'
         self.failUnless(self.form.errors.has_key('name'))
         expected = UnicodeSlugField.default_error_messages['invalid']
         self.failUnless(expected in self.form.errors['name'])
@@ -139,12 +139,6 @@ class DisziplinFormTest(TestCase):
 
 
 class BewertungFormTest(TestCase):
-    """
-    Formset für eine Liste von Startnummern.  Das Postenblatt besteht aus 1-n
-    solchen Formsets.  Gibt man 'einzelfahren/postenblatt/' ein, also keine
-    konkreten Parameter, dann wird der erste Posten mit den ersten 15
-    Startnummern gezeigt.
-    """
     def setUp(self):
         # Stammdaten
         bremgarten = Sektion.objects.get(name="Bremgarten")

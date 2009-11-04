@@ -7,6 +7,7 @@ from django.forms import Field
 from django.forms import CharField
 from django.forms import ModelChoiceField
 from django.forms import RegexField
+from django.forms import DecimalField
 from django.forms import Select
 from django.forms import TextInput
 from django.forms import ValidationError
@@ -32,6 +33,29 @@ class UnicodeSlugField(RegexField):
         super(UnicodeSlugField, self).__init__(unicode_slug_re, *args, **kwargs)
 
 
+# TODO: Richtiger Wertebereich überprüfen
+class PunkteField(DecimalField):
+    def __init__(self, bewertungsart, *args, **kwargs):
+        self.bewertungsart = bewertungsart
+        super(PunkteField, self).__init__(*args, **kwargs)
+        self.widget.attrs['size'] = 2
+        # Wertebereich
+        self.max_digits = 4
+        self.decimal_places = 2
+        self.min_value = 0
+        self.max_value = 10
+        valid_values = self.bewertungsart.wertebereich
+        if valid_values and valid_values != "TODO":
+            self.max_value = int(valid_values)
+
+    def clean(self, value):
+        value = super(PunkteField, self).clean(value)
+        if value % 1 not in (0, Decimal('0.5')):
+            msg = u'Nur ganze Zahlen oder Vielfaches von 0.5 erlaubt'
+            raise ValidationError(msg)
+        return value
+
+
 zeit_parser = re.compile(r"((?P<min>\d+)[: .])?(?P<sec>\d+)(\.(?P<frac>\d+))?$")
 
 class ZeitInSekundenField(Field):
@@ -39,7 +63,7 @@ class ZeitInSekundenField(Field):
     Wandelt die Eingabe von Minuten/Sekunden/Hundertstel in einen Decimal, der
     die Anzahl Sekunden representiert.
     """
-    widget = ZeitInSekundenWidget
+    widget = ZeitInSekundenWidget(attrs={'size': 4})
     default_error_messages = {
         'invalid': (u"Ungültige Eingabe. Bitte Zeit im Format"
                     u" 'min:sek.hundertstel' eingeben."
@@ -64,6 +88,9 @@ class ZeitInSekundenField(Field):
             minutes = '0'
         total_seconds = int(minutes)*60 + int(seconds)
         result = Decimal("%d.%s" % (total_seconds, fractional_second))
+        if result == 0:
+            msg = 'Zeit muss grösser 0 sein.'
+            raise ValidationError(msg)
         return result
 
 

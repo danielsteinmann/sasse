@@ -3,6 +3,7 @@
 from decimal import Decimal
 
 from django.forms.widgets import Input
+from templatetags.sasse import zeit2str
 
 class ZeitInSekundenWidget(Input):
     input_type = 'text'
@@ -11,8 +12,5 @@ class ZeitInSekundenWidget(Input):
         if value is None:
             value = ''
         elif isinstance(value, Decimal):
-            minutes = value // 60
-            seconds = value - (minutes * 60)
-            value = '%d:%.2f' % (minutes, seconds)
+            value = zeit2str(value)
         return super(ZeitInSekundenWidget, self).render(name, value, attrs)
-

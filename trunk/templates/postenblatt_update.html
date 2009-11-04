@@ -17,7 +17,7 @@
       <tr>
           <th>{{ set.bewertungsart.name }}:</th>
           {% for form in set.forms %}
-          <td {% if not form.initial.id %}bgcolor="Coral"{% endif %}>
+          <td {% if not form.initial.id %}bgcolor="LightGreen"{% endif %}>
               {{ form.wert.errors }}{{ form.wert }} {{ form.teilnehmer }}{{ form.id }}
           </td>
           {% endfor %}

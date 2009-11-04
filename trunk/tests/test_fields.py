@@ -150,6 +150,8 @@ class ZeitInSekundenFieldTest(unittest.TestCase):
         self.assertRaises(ValidationError, self.sut.clean, None)
         self.assertRaises(ValidationError, self.sut.clean, '3m30')
         self.assertRaises(ValidationError, self.sut.clean, '1:70:98')
+        self.assertRaises(ValidationError, self.sut.clean, '0')
+        self.assertRaises(ValidationError, self.sut.clean, '0:0.0')
 
     def test_minutes_seconds(self):
         self.assertEquals(Decimal('210'), self.sut.clean('3:30'))

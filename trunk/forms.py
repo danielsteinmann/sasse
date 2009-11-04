@@ -38,6 +38,7 @@ from models import Wettkampf
 from fields import MitgliedSearchField
 from fields import UnicodeSlugField
 from fields import ZeitInSekundenField
+from fields import PunkteField
 from fields import StartnummernSelectionField
 
 
@@ -337,39 +338,30 @@ class PostenblattFilterForm(Form):
 class BewertungForm(Form):
     id = IntegerField(required=False, widget=HiddenInput())
     teilnehmer = IntegerField(widget=HiddenInput())
-    wert = DecimalField(max_digits=4, decimal_places=2,
-            min_value=0, max_value=10,
-            widget=TextInput(attrs={'size': '2'}))
 
     def __init__(self, *args, **kwargs):
         self.posten = kwargs.pop("posten")
         self.bewertungsart = kwargs.pop("bewertungsart")
         super(BewertungForm, self).__init__(*args, **kwargs)
-        wert = self.bewertungsart.defaultwert
-        valid_values = self.bewertungsart.wertebereich
-        if valid_values and valid_values != "TODO":
-            self.fields['wert'].max_value = int(valid_values)
+        # Definiere Typ von Bewertungsfeld
         if self.bewertungsart.einheit == 'ZEIT':
-            self.fields['wert'] = ZeitInSekundenField()
-            self.fields['wert'].widget.attrs['size'] = 4
-        if self.initial.get('id') is not None:
-            wert = self.initial['wert']
-            if wert != 0:
-                # Vermeide Darstellung von '-0'
-                wert = wert * self.bewertungsart.signum
-        self.initial['wert'] = wert
-
-    def clean_wert(self):
-        wert = self.cleaned_data.get('wert')
-        if self.bewertungsart.einheit == 'PUNKT':
-            # TODO: Richtiger Wertebereich überprüfen
-            if wert % 1 not in (0, Decimal('0.5')):
-                msg = u'Nur ganze Zahlen oder Vielfaches von 0.5 erlaubt'
-                raise ValidationError(msg)
+            wert_field = ZeitInSekundenField()
+        else:
+            wert_field = PunkteField(self.bewertungsart)
+        # Definiere Initial Value von Bewertungsfeld
+        if self.initial.get('id') is None:
+            wert_initial = self.bewertungsart.defaultwert
+        else:
             # Wert wird wenn nötig als negative Zahl gespeichert, damit man
-            # einfacher mit SQL sum() arbeiten kann.
-            return wert * self.bewertungsart.signum
-        return wert
+            # einfacher mit SQL sum() arbeiten kann (siehe save()). Darum
+            # hier das Vorzeichen wieder kehren.
+            wert_initial = self.initial['wert']
+            if wert_initial != 0:
+                # Vermeide Darstellung von '-0'
+                wert_initial = wert_initial * self.bewertungsart.signum
+        # Dynamisches Bewertungsfeld einfügen
+        self.fields['wert'] = wert_field
+        self.initial['wert'] = wert_initial
 
     def has_changed(self):
         """
@@ -390,7 +382,9 @@ class BewertungForm(Form):
             b = Bewertung()
             b.id = self.cleaned_data['id']
             b.teilnehmer_id = self.cleaned_data['teilnehmer']
-            b.wert = self.cleaned_data['wert']
+            # Wert wird wenn nötig als negative Zahl gespeichert, damit man
+            # einfacher mit SQL sum() arbeiten kann.
+            b.wert = self.cleaned_data['wert'] * self.bewertungsart.signum
             b.posten_id = self.posten.id
             b.bewertungsart_id = self.bewertungsart.id
             b.save()
@@ -398,6 +392,12 @@ class BewertungForm(Form):
 
 
 class BewertungBaseFormSet(BaseFormSet):
+    """
+    Formset für eine Liste von Startnummern.  Das Postenblatt besteht aus 1-n
+    solchen Formsets.  Gibt man 'einzelfahren/postenblatt/' ein, also keine
+    konkreten Parameter, dann wird der erste Posten mit den ersten 15
+    Startnummern gezeigt.
+    """
     def __init__(self, *args, **kwargs):
         self.posten = kwargs.pop("posten")
         self.bewertungsart = kwargs.pop("bewertungsart")

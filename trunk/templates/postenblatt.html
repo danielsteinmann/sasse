@@ -1,4 +1,5 @@
 {% extends "base_bewertungen.html" %}
+{% load sasse %}
 
 {% block content %}
 <form id="filterform" name="filterform" action="" method="GET">
@@ -23,8 +24,8 @@ Startnummern {{ filterform.startnummern }}
     <tr>
         <th>{{ set.bewertungsart.name }}:</th>
         {% for form in set.forms %}
-        <td {% if not form.initial.id %}bgcolor="Coral"{% endif %}>
-          {{ form.initial.wert }}
+        <td {% if not form.initial.id %}bgcolor="LightGreen"{% endif %}>
+          {{ form.initial.wert|bewertung:form.bewertungsart.einheit }}
         </td>
         {% endfor %}
     </tr>
