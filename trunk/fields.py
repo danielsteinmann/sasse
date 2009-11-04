@@ -36,13 +36,13 @@ zeit_parser = re.compile(r"((?P<min>\d+)[: .])?(?P<sec>\d+)(\.(?P<frac>\d+))?$")
 
 class ZeitInSekundenField(Field):
     """
-    Wandelt die Eingabe von Minuten/Sekunden/Hundertstel einen Decimal,
-    der die Anzahl Sekunden representiert.
+    Wandelt die Eingabe von Minuten/Sekunden/Hundertstel in einen Decimal, der
+    die Anzahl Sekunden representiert.
     """
     widget = ZeitInSekundenWidget
     default_error_messages = {
         'invalid': (u"Ungültige Eingabe. Bitte Zeit im Format"
-                    u" 'min:sek.hunderstel' eingeben."
+                    u" 'min:sek.hundertstel' eingeben."
                     u" Beispiel: '2:35.76' für 2 Minuten, 35 Sekunden und"
                     u" 76 Hunderstel. Der Wert '2.35.76' ist auch ok.")
     }
@@ -56,9 +56,9 @@ class ZeitInSekundenField(Field):
         seconds = m.group('sec')
         fractional_second = m.group('frac') or ''
         if minutes != '0' and fractional_second == '' and '.' in value:
-            # Weil der Punkt als Separator zwischen Minuten und Sekunden
-            # aus Datenerfassungsgründen auch erlaubt ist, muss man hiermit
-            # die die Minuten/Sekunden in Sekunden/Millis umbiegen
+            # Weil der Punkt als Separator zwischen Minuten und Sekunden aus
+            # Datenerfassungsgründen auch erlaubt ist, muss man in diesem Fall
+            # die Minuten/Sekunden in Sekunden/Millis umbiegen
             fractional_second = seconds
             seconds = minutes
             minutes = '0'
@@ -68,7 +68,14 @@ class ZeitInSekundenField(Field):
 
 
 class MitgliedSearchField(ModelChoiceField):
+    """
+    Ein Mitglied kann mit einem beliebigen Text (z.B. Name oder
+    Mitgliedernummer) eingebeben werden.
 
+    Dieses Feld ist nötig, weil ein normales ModelChoiceField mehr als 2000
+    Einträge hätte und somit die HTML Seite aufbläst. Zudem ist es nun möglich,
+    neben der Mitgliedernummer auch nur Namen/Vornamen einzugeben.
+    """
     def __init__(self, *args, **kwargs):
         kwargs['widget'] = kwargs.pop('widget', TextInput)
         super(MitgliedSearchField, self).__init__(*args, **kwargs)
@@ -102,13 +109,11 @@ class MitgliedSearchField(ModelChoiceField):
             return q[0]
 
 
-startnummern_re = re.compile(r'^[-,\d]+$', re.UNICODE)
+startnummern_re = re.compile(r'^[- ,\d]+$', re.UNICODE)
 
 class StartnummernSelectionField(RegexField):
     """
-    Kann nicht SlugField nehmen, da dieses keine Unicode Zeichen versteht,
-    ich aber in der URL Namen wie 'Fällbaum-Cup' haben möchte.
-    (siehe django.forms.fields.SlugField)
+    Erlaubt die Eingabe einer beliebigen Menge von Startnummern.
     """
     help_text = u"Beispiele: '1-6,9' oder '600-'"
     default_error_messages = {
@@ -158,7 +163,7 @@ class StartnummernSelectionField(RegexField):
     #
     def clean(self, value):
         super(StartnummernSelectionField, self).clean(value)
-        if value:
+        if value and value.strip():
             result = []
             commas = value.split(',')
             for c in commas:
@@ -167,7 +172,7 @@ class StartnummernSelectionField(RegexField):
                     raise ValidationError(text)
                 dashes = c.split('-')
                 if len(dashes) == 1:
-                    result.append(c)
+                    result.append(int(c))
                 elif len(dashes) > 2:
                     text = u"'%s' enthält mehr als einen Gedankenstrich." % (c,)
                     raise ValidationError(text)
