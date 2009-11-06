@@ -3,13 +3,17 @@
 
 {% block content %}
 <form id="filterform" name="filterform" action="" method="GET">
+{% for p in disziplin.posten_set.all %}
+{% ifequal p.id posten.id %}<b>{{ p.name }}</b>
+{% else %}<a href="{% url postenblatt wettkampf.jahr, wettkampf.name, disziplin.name, p.name %}?{{ query }}">{{ p.name }}</a>
+{% endifequal %}{% if not forloop.last %}|{% endif %}
+{% endfor %}
 {% if filterform.non_field_errors %}
 {{ filterform.non_field_errors }}
 {% endif %}
-{{ filterform.startnummern.errors }}
-Postenblatt für Posten {{ filterform.posten }} und/oder
-Startnummern {{ filterform.startnummern }}
-<input type="submit" value="auswählen">
+| {{ filterform.startnummern.errors }}
+{{ filterform.startnummern }}
+<input type="submit" value="Startnummern auswählen">
 </form>
 <p>
 <b>Posten {{ posten.name }}: {{ posten.postenart.name }}</b>
@@ -32,11 +36,10 @@ Startnummern {{ filterform.startnummern }}
     {% endfor %}
 </table>
 <p>
-<a href="{% url postenblatt_update wettkampf.jahr, wettkampf.name, disziplin.name %}?{{ query }}">Ändern</a>
-| <a href="{% url postenblatt wettkampf.jahr, wettkampf.name, disziplin.name %}?{{ next_query }}">Weiter</a>
+<a href="{% url postenblatt_update wettkampf.jahr, wettkampf.name, disziplin.name, posten.name %}?{{ query }}">Ändern</a>
 </form>
 <script type="text/javascript">
-  var first_field = document.getElementById('id_posten');
+  var first_field = document.getElementById('id_startnummern');
   first_field.focus();
   first_field.select();
 </script>

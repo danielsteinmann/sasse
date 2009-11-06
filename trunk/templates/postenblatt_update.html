@@ -1,7 +1,7 @@
 {% extends "base_bewertungen.html" %}
 
 {% block content %}
-<a href="{% url postenblatt wettkampf.jahr, wettkampf.name, disziplin.name %}?{{ query }}">Postenblatt auswählen</a>
+<a href="{% url postenblatt wettkampf.jahr, wettkampf.name, disziplin.name, posten.name %}?{{ query }}">Anderes Postenblatt auswählen</a>
 <p>
 <form id="postenblattform" name="postenblattform" action="" method="POST">
   <b>Posten {{ posten.name }}: {{ posten.postenart.name }}</b>

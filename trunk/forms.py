@@ -287,13 +287,10 @@ class SchiffeinzelListForm(SchiffeinzelEditForm):
 
 
 class PostenblattFilterForm(Form):
-    posten = ChoiceField(required=False)
-
     def __init__(self, disziplin, *args, **kwargs):
         self.disziplin = disziplin
         super(PostenblattFilterForm, self).__init__(*args, **kwargs)
         self.fields['startnummern'] = StartnummernSelectionField(disziplin)
-        self.fields['posten'].choices = [(p.name, p.name) for p in disziplin.posten_set.all()]
 
     def selected_startnummern(self, visible=15):
         # TODO: Falls keine Startnummern eingegeben, suche ersten Teilnehmer
@@ -305,30 +302,15 @@ class PostenblattFilterForm(Form):
         result = result.filter()[:visible]
         return result
 
-    def selected_posten(self):
-        name = self.cleaned_data['posten']
-        if name:
-            result = self.disziplin.posten_set.get(name=name)
-        else:
-            result = self.disziplin.posten_set.all()[0]
-        return result
-
-    def next_posten(self):
-        selected = self.selected_posten()
+    def next_posten(self, current_posten):
+        result = None
         try:
-            result = self.disziplin.posten_set.filter(
-                    reihenfolge__gt=selected.reihenfolge)[0]
+            next = self.disziplin.posten_set.filter(
+                    reihenfolge__gt=current_posten.reihenfolge)
+            result = next.filter()[0]
         except IndexError:
-            # Keine weiteren Posten mehr, treten an Ort
-            result = selected
-        return result
-
-    def next_query(self):
-        params = ["posten=%s" % self.next_posten().name]
-        s = self.cleaned_data['startnummern']
-        if s:
-            params.append("startnummern=%s" % s)
-        result = "&".join(params)
+            # current_posten ist der letzte Posten der Postenliste
+            pass
         return result
 
 

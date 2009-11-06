@@ -369,54 +369,56 @@ def bewertungen(request, jahr, wettkampf, disziplin):
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
     if d.posten_set.count() == 0:
         raise Http404(u"Es sind noch keine Posten definiert")
-    url = reverse(postenblatt, args=[jahr, wettkampf, disziplin])
+    p = d.posten_set.all()[0]
+    url = reverse(postenblatt, args=[jahr, wettkampf, disziplin, p.name])
     return HttpResponseRedirect(url)
 
-def postenblatt(request, jahr, wettkampf, disziplin, template="postenblatt.html"):
+def postenblatt(request, jahr, wettkampf, disziplin, posten, template="postenblatt.html"):
     assert request.method == 'GET'
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
+    p = Posten.objects.get(disziplin=d, name=posten)
     query = request.META.get('QUERY_STRING')
-    next_query = None
-    p = None
     s = []
     sets = []
     filterform = PostenblattFilterForm(d, request.GET)
     if filterform.is_valid():
         s = filterform.selected_startnummern(visible=15)
-        p = filterform.selected_posten()
-        next_query = filterform.next_query()
         sets = create_postenblatt_formsets(posten=p, startliste=s)
     return render_to_response(template, {'wettkampf': w, 'disziplin':
         d, 'posten': p, 'startliste': s, 'filterform': filterform, 'formset':
-        sets, 'query': query, 'next_query': next_query, })
+        sets, 'query': query })
 
-def postenblatt_update(request, jahr, wettkampf, disziplin):
+def postenblatt_update(request, jahr, wettkampf, disziplin, posten):
     if request.method == 'POST':
-        return postenblatt_post(request, jahr, wettkampf, disziplin)
-    return postenblatt(request, jahr, wettkampf, disziplin, "postenblatt_update.html")
+        return postenblatt_post(request, jahr, wettkampf, disziplin, posten)
+    return postenblatt(request, jahr, wettkampf, disziplin, posten, "postenblatt_update.html")
 
-def postenblatt_post(request, jahr, wettkampf, disziplin):
+def postenblatt_post(request, jahr, wettkampf, disziplin, posten):
     assert request.method == 'POST'
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
-    p = None
+    p = Posten.objects.get(disziplin=d, name=posten)
     # TODO: Extrahiere Startliste aus request.POST
     s = []
     filterform = PostenblattFilterForm(d, request.GET)
     if filterform.is_valid():
         s = filterform.selected_startnummern(visible=15)
-        p = filterform.selected_posten()
     sets = create_postenblatt_formsets(posten=p, startliste=s, data=request.POST)
     if all_valid(sets):
         for formset in sets:
             formset.save()
         view = postenblatt
+        if request.POST.has_key('save_and_next'):
+            next_p = filterform.next_posten(p)
+            if next_p is not None:
+                posten = next_p.name
+                view = postenblatt_update
+            else:
+                # Back to square one
+                posten = d.posten_set.all()[0]
+        url = reverse(view, args=[jahr, wettkampf, disziplin, posten])
         query = request.META.get('QUERY_STRING')
-        if p.name != filterform.next_posten().name and request.POST.has_key('save_and_next'):
-            view = postenblatt_update
-            query = filterform.next_query()
-        url = reverse(view, args=[jahr, wettkampf, disziplin])
         if query:
             url = "%s?%s" % (url, query)
         return HttpResponseRedirect(url)
