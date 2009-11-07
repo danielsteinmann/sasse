@@ -109,10 +109,10 @@ class Bewertungsart(models.Model):
     postenart = models.ForeignKey('Postenart')
 
     class Meta:
-        ordering = ['reihenfolge']
+        ordering = ['postenart', 'reihenfolge']
 
     def __unicode__(self):
-        return u'%s' % (self.name,)
+        return u'%s, %s' % (self.postenart.name, self.name)
 
 
 class Kategorie(models.Model):
