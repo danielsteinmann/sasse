@@ -8,9 +8,10 @@ register = template.Library()
 def bewertung(value, einheit='PUNKT'):
     if value is None:
         return ''
-    if einheit == 'ZEIT':
+    elif einheit == 'ZEIT':
         return zeit2str(value)
-    return value
+    else:
+        return '%.1f' % value
 
 def zeit2str(value):
     minutes = value // 60
