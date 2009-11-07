@@ -38,7 +38,7 @@ class PunkteField(DecimalField):
     def __init__(self, bewertungsart, *args, **kwargs):
         self.bewertungsart = bewertungsart
         super(PunkteField, self).__init__(*args, **kwargs)
-        self.widget.attrs['size'] = 2
+        self.widget.attrs['size'] = 4
         # Wertebereich
         self.max_digits = 4
         self.decimal_places = 2
@@ -63,7 +63,7 @@ class ZeitInSekundenField(Field):
     Wandelt die Eingabe von Minuten/Sekunden/Hundertstel in einen Decimal, der
     die Anzahl Sekunden representiert.
     """
-    widget = ZeitInSekundenWidget(attrs={'size': 4})
+    widget = ZeitInSekundenWidget(attrs={'size': 7})
     default_error_messages = {
         'invalid': (u"Ungültige Eingabe. Bitte Zeit im Format"
                     u" 'min:sek.hundertstel' eingeben."

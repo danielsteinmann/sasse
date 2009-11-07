@@ -245,7 +245,7 @@ class SchiffeinzelListForm(SchiffeinzelEditForm):
 
     def __init__(self, disziplin, *args, **kwargs):
         super(SchiffeinzelListForm, self).__init__(disziplin, *args, **kwargs)
-        self.fields['startnummer'].widget = TextInput(attrs={'size':'2'})
+        self.fields['startnummer'].widget = TextInput(attrs={'size':'3'})
         self.fields['sektion'].widget = HiddenInput()
         # Folgende Felder werden in clean() gesetzt, deshalb nicht required
         self.fields['sektion'].required = False
