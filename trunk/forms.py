@@ -427,7 +427,7 @@ class TeilnehmerContainerForm(Form):
             self.initial['total'] = len(self.startliste)
         else:
             if not self.is_valid():
-                msg = u"Das hidden 'total' Feld nicht im Template vorhanden"
+                msg = u"Das hidden Feld 'total' nicht im Template vorhanden"
                 raise ValidationError(msg)
 
     def teilnehmer_forms(self):

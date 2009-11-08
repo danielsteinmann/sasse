@@ -9,11 +9,13 @@ from django.forms import ValidationError
 
 from sasse.fields import UnicodeSlugField
 from sasse.fields import MitgliedSearchField
+from sasse.fields import PunkteField
 from sasse.fields import ZeitInSekundenField
 from sasse.fields import StartnummernSelectionField
 from sasse.models import Disziplin
 from sasse.models import Schiffeinzel
 from sasse.models import Sektion
+from sasse.models import Bewertungsart
 from sasse.models import Mitglied
 from sasse.templatetags.sasse import zeit2str
 
@@ -89,13 +91,15 @@ class StartnummernSelectionFieldTest(TestCase):
         # Rauschen einfügen, um die vollständige where clause zu prüfen
         d = Disziplin.objects.create(wettkampf_id=1, name="Eine-Disziplin")
         for startnr in range(1,50):
-          Schiffeinzel.objects.create(startnummer=startnr, disziplin=d,
-              steuermann_id=1, vorderfahrer_id=2, sektion_id=1, kategorie_id=1)
+            Schiffeinzel.objects.create(startnummer=startnr, disziplin=d,
+                    steuermann_id=1, vorderfahrer_id=2, sektion_id=1,
+                    kategorie_id=1)
         # Eine Grundmenge Teilnehmer einfügen
         d = Disziplin.objects.create(wettkampf_id=1, name="Test")
         for startnr in range(1,50):
-          Schiffeinzel.objects.create(startnummer=startnr, disziplin=d,
-              steuermann_id=1, vorderfahrer_id=2, sektion_id=1, kategorie_id=1)
+            Schiffeinzel.objects.create(startnummer=startnr, disziplin=d,
+                    steuermann_id=1, vorderfahrer_id=2, sektion_id=1,
+                    kategorie_id=1)
         self.sut = StartnummernSelectionField(d)
 
     def test_invalid_input(self):
@@ -138,6 +142,37 @@ class StartnummernSelectionFieldTest(TestCase):
     def test_open_starting_range(self):
         self.sut.clean('-6')
         self.assertEquals([1, 2, 3, 4, 5, 6], self.sut.startnummern_list)
+
+
+class PunkteFieldTest(TestCase):
+    def setUp(self):
+        art = Bewertungsart.objects.create(postenart_id=1,
+                name="Abzug", signum=-1, einheit="PUNKT", wertebereich="TODO",
+                defaultwert=3)
+        self.sut = PunkteField(art)
+
+    def test_invalid_input(self):
+        self.assertRaises(ValidationError, self.sut.clean, 'x')
+        self.assertRaises(ValidationError, self.sut.clean, '')
+        self.assertRaises(ValidationError, self.sut.clean, '1,0')
+        self.assertRaises(ValidationError, self.sut.clean, None)
+
+    def test_min_and_below(self):
+        self.assertEquals(Decimal('0'), self.sut.clean('0'))
+        self.assertEquals(Decimal('0'), self.sut.clean('0.0'))
+        self.assertRaises(ValidationError, self.sut.clean, '-1')
+
+    def test_max_and_above(self):
+        self.assertEquals(Decimal('10.0'), self.sut.clean('10'))
+        self.assertRaises(ValidationError, self.sut.clean, '10.5')
+
+    def test_normal_range(self):
+        self.assertEquals(Decimal('1'), self.sut.clean('1'))
+        self.assertEquals(Decimal('1'), self.sut.clean('1.0'))
+        self.assertEquals(Decimal('9.5'), self.sut.clean('9.5'))
+
+    def test_wrong_fractional_part(self):
+        self.assertRaises(ValidationError, self.sut.clean, '1.8')
 
 
 class ZeitInSekundenFieldTest(unittest.TestCase):

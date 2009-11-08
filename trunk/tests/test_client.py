@@ -15,6 +15,7 @@ from sasse.views import wettkampf_delete_confirm
 
 from sasse.models import Disziplinart
 from sasse.models import Kategorie
+from sasse.models import Schiffeinzel
 from sasse.models import Postenart
 from sasse.models import Wettkampf
 from sasse.models import Mitglied
@@ -258,4 +259,169 @@ class EinzelfahrenStartlistePageTest(TestCase):
         response = self.client.get(updateURL)
         self.assertContains(response, 'Steinmann')
 
-#TODO: TeilneherSchiffeinzelPageTest(unittest.TestCase):
+
+class PostenblattPageTest(TestCase):
+    def setUp(self):
+        einzel = Disziplinart.objects.get(name="Einzelfahren")
+        w = Wettkampf.objects.create(name="Test-Cup", von="2009-04-04")
+        d = w.disziplin_set.create(name="klein", disziplinart=einzel)
+        durchfahrt = Postenart.objects.get(name="Durchfahrt")
+        posten_D = d.posten_set.create(name="D", postenart=durchfahrt,
+                reihenfolge=1)
+        posten_F = d.posten_set.create(name="F", postenart=durchfahrt,
+                reihenfolge=2)
+        for startnr in range(1,50):
+            Schiffeinzel.objects.create(startnummer=startnr, disziplin=d,
+                    steuermann_id=1, vorderfahrer_id=2, sektion_id=1,
+                    kategorie_id=1)
+
+    def test_bewertungen_redirect_to_postenblatt(self):
+        bewertungen = '/2009/Test-Cup/klein/bewertungen/'
+        postenblatt_D = '/2009/Test-Cup/klein/postenblatt/D/'
+        response = self.client.get(bewertungen)
+        self.assertRedirects(response, postenblatt_D)
+        response = self.client.get(postenblatt_D)
+        self.failUnlessEqual(response.status_code, 200)
+
+    def test_filter_startnummern(self):
+        postenblatt_D = '/2009/Test-Cup/klein/postenblatt/D/'
+        # Default Anzahl Teilnehmer
+        response = self.client.get(postenblatt_D)
+        self.failUnlessEqual(response.status_code, 200)
+        teilnehmer_count = len(response.context['startliste'].teilnehmer_forms())
+        self.assertEquals(15, teilnehmer_count)
+        # Gefilterte Anzahl Teilnehmer
+        response = self.client.get(postenblatt_D, {'startnummern': '1,2'})
+        self.failUnlessEqual(response.status_code, 200)
+        teilnehmer_count = len(response.context['startliste'].teilnehmer_forms())
+        self.assertEquals(2, teilnehmer_count)
+        # Ungültiger Filter
+        response = self.client.get(postenblatt_D, {'startnummern': 'XXX'})
+        self.assertContains(response, 'Bitte nur ganze Zahlen, Bindestrich oder Komma eingeben')
+        self.assertEquals(None, response.context['startliste'])
+
+    def test_naechster_posten(self):
+        postenblatt_D = '/2009/Test-Cup/klein/postenblatt/D/'
+        postenblatt_F = '/2009/Test-Cup/klein/postenblatt/F/'
+        response = self.client.get(postenblatt_D)
+        self.failUnlessEqual(response.status_code, 200)
+        self.assertEquals('F', response.context['posten_next_name'])
+        response = self.client.get(postenblatt_F)
+        self.failUnlessEqual(response.status_code, 200)
+        self.assertEquals(None, response.context['posten_next_name'])
+
+    def test_speichern_defaults(self):
+        postenblatt_D = '/2009/Test-Cup/klein/postenblatt/D/'
+        postenblatt_D_update = '/2009/Test-Cup/klein/postenblatt/D/update/'
+        response = self.client.post(postenblatt_D_update, {
+            'total': 2,
+            'stnr-0-teilnehmer': 1,
+            'stnr-1-teilnehmer': 2,
+            'Abzug-TOTAL_FORMS': 2,
+            'Abzug-INITIAL_FORMS': 0,
+            'Abzug-0-wert': 0,
+            'Abzug-1-wert': 0,
+            'Note-TOTAL_FORMS': 2,
+            'Note-INITIAL_FORMS': 0,
+            'Note-0-wert': 10,
+            'Note-1-wert': 10,
+            })
+        self.assertRedirects(response, postenblatt_D)
+        response = self.client.get(postenblatt_D_update)
+        self.failUnlessEqual(response.status_code, 200)
+
+    def test_speichern_mit_ungueltigem_wert(self):
+        postenblatt_D_update = '/2009/Test-Cup/klein/postenblatt/D/update/'
+        response = self.client.post(postenblatt_D_update, {
+            'total': 2,
+            'stnr-0-teilnehmer': 1,
+            'stnr-1-teilnehmer': 2,
+            'Abzug-TOTAL_FORMS': 2,
+            'Abzug-INITIAL_FORMS': 0,
+            'Abzug-0-wert': '7.3',
+            'Abzug-1-wert': 'xx',
+            'Note-TOTAL_FORMS': 2,
+            'Note-INITIAL_FORMS': 0,
+            'Note-0-wert': 10,
+            'Note-1-wert': 10,
+            })
+        self.failUnlessEqual(response.status_code, 200)
+        self.assertContains(response, 'Nur ganze Zahlen oder Vielfaches von 0.5 erlaubt')
+
+    def test_speichern_und_weiter(self):
+        postenblatt_D_update = '/2009/Test-Cup/klein/postenblatt/D/update/'
+        postenblatt_F_update = '/2009/Test-Cup/klein/postenblatt/F/update/'
+        response = self.client.post(postenblatt_D_update, {
+            'total': 2,
+            'stnr-0-teilnehmer': 1,
+            'stnr-1-teilnehmer': 2,
+            'Abzug-TOTAL_FORMS': 2,
+            'Abzug-INITIAL_FORMS': 0,
+            'Abzug-0-wert': 0,
+            'Abzug-1-wert': 0,
+            'Note-TOTAL_FORMS': 2,
+            'Note-INITIAL_FORMS': 0,
+            'Note-0-wert': 10,
+            'Note-1-wert': 10,
+            'save_and_next': 'Blabla',
+            'posten_next_name': 'F',
+            })
+        self.assertRedirects(response, postenblatt_F_update)
+        response = self.client.get(postenblatt_F_update)
+        self.failUnlessEqual(response.status_code, 200)
+
+    def test_speichern_und_weiter_am_ende(self):
+        postenblatt_D = '/2009/Test-Cup/klein/postenblatt/D/'
+        postenblatt_F_update = '/2009/Test-Cup/klein/postenblatt/F/update/'
+        response = self.client.post(postenblatt_F_update, {
+            'total': 2,
+            'stnr-0-teilnehmer': 1,
+            'stnr-1-teilnehmer': 2,
+            'Abzug-TOTAL_FORMS': 2,
+            'Abzug-INITIAL_FORMS': 0,
+            'Abzug-0-wert': 0,
+            'Abzug-1-wert': 0,
+            'Note-TOTAL_FORMS': 2,
+            'Note-INITIAL_FORMS': 0,
+            'Note-0-wert': 10,
+            'Note-1-wert': 10,
+            'save_and_finish': 'Blabla',
+            })
+        self.assertRedirects(response, postenblatt_D)
+
+    def test_aendern_existierender_daten(self):
+        postenblatt_D = '/2009/Test-Cup/klein/postenblatt/D/'
+        postenblatt_D_update = '/2009/Test-Cup/klein/postenblatt/D/update/'
+        response = self.client.post(postenblatt_D_update, {
+            'total': 2,
+            'stnr-0-teilnehmer': 1,
+            'stnr-1-teilnehmer': 2,
+            'Abzug-TOTAL_FORMS': 2,
+            'Abzug-INITIAL_FORMS': 0,
+            'Abzug-0-wert': 0,
+            'Abzug-1-wert': 0,
+            'Note-TOTAL_FORMS': 2,
+            'Note-INITIAL_FORMS': 0,
+            'Note-0-wert': 10,
+            'Note-1-wert': 10,
+            })
+        self.assertRedirects(response, postenblatt_D)
+        response = self.client.post(postenblatt_D_update, {
+            'total': 2,
+            'stnr-0-teilnehmer': 1,
+            'stnr-1-teilnehmer': 2,
+            'Abzug-TOTAL_FORMS': 2,
+            'Abzug-INITIAL_FORMS': 0,
+            'Abzug-0-wert': 0,
+            'Abzug-0-id': 1,
+            'Abzug-1-wert': 0,
+            'Abzug-1-id': 2,
+            'Note-TOTAL_FORMS': 2,
+            'Note-INITIAL_FORMS': 0,
+            'Note-0-wert': 10,
+            'Note-0-id': 3,
+            'Note-1-wert': 10,
+            'Note-1-id': 4,
+            })
+        self.assertRedirects(response, postenblatt_D)
+
