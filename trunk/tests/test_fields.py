@@ -15,6 +15,7 @@ from sasse.models import Disziplin
 from sasse.models import Schiffeinzel
 from sasse.models import Sektion
 from sasse.models import Mitglied
+from sasse.templatetags.sasse import zeit2str
 
 class UnicodeSlugFieldTest(TestCase):
     def setUp(self):
@@ -174,3 +175,23 @@ class ZeitInSekundenFieldTest(unittest.TestCase):
     def test_seconds(self):
         self.assertEquals(Decimal('10'), self.sut.clean('10'))
         self.assertEquals(Decimal('7'), self.sut.clean('7'))
+
+
+class ZeitToStringTest(unittest.TestCase):
+    def test_invalid_input(self):
+        self.assertRaises(AssertionError, zeit2str, None)
+        self.assertRaises(AssertionError, zeit2str, '')
+
+    def test_seconds(self):
+        self.assertEquals('0:00.00', zeit2str(Decimal('0')))
+        self.assertEquals('0:01.00', zeit2str(Decimal('1')))
+        self.assertEquals('1:03.00', zeit2str(Decimal('63')))
+        self.assertEquals('1:15.00', zeit2str(Decimal('75')))
+
+    def test_fractional_seconds(self):
+        self.assertEquals('0:00.19', zeit2str(Decimal('.19')))
+        self.assertEquals('0:01.87', zeit2str(Decimal('1.87')))
+        self.assertEquals('1:03.87', zeit2str(Decimal('63.87')))
+        self.assertEquals('1:03.01', zeit2str(Decimal('63.01')))
+        self.assertEquals('2:25.80', zeit2str(Decimal('145.8')))
+        self.assertEquals('2:25.87', zeit2str(Decimal('145.87')))

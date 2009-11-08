@@ -1,16 +1,15 @@
 {% extends "base_bewertungen.html" %}
 
 {% block content %}
-<a href="{% url postenblatt wettkampf.jahr, wettkampf.name, disziplin.name, posten.name %}?{{ query }}">Anderes Postenblatt auswählen</a>
-<p>
 <form id="postenblattform" name="postenblattform" action="" method="POST">
   <b>Posten {{ posten.name }}: {{ posten.postenart.name }}</b>
   {% for set in formset %}{{ set.management_form }}{% endfor %}
   <table class="list">
       <tr>
+          {{ startliste.total }}
           <th>Startnr:</th>
-          {% for t in startliste %}
-          <th>{{ t.startnummer }}</th>
+          {% for t in startliste.teilnehmer_forms %}
+          <th>{{ t.startnummer }}{{ t.teilnehmer }}</th>
           {% endfor %}
       </tr>
       {% for set in formset %}
@@ -18,15 +17,20 @@
           <th>{{ set.bewertungsart.name }}:</th>
           {% for form in set.forms %}
           <td {% if not form.initial.id %}bgcolor="LightGreen"{% endif %}>
-              {{ form.wert.errors }}{{ form.wert }} {{ form.teilnehmer }}{{ form.id }}
+              {{ form.wert.errors }}{{ form.wert }}{{ form.id }}
           </td>
           {% endfor %}
       </tr>
       {% endfor %}
   </table>
 <p>
+{% if posten_next_name %}
+<input type="submit" name="save_and_next" value="Speichern, weiter zu Posten {{ posten_next_name }}">
+<input type="hidden" name="posten_next_name" value="{{ posten_next_name }}">
+{% else %}
+<input type="submit" name="save_and_finish" value="Speichern, weiter zu Postenblattwahl">
+{% endif %}
 <input type="submit" name="save" value="Speichern">
-<input type="submit" name="save_and_next" value="Speichern und Weiter">
 </form>
 <script type="text/javascript">
   (function() {

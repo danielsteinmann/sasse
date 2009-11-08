@@ -23,6 +23,7 @@ from forms import SchiffeinzelEditForm
 from forms import SchiffeinzelListForm
 from forms import SchiffeinzelFilterForm
 from forms import PostenblattFilterForm
+from forms import TeilnehmerContainerForm
 from forms import WettkampfForm
 from forms import create_postenblatt_formsets
 
@@ -379,15 +380,22 @@ def postenblatt(request, jahr, wettkampf, disziplin, posten, template="postenbla
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
     p = Posten.objects.get(disziplin=d, name=posten)
     query = request.META.get('QUERY_STRING')
-    s = []
+    sl = None
     sets = []
     filterform = PostenblattFilterForm(d, request.GET)
     if filterform.is_valid():
         s = filterform.selected_startnummern(visible=15)
+        sl = TeilnehmerContainerForm(startliste=s)
         sets = create_postenblatt_formsets(posten=p, startliste=s)
+    try:
+        p_next = d.posten_set.filter(reihenfolge__gt=p.reihenfolge)[0]
+        p_next_name = p_next.name
+    except IndexError:
+        # Aktueller Posten ist der Letzte in der Postenliste
+        p_next_name = None
     return render_to_response(template, {'wettkampf': w, 'disziplin':
-        d, 'posten': p, 'startliste': s, 'filterform': filterform, 'formset':
-        sets, 'query': query })
+        d, 'posten': p, 'startliste': sl, 'filterform': filterform, 'formset':
+        sets, 'query': query, 'posten_next_name': p_next_name })
 
 def postenblatt_update(request, jahr, wettkampf, disziplin, posten):
     if request.method == 'POST':
@@ -399,29 +407,28 @@ def postenblatt_post(request, jahr, wettkampf, disziplin, posten):
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
     p = Posten.objects.get(disziplin=d, name=posten)
-    # TODO: Extrahiere Startliste aus request.POST
-    s = []
-    filterform = PostenblattFilterForm(d, request.GET)
-    if filterform.is_valid():
-        s = filterform.selected_startnummern(visible=15)
-    sets = create_postenblatt_formsets(posten=p, startliste=s, data=request.POST)
+    p_next_name = request.POST.get('posten_next_name')
+    sets = create_postenblatt_formsets(posten=p, data=request.POST)
     if all_valid(sets):
         for formset in sets:
             formset.save()
         view = postenblatt
         if request.POST.has_key('save_and_next'):
-            next_p = filterform.next_posten(p)
-            if next_p is not None:
-                posten = next_p.name
-                view = postenblatt_update
-            else:
-                # Back to square one
-                posten = d.posten_set.all()[0]
+            posten = p_next_name
+            view = postenblatt_update
+        elif request.POST.has_key('save_and_finish'):
+            # Wir waren auf letztem Posten => Zurück zur Postenblattwahl
+            posten = d.posten_set.all()[0].name
+            view = postenblatt
         url = reverse(view, args=[jahr, wettkampf, disziplin, posten])
         query = request.META.get('QUERY_STRING')
         if query:
             url = "%s?%s" % (url, query)
         return HttpResponseRedirect(url)
+    filterform = PostenblattFilterForm(d, request.GET)
+    filterform.is_valid()
+    s = filterform.selected_startnummern(visible=15)
+    sl = TeilnehmerContainerForm(startliste=s)
     return render_to_response('postenblatt_update.html', {'wettkampf': w,
-        'disziplin': d, 'posten': p, 'startliste': s, 'filterform': filterform,
-        'formset': sets})
+        'disziplin': d, 'posten': p, 'startliste': sl, 'filterform': filterform,
+        'formset': sets, 'posten_next_name': p_next_name})

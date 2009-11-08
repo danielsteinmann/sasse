@@ -293,24 +293,11 @@ class PostenblattFilterForm(Form):
         self.fields['startnummern'] = StartnummernSelectionField(disziplin)
 
     def selected_startnummern(self, visible=15):
-        # TODO: Falls keine Startnummern eingegeben, suche ersten Teilnehmer
-        # ohne Bewertungen für den aktuellen Posten.
         nummern = self.fields['startnummern'].startnummern_list
         result = Schiffeinzel.objects.filter(disziplin=self.disziplin)
         if nummern:
             result = result.filter(startnummer__in=nummern)
         result = result.filter()[:visible]
-        return result
-
-    def next_posten(self, current_posten):
-        result = None
-        try:
-            next = self.disziplin.posten_set.filter(
-                    reihenfolge__gt=current_posten.reihenfolge)
-            result = next.filter()[0]
-        except IndexError:
-            # current_posten ist der letzte Posten der Postenliste
-            pass
         return result
 
 
@@ -319,11 +306,11 @@ class PostenblattFilterForm(Form):
 # Das gilt für die meisten Posten, ausser die Anmeldung.
 class BewertungForm(Form):
     id = IntegerField(required=False, widget=HiddenInput())
-    teilnehmer = IntegerField(widget=HiddenInput())
 
     def __init__(self, *args, **kwargs):
         self.posten = kwargs.pop("posten")
         self.bewertungsart = kwargs.pop("bewertungsart")
+        self.teilnehmer_id = kwargs.pop("teilnehmer_id")
         super(BewertungForm, self).__init__(*args, **kwargs)
         # Definiere Typ von Bewertungsfeld
         if self.bewertungsart.einheit == 'ZEIT':
@@ -363,12 +350,12 @@ class BewertungForm(Form):
         if self.has_changed():
             b = Bewertung()
             b.id = self.cleaned_data['id']
-            b.teilnehmer_id = self.cleaned_data['teilnehmer']
             # Wert wird wenn nötig als negative Zahl gespeichert, damit man
             # einfacher mit SQL sum() arbeiten kann.
             b.wert = self.cleaned_data['wert'] * self.bewertungsart.signum
             b.posten_id = self.posten.id
             b.bewertungsart_id = self.bewertungsart.id
+            b.teilnehmer_id = self.teilnehmer_id
             b.save()
             return b
 
@@ -383,28 +370,28 @@ class BewertungBaseFormSet(BaseFormSet):
     def __init__(self, *args, **kwargs):
         self.posten = kwargs.pop("posten")
         self.bewertungsart = kwargs.pop("bewertungsart")
-        self.startliste = kwargs.pop("startliste")
-        self.extra = len(self.startliste)
+        self.teilnehmer_ids = kwargs.pop("teilnehmer_ids")
+        self.extra = len(self.teilnehmer_ids)
         # Mit Hilfe eines einzigen Select (Performance) sich merken, zu
         # welchem Teilnehmer bereits eine Bewertung existiert
         self.bewertung = {}
-        ids = [t.id for t in self.startliste]
+        ids = self.teilnehmer_ids
         for b in Bewertung.objects.filter(posten=self.posten,
                 bewertungsart=self.bewertungsart, teilnehmer__id__in=ids):
             self.bewertung[b.teilnehmer.id] = b
         super(BewertungBaseFormSet, self).__init__(*args, **kwargs)
 
     def _construct_form(self, i, **kwargs):
-        kwargs["posten"] = self.posten
-        kwargs["bewertungsart"] = self.bewertungsart
         initial = {}
-        teilnehmer = self.startliste[i]
-        instance = self.bewertung.get(teilnehmer.id)
+        teilnehmer_id = self.teilnehmer_ids[i]
+        instance = self.bewertung.get(teilnehmer_id)
         if instance is not None:
             initial['id'] = instance.id
             initial['wert'] = instance.wert
-        initial['teilnehmer'] = teilnehmer.id
         kwargs["initial"] = initial
+        kwargs["posten"] = self.posten
+        kwargs["bewertungsart"] = self.bewertungsart
+        kwargs["teilnehmer_id"] = teilnehmer_id
         return super(BewertungBaseFormSet, self)._construct_form(i, **kwargs)
 
     def save(self):
@@ -412,12 +399,75 @@ class BewertungBaseFormSet(BaseFormSet):
             form.save()
 
 
+class TeilnehmerForm(Form):
+    """
+    Hilfsform für TeilnehmerContainerForm.
+    """
+    teilnehmer = IntegerField(widget=HiddenInput())
+
+
+class TeilnehmerContainerForm(Form):
+    """
+    Hiermit kann man die Liste der Startnummern auf dem Postenblatt darstellen
+    (GET) respektive auszulesen (POST).
+    
+    Ich habe kein ModelFormSet von Django verwendet, weil es dies nicht
+    erlaubt, das queryset aus dem POST Request zu rekonstruieren.
+    """
+    PREFIX = 'stnr-%d'
+    total = IntegerField(widget=HiddenInput())
+
+    def __init__(self, startliste=None, *args, **kwargs):
+        self.startliste = startliste
+        super(TeilnehmerContainerForm, self).__init__(*args, **kwargs)
+        if self.startliste and self.data:
+            msg = u"Entweder startliste oder data, aber nicht beide"
+            raise AssertionError(msg)
+        if self.startliste:
+            self.initial['total'] = len(self.startliste)
+        else:
+            if not self.is_valid():
+                msg = u"Das hidden 'total' Feld nicht im Template vorhanden"
+                raise ValidationError(msg)
+
+    def teilnehmer_forms(self):
+        """
+        Wandelt die beim Konstruktor angegebene Startliste in eine Liste von
+        TeilnehmerForm um.
+        """
+        result = []
+        for i, t in enumerate(self.startliste):
+            form = TeilnehmerForm(prefix=self.PREFIX % i)
+            form.initial['teilnehmer'] = t.id
+            form.startnummer = t.startnummer
+            result.append(form)
+        return result
+
+    def teilnehmer_ids(self):
+        """
+        Wandelt die beim Konstruktor angegebenen POST Parameter in eine Liste
+        von Teilnehmer IDs um.
+        """
+        result = []
+        count = self.cleaned_data['total']
+        for i in range(0, count):
+            form = TeilnehmerForm(self.data, prefix=self.PREFIX % i)
+            form.is_valid()
+            id = form.cleaned_data['teilnehmer']
+            result.append(id)
+        return result
+
+
 def create_postenblatt_formsets(posten, startliste=None, data=None):
+    if startliste:
+        ids = [t.id for t in startliste]
+    else:
+        ids = TeilnehmerContainerForm(data=data).teilnehmer_ids()
     FormSet = formset_factory(form=BewertungForm, formset=BewertungBaseFormSet)
     result = []
     for art in Bewertungsart.objects.filter(postenart=posten.postenart):
         formset = FormSet(posten=posten, bewertungsart=art, prefix=art.name,
-                startliste=startliste, data=data)
+                teilnehmer_ids=ids, data=data)
         result.append(formset)
     return result
 
