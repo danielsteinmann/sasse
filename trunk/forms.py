@@ -34,6 +34,7 @@ from models import Schiffeinzel
 from models import Sektion
 from models import Teilnehmer
 from models import Wettkampf
+from models import Richtzeit
 
 from fields import MitgliedSearchField
 from fields import UnicodeSlugField
@@ -471,3 +472,17 @@ def create_postenblatt_formsets(posten, startliste=None, data=None):
         result.append(formset)
     return result
 
+
+class RichtzeitForm(ModelForm):
+    class Meta:
+        model = Richtzeit
+
+    def __init__(self, posten, *args, **kwargs):
+        try:
+            kwargs['instance'] = Richtzeit.objects.get(posten=posten)
+        except Richtzeit.DoesNotExist:
+            pass
+        super(RichtzeitForm, self).__init__(*args, **kwargs)
+        self.fields['zeit'] = ZeitInSekundenField()
+        self.fields['posten'].widget = HiddenInput()
+        self.initial['posten'] = posten.id

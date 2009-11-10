@@ -1,0 +1,19 @@
+{% load sasse %}
+<table class="list">
+  <tr>
+    <th>Topzeit</th>
+    <th>Fahrerpaar</th>
+    <th>Sektion</th>
+    <th>Kat</th>
+    <th>Startnr</th>
+  </tr>
+{% for row in rangliste %}
+  <tr>
+    <td>{{row.wert|bewertung:'ZEIT'}}</td>
+    <td>{{row.schiff.steuermann.name}} / {{row.schiff.vorderfahrer.name}}</td>
+    <td>{{row.schiff.sektion.name}}</td>
+    <td>{{row.schiff.kategorie.name}}</td>
+    <td><a href="{% url teilnehmer_get wettkampf.jahr, wettkampf.name, disziplin.name, row.schiff.startnummer %}">{{row.schiff.startnummer}}</a></td>
+  </tr>
+{% endfor %}
+</table>

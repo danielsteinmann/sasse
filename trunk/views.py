@@ -15,6 +15,7 @@ from models import Posten
 from models import Teilnehmer
 from models import Schiffeinzel
 from models import Bewertung
+from models import Richtzeit
 
 from forms import DisziplinForm
 from forms import PostenEditForm
@@ -26,6 +27,7 @@ from forms import PostenblattFilterForm
 from forms import TeilnehmerContainerForm
 from forms import WettkampfForm
 from forms import create_postenblatt_formsets
+from forms import RichtzeitForm
 
 # TODO: Mögliche Apps:
 #  - basis: Stammdaten
@@ -432,3 +434,67 @@ def postenblatt_post(request, jahr, wettkampf, disziplin, posten):
     return render_to_response('postenblatt_update.html', {'wettkampf': w,
         'disziplin': d, 'posten': p, 'startliste': sl, 'filterform': filterform,
         'formset': sets, 'posten_next_name': p_next_name})
+
+def richtzeiten(request, jahr, wettkampf, disziplin):
+    assert request.method == 'GET'
+    w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
+    d = Disziplin.objects.get(wettkampf=w, name=disziplin)
+    zeitposten = d.posten_set.filter(postenart__name='Zeitnote')
+    if zeitposten.count() == 0:
+        raise Http404(u"Es gibt gar keine Zeitposten")
+    p = zeitposten[0]
+    url = reverse(richtzeit, args=[jahr, wettkampf, disziplin, p.name])
+    return HttpResponseRedirect(url)
+
+def richtzeit(request, jahr, wettkampf, disziplin, posten, template='richtzeit.html'):
+    assert request.method == 'GET'
+    w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
+    d = Disziplin.objects.get(wettkampf=w, name=disziplin)
+    p = Posten.objects.get(disziplin=d, name=posten)
+    form = RichtzeitForm(p)
+    zeitposten = d.posten_set.filter(postenart__name='Zeitnote')
+    rangliste = read_topzeiten(p)
+    return render_to_response(template, {'wettkampf': w, 'disziplin':
+        d, 'posten': p, 'zeitposten': zeitposten, 'rangliste': rangliste,
+        'form': form})
+
+def richtzeit_update(request, jahr, wettkampf, disziplin, posten):
+    if request.method == 'POST':
+        return richtzeit_post(request, jahr, wettkampf, disziplin, posten)
+    return richtzeit(request, jahr, wettkampf, disziplin, posten, 'richtzeit_update.html')
+
+def richtzeit_post(request, jahr, wettkampf, disziplin, posten):
+    w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
+    d = Disziplin.objects.get(wettkampf=w, name=disziplin)
+    p = Posten.objects.get(disziplin=d, name=posten)
+    form = RichtzeitForm(p, data=request.POST)
+    if form.is_valid():
+        form.save()
+        url = reverse(richtzeit, args=[jahr, wettkampf, disziplin, posten])
+        return HttpResponseRedirect(url)
+    zeitposten = d.posten_set.filter(postenart__name='Zeitnote')
+    rangliste = read_topzeiten(p)
+    return render_to_response('richtzeit_update.html', {'wettkampf': w,
+        'disziplin': d, 'posten': p, 'zeitposten': zeitposten, 'rangliste':
+        rangliste, 'form': form})
+
+def read_topzeiten(posten, topn=10):
+    """
+    Bis jetzt habe ich nicht rausgefunden, wie ich 'Schiffeinzel' Objekte (eine
+    Subklasse von 'Teilnehmer') zusammen mit den Topzeiten in *einem* SQL
+    Select auszulesen kann. 
+    """
+    result = Bewertung.objects.filter(posten=posten).order_by('wert')
+    result = result.select_related()[:topn]
+    teilnehmer_ids = [z.teilnehmer_id for z in result]
+    schiffe = Schiffeinzel.objects.select_related().in_bulk(teilnehmer_ids)
+    for z in result:
+        z.schiff = schiffe[z.teilnehmer_id]
+    return result
+
+#-----------
+#    from django.db import connection
+#    for q in connection.queries:
+#        print "--------"
+#        print q
+#    print "Anzahl Queries", len(connection.queries)

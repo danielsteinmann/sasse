@@ -53,10 +53,8 @@ table.display td {
 /* tab navigation */
 ul.tabnav {
     text-align: left;
-    margin: 1em 0 1em 0;
-    font-weight: bolder;
-    font-size: 90%;
-    border-bottom: 1px solid #81BEF7;
+    margin: 1em 0 0 0;
+    border-bottom: 1px solid #B5D2F7;
     list-style-type: none;
     padding: 3px 10px 3px 10px;
 }
@@ -64,9 +62,10 @@ ul.tabnav li {
     display: inline;
 }
 ul.tabnav li.selected a {
-    border: 1px solid #81BEF7;
+    border: 1px solid #B5D2F7;
     border-bottom: none;
-    background-color: #81BEF7;
+    background-color: #B5D2F7;
+    font-weight: bolder;
     color: Black;
     position: relative;
 }
@@ -77,9 +76,30 @@ ul.tabnav li a {
     color: Black;
     padding: 3px 4px;
     text-decoration: none;
-    margin-right: 5px; /* space between tabs */
+    margin-right: 2px; /* space between tabs */
 }
 ul.tabnav li a:hover {
-    background: #81BEF7;
+    background: #B5D2F7;
     color: Black;
+}
+/* submenus of a tab */
+ul.subnav {
+    text-align: left;
+    margin: 0 0 0 0;
+    font-size: 85%;
+    background-color: #B5D2F7;
+    padding: 3px 3px 4px 3px;
+}
+ul.subnav li {
+    display: inline;
+}
+ul.subnav li.selected a {
+    font-weight: bolder;
+    color: Black;
+    text-decoration: none;
+    position: relative;
+}
+ul.subnav li a {
+    color: Black;
+    padding: 2px 2px;
 }

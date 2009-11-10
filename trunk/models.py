@@ -274,7 +274,7 @@ class Schiffeinzel(Teilnehmer):
 
 class Richtzeit(models.Model):
     """
-    Zeit in Millisekunden, welche 10 Punkte auf dem Notenblatt ergeben.
+    Zeit in Sekunden, welche 10 Punkte auf dem Notenblatt ergeben.
     """
     posten = models.ForeignKey('Posten')
     zeit = models.DecimalField(max_digits=6, decimal_places=2)
