@@ -1,10 +1,5 @@
 {% extends "base_disziplin.html" %}
 
-{% block breadcrumbs %}
-{{ block.super }}
-/ <a href="{% url bewertungen wettkampf.jahr, wettkampf.name, disziplin.name %}">Bewertungen</a>
-{% endblock %}
-
 {% block nav_bewertungen %}selected{% endblock %}
 
 {% block nav %}

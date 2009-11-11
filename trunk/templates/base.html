@@ -4,9 +4,8 @@
 <link href="/media/style.css" type="text/css" rel="stylesheet" />
 </head>
 <body>
-SPSV Wettkampfprogramm
+{% block breadcrumbs %}<a href="{% url wettkaempfe_get %}">SPSV Wettkämpfe</a>{% endblock %}
 <hr />
-{% block breadcrumbs %}{% endblock %}
 {% block nav %}{% endblock %}
 <p></p>
 {% block content %}{% endblock %}

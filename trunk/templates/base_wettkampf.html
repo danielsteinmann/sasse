@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block breadcrumbs %}
-<a href="{% url wettkaempfe_get %}">Home</a>
+{{ block.super }}
 {% if wettkampf %}
 / <a href="{% url wettkaempfe_by_year wettkampf.jahr %}">{{ wettkampf.jahr }}</a>
 / <a href="{% url wettkampf_get wettkampf.jahr, wettkampf.name %}">{{ wettkampf.name }}</a>

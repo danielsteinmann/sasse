@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block breadcrumbs %}
-<a href="{% url wettkaempfe_get %}">Home</a>
+{{ block.super }}
 {% if year %}
 / <a href="{% url wettkaempfe_by_year year %}">{{ year }}</a>
 {% endif %}

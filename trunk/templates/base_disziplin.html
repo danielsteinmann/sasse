@@ -1,13 +1,9 @@
-{% extends "base.html" %}
+{% extends "base_wettkampf.html" %}
 
-{% block title %}
-{{ wettkampf.name }} {{ wettkampf.jahr }} - {{ disziplin.name }}
-{% endblock %}
+{% block title %}{{ block.super }} - {{ disziplin.name }}{% endblock %}
 
 {% block breadcrumbs %}
-<a href="{% url wettkaempfe_get %}">Home</a>
-/ <a href="{% url wettkaempfe_by_year wettkampf.jahr %}">{{ wettkampf.jahr }}</a>
-/ <a href="{% url wettkampf_get wettkampf.jahr, wettkampf.name %}">{{ wettkampf.name }}</a>
+{{ block.super }}
 / <a href="{% url disziplin_get wettkampf.jahr, wettkampf.name, disziplin.name %}">{{ disziplin.name }}</a>
 {% endblock %}
 
