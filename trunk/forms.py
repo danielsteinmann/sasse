@@ -379,7 +379,7 @@ class BewertungBaseFormSet(BaseFormSet):
         ids = self.teilnehmer_ids
         for b in Bewertung.objects.filter(posten=self.posten,
                 bewertungsart=self.bewertungsart, teilnehmer__id__in=ids):
-            self.bewertung[b.teilnehmer.id] = b
+            self.bewertung[b.teilnehmer_id] = b
         super(BewertungBaseFormSet, self).__init__(*args, **kwargs)
 
     def _construct_form(self, i, **kwargs):
