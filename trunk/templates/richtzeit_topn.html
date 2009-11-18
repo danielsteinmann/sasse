@@ -1,19 +1,20 @@
 {% load sasse %}
+Die besten {{ rangliste.count }} Zeiten für Posten {{ posten.name }}:
 <table class="list">
   <tr>
-    <th>Topzeit</th>
+    <th class="startnummer">Stnr</th>
     <th>Fahrerpaar</th>
     <th>Sektion</th>
-    <th>Kat</th>
-    <th>Startnr</th>
+    <th class="kategorie">Kat</th>
+    <th class="note">Zeit</th>
   </tr>
 {% for row in rangliste %}
-  <tr>
-    <td>{{row.wert|bewertung:'ZEIT'}}</td>
+  <tr class="{% cycle 'odd' 'even' %}">
+    <td class="startnummer"><a href="{% url teilnehmer_get wettkampf.jahr, wettkampf.name, disziplin.name, row.schiff.startnummer %}">{{row.schiff.startnummer}}</a></td>
     <td>{{row.schiff.steuermann.name}} / {{row.schiff.vorderfahrer.name}}</td>
     <td>{{row.schiff.sektion.name}}</td>
-    <td>{{row.schiff.kategorie.name}}</td>
-    <td><a href="{% url teilnehmer_get wettkampf.jahr, wettkampf.name, disziplin.name, row.schiff.startnummer %}">{{row.schiff.startnummer}}</a></td>
+    <td class="kategorie">{{row.schiff.kategorie.name}}</td>
+    <td>{{row.wert|bewertung:'ZEIT'}}</td>
   </tr>
 {% endfor %}
 </table>

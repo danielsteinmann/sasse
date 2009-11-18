@@ -15,14 +15,30 @@ table.list {
 }
 table.list th {
     padding: 2px 4px 2px 4px;
-    font-weight: normal;
+    font-weight: bold;
     background-color: LightGrey;
     border: thin solid DarkGrey;
     text-align: left;
 }
+table.list tr {
+    border-style: solid;
+    border-width: thin;
+    border-color: DarkGrey;
+}
+table.list tr.even {
+    background-color: #FFFFDC;
+}
 table.list td {
     padding: 2px 4px 2px 4px;
-    border: thin solid DarkGrey;
+}
+table.list .startnummer {
+    text-align: right;
+}
+table.list .note {
+    text-align: right;
+}
+table.list .kategorie {
+    text-align: right;
 }
 /* Data as entry form */
 table.form {

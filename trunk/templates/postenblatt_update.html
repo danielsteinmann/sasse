@@ -7,14 +7,14 @@
   <table class="list">
       <tr>
           {{ startliste.total }}
-          <th>Startnr:</th>
+          <th class="startnummer">Startnr:</th>
           {% for t in startliste.teilnehmer_forms %}
           <th>{{ t.startnummer }}{{ t.teilnehmer }}</th>
           {% endfor %}
       </tr>
       {% for set in formset %}
       <tr>
-          <th>{{ set.bewertungsart.name }}:</th>
+          <th class="note">{{ set.bewertungsart.name }}:</th>
           {% for form in set.forms %}
           <td {% if not form.initial.id %}bgcolor="LightGreen"{% endif %}>
               {{ form.wert.errors }}{{ form.wert }}{{ form.id }}

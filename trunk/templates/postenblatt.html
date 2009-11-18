@@ -15,21 +15,23 @@
 | {{ filterform.startnummern.errors }}
 {{ filterform.startnummern }}
 <input type="submit" value="Startnummern auswählen">
+| <a href="#" title="Startnummern '1,4-15' zeigt Startnummern 1,4,5,...,15.
+'800-' zeigt Startnummern ab 800">Filter Tipps</a>
 </form>
 <p>
 <b>Posten {{ posten.name }}: {{ posten.postenart.name }}</b>
 <table class="list">
     <tr>
-        <th>Startnr:</th>
+        <th class="startnummer">Startnr:</th>
         {% for t in startliste.teilnehmer_forms %}
-        <th width="30">{{ t.startnummer }}</th>
+        <th class="startnummer" width="30">{{ t.startnummer }}</th>
         {% endfor %}
     </tr>
     {% for set in formset %}
     <tr>
-        <th>{{ set.bewertungsart.name }}:</th>
+        <th class="note">{{ set.bewertungsart.name }}:</th>
         {% for form in set.forms %}
-        <td {% if not form.initial.id %}bgcolor="LightGreen"{% endif %}>
+        <td class="note" {% if not form.initial.id %}bgcolor="LightGreen"{% endif %}>
           {{ form.initial.wert|bewertung:form.bewertungsart.einheit }}
         </td>
         {% endfor %}
