@@ -7,6 +7,7 @@ from django.http import HttpResponseRedirect
 from django.http import Http404
 from django.shortcuts import render_to_response
 from django.forms.formsets import all_valid
+from django.template.loader import render_to_string
 
 from models import Wettkampf
 from models import Disziplin
@@ -16,6 +17,8 @@ from models import Teilnehmer
 from models import Schiffeinzel
 from models import Bewertung
 from models import Richtzeit
+from models import Sektion
+from models import Bewertungsart
 
 from forms import DisziplinForm
 from forms import PostenEditForm
@@ -378,9 +381,13 @@ def bewertungen(request, jahr, wettkampf, disziplin):
 
 def postenblatt(request, jahr, wettkampf, disziplin, posten, template="postenblatt.html"):
     assert request.method == 'GET'
-    w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
-    d = Disziplin.objects.get(wettkampf=w, name=disziplin)
-    p = Posten.objects.get(disziplin=d, name=posten)
+    p = Posten.objects.select_related().get(
+            name=posten,
+            disziplin__name=disziplin,
+            disziplin__wettkampf__name=wettkampf,
+            disziplin__wettkampf__von__year=jahr)
+    d = p.disziplin
+    w = d.wettkampf
     query = request.META.get('QUERY_STRING')
     sl = None
     sets = []
@@ -491,6 +498,57 @@ def read_topzeiten(posten, topn=10):
     for z in result:
         z.schiff = schiffe[z.teilnehmer_id]
     return result
+
+def notenliste(request, jahr, wettkampf, disziplin):
+    assert request.method == 'GET'
+    w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
+    d = Disziplin.objects.get(wettkampf=w, name=disziplin)
+    posten = d.posten_set.all().select_related()
+    sektion = None
+    filter_form = SchiffeinzelFilterForm(d, request.GET)
+    if filter_form.is_valid():
+        sektion = filter_form.cleaned_data['sektion']
+        # TODO Eine Sektion auswählen, damit Liste nicht zu gross wird.
+        #      Oder Paging einführen
+    list = read_notenliste(d, posten, sektion)
+    return render_to_response('notenliste.html', {'wettkampf': w, 'disziplin':
+        d, 'posten': posten, 'notenliste': list, 'searchform': filter_form})
+
+def read_notenliste(disziplin, posten, sektion=None):
+    from django.db import connection
+    sql = render_to_string('notenliste.sql',
+            {"posten": posten, "sektion": sektion})
+    args = [disziplin.id]
+    if sektion:
+        args.append(sektion.id)
+    cursor = connection.cursor()
+    cursor.execute(sql, args)
+    # Hilfsfunktion, damit Bewertung.__unicode__ im Template verwendet wird
+    def new_bew(col, art):
+        wert = Decimal()
+        if col:
+            wert = Decimal(str(col))
+        return Bewertung(wert=wert, bewertungsart=art)
+    ZEIT = Bewertungsart(einheit='ZEIT')
+    PUNKT = Bewertungsart(einheit='PUNKT')
+    for row in cursor:
+        dict = {}; i = 0
+        dict['startnummer'] = row[i]; i += 1
+        dict['steuermann'] = row[i]; i += 1
+        dict['vorderfahrer'] = row[i]; i += 1
+        dict['sektion'] = row[i]; i += 1
+        dict['kategorie'] = row[i]; i += 1
+        dict['zeit_tot'] = new_bew(row[i], ZEIT); i += 1
+        dict['punkt_tot'] = new_bew(row[i], PUNKT); i += 1
+        noten = []
+        for p in posten:
+            if p.postenart.name == "Zeitnote":
+                noten.append(new_bew(row[i], ZEIT))
+                i += 1
+            noten.append(new_bew(row[i], PUNKT))
+            i += 1
+        dict['noten'] = noten
+        yield dict
 
 #-----------
 #    from django.db import connection

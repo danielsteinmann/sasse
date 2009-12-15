@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
+from templatetags.sasse import zeit2str
 
 SCHIFFS_ART = (
         ('b', 'Boot'),
@@ -193,6 +194,14 @@ class Bewertung(models.Model):
 
     class Meta:
         unique_together = ('teilnehmer', 'posten', 'bewertungsart')
+
+    def __unicode__(self):
+        if self.bewertungsart.einheit == 'ZEIT':
+            return u'%s' % (zeit2str(self.wert),)
+        else:
+            if self.wert == 0:
+                return u'0'
+            return u'%.01f' % (self.wert,)
 
 
 class Teilnehmer(models.Model):

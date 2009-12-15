@@ -10,6 +10,8 @@
     <a href="{% url bewertungen wettkampf.jahr, wettkampf.name, disziplin.name %}">Postenblätter</a></li>
   <li class="{% block nav_richtzeiten %}{% endblock %}">
   | <a href="{% url richtzeiten wettkampf.jahr, wettkampf.name, disziplin.name %}">Richtzeiten</a></li>
+  <li class="{% block nav_notenliste %}{% endblock %}">
+  | <a href="{% url notenliste wettkampf.jahr, wettkampf.name, disziplin.name %}">Notenliste</a></li>
 </ul>
 {% endblock %}
 {% endblock %}

@@ -12,7 +12,9 @@ def bewertung(value, einheit='PUNKT'):
     elif einheit == 'ZEIT':
         return zeit2str(value)
     else:
-        return '%.1f' % value
+        if value == 0:
+            return '0'
+        return '%.01f' % value
 
 def zeit2str(value):
     assert isinstance(value, Decimal)

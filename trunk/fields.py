@@ -41,7 +41,7 @@ class PunkteField(DecimalField):
         self.widget.attrs['size'] = 4
         # Wertebereich
         self.max_digits = 4
-        self.decimal_places = 2
+        self.decimal_places = 1
         self.min_value = 0
         self.max_value = 10
         valid_values = self.bewertungsart.wertebereich

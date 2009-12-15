@@ -51,6 +51,8 @@ urlpatterns = patterns('',
         views.richtzeit, {}, "richtzeit"),
     (r'^(?P<jahr>\d+)/(?P<wettkampf>[-\w]+)/(?P<disziplin>[-\w]+)/richtzeit/(?P<posten>[-\w]+)/update/$',
         views.richtzeit_update, {}, "richtzeit_update"),
+    (r'^(?P<jahr>\d+)/(?P<wettkampf>[-\w]+)/(?P<disziplin>[-\w]+)/notenliste/$',
+        views.notenliste, {}, "notenliste"),
 )
 
 #---- Wettkaempfe

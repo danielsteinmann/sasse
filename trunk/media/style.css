@@ -13,13 +13,6 @@ ul.errorlist li {
 table.list {
     border-collapse: collapse;
 }
-table.list th {
-    padding: 2px 4px 2px 4px;
-    font-weight: bold;
-    background-color: LightGrey;
-    border: thin solid DarkGrey;
-    text-align: left;
-}
 table.list tr {
     border-style: solid;
     border-width: thin;
@@ -27,6 +20,13 @@ table.list tr {
 }
 table.list tr.even {
     background-color: #FFFFDC;
+}
+table.list th {
+    padding: 2px 4px 2px 4px;
+    font-weight: bold;
+    background-color: LightGrey;
+    border: thin solid DarkGrey;
+    text-align: left;
 }
 table.list td {
     padding: 2px 4px 2px 4px;
