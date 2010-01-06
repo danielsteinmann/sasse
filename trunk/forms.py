@@ -260,6 +260,14 @@ class SchiffeinzelListForm(SchiffeinzelEditForm):
     # *späterer* Startnr existiert => Eventuell Hilfstabelle führen, welche
     # Startnummernblöcke definiert
     #
+    # TODO Was passiert, wenn ein Doppelstarter in einer anderen Kategorie
+    # passiert. Beispiel:
+    #      Steinmann     Kohler   C
+    #      Steinmann*    Dux      D
+    # 
+    # TODO Es gibt der Fall, wo Name/Vorname innerhalb der Sektion zweimal
+    # vorkommt (z.B. Schenker Michael). Dropdown Liste mit Jahrgang ergänzen
+    #
     def clean(self):
         super(SchiffeinzelListForm, self).clean()
         cleaned_data = self.cleaned_data
