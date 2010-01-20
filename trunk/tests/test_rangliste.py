@@ -4,9 +4,13 @@ from decimal import Decimal
 
 from django.test import TestCase
 from django.db import connection
+from django.template.loader import render_to_string
 
 from sasse.models import Wettkampf
+from sasse.models import Disziplin
 from sasse.models import Postenart
+from sasse.models import Kategorie
+from sasse.views import read_rangliste
 
 
 class ZeitInPunkteTest(TestCase):
@@ -66,4 +70,124 @@ class ZeitInPunkteTest(TestCase):
             # SQLLite liefert keinen Decimal zurück, MySQL aber schon
             result = Decimal(str(result))
         return result
+
+
+class RanglisteTest(TestCase):
+    """
+    Testet die Erstellung der Rangliste.
+
+    Hier einige Gedanken zur Erstellung der Rangliste
+    1  Foo/Bar
+    2  Hans/Wurst
+    2  Gleicher/Rang
+    4  Dritter/Rang
+    DS Der/Doppler
+    DS Nochein/Doppler
+    ----- Kranzlimite -----
+    5  Der/Vierte
+    6  Noch/Einer
+    DS Hans/Doppel
+    -  Foo/Bar      disqualizifiert
+
+    # Kranzlimite
+    kranzlimite = read_kranzlimite(disziplin)
+    if not kranzlimite:
+        # Default: 1/4 respektive 25%
+        anzahl_kranzraenge = Teilnehmer(disziplin).count() / 4
+        kranzlimite = rangliste[anzahl_kranzraenge].punkte
+
+    # Neu sortieren: kranz, doppelstarter, punkte, time
+
+>>> # (Kranz, Doppelstarter, Total)
+>>> rl = [(1, 0, 123), (1, 0, 122), (1, 1, 121), (1, 0, 120), (1, 0, 119), (0, 1, 118), (0, 0, 117)]
+>>> def mykey(row):
+...    order = 99
+...    if row[0] == 1 and row[1] == 0: order = 1
+...    if row[0] == 1 and row[1] == 1: order = 2
+...    if row[0] == 0 and row[1] == 0: order = 3
+...    if row[0] == 0 and row[1] == 1: order = 4
+...    #if row['ausgeschieden']: order = 5
+...    return order
+...
+>>> sorted(rl, key=mykey)
+[(1, 0, 123), (1, 0, 122), (1, 0, 120), (1, 0, 119), (1, 1, 121), (0, 0, 117), (0, 1, 118)]
+
+    # Doppelstarter Rangliste
+    rang = 'DS'
+    for row in rangliste_ds:
+        if row.VorderfahrerIstDS:
+            vorderfahrer.join('*')
+        if row.SteuermannIstDS:
+            steuermann.join('*')
+    """
+    fixtures = ['test_rangliste.json']
+
+    def test_rangliste_ohne_ds(self):
+        disziplin = Disziplin.objects.get(
+                name="Einzelfahren-II-III-C-D-F",
+                wettkampf__name="Fällbaum-Cup",
+                wettkampf__von__year="2010")
+        kat_C = Kategorie.objects.get(name='C')
+        cursor = connection.cursor()
+        RANGLISTE = render_to_string('rangliste.sql')
+
+        # Komplett
+        cursor.execute(RANGLISTE, [disziplin.id, kat_C.id])
+        self.assertEquals(13, len(cursor.fetchall()))
+
+        # Ohne Doppelstarter
+        sql = "select * from (" + RANGLISTE + ") where SteuermannIstDS = 0 and VorderfahrerIstDS = 0"
+        cursor.execute(sql, [disziplin.id, kat_C.id])
+        self.assertEquals(10, len(cursor.fetchall()))
+
+        # Nur Doppelstarter
+        sql = "select * from (" + RANGLISTE + ") where SteuermannIstDS = 1 or VorderfahrerIstDS = 1"
+        cursor.execute(sql, [disziplin.id, kat_C.id])
+        self.assertEquals(3, len(cursor.fetchall()))
+
+        # Nummerierte Rangliste
+        kranzlimite = Decimal("36.0")
+        actual = []
+        for row in read_rangliste(disziplin, kat_C, kranzlimite):
+            actual.append(dict(rang=row['rang'], kranz=row['kranz'],
+                doppelstarter=row['doppelstarter'], startnummer=row['startnummer']))
+        expected = [
+                {'rang': None, 'kranz': True,  'doppelstarter':  True, 'startnummer': 102},
+                {'rang':    1, 'kranz': True,  'doppelstarter': False, 'startnummer':   2},
+                {'rang':    2, 'kranz': True,  'doppelstarter': False, 'startnummer':  14},
+                {'rang':    3, 'kranz': True,  'doppelstarter': False, 'startnummer':  11},
+                {'rang':    4, 'kranz': True,  'doppelstarter': False, 'startnummer':   9},
+                {'rang':    5, 'kranz': True,  'doppelstarter': False, 'startnummer':  12},
+                {'rang':    6, 'kranz': True,  'doppelstarter': False, 'startnummer':   1},
+                {'rang':    7, 'kranz': True,  'doppelstarter': False, 'startnummer':  10},
+                {'rang':    8, 'kranz': True,  'doppelstarter': False, 'startnummer':   3},
+                {'rang': None, 'kranz': False, 'doppelstarter':  True, 'startnummer': 101},
+                {'rang': None, 'kranz': False, 'doppelstarter':  True, 'startnummer': 103},
+                {'rang':    9, 'kranz': False, 'doppelstarter': False, 'startnummer':   6},
+                {'rang':   10, 'kranz': False, 'doppelstarter': False, 'startnummer':  13},
+                ]
+        self.assertEquals(expected, actual)
+
+        # Nummerierte Rangliste, ohne Doppelstarter
+        kranzlimite = Decimal("36.0")
+        actual = []
+        for row in read_rangliste(disziplin, kat_C, kranzlimite, doppelstarter_mit_rang=True):
+            actual.append(dict(rang=row['rang'], kranz=row['kranz'],
+                doppelstarter=row['doppelstarter'], startnummer=row['startnummer']))
+        expected = [
+                {'rang':    1, 'kranz': True,  'doppelstarter':  True, 'startnummer': 102},
+                {'rang':    2, 'kranz': True,  'doppelstarter': False, 'startnummer':   2},
+                {'rang':    3, 'kranz': True,  'doppelstarter': False, 'startnummer':  14},
+                {'rang':    4, 'kranz': True,  'doppelstarter': False, 'startnummer':  11},
+                {'rang':    5, 'kranz': True,  'doppelstarter': False, 'startnummer':   9},
+                {'rang':    6, 'kranz': True,  'doppelstarter': False, 'startnummer':  12},
+                {'rang':    7, 'kranz': True,  'doppelstarter': False, 'startnummer':   1},
+                {'rang':    8, 'kranz': True,  'doppelstarter': False, 'startnummer':  10},
+                {'rang':    9, 'kranz': True,  'doppelstarter': False, 'startnummer':   3},
+                {'rang':   10, 'kranz': False, 'doppelstarter':  True, 'startnummer': 101},
+                {'rang':   11, 'kranz': False, 'doppelstarter':  True, 'startnummer': 103},
+                {'rang':   12, 'kranz': False, 'doppelstarter': False, 'startnummer':   6},
+                {'rang':   13, 'kranz': False, 'doppelstarter': False, 'startnummer':  13},
+                ]
+        self.assertEquals(expected, actual)
 

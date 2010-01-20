@@ -1,0 +1,9386 @@
+[
+  {
+    "pk": 10, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "name": "Bremgarten"
+    }
+  }, 
+  {
+    "pk": 14, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "name": "Dietikon"
+    }
+  }, 
+  {
+    "pk": 29, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "name": "Schaffhausen"
+    }
+  }, 
+  {
+    "pk": 31, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "name": "Sch\u00f6nenwerd"
+    }
+  }, 
+  {
+    "pk": 2036, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1995-03-25", 
+      "nummer": "14137", 
+      "name": "Aitchison", 
+      "parent": null, 
+      "sektion": 14, 
+      "vorname": "Brendan", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 2038, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1989-11-14", 
+      "nummer": "31163", 
+      "name": "Ammann", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Jonas", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 330, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1989-01-05", 
+      "nummer": "10118", 
+      "name": "Anderegg", 
+      "parent": null, 
+      "sektion": 10, 
+      "vorname": "Patrik", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1715, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1927-04-14", 
+      "nummer": "14001", 
+      "name": "Appenzeller", 
+      "parent": null, 
+      "sektion": 14, 
+      "vorname": "Hans", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1114, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1957-06-22", 
+      "nummer": "31002", 
+      "name": "Arnet", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Oskar", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1079, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1985-07-04", 
+      "nummer": "31108", 
+      "name": "Ascari", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Alexander", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1076, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1986-10-14", 
+      "nummer": "31097", 
+      "name": "Ascari", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Phillip", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1827, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1992-05-22", 
+      "nummer": "14122", 
+      "name": "Asuna", 
+      "parent": null, 
+      "sektion": 14, 
+      "vorname": "Alvaro", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1085, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1989-06-27", 
+      "nummer": "31131", 
+      "name": "Baldini", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Benjamin", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1120, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1940-01-02", 
+      "nummer": "31003", 
+      "name": "Baumann", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Ren\u00e9", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 994, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1969-02-09", 
+      "nummer": "29002", 
+      "name": "Baumer", 
+      "parent": null, 
+      "sektion": 29, 
+      "vorname": "Markus", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 2039, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1993-03-20", 
+      "nummer": "31164", 
+      "name": "Bergamin", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Caspar", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1121, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1931-09-25", 
+      "nummer": "31004", 
+      "name": "Berger", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Alwin", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 504, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1962-08-11", 
+      "nummer": "14003", 
+      "name": "Bohnenblust", 
+      "parent": null, 
+      "sektion": 14, 
+      "vorname": "Andr\u00e9", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1578, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1936-05-26", 
+      "nummer": "14004", 
+      "name": "Bohnenblust", 
+      "parent": null, 
+      "sektion": 14, 
+      "vorname": "Hans", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1829, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1989-10-08", 
+      "nummer": "14124", 
+      "name": "Borbua", 
+      "parent": null, 
+      "sektion": 14, 
+      "vorname": "Adrien", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1874, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1994-09-14", 
+      "nummer": "10144", 
+      "name": "Brem", 
+      "parent": null, 
+      "sektion": 10, 
+      "vorname": "Fabian", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1730, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1993-03-23", 
+      "nummer": "10135", 
+      "name": "Brem", 
+      "parent": null, 
+      "sektion": 10, 
+      "vorname": "Roman", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 998, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1918-10-04", 
+      "nummer": "29006", 
+      "name": "Breu", 
+      "parent": null, 
+      "sektion": 29, 
+      "vorname": "Hans", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 999, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1943-01-26", 
+      "nummer": "29007", 
+      "name": "Brodbeck", 
+      "parent": null, 
+      "sektion": 29, 
+      "vorname": "Ruedi", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1831, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1991-02-23", 
+      "nummer": "14126", 
+      "name": "Bruggmann", 
+      "parent": null, 
+      "sektion": 14, 
+      "vorname": "Carola", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1830, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1989-11-18", 
+      "nummer": "14125", 
+      "name": "Bruggmann", 
+      "parent": null, 
+      "sektion": 14, 
+      "vorname": "Natascha", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 332, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1987-11-15", 
+      "nummer": "10112", 
+      "name": "Brunner", 
+      "parent": null, 
+      "sektion": 10, 
+      "vorname": "Lukas", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 981, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1974-03-11", 
+      "nummer": "29008", 
+      "name": "Buchschacher", 
+      "parent": null, 
+      "sektion": 29, 
+      "vorname": "Michael", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 502, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1956-09-27", 
+      "nummer": "14007", 
+      "name": "Bumbacher", 
+      "parent": null, 
+      "sektion": 14, 
+      "vorname": "Bruno", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 319, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1936-06-12", 
+      "nummer": "10003", 
+      "name": "Burkart", 
+      "parent": null, 
+      "sektion": 10, 
+      "vorname": "Adolf", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 290, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1983-09-17", 
+      "nummer": "10089", 
+      "name": "B\u00e4r", 
+      "parent": null, 
+      "sektion": 10, 
+      "vorname": "Dominik", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 291, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1985-03-13", 
+      "nummer": "10092", 
+      "name": "B\u00e4r", 
+      "parent": null, 
+      "sektion": 10, 
+      "vorname": "Patricia", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1567, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1987-03-31", 
+      "nummer": "31153", 
+      "name": "B\u00e4rtschi", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Diego", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1000, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1942-08-17", 
+      "nummer": "29010", 
+      "name": "B\u00fchrer", 
+      "parent": null, 
+      "sektion": 29, 
+      "vorname": "Heinz", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 329, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1950-12-17", 
+      "nummer": "10002", 
+      "name": "B\u00fcrgisser", 
+      "parent": null, 
+      "sektion": 10, 
+      "vorname": "Bruno", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 2037, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1993-01-21", 
+      "nummer": "14138", 
+      "name": "Dellsperger", 
+      "parent": null, 
+      "sektion": 14, 
+      "vorname": "Pierre", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1868, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1941-01-14", 
+      "nummer": "10139", 
+      "name": "Dietiker", 
+      "parent": null, 
+      "sektion": 10, 
+      "vorname": "Hans", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 305, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1952-07-02", 
+      "nummer": "10006", 
+      "name": "Dux", 
+      "parent": null, 
+      "sektion": 10, 
+      "vorname": "Heinrich", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 499, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1967-03-01", 
+      "nummer": "14008", 
+      "name": "D\u00f6rig", 
+      "parent": null, 
+      "sektion": 14, 
+      "vorname": "Ralf", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1815, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1992-06-30", 
+      "nummer": "31160", 
+      "name": "D\u00f6tlinger", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Patrick", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 506, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1943-09-15", 
+      "nummer": "14009", 
+      "name": "Ebersold", 
+      "parent": null, 
+      "sektion": 14, 
+      "vorname": "Peter", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 22, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1980-05-15", 
+      "nummer": "14084", 
+      "name": "Ehrsam", 
+      "parent": null, 
+      "sektion": 14, 
+      "vorname": "Harry", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1095, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1973-02-28", 
+      "nummer": "31008", 
+      "name": "Eichenberger", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Michel", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 507, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1946-10-30", 
+      "nummer": "14011", 
+      "name": "Fischer", 
+      "parent": null, 
+      "sektion": 14, 
+      "vorname": "Fritz", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1953, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1991-07-26", 
+      "nummer": "14131", 
+      "name": "Fischer", 
+      "parent": null, 
+      "sektion": 14, 
+      "vorname": "Nicole", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 493, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1977-05-16", 
+      "nummer": "14074", 
+      "name": "Fischer", 
+      "parent": null, 
+      "sektion": 14, 
+      "vorname": "Peter", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 500, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1962-08-02", 
+      "nummer": "14014", 
+      "name": "Fischer", 
+      "parent": null, 
+      "sektion": 14, 
+      "vorname": "Werner", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1084, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1989-09-11", 
+      "nummer": "31129", 
+      "name": "Fricker", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Patrick", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1122, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1947-12-01", 
+      "nummer": "31009", 
+      "name": "F\u00e4s", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Walter", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1093, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1983-02-09", 
+      "nummer": "31106", 
+      "name": "F\u00fceg", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Dominik", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1096, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1973-09-06", 
+      "nummer": "31011", 
+      "name": "Galliker", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Heino", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1097, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1973-09-06", 
+      "nummer": "31012", 
+      "name": "Galliker", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Roger", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1087, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1986-09-15", 
+      "nummer": "31135", 
+      "name": "Gardelli", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Kay", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 979, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1986-04-28", 
+      "nummer": "29142", 
+      "name": "Gasser", 
+      "parent": null, 
+      "sektion": 29, 
+      "vorname": "Andreas", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 983, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1958-06-03", 
+      "nummer": "29018", 
+      "name": "Gasser", 
+      "parent": null, 
+      "sektion": 29, 
+      "vorname": "Paul", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1025, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1931-05-22", 
+      "nummer": "29019", 
+      "name": "Gasser", 
+      "parent": null, 
+      "sektion": 29, 
+      "vorname": "Wolfgang", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1577, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1967-01-04", 
+      "nummer": "14017", 
+      "name": "Gehrig", 
+      "parent": null, 
+      "sektion": 14, 
+      "vorname": "Bruno", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1098, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1971-04-27", 
+      "nummer": "31013", 
+      "name": "Geissb\u00fchler", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Martin", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1509, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1985-09-10", 
+      "nummer": "29203", 
+      "name": "Geuggis", 
+      "parent": null, 
+      "sektion": 29, 
+      "vorname": "Dominik", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1826, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1990-06-24", 
+      "nummer": "14120", 
+      "name": "Giardino", 
+      "parent": null, 
+      "sektion": 14, 
+      "vorname": "Pietro", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1112, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1970-12-04", 
+      "nummer": "31093", 
+      "name": "Glanzmann", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Daniel", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1081, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1990-05-09", 
+      "nummer": "31125", 
+      "name": "Grazioli", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Marco", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1871, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1993-05-20", 
+      "nummer": "10141", 
+      "name": "Greber", 
+      "parent": null, 
+      "sektion": 10, 
+      "vorname": "Kevin", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1654, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1989-03-30", 
+      "nummer": "10130", 
+      "name": "Greber", 
+      "parent": null, 
+      "sektion": 10, 
+      "vorname": "Marco", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1001, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1931-12-10", 
+      "nummer": "29022", 
+      "name": "Greutmann", 
+      "parent": null, 
+      "sektion": 29, 
+      "vorname": "Ren\u00e9", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1099, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1972-07-27", 
+      "nummer": "31014", 
+      "name": "Gross", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Philippe", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 984, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1973-08-05", 
+      "nummer": "29024", 
+      "name": "Grossenbacher", 
+      "parent": null, 
+      "sektion": 29, 
+      "vorname": "Markus", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 315, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1976-05-01", 
+      "nummer": "10106", 
+      "name": "Gr\u00fctter", 
+      "parent": null, 
+      "sektion": 10, 
+      "vorname": "Christian", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1123, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1944-12-28", 
+      "nummer": "31016", 
+      "name": "Gugger", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Alfred", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1118, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1953-06-15", 
+      "nummer": "31017", 
+      "name": "Gugger", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Daniel", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 508, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1938-07-12", 
+      "nummer": "14015", 
+      "name": "G\u00e4hwiler", 
+      "parent": null, 
+      "sektion": 14, 
+      "vorname": "Max", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 293, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1982-01-06", 
+      "nummer": "10097", 
+      "name": "G\u00fcttinger", 
+      "parent": null, 
+      "sektion": 10, 
+      "vorname": "Reto", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 301, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1975-02-15", 
+      "nummer": "10047", 
+      "name": "Hafner", 
+      "parent": null, 
+      "sektion": 10, 
+      "vorname": "Urs", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 492, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1980-09-27", 
+      "nummer": "14087", 
+      "name": "Hagenbuch", 
+      "parent": null, 
+      "sektion": 14, 
+      "vorname": "Roman", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1470, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1986-04-03", 
+      "nummer": "31148", 
+      "name": "Hallauer", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Manuel", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 328, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1959-04-26", 
+      "nummer": "10105", 
+      "name": "Haller", 
+      "parent": null, 
+      "sektion": 10, 
+      "vorname": "Hansruedi", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 320, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1915-09-05", 
+      "nummer": "10008", 
+      "name": "Hausherr", 
+      "parent": null, 
+      "sektion": 10, 
+      "vorname": "Max", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 321, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1939-10-21", 
+      "nummer": "10009", 
+      "name": "Hausherr", 
+      "parent": null, 
+      "sektion": 10, 
+      "vorname": "Rudolf", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1110, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1971-06-27", 
+      "nummer": "31066", 
+      "name": "Heller", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Stefan", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1116, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1951-12-05", 
+      "nummer": "31021", 
+      "name": "Hengartner", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Karl", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 322, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1940-10-27", 
+      "nummer": "10010", 
+      "name": "Hiltmann", 
+      "parent": null, 
+      "sektion": 10, 
+      "vorname": "Marcel", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1564, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1970-03-19", 
+      "nummer": "10011", 
+      "name": "Hiltmann", 
+      "parent": null, 
+      "sektion": 10, 
+      "vorname": "Patrick", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 287, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1950-01-16", 
+      "nummer": "10041", 
+      "name": "Hirsiger", 
+      "parent": null, 
+      "sektion": 10, 
+      "vorname": "Erich", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1869, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1935-10-01", 
+      "nummer": "10140", 
+      "name": "Hirzel", 
+      "parent": null, 
+      "sektion": 10, 
+      "vorname": "Theodor", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1002, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1923-07-29", 
+      "nummer": "29030", 
+      "name": "Hodler", 
+      "parent": null, 
+      "sektion": 29, 
+      "vorname": "Werner", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 985, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1973-07-29", 
+      "nummer": "29033", 
+      "name": "Hofer", 
+      "parent": null, 
+      "sektion": 29, 
+      "vorname": "Patrick", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 318, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1963-09-15", 
+      "nummer": "10012", 
+      "name": "Hofmann", 
+      "parent": null, 
+      "sektion": 10, 
+      "vorname": "Daniel", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 304, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1977-02-09", 
+      "nummer": "10065", 
+      "name": "Honegger", 
+      "parent": null, 
+      "sektion": 10, 
+      "vorname": "Patricia", 
+      "geschlecht": "f"
+    }
+  }, 
+  {
+    "pk": 1092, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1983-06-26", 
+      "nummer": "31089", 
+      "name": "Hoppler", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Ren\u00e9", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 310, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1973-12-27", 
+      "nummer": "10037", 
+      "name": "Hoppler", 
+      "parent": null, 
+      "sektion": 10, 
+      "vorname": "Sven", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1541, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1991-10-19", 
+      "nummer": "31151", 
+      "name": "Howald", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Fabrizio", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1113, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1957-11-08", 
+      "nummer": "31022", 
+      "name": "Howald", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Markus", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1542, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1991-10-19", 
+      "nummer": "31152", 
+      "name": "Howald", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Patric", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1078, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1985-06-25", 
+      "nummer": "31105", 
+      "name": "Huber", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Andreas", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1471, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1990-09-04", 
+      "nummer": "31149", 
+      "name": "Huber", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Christian", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1100, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1968-05-20", 
+      "nummer": "31023", 
+      "name": "Huber", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Hugo", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1004, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1932-12-17", 
+      "nummer": "29036", 
+      "name": "Huber", 
+      "parent": null, 
+      "sektion": 29, 
+      "vorname": "Kurt", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1083, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1988-03-29", 
+      "nummer": "31128", 
+      "name": "Huber", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Thomas", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 512, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1936-07-19", 
+      "nummer": "14056", 
+      "name": "Huggler", 
+      "parent": null, 
+      "sektion": 14, 
+      "vorname": "Armin", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1129, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1987-10-12", 
+      "nummer": "31145", 
+      "name": "Humbel", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Lukas", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 21, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1967-09-27", 
+      "nummer": "31141", 
+      "name": "Hunkeler", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Philippe", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1003, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1929-11-14", 
+      "nummer": "29031", 
+      "name": "H\u00f6hn", 
+      "parent": null, 
+      "sektion": 29, 
+      "vorname": "Jakob", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1836, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1989-06-07", 
+      "nummer": "31161", 
+      "name": "H\u00fcbscher", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Fabian", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 498, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1954-05-17", 
+      "nummer": "14057", 
+      "name": "Isenring", 
+      "parent": null, 
+      "sektion": 14, 
+      "vorname": "Ivo", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 294, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1986-01-21", 
+      "nummer": "10098", 
+      "name": "Jakob", 
+      "parent": null, 
+      "sektion": 10, 
+      "vorname": "Denise", 
+      "geschlecht": "f"
+    }
+  }, 
+  {
+    "pk": 333, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1986-08-07", 
+      "nummer": "10119", 
+      "name": "Jutzeler", 
+      "parent": null, 
+      "sektion": 10, 
+      "vorname": "Raphael", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1005, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1914-01-16", 
+      "nummer": "29037", 
+      "name": "J\u00e4ger", 
+      "parent": null, 
+      "sektion": 29, 
+      "vorname": "Albert", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1006, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1926-03-15", 
+      "nummer": "29038", 
+      "name": "Kalt", 
+      "parent": null, 
+      "sektion": 29, 
+      "vorname": "Karl", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1007, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1934-08-08", 
+      "nummer": "29039", 
+      "name": "Karrer", 
+      "parent": null, 
+      "sektion": 29, 
+      "vorname": "David", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 513, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1943-07-22", 
+      "nummer": "14059", 
+      "name": "Keller", 
+      "parent": null, 
+      "sektion": 14, 
+      "vorname": "Florian", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1008, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1923-07-21", 
+      "nummer": "29041", 
+      "name": "Keller", 
+      "parent": null, 
+      "sektion": 29, 
+      "vorname": "Karl", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 503, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1969-03-28", 
+      "nummer": "14060", 
+      "name": "Keller", 
+      "parent": null, 
+      "sektion": 14, 
+      "vorname": "Roland", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 977, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1955-09-09", 
+      "nummer": "29116", 
+      "name": "Kessler", 
+      "parent": null, 
+      "sektion": 29, 
+      "vorname": "Bruno", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1551, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1986-07-21", 
+      "nummer": "10123", 
+      "name": "Keusch", 
+      "parent": null, 
+      "sektion": 10, 
+      "vorname": "Stephan", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 496, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1969-04-10", 
+      "nummer": "14062", 
+      "name": "Knecht", 
+      "parent": null, 
+      "sektion": 14, 
+      "vorname": "Philipp", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 313, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1970-02-22", 
+      "nummer": "10044", 
+      "name": "Koch", 
+      "parent": null, 
+      "sektion": 10, 
+      "vorname": "Bernhard", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 300, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1978-11-14", 
+      "nummer": "10078", 
+      "name": "Kohler", 
+      "parent": null, 
+      "sektion": 10, 
+      "vorname": "Bernhard", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1652, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1989-11-04", 
+      "nummer": "10128", 
+      "name": "Kohler", 
+      "parent": null, 
+      "sektion": 10, 
+      "vorname": "Bruno", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1573, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1983-06-03", 
+      "nummer": "14116", 
+      "name": "Kohler", 
+      "parent": null, 
+      "sektion": 14, 
+      "vorname": "Marcel", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 514, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1949-06-10", 
+      "nummer": "14064", 
+      "name": "Kohler", 
+      "parent": null, 
+      "sektion": 14, 
+      "vorname": "Max", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 323, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1947-10-23", 
+      "nummer": "10018", 
+      "name": "Kohler", 
+      "parent": null, 
+      "sektion": 10, 
+      "vorname": "Thomas", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 2040, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1989-09-15", 
+      "nummer": "31165", 
+      "name": "Kyburz", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Stefan", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1009, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1932-10-10", 
+      "nummer": "29044", 
+      "name": "Labhart", 
+      "parent": null, 
+      "sektion": 29, 
+      "vorname": "Rolf", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1101, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1974-01-04", 
+      "nummer": "31027", 
+      "name": "Lanz", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Patrick", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1872, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1993-01-31", 
+      "nummer": "10142", 
+      "name": "Leemann", 
+      "parent": null, 
+      "sektion": 10, 
+      "vorname": "Reto", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1090, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1978-08-19", 
+      "nummer": "31085", 
+      "name": "Lehner", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Roland", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1102, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1956-10-10", 
+      "nummer": "31028", 
+      "name": "Leutwiler", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Kurt", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1088, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1978-04-19", 
+      "nummer": "31077", 
+      "name": "Loberti", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Flavio", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1510, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1986-07-05", 
+      "nummer": "29208", 
+      "name": "L\u00fcchinger", 
+      "parent": null, 
+      "sektion": 29, 
+      "vorname": "Matthias", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 2033, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1994-08-20", 
+      "nummer": "14134", 
+      "name": "Madassery", 
+      "parent": null, 
+      "sektion": 14, 
+      "vorname": "Anish", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 2034, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1988-11-08", 
+      "nummer": "14135", 
+      "name": "Madassery", 
+      "parent": null, 
+      "sektion": 14, 
+      "vorname": "Anoop", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 2041, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1993-07-03", 
+      "nummer": "31166", 
+      "name": "Mancini", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Lukas", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1111, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1963-09-30", 
+      "nummer": "31067", 
+      "name": "Marti", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Daniel", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 2042, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1996-03-19", 
+      "nummer": "31167", 
+      "name": "Marti", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Sven", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 978, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1986-09-08", 
+      "nummer": "29166", 
+      "name": "Marty", 
+      "parent": null, 
+      "sektion": 29, 
+      "vorname": "Stefan", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 510, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1931-01-11", 
+      "nummer": "14034", 
+      "name": "Meier", 
+      "parent": null, 
+      "sektion": 14, 
+      "vorname": "Hans", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1124, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1934-06-12", 
+      "nummer": "31031", 
+      "name": "Meier", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Karl", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1828, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1990-01-03", 
+      "nummer": "14123", 
+      "name": "Meier", 
+      "parent": null, 
+      "sektion": 14, 
+      "vorname": "Pascal", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1125, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1943-03-05", 
+      "nummer": "31034", 
+      "name": "Moor", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Peter", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1126, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1937-10-22", 
+      "nummer": "31035", 
+      "name": "Moor", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Werner", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 495, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1956-05-28", 
+      "nummer": "14039", 
+      "name": "Moser", 
+      "parent": null, 
+      "sektion": 14, 
+      "vorname": "Bruno", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 505, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1958-01-03", 
+      "nummer": "14038", 
+      "name": "Moser", 
+      "parent": null, 
+      "sektion": 14, 
+      "vorname": "Fredi", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 511, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1921-01-25", 
+      "nummer": "14040", 
+      "name": "M\u00fcller", 
+      "parent": null, 
+      "sektion": 14, 
+      "vorname": "Arthur", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 316, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1971-02-19", 
+      "nummer": "10020", 
+      "name": "M\u00fcller", 
+      "parent": null, 
+      "sektion": 10, 
+      "vorname": "Christoph", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1579, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1944-10-19", 
+      "nummer": "14042", 
+      "name": "M\u00fcller", 
+      "parent": null, 
+      "sektion": 14, 
+      "vorname": "Ernst", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1609, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1990-07-08", 
+      "nummer": "29213", 
+      "name": "M\u00fcller", 
+      "parent": null, 
+      "sektion": 29, 
+      "vorname": "J\u00e9r\u00f4me", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1651, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1990-12-13", 
+      "nummer": "10127", 
+      "name": "M\u00fcller", 
+      "parent": null, 
+      "sektion": 10, 
+      "vorname": "L\u00e9my", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 986, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1956-04-02", 
+      "nummer": "29052", 
+      "name": "Neidhart", 
+      "parent": null, 
+      "sektion": 29, 
+      "vorname": "Dominik", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1077, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1986-04-03", 
+      "nummer": "31103", 
+      "name": "Nussbaumer", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Alexander", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1103, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1963-08-29", 
+      "nummer": "31037", 
+      "name": "Nussbaumer", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Martin", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1115, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1957-01-31", 
+      "nummer": "31038", 
+      "name": "Nussbaumer", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Urs", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1023, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1930-04-13", 
+      "nummer": "29120", 
+      "name": "Oertli", 
+      "parent": null, 
+      "sektion": 29, 
+      "vorname": "Paul", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 997, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1968-05-15", 
+      "nummer": "29053", 
+      "name": "Oertli", 
+      "parent": null, 
+      "sektion": 29, 
+      "vorname": "Urs", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 324, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1934-08-14", 
+      "nummer": "10021", 
+      "name": "Oggenfuss", 
+      "parent": null, 
+      "sektion": 10, 
+      "vorname": "Gottfried", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 987, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1952-09-07", 
+      "nummer": "29054", 
+      "name": "Oster", 
+      "parent": null, 
+      "sektion": 29, 
+      "vorname": "Beat", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1833, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1990-12-10", 
+      "nummer": "14129", 
+      "name": "Pallavicini", 
+      "parent": null, 
+      "sektion": 14, 
+      "vorname": "Laura", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 490, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1986-07-08", 
+      "nummer": "14106", 
+      "name": "Peyer", 
+      "parent": null, 
+      "sektion": 14, 
+      "vorname": "Patrick", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 489, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1984-10-18", 
+      "nummer": "14105", 
+      "name": "Peyer", 
+      "parent": null, 
+      "sektion": 14, 
+      "vorname": "Raphael", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 993, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1967-03-08", 
+      "nummer": "29103", 
+      "name": "Pezzotti", 
+      "parent": null, 
+      "sektion": 29, 
+      "vorname": "Marco", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1887, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1990-10-26", 
+      "nummer": "14130", 
+      "name": "Portner", 
+      "parent": null, 
+      "sektion": 14, 
+      "vorname": "Tobias", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1610, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1990-03-31", 
+      "nummer": "29214", 
+      "name": "Rapold", 
+      "parent": null, 
+      "sektion": 29, 
+      "vorname": "Samuel", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1010, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1941-03-10", 
+      "nummer": "29058", 
+      "name": "Renggli", 
+      "parent": null, 
+      "sektion": 29, 
+      "vorname": "Anton", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1011, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1944-04-08", 
+      "nummer": "29062", 
+      "name": "Rohner", 
+      "parent": null, 
+      "sektion": 29, 
+      "vorname": "Walter", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 501, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1968-06-02", 
+      "nummer": "14045", 
+      "name": "Rufer", 
+      "parent": null, 
+      "sektion": 14, 
+      "vorname": "Urs", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 995, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1962-04-20", 
+      "nummer": "29067", 
+      "name": "Rust", 
+      "parent": null, 
+      "sektion": 29, 
+      "vorname": "Beda", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1012, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1940-07-05", 
+      "nummer": "29066", 
+      "name": "R\u00fcegg", 
+      "parent": null, 
+      "sektion": 29, 
+      "vorname": "Markus", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1089, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1976-05-30", 
+      "nummer": "31078", 
+      "name": "R\u00fcegg", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Markus", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1104, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1965-11-14", 
+      "nummer": "31044", 
+      "name": "Salzmann", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Martin", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1105, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1954-10-15", 
+      "nummer": "31045", 
+      "name": "Sandmeier", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Markus", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1127, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1947-02-05", 
+      "nummer": "31046", 
+      "name": "Sandmeier", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Ulrich", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1026, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1987-07-12", 
+      "nummer": "29192", 
+      "name": "Sauter", 
+      "parent": null, 
+      "sektion": 29, 
+      "vorname": "Toni", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1932-12-26", 
+      "nummer": "10023", 
+      "name": "Schaufelb\u00fchl", 
+      "parent": null, 
+      "sektion": 10, 
+      "vorname": "Heinrich", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1094, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1981-10-23", 
+      "nummer": "31114", 
+      "name": "Schenker", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Michael", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 2044, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1993-03-01", 
+      "nummer": "31169", 
+      "name": "Schenker", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Michael", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 2045, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1993-03-01", 
+      "nummer": "31170", 
+      "name": "Schenker", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Sebastian", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1732, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1921-01-28", 
+      "nummer": "31048", 
+      "name": "Schenker", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Walter", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 314, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1954-05-13", 
+      "nummer": "10064", 
+      "name": "Schertenleib", 
+      "parent": null, 
+      "sektion": 10, 
+      "vorname": "Heinz", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1013, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1921-11-20", 
+      "nummer": "29068", 
+      "name": "Schlatter", 
+      "parent": null, 
+      "sektion": 29, 
+      "vorname": "Ernst", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1873, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1992-05-11", 
+      "nummer": "10143", 
+      "name": "Schmid", 
+      "parent": null, 
+      "sektion": 10, 
+      "vorname": "Daniel", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 306, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1971-11-14", 
+      "nummer": "10024", 
+      "name": "Schmid", 
+      "parent": null, 
+      "sektion": 10, 
+      "vorname": "Stephan", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1119, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1957-11-15", 
+      "nummer": "31051", 
+      "name": "Schmiedichen", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "G\u00fcnther", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1106, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1969-05-23", 
+      "nummer": "31052", 
+      "name": "Schnegg", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Harry", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 488, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1986-09-26", 
+      "nummer": "14104", 
+      "name": "Schweizer", 
+      "parent": null, 
+      "sektion": 14, 
+      "vorname": "Yves", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 2043, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1995-07-05", 
+      "nummer": "31168", 
+      "name": "Sch\u00e4rli", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Tobias", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 292, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1985-10-04", 
+      "nummer": "10095", 
+      "name": "Sch\u00f6llhammer", 
+      "parent": null, 
+      "sektion": 10, 
+      "vorname": "Donat", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1014, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1944-03-12", 
+      "nummer": "29072", 
+      "name": "Sch\u00f6n", 
+      "parent": null, 
+      "sektion": 29, 
+      "vorname": "Hans", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 988, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1973-06-19", 
+      "nummer": "29073", 
+      "name": "Sch\u00f6n", 
+      "parent": null, 
+      "sektion": 29, 
+      "vorname": "Roland", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 325, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1934-11-07", 
+      "nummer": "10025", 
+      "name": "Seiler", 
+      "parent": null, 
+      "sektion": 10, 
+      "vorname": "Pius", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 2035, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1993-06-20", 
+      "nummer": "14136", 
+      "name": "Siegrist", 
+      "parent": null, 
+      "sektion": 14, 
+      "vorname": "Dominic-Sandro", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1684, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1989-05-04", 
+      "nummer": "14118", 
+      "name": "Siegrist", 
+      "parent": null, 
+      "sektion": 14, 
+      "vorname": "Markus", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1583, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1958-04-12", 
+      "nummer": "14117", 
+      "name": "Siegrist", 
+      "parent": null, 
+      "sektion": 14, 
+      "vorname": "Roland", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 289, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1984-06-27", 
+      "nummer": "10086", 
+      "name": "Sigel", 
+      "parent": null, 
+      "sektion": 10, 
+      "vorname": "Jan", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1992, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1989-05-15", 
+      "nummer": "14133", 
+      "name": "Sonderegger", 
+      "parent": null, 
+      "sektion": 14, 
+      "vorname": "Kay", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 989, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1960-08-06", 
+      "nummer": "29076", 
+      "name": "Spengler", 
+      "parent": null, 
+      "sektion": 29, 
+      "vorname": "Rolf", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 996, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1962-06-09", 
+      "nummer": "29077", 
+      "name": "Spengler", 
+      "parent": null, 
+      "sektion": 29, 
+      "vorname": "Urs", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1128, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1935-02-16", 
+      "nummer": "31055", 
+      "name": "Spielmann", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Gerhard", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1015, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1946-09-23", 
+      "nummer": "29078", 
+      "name": "Stamm", 
+      "parent": null, 
+      "sektion": 29, 
+      "vorname": "Christian", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1017, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1943-08-16", 
+      "nummer": "29080", 
+      "name": "Stamm", 
+      "parent": null, 
+      "sektion": 29, 
+      "vorname": "Erich", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1016, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1944-09-10", 
+      "nummer": "29079", 
+      "name": "Stamm", 
+      "parent": null, 
+      "sektion": 29, 
+      "vorname": "Peter", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1832, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1990-10-19", 
+      "nummer": "14127", 
+      "name": "Staub", 
+      "parent": null, 
+      "sektion": 14, 
+      "vorname": "Cornel", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1082, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1989-06-29", 
+      "nummer": "31127", 
+      "name": "Staub", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Mike", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1080, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1986-03-20", 
+      "nummer": "31116", 
+      "name": "Staub", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Reto", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 299, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1978-12-18", 
+      "nummer": "10068", 
+      "name": "Staubli", 
+      "parent": null, 
+      "sektion": 10, 
+      "vorname": "Ren\u00e9", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 312, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1967-04-30", 
+      "nummer": "10043", 
+      "name": "Steinmann", 
+      "parent": null, 
+      "sektion": 10, 
+      "vorname": "Daniel", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 326, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1938-11-03", 
+      "nummer": "10028", 
+      "name": "Steinmann", 
+      "parent": null, 
+      "sektion": 10, 
+      "vorname": "Hanspeter", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 302, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1976-04-13", 
+      "nummer": "10051", 
+      "name": "Steinmann", 
+      "parent": null, 
+      "sektion": 10, 
+      "vorname": "Marco", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 307, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1971-03-09", 
+      "nummer": "10029", 
+      "name": "Stenz", 
+      "parent": null, 
+      "sektion": 10, 
+      "vorname": "Alois", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 303, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1975-09-18", 
+      "nummer": "10071", 
+      "name": "Stenz", 
+      "parent": null, 
+      "sektion": 10, 
+      "vorname": "Markus", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1649, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1991-11-24", 
+      "nummer": "10125", 
+      "name": "Stettler", 
+      "parent": null, 
+      "sektion": 10, 
+      "vorname": "Reto", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 487, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1985-12-19", 
+      "nummer": "14103", 
+      "name": "Stich", 
+      "parent": null, 
+      "sektion": 14, 
+      "vorname": "Christian", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 298, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1988-10-06", 
+      "nummer": "10110", 
+      "name": "Struck", 
+      "parent": null, 
+      "sektion": 10, 
+      "vorname": "Roman", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1650, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1988-12-18", 
+      "nummer": "10126", 
+      "name": "Stulz", 
+      "parent": null, 
+      "sektion": 10, 
+      "vorname": "Manuel", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 308, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1971-02-18", 
+      "nummer": "10031", 
+      "name": "Stutz", 
+      "parent": null, 
+      "sektion": 10, 
+      "vorname": "Cornel", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 311, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1965-04-17", 
+      "nummer": "10042", 
+      "name": "Stutz", 
+      "parent": null, 
+      "sektion": 10, 
+      "vorname": "Erich", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 309, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1964-04-09", 
+      "nummer": "10033", 
+      "name": "Stutz", 
+      "parent": null, 
+      "sektion": 10, 
+      "vorname": "Peter", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 15, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1981-10-07", 
+      "nummer": "31112", 
+      "name": "St\u00f6ckli", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Andr\u00e9", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 12, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1978-11-12", 
+      "nummer": "31075", 
+      "name": "St\u00f6ckli", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Oliver", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1653, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1992-07-07", 
+      "nummer": "10129", 
+      "name": "St\u00f6ckli", 
+      "parent": null, 
+      "sektion": 10, 
+      "vorname": "Reto", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1550, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1986-03-05", 
+      "nummer": "10122", 
+      "name": "St\u00f6ckli", 
+      "parent": null, 
+      "sektion": 10, 
+      "vorname": "Roger", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1822, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1991-03-14", 
+      "nummer": "10137", 
+      "name": "St\u00f6ckli", 
+      "parent": null, 
+      "sektion": 10, 
+      "vorname": "Roman", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1107, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1951-11-13", 
+      "nummer": "31058", 
+      "name": "St\u00f6ckli", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Urs", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1117, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1952-10-10", 
+      "nummer": "31059", 
+      "name": "St\u00fccheli", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Meinrad", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1091, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1981-08-29", 
+      "nummer": "31091", 
+      "name": "St\u00fccheli", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Sandro", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1086, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1987-12-16", 
+      "nummer": "31133", 
+      "name": "Tsch\u00e4ppeler", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Michael", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 327, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1945-10-28", 
+      "nummer": "10081", 
+      "name": "T\u00f6ngi", 
+      "parent": null, 
+      "sektion": 10, 
+      "vorname": "Klaus", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1608, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1990-01-28", 
+      "nummer": "29210", 
+      "name": "Ulrich", 
+      "parent": null, 
+      "sektion": 29, 
+      "vorname": "Marcel", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 494, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1963-06-10", 
+      "nummer": "14021", 
+      "name": "Ungricht", 
+      "parent": null, 
+      "sektion": 14, 
+      "vorname": "Gusti", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1994, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1984-09-28", 
+      "nummer": "31162", 
+      "name": "Urbinello", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Damiano", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1024, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1971-06-07", 
+      "nummer": "29086", 
+      "name": "Utzinger", 
+      "parent": null, 
+      "sektion": 29, 
+      "vorname": "Stefan", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 331, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1987-10-08", 
+      "nummer": "10111", 
+      "name": "Villiger", 
+      "parent": null, 
+      "sektion": 10, 
+      "vorname": "Manuel", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 980, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1978-09-24", 
+      "nummer": "29124", 
+      "name": "Vogelsanger", 
+      "parent": null, 
+      "sektion": 29, 
+      "vorname": "Marc", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1656, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1987-06-17", 
+      "nummer": "10132", 
+      "name": "Vollenweider", 
+      "parent": null, 
+      "sektion": 10, 
+      "vorname": "Roland", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 982, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1985-07-09", 
+      "nummer": "29147", 
+      "name": "Wagner", 
+      "parent": null, 
+      "sektion": 29, 
+      "vorname": "Stefan", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1655, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1989-01-04", 
+      "nummer": "10131", 
+      "name": "Waltensp\u00fcl", 
+      "parent": null, 
+      "sektion": 10, 
+      "vorname": "Oliver", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1814, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1992-12-21", 
+      "nummer": "31159", 
+      "name": "Walter", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Fabian", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1018, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1944-11-18", 
+      "nummer": "29090", 
+      "name": "Wangler", 
+      "parent": null, 
+      "sektion": 29, 
+      "vorname": "Werner", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1108, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1970-01-16", 
+      "nummer": "31061", 
+      "name": "Wanner", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Frank", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1019, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1942-03-17", 
+      "nummer": "29091", 
+      "name": "Wanner", 
+      "parent": null, 
+      "sektion": 29, 
+      "vorname": "Heinz", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 509, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1945-02-24", 
+      "nummer": "14025", 
+      "name": "Weber", 
+      "parent": null, 
+      "sektion": 14, 
+      "vorname": "Hansruedi", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1981, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1990-04-06", 
+      "nummer": "29226", 
+      "name": "Wehrle", 
+      "parent": null, 
+      "sektion": 29, 
+      "vorname": "Christian", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 990, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1960-07-10", 
+      "nummer": "29093", 
+      "name": "Wehrli", 
+      "parent": null, 
+      "sektion": 29, 
+      "vorname": "Alexander", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1020, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1932-01-02", 
+      "nummer": "29094", 
+      "name": "Wehrli", 
+      "parent": null, 
+      "sektion": 29, 
+      "vorname": "Richard", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 991, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1964-08-02", 
+      "nummer": "29095", 
+      "name": "Wehrli", 
+      "parent": null, 
+      "sektion": 29, 
+      "vorname": "Urs", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 2046, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1992-01-15", 
+      "nummer": "31171", 
+      "name": "Wehrli", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Yanik", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1021, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1926-07-04", 
+      "nummer": "29096", 
+      "name": "Weibel", 
+      "parent": null, 
+      "sektion": 29, 
+      "vorname": "Arthur", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 297, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1989-09-07", 
+      "nummer": "10109", 
+      "name": "Wendel", 
+      "parent": null, 
+      "sektion": 10, 
+      "vorname": "Mirco", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 288, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1984-01-19", 
+      "nummer": "10085", 
+      "name": "Wendel", 
+      "parent": null, 
+      "sektion": 10, 
+      "vorname": "Patrik", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 295, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1984-03-01", 
+      "nummer": "10100", 
+      "name": "Wendel", 
+      "parent": null, 
+      "sektion": 10, 
+      "vorname": "Peter", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 317, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1958-02-13", 
+      "nummer": "10080", 
+      "name": "Wendel", 
+      "parent": null, 
+      "sektion": 10, 
+      "vorname": "Ren\u00e9", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 992, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1959-10-25", 
+      "nummer": "29097", 
+      "name": "Werner", 
+      "parent": null, 
+      "sektion": 29, 
+      "vorname": "Hans", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1109, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1973-11-16", 
+      "nummer": "31063", 
+      "name": "Widmer", 
+      "parent": null, 
+      "sektion": 31, 
+      "vorname": "Roger", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1022, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1928-09-08", 
+      "nummer": "29098", 
+      "name": "Widtmann", 
+      "parent": null, 
+      "sektion": 29, 
+      "vorname": "Jean", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1850, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1989-12-10", 
+      "nummer": "10138", 
+      "name": "Wietlisbach", 
+      "parent": null, 
+      "sektion": 10, 
+      "vorname": "David", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 491, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1980-05-26", 
+      "nummer": "14082", 
+      "name": "Wildhaber", 
+      "parent": null, 
+      "sektion": 14, 
+      "vorname": "Urs", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 296, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1986-10-19", 
+      "nummer": "10102", 
+      "name": "Wirth", 
+      "parent": null, 
+      "sektion": 10, 
+      "vorname": "Daniel", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 515, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1987-04-15", 
+      "nummer": "14111", 
+      "name": "W\u00e4chter", 
+      "parent": null, 
+      "sektion": 14, 
+      "vorname": "Flavio", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1991, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1991-09-22", 
+      "nummer": "14132", 
+      "name": "Zamboni", 
+      "parent": null, 
+      "sektion": 14, 
+      "vorname": "Valeria", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1987, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1988-08-19", 
+      "nummer": "10146", 
+      "name": "Zandegiacomo", 
+      "parent": null, 
+      "sektion": 10, 
+      "vorname": "Miriam", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1580, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1945-09-22", 
+      "nummer": "14031", 
+      "name": "Zimmerli", 
+      "parent": null, 
+      "sektion": 14, 
+      "vorname": "Hans-Peter", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 497, 
+    "model": "sasse.mitglied", 
+    "fields": {
+      "geburtsdatum": "1966-09-08", 
+      "nummer": "14067", 
+      "name": "Zimmermann", 
+      "parent": null, 
+      "sektion": 14, 
+      "vorname": "Robert", 
+      "geschlecht": "m"
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "sasse.disziplinart", 
+    "fields": {
+      "name": "Einzelfahren"
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "sasse.disziplinart", 
+    "fields": {
+      "name": "Sektionsfahren"
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "sasse.disziplinart", 
+    "fields": {
+      "name": "Bootsf\u00e4hrenbau"
+    }
+  }, 
+  {
+    "pk": 4, 
+    "model": "sasse.disziplinart", 
+    "fields": {
+      "name": "Einzelschn\u00fcren"
+    }
+  }, 
+  {
+    "pk": 5, 
+    "model": "sasse.disziplinart", 
+    "fields": {
+      "name": "Gruppenschn\u00fcren"
+    }
+  }, 
+  {
+    "pk": 6, 
+    "model": "sasse.disziplinart", 
+    "fields": {
+      "name": "Schwimmen"
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [
+        1, 
+        2
+      ], 
+      "name": "Abfahrt bei einer Stange"
+    }
+  }, 
+  {
+    "pk": 18, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [
+        2
+      ], 
+      "name": "Abfahrt und Ueberfahrt in Linie"
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [
+        1, 
+        2
+      ], 
+      "name": "Abfahrt unterhalb eines markierten Felsens"
+    }
+  }, 
+  {
+    "pk": 20, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [
+        2
+      ], 
+      "name": "Abmeldung"
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [
+        1
+      ], 
+      "name": "Allgemeines und Antreten (Einzelfahren)"
+    }
+  }, 
+  {
+    "pk": 10, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [
+        2
+      ], 
+      "name": "Anmeldung (Sektionsfahren)"
+    }
+  }, 
+  {
+    "pk": 50, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [
+        3
+      ], 
+      "name": "Bootsf\u00e4hrenbau"
+    }
+  }, 
+  {
+    "pk": 8, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [
+        1, 
+        2
+      ], 
+      "name": "Durchfahrt"
+    }
+  }, 
+  {
+    "pk": 7, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [
+        1, 
+        2
+      ], 
+      "name": "Einfahren in die Br\u00fcckenlinie"
+    }
+  }, 
+  {
+    "pk": 52, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [
+        4
+      ], 
+      "name": "Einzelschn\u00fcren"
+    }
+  }, 
+  {
+    "pk": 11, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [
+        2
+      ], 
+      "name": "Gemeinsame Stachelfahrt"
+    }
+  }, 
+  {
+    "pk": 53, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [
+        5
+      ], 
+      "name": "Gruppenschn\u00fcren"
+    }
+  }, 
+  {
+    "pk": 5, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [
+        1, 
+        2
+      ], 
+      "name": "Landung auf bestimmtes Ziel"
+    }
+  }, 
+  {
+    "pk": 6, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [
+        1
+      ], 
+      "name": "Landung auf h\u00f6chstes Ziel (Einzelfahren)"
+    }
+  }, 
+  {
+    "pk": 13, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [
+        2
+      ], 
+      "name": "Landung auf h\u00f6chstes Ziel (Sektionsfahren)"
+    }
+  }, 
+  {
+    "pk": 19, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [
+        2
+      ], 
+      "name": "Landung in Linie"
+    }
+  }, 
+  {
+    "pk": 51, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [
+        6
+      ], 
+      "name": "Schwimmen"
+    }
+  }, 
+  {
+    "pk": 21, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [
+        1
+      ], 
+      "name": "Stachelfahrt"
+    }
+  }, 
+  {
+    "pk": 4, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [
+        1, 
+        2
+      ], 
+      "name": "Umfahren eines markierten Felsens"
+    }
+  }, 
+  {
+    "pk": 9, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [
+        1, 
+        2, 
+        3, 
+        4, 
+        5, 
+        6
+      ], 
+      "name": "Zeitnote"
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "name": "Abzug", 
+      "defaultwert": "0", 
+      "reihenfolge": 1, 
+      "postenart": 2, 
+      "signum": -1, 
+      "wertebereich": "TODO", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "name": "Note", 
+      "defaultwert": "10", 
+      "reihenfolge": 2, 
+      "postenart": 2, 
+      "signum": 1, 
+      "wertebereich": "TODO", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 4, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "name": "Abzug", 
+      "defaultwert": "0", 
+      "reihenfolge": 1, 
+      "postenart": 3, 
+      "signum": -1, 
+      "wertebereich": "TODO", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 5, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "name": "Note", 
+      "defaultwert": "10", 
+      "reihenfolge": 2, 
+      "postenart": 3, 
+      "signum": 1, 
+      "wertebereich": "TODO", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "name": "Abzug", 
+      "defaultwert": "0", 
+      "reihenfolge": 1, 
+      "postenart": 1, 
+      "signum": -1, 
+      "wertebereich": "TODO", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 14, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "name": "Abzug", 
+      "defaultwert": "0", 
+      "reihenfolge": 1, 
+      "postenart": 8, 
+      "signum": -1, 
+      "wertebereich": "TODO", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 15, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "name": "Note", 
+      "defaultwert": "10", 
+      "reihenfolge": 2, 
+      "postenart": 8, 
+      "signum": 1, 
+      "wertebereich": "TODO", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 12, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "name": "Abzug", 
+      "defaultwert": "0", 
+      "reihenfolge": 1, 
+      "postenart": 7, 
+      "signum": -1, 
+      "wertebereich": "TODO", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 13, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "name": "Note", 
+      "defaultwert": "10", 
+      "reihenfolge": 2, 
+      "postenart": 7, 
+      "signum": 1, 
+      "wertebereich": "TODO", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 8, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "name": "Abzug", 
+      "defaultwert": "0", 
+      "reihenfolge": 1, 
+      "postenart": 5, 
+      "signum": -1, 
+      "wertebereich": "TODO", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 9, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "name": "Note", 
+      "defaultwert": "10", 
+      "reihenfolge": 2, 
+      "postenart": 5, 
+      "signum": 1, 
+      "wertebereich": "TODO", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 10, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "name": "Abzug", 
+      "defaultwert": "0", 
+      "reihenfolge": 1, 
+      "postenart": 6, 
+      "signum": -1, 
+      "wertebereich": "TODO", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 11, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "name": "Note", 
+      "defaultwert": "15", 
+      "reihenfolge": 2, 
+      "postenart": 6, 
+      "signum": 1, 
+      "wertebereich": "15", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 6, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "name": "Abzug", 
+      "defaultwert": "0", 
+      "reihenfolge": 1, 
+      "postenart": 4, 
+      "signum": -1, 
+      "wertebereich": "TODO", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 7, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "name": "Note", 
+      "defaultwert": "10", 
+      "reihenfolge": 2, 
+      "postenart": 4, 
+      "signum": 1, 
+      "wertebereich": "TODO", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 16, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "name": "Zeit", 
+      "defaultwert": "0", 
+      "reihenfolge": 1, 
+      "postenart": 9, 
+      "signum": 1, 
+      "wertebereich": "TODO", 
+      "einheit": "ZEIT"
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "sasse.kategorie", 
+    "fields": {
+      "geschlecht": "m", 
+      "alter_von": 0, 
+      "disziplinart": 1, 
+      "alter_bis": 14, 
+      "name": "I"
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "sasse.kategorie", 
+    "fields": {
+      "geschlecht": "m", 
+      "alter_von": 15, 
+      "disziplinart": 1, 
+      "alter_bis": 17, 
+      "name": "II"
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "sasse.kategorie", 
+    "fields": {
+      "geschlecht": "m", 
+      "alter_von": 18, 
+      "disziplinart": 1, 
+      "alter_bis": 20, 
+      "name": "III"
+    }
+  }, 
+  {
+    "pk": 4, 
+    "model": "sasse.kategorie", 
+    "fields": {
+      "geschlecht": "m", 
+      "alter_von": 21, 
+      "disziplinart": 1, 
+      "alter_bis": 42, 
+      "name": "C"
+    }
+  }, 
+  {
+    "pk": 5, 
+    "model": "sasse.kategorie", 
+    "fields": {
+      "geschlecht": "m", 
+      "alter_von": 43, 
+      "disziplinart": 1, 
+      "alter_bis": 99, 
+      "name": "D"
+    }
+  }, 
+  {
+    "pk": 6, 
+    "model": "sasse.kategorie", 
+    "fields": {
+      "geschlecht": "f", 
+      "alter_von": 21, 
+      "disziplinart": 1, 
+      "alter_bis": 99, 
+      "name": "F"
+    }
+  }, 
+  {
+    "pk": 4, 
+    "model": "sasse.wettkampf", 
+    "fields": {
+      "von": "2010-05-15", 
+      "name": "F\u00e4llbaum-Cup", 
+      "bis": null, 
+      "zusatz": "Bremgarten, 15. Mai 2010"
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "sasse.wettkampf", 
+    "fields": {
+      "von": "2008-05-18", 
+      "name": "Glanzenburg-Cup", 
+      "bis": null, 
+      "zusatz": "Dietikon, 18. Mai 2008"
+    }
+  }, 
+  {
+    "pk": 4, 
+    "model": "sasse.disziplin", 
+    "fields": {
+      "wettkampf": 1, 
+      "kategorien": [], 
+      "name": "Bootsf\u00e4hrenbau", 
+      "disziplinart": 3
+    }
+  }, 
+  {
+    "pk": 5, 
+    "model": "sasse.disziplin", 
+    "fields": {
+      "wettkampf": 1, 
+      "kategorien": [], 
+      "name": "Einzelfahren", 
+      "disziplinart": 1
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "sasse.disziplin", 
+    "fields": {
+      "wettkampf": 1, 
+      "kategorien": [
+        1
+      ], 
+      "name": "Einzelfahren-I", 
+      "disziplinart": 1
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "sasse.disziplin", 
+    "fields": {
+      "wettkampf": 1, 
+      "kategorien": [
+        2, 
+        3, 
+        4, 
+        5, 
+        6
+      ], 
+      "name": "Einzelfahren-II-III-C-D-F", 
+      "disziplinart": 1
+    }
+  }, 
+  {
+    "pk": 11, 
+    "model": "sasse.disziplin", 
+    "fields": {
+      "wettkampf": 4, 
+      "kategorien": [
+        2, 
+        3, 
+        4, 
+        5, 
+        6
+      ], 
+      "name": "Einzelfahren-II-III-C-D-F", 
+      "disziplinart": 1
+    }
+  }, 
+  {
+    "pk": 6, 
+    "model": "sasse.disziplin", 
+    "fields": {
+      "wettkampf": 1, 
+      "kategorien": [], 
+      "name": "Grschn\u00fc", 
+      "disziplinart": 5
+    }
+  }, 
+  {
+    "pk": 7, 
+    "model": "sasse.disziplin", 
+    "fields": {
+      "wettkampf": 1, 
+      "kategorien": [], 
+      "name": "Sektionsfahren", 
+      "disziplinart": 2
+    }
+  }, 
+  {
+    "pk": 10, 
+    "model": "sasse.disziplin", 
+    "fields": {
+      "wettkampf": 1, 
+      "kategorien": [], 
+      "name": "x", 
+      "disziplinart": 1
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "sasse.posten", 
+    "fields": {
+      "postenart": 1, 
+      "disziplin": 1, 
+      "name": "A", 
+      "reihenfolge": 1
+    }
+  }, 
+  {
+    "pk": 5, 
+    "model": "sasse.posten", 
+    "fields": {
+      "postenart": 2, 
+      "disziplin": 2, 
+      "name": "A0", 
+      "reihenfolge": 1
+    }
+  }, 
+  {
+    "pk": 6, 
+    "model": "sasse.posten", 
+    "fields": {
+      "postenart": 1, 
+      "disziplin": 2, 
+      "name": "A", 
+      "reihenfolge": 2
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "sasse.posten", 
+    "fields": {
+      "postenart": 2, 
+      "disziplin": 1, 
+      "name": "B", 
+      "reihenfolge": 2
+    }
+  }, 
+  {
+    "pk": 15, 
+    "model": "sasse.posten", 
+    "fields": {
+      "postenart": 2, 
+      "disziplin": 11, 
+      "name": "B", 
+      "reihenfolge": 2
+    }
+  }, 
+  {
+    "pk": 4, 
+    "model": "sasse.posten", 
+    "fields": {
+      "postenart": 3, 
+      "disziplin": 1, 
+      "name": "C", 
+      "reihenfolge": 3
+    }
+  }, 
+  {
+    "pk": 13, 
+    "model": "sasse.posten", 
+    "fields": {
+      "postenart": 9, 
+      "disziplin": 2, 
+      "name": "C-E", 
+      "reihenfolge": 3
+    }
+  }, 
+  {
+    "pk": 17, 
+    "model": "sasse.posten", 
+    "fields": {
+      "postenart": 8, 
+      "disziplin": 11, 
+      "name": "D", 
+      "reihenfolge": 4
+    }
+  }, 
+  {
+    "pk": 7, 
+    "model": "sasse.posten", 
+    "fields": {
+      "postenart": 8, 
+      "disziplin": 1, 
+      "name": "E", 
+      "reihenfolge": 4
+    }
+  }, 
+  {
+    "pk": 18, 
+    "model": "sasse.posten", 
+    "fields": {
+      "postenart": 9, 
+      "disziplin": 11, 
+      "name": "B-C", 
+      "reihenfolge": 5
+    }
+  }, 
+  {
+    "pk": 8, 
+    "model": "sasse.posten", 
+    "fields": {
+      "postenart": 5, 
+      "disziplin": 1, 
+      "name": "G", 
+      "reihenfolge": 5
+    }
+  }, 
+  {
+    "pk": 19, 
+    "model": "sasse.posten", 
+    "fields": {
+      "postenart": 9, 
+      "disziplin": 11, 
+      "name": "C-E", 
+      "reihenfolge": 6
+    }
+  }, 
+  {
+    "pk": 10, 
+    "model": "sasse.posten", 
+    "fields": {
+      "postenart": 6, 
+      "disziplin": 1, 
+      "name": "L", 
+      "reihenfolge": 6
+    }
+  }, 
+  {
+    "pk": 9, 
+    "model": "sasse.posten", 
+    "fields": {
+      "postenart": 8, 
+      "disziplin": 1, 
+      "name": "K", 
+      "reihenfolge": 7
+    }
+  }, 
+  {
+    "pk": 11, 
+    "model": "sasse.posten", 
+    "fields": {
+      "postenart": 9, 
+      "disziplin": 1, 
+      "name": "B-C", 
+      "reihenfolge": 8
+    }
+  }, 
+  {
+    "pk": 12, 
+    "model": "sasse.posten", 
+    "fields": {
+      "postenart": 9, 
+      "disziplin": 1, 
+      "name": "E-G", 
+      "reihenfolge": 9
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 1, 
+      "posten": 1, 
+      "wert": "-1.5", 
+      "teilnehmer": 67
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 1, 
+      "posten": 1, 
+      "wert": "-1", 
+      "teilnehmer": 3
+    }
+  }, 
+  {
+    "pk": 4, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 1, 
+      "posten": 1, 
+      "wert": "-1", 
+      "teilnehmer": 4
+    }
+  }, 
+  {
+    "pk": 5, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 1, 
+      "posten": 1, 
+      "wert": "-1", 
+      "teilnehmer": 5
+    }
+  }, 
+  {
+    "pk": 7, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 1, 
+      "posten": 1, 
+      "wert": "-1", 
+      "teilnehmer": 7
+    }
+  }, 
+  {
+    "pk": 8, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 1, 
+      "posten": 1, 
+      "wert": "-2", 
+      "teilnehmer": 8
+    }
+  }, 
+  {
+    "pk": 9, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 1, 
+      "posten": 1, 
+      "wert": "-1", 
+      "teilnehmer": 9
+    }
+  }, 
+  {
+    "pk": 10, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 1, 
+      "posten": 1, 
+      "wert": "-1", 
+      "teilnehmer": 10
+    }
+  }, 
+  {
+    "pk": 11, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 1, 
+      "posten": 1, 
+      "wert": "-1", 
+      "teilnehmer": 11
+    }
+  }, 
+  {
+    "pk": 12, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 1, 
+      "posten": 1, 
+      "wert": "-1", 
+      "teilnehmer": 12
+    }
+  }, 
+  {
+    "pk": 14, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 1, 
+      "posten": 1, 
+      "wert": "-1", 
+      "teilnehmer": 18
+    }
+  }, 
+  {
+    "pk": 15, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 1, 
+      "posten": 1, 
+      "wert": "-1", 
+      "teilnehmer": 19
+    }
+  }, 
+  {
+    "pk": 16, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 2, 
+      "posten": 3, 
+      "wert": "-1", 
+      "teilnehmer": 67
+    }
+  }, 
+  {
+    "pk": 17, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 2, 
+      "posten": 3, 
+      "wert": "-1", 
+      "teilnehmer": 2
+    }
+  }, 
+  {
+    "pk": 18, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 2, 
+      "posten": 3, 
+      "wert": "-1", 
+      "teilnehmer": 3
+    }
+  }, 
+  {
+    "pk": 19, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 2, 
+      "posten": 3, 
+      "wert": "-1", 
+      "teilnehmer": 4
+    }
+  }, 
+  {
+    "pk": 20, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 2, 
+      "posten": 3, 
+      "wert": "-2", 
+      "teilnehmer": 5
+    }
+  }, 
+  {
+    "pk": 22, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 2, 
+      "posten": 3, 
+      "wert": "-1", 
+      "teilnehmer": 7
+    }
+  }, 
+  {
+    "pk": 23, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 2, 
+      "posten": 3, 
+      "wert": "-2", 
+      "teilnehmer": 8
+    }
+  }, 
+  {
+    "pk": 24, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 2, 
+      "posten": 3, 
+      "wert": "-1", 
+      "teilnehmer": 9
+    }
+  }, 
+  {
+    "pk": 25, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 2, 
+      "posten": 3, 
+      "wert": "-1", 
+      "teilnehmer": 10
+    }
+  }, 
+  {
+    "pk": 26, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 2, 
+      "posten": 3, 
+      "wert": "-2", 
+      "teilnehmer": 11
+    }
+  }, 
+  {
+    "pk": 27, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 2, 
+      "posten": 3, 
+      "wert": "-1", 
+      "teilnehmer": 12
+    }
+  }, 
+  {
+    "pk": 29, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 2, 
+      "posten": 3, 
+      "wert": "0", 
+      "teilnehmer": 18
+    }
+  }, 
+  {
+    "pk": 30, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 2, 
+      "posten": 3, 
+      "wert": "-1", 
+      "teilnehmer": 19
+    }
+  }, 
+  {
+    "pk": 31, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 3, 
+      "posten": 3, 
+      "wert": "9", 
+      "teilnehmer": 67
+    }
+  }, 
+  {
+    "pk": 32, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 3, 
+      "posten": 3, 
+      "wert": "9", 
+      "teilnehmer": 2
+    }
+  }, 
+  {
+    "pk": 33, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 3, 
+      "posten": 3, 
+      "wert": "8.5", 
+      "teilnehmer": 3
+    }
+  }, 
+  {
+    "pk": 34, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 3, 
+      "posten": 3, 
+      "wert": "9", 
+      "teilnehmer": 4
+    }
+  }, 
+  {
+    "pk": 35, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 3, 
+      "posten": 3, 
+      "wert": "8.5", 
+      "teilnehmer": 5
+    }
+  }, 
+  {
+    "pk": 37, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 3, 
+      "posten": 3, 
+      "wert": "8", 
+      "teilnehmer": 7
+    }
+  }, 
+  {
+    "pk": 38, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 3, 
+      "posten": 3, 
+      "wert": "7", 
+      "teilnehmer": 8
+    }
+  }, 
+  {
+    "pk": 39, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 3, 
+      "posten": 3, 
+      "wert": "9.5", 
+      "teilnehmer": 9
+    }
+  }, 
+  {
+    "pk": 40, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 3, 
+      "posten": 3, 
+      "wert": "6", 
+      "teilnehmer": 10
+    }
+  }, 
+  {
+    "pk": 41, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 3, 
+      "posten": 3, 
+      "wert": "9", 
+      "teilnehmer": 11
+    }
+  }, 
+  {
+    "pk": 42, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 3, 
+      "posten": 3, 
+      "wert": "9", 
+      "teilnehmer": 12
+    }
+  }, 
+  {
+    "pk": 44, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 3, 
+      "posten": 3, 
+      "wert": "6.5", 
+      "teilnehmer": 18
+    }
+  }, 
+  {
+    "pk": 45, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 3, 
+      "posten": 3, 
+      "wert": "9", 
+      "teilnehmer": 19
+    }
+  }, 
+  {
+    "pk": 46, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 4, 
+      "posten": 4, 
+      "wert": "-1", 
+      "teilnehmer": 67
+    }
+  }, 
+  {
+    "pk": 47, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 4, 
+      "posten": 4, 
+      "wert": "-2", 
+      "teilnehmer": 2
+    }
+  }, 
+  {
+    "pk": 48, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 4, 
+      "posten": 4, 
+      "wert": "-1", 
+      "teilnehmer": 3
+    }
+  }, 
+  {
+    "pk": 49, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 4, 
+      "posten": 4, 
+      "wert": "-3", 
+      "teilnehmer": 4
+    }
+  }, 
+  {
+    "pk": 50, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 4, 
+      "posten": 4, 
+      "wert": "-1", 
+      "teilnehmer": 5
+    }
+  }, 
+  {
+    "pk": 52, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 4, 
+      "posten": 4, 
+      "wert": "-2", 
+      "teilnehmer": 7
+    }
+  }, 
+  {
+    "pk": 53, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 4, 
+      "posten": 4, 
+      "wert": "-1", 
+      "teilnehmer": 8
+    }
+  }, 
+  {
+    "pk": 54, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 4, 
+      "posten": 4, 
+      "wert": "-1", 
+      "teilnehmer": 9
+    }
+  }, 
+  {
+    "pk": 55, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 4, 
+      "posten": 4, 
+      "wert": "-1", 
+      "teilnehmer": 10
+    }
+  }, 
+  {
+    "pk": 56, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 4, 
+      "posten": 4, 
+      "wert": "-3", 
+      "teilnehmer": 11
+    }
+  }, 
+  {
+    "pk": 57, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 4, 
+      "posten": 4, 
+      "wert": "-1.5", 
+      "teilnehmer": 12
+    }
+  }, 
+  {
+    "pk": 59, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 4, 
+      "posten": 4, 
+      "wert": "-1", 
+      "teilnehmer": 18
+    }
+  }, 
+  {
+    "pk": 60, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 4, 
+      "posten": 4, 
+      "wert": "0", 
+      "teilnehmer": 19
+    }
+  }, 
+  {
+    "pk": 61, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 5, 
+      "posten": 4, 
+      "wert": "9", 
+      "teilnehmer": 67
+    }
+  }, 
+  {
+    "pk": 62, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 5, 
+      "posten": 4, 
+      "wert": "8", 
+      "teilnehmer": 2
+    }
+  }, 
+  {
+    "pk": 63, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 5, 
+      "posten": 4, 
+      "wert": "9", 
+      "teilnehmer": 3
+    }
+  }, 
+  {
+    "pk": 64, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 5, 
+      "posten": 4, 
+      "wert": "9.5", 
+      "teilnehmer": 4
+    }
+  }, 
+  {
+    "pk": 65, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 5, 
+      "posten": 4, 
+      "wert": "4", 
+      "teilnehmer": 5
+    }
+  }, 
+  {
+    "pk": 67, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 5, 
+      "posten": 4, 
+      "wert": "9", 
+      "teilnehmer": 7
+    }
+  }, 
+  {
+    "pk": 68, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 5, 
+      "posten": 4, 
+      "wert": "5.5", 
+      "teilnehmer": 8
+    }
+  }, 
+  {
+    "pk": 69, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 5, 
+      "posten": 4, 
+      "wert": "7", 
+      "teilnehmer": 9
+    }
+  }, 
+  {
+    "pk": 70, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 5, 
+      "posten": 4, 
+      "wert": "7", 
+      "teilnehmer": 10
+    }
+  }, 
+  {
+    "pk": 71, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 5, 
+      "posten": 4, 
+      "wert": "9", 
+      "teilnehmer": 11
+    }
+  }, 
+  {
+    "pk": 72, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 5, 
+      "posten": 4, 
+      "wert": "7", 
+      "teilnehmer": 12
+    }
+  }, 
+  {
+    "pk": 74, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 5, 
+      "posten": 4, 
+      "wert": "9.5", 
+      "teilnehmer": 18
+    }
+  }, 
+  {
+    "pk": 75, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 5, 
+      "posten": 4, 
+      "wert": "7", 
+      "teilnehmer": 19
+    }
+  }, 
+  {
+    "pk": 76, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 14, 
+      "posten": 7, 
+      "wert": "-3", 
+      "teilnehmer": 67
+    }
+  }, 
+  {
+    "pk": 77, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 14, 
+      "posten": 7, 
+      "wert": "-1", 
+      "teilnehmer": 2
+    }
+  }, 
+  {
+    "pk": 78, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 14, 
+      "posten": 7, 
+      "wert": "-1", 
+      "teilnehmer": 3
+    }
+  }, 
+  {
+    "pk": 79, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 14, 
+      "posten": 7, 
+      "wert": "-2", 
+      "teilnehmer": 4
+    }
+  }, 
+  {
+    "pk": 80, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 14, 
+      "posten": 7, 
+      "wert": "-5", 
+      "teilnehmer": 5
+    }
+  }, 
+  {
+    "pk": 82, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 14, 
+      "posten": 7, 
+      "wert": "-9", 
+      "teilnehmer": 7
+    }
+  }, 
+  {
+    "pk": 83, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 14, 
+      "posten": 7, 
+      "wert": "-9.5", 
+      "teilnehmer": 8
+    }
+  }, 
+  {
+    "pk": 84, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 14, 
+      "posten": 7, 
+      "wert": "-7", 
+      "teilnehmer": 9
+    }
+  }, 
+  {
+    "pk": 85, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 14, 
+      "posten": 7, 
+      "wert": "-9", 
+      "teilnehmer": 10
+    }
+  }, 
+  {
+    "pk": 86, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 14, 
+      "posten": 7, 
+      "wert": "-9", 
+      "teilnehmer": 11
+    }
+  }, 
+  {
+    "pk": 87, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 14, 
+      "posten": 7, 
+      "wert": "0", 
+      "teilnehmer": 12
+    }
+  }, 
+  {
+    "pk": 89, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 14, 
+      "posten": 7, 
+      "wert": "-7", 
+      "teilnehmer": 18
+    }
+  }, 
+  {
+    "pk": 90, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 14, 
+      "posten": 7, 
+      "wert": "-9", 
+      "teilnehmer": 19
+    }
+  }, 
+  {
+    "pk": 91, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 15, 
+      "posten": 7, 
+      "wert": "9", 
+      "teilnehmer": 67
+    }
+  }, 
+  {
+    "pk": 92, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 15, 
+      "posten": 7, 
+      "wert": "5.5", 
+      "teilnehmer": 2
+    }
+  }, 
+  {
+    "pk": 93, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 15, 
+      "posten": 7, 
+      "wert": "4", 
+      "teilnehmer": 3
+    }
+  }, 
+  {
+    "pk": 94, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 15, 
+      "posten": 7, 
+      "wert": "9", 
+      "teilnehmer": 4
+    }
+  }, 
+  {
+    "pk": 95, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 15, 
+      "posten": 7, 
+      "wert": "9", 
+      "teilnehmer": 5
+    }
+  }, 
+  {
+    "pk": 97, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 15, 
+      "posten": 7, 
+      "wert": "8.5", 
+      "teilnehmer": 7
+    }
+  }, 
+  {
+    "pk": 98, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 15, 
+      "posten": 7, 
+      "wert": "9", 
+      "teilnehmer": 8
+    }
+  }, 
+  {
+    "pk": 99, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 15, 
+      "posten": 7, 
+      "wert": "8", 
+      "teilnehmer": 9
+    }
+  }, 
+  {
+    "pk": 100, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 15, 
+      "posten": 7, 
+      "wert": "7", 
+      "teilnehmer": 10
+    }
+  }, 
+  {
+    "pk": 101, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 15, 
+      "posten": 7, 
+      "wert": "9", 
+      "teilnehmer": 11
+    }
+  }, 
+  {
+    "pk": 102, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 15, 
+      "posten": 7, 
+      "wert": "2", 
+      "teilnehmer": 12
+    }
+  }, 
+  {
+    "pk": 104, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 15, 
+      "posten": 7, 
+      "wert": "7", 
+      "teilnehmer": 18
+    }
+  }, 
+  {
+    "pk": 105, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 15, 
+      "posten": 7, 
+      "wert": "9", 
+      "teilnehmer": 19
+    }
+  }, 
+  {
+    "pk": 106, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 8, 
+      "posten": 8, 
+      "wert": "-7", 
+      "teilnehmer": 67
+    }
+  }, 
+  {
+    "pk": 107, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 8, 
+      "posten": 8, 
+      "wert": "-1", 
+      "teilnehmer": 2
+    }
+  }, 
+  {
+    "pk": 108, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 8, 
+      "posten": 8, 
+      "wert": "-2", 
+      "teilnehmer": 3
+    }
+  }, 
+  {
+    "pk": 109, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 8, 
+      "posten": 8, 
+      "wert": "-1", 
+      "teilnehmer": 4
+    }
+  }, 
+  {
+    "pk": 110, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 8, 
+      "posten": 8, 
+      "wert": "-1", 
+      "teilnehmer": 5
+    }
+  }, 
+  {
+    "pk": 112, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 8, 
+      "posten": 8, 
+      "wert": "-6", 
+      "teilnehmer": 7
+    }
+  }, 
+  {
+    "pk": 113, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 8, 
+      "posten": 8, 
+      "wert": "-1", 
+      "teilnehmer": 8
+    }
+  }, 
+  {
+    "pk": 114, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 8, 
+      "posten": 8, 
+      "wert": "-1", 
+      "teilnehmer": 9
+    }
+  }, 
+  {
+    "pk": 115, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 8, 
+      "posten": 8, 
+      "wert": "-1", 
+      "teilnehmer": 10
+    }
+  }, 
+  {
+    "pk": 116, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 8, 
+      "posten": 8, 
+      "wert": "-1", 
+      "teilnehmer": 11
+    }
+  }, 
+  {
+    "pk": 117, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 8, 
+      "posten": 8, 
+      "wert": "-4", 
+      "teilnehmer": 12
+    }
+  }, 
+  {
+    "pk": 119, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 8, 
+      "posten": 8, 
+      "wert": "-2", 
+      "teilnehmer": 18
+    }
+  }, 
+  {
+    "pk": 120, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 8, 
+      "posten": 8, 
+      "wert": "-1", 
+      "teilnehmer": 19
+    }
+  }, 
+  {
+    "pk": 121, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 9, 
+      "posten": 8, 
+      "wert": "9", 
+      "teilnehmer": 67
+    }
+  }, 
+  {
+    "pk": 122, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 9, 
+      "posten": 8, 
+      "wert": "5.5", 
+      "teilnehmer": 2
+    }
+  }, 
+  {
+    "pk": 123, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 9, 
+      "posten": 8, 
+      "wert": "4", 
+      "teilnehmer": 3
+    }
+  }, 
+  {
+    "pk": 124, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 9, 
+      "posten": 8, 
+      "wert": "9", 
+      "teilnehmer": 4
+    }
+  }, 
+  {
+    "pk": 125, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 9, 
+      "posten": 8, 
+      "wert": "9.5", 
+      "teilnehmer": 5
+    }
+  }, 
+  {
+    "pk": 127, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 9, 
+      "posten": 8, 
+      "wert": "10", 
+      "teilnehmer": 7
+    }
+  }, 
+  {
+    "pk": 128, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 9, 
+      "posten": 8, 
+      "wert": "8", 
+      "teilnehmer": 8
+    }
+  }, 
+  {
+    "pk": 129, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 9, 
+      "posten": 8, 
+      "wert": "9.5", 
+      "teilnehmer": 9
+    }
+  }, 
+  {
+    "pk": 130, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 9, 
+      "posten": 8, 
+      "wert": "9.5", 
+      "teilnehmer": 10
+    }
+  }, 
+  {
+    "pk": 131, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 9, 
+      "posten": 8, 
+      "wert": "7", 
+      "teilnehmer": 11
+    }
+  }, 
+  {
+    "pk": 132, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 9, 
+      "posten": 8, 
+      "wert": "9.5", 
+      "teilnehmer": 12
+    }
+  }, 
+  {
+    "pk": 134, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 9, 
+      "posten": 8, 
+      "wert": "9", 
+      "teilnehmer": 18
+    }
+  }, 
+  {
+    "pk": 135, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 9, 
+      "posten": 8, 
+      "wert": "10", 
+      "teilnehmer": 19
+    }
+  }, 
+  {
+    "pk": 136, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 10, 
+      "posten": 10, 
+      "wert": "-1", 
+      "teilnehmer": 67
+    }
+  }, 
+  {
+    "pk": 137, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 10, 
+      "posten": 10, 
+      "wert": "-2", 
+      "teilnehmer": 2
+    }
+  }, 
+  {
+    "pk": 138, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 10, 
+      "posten": 10, 
+      "wert": "-3", 
+      "teilnehmer": 3
+    }
+  }, 
+  {
+    "pk": 139, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 10, 
+      "posten": 10, 
+      "wert": "-1", 
+      "teilnehmer": 4
+    }
+  }, 
+  {
+    "pk": 140, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 10, 
+      "posten": 10, 
+      "wert": "-1", 
+      "teilnehmer": 5
+    }
+  }, 
+  {
+    "pk": 142, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 10, 
+      "posten": 10, 
+      "wert": "-5", 
+      "teilnehmer": 7
+    }
+  }, 
+  {
+    "pk": 143, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 10, 
+      "posten": 10, 
+      "wert": "-1", 
+      "teilnehmer": 8
+    }
+  }, 
+  {
+    "pk": 144, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 10, 
+      "posten": 10, 
+      "wert": "-5", 
+      "teilnehmer": 9
+    }
+  }, 
+  {
+    "pk": 145, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 10, 
+      "posten": 10, 
+      "wert": "0", 
+      "teilnehmer": 10
+    }
+  }, 
+  {
+    "pk": 146, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 10, 
+      "posten": 10, 
+      "wert": "-1", 
+      "teilnehmer": 11
+    }
+  }, 
+  {
+    "pk": 147, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 10, 
+      "posten": 10, 
+      "wert": "-1", 
+      "teilnehmer": 12
+    }
+  }, 
+  {
+    "pk": 149, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 10, 
+      "posten": 10, 
+      "wert": "-1", 
+      "teilnehmer": 18
+    }
+  }, 
+  {
+    "pk": 150, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 10, 
+      "posten": 10, 
+      "wert": "0", 
+      "teilnehmer": 19
+    }
+  }, 
+  {
+    "pk": 151, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 11, 
+      "posten": 10, 
+      "wert": "14", 
+      "teilnehmer": 67
+    }
+  }, 
+  {
+    "pk": 152, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 11, 
+      "posten": 10, 
+      "wert": "12", 
+      "teilnehmer": 2
+    }
+  }, 
+  {
+    "pk": 153, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 11, 
+      "posten": 10, 
+      "wert": "12", 
+      "teilnehmer": 3
+    }
+  }, 
+  {
+    "pk": 154, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 11, 
+      "posten": 10, 
+      "wert": "13", 
+      "teilnehmer": 4
+    }
+  }, 
+  {
+    "pk": 155, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 11, 
+      "posten": 10, 
+      "wert": "14", 
+      "teilnehmer": 5
+    }
+  }, 
+  {
+    "pk": 157, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 11, 
+      "posten": 10, 
+      "wert": "14", 
+      "teilnehmer": 7
+    }
+  }, 
+  {
+    "pk": 158, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 11, 
+      "posten": 10, 
+      "wert": "13", 
+      "teilnehmer": 8
+    }
+  }, 
+  {
+    "pk": 159, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 11, 
+      "posten": 10, 
+      "wert": "11", 
+      "teilnehmer": 9
+    }
+  }, 
+  {
+    "pk": 160, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 11, 
+      "posten": 10, 
+      "wert": "9", 
+      "teilnehmer": 10
+    }
+  }, 
+  {
+    "pk": 161, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 11, 
+      "posten": 10, 
+      "wert": "11", 
+      "teilnehmer": 11
+    }
+  }, 
+  {
+    "pk": 162, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 11, 
+      "posten": 10, 
+      "wert": "12", 
+      "teilnehmer": 12
+    }
+  }, 
+  {
+    "pk": 164, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 11, 
+      "posten": 10, 
+      "wert": "14", 
+      "teilnehmer": 18
+    }
+  }, 
+  {
+    "pk": 165, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 11, 
+      "posten": 10, 
+      "wert": "13", 
+      "teilnehmer": 19
+    }
+  }, 
+  {
+    "pk": 166, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 14, 
+      "posten": 9, 
+      "wert": "-1", 
+      "teilnehmer": 67
+    }
+  }, 
+  {
+    "pk": 167, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 14, 
+      "posten": 9, 
+      "wert": "-1", 
+      "teilnehmer": 2
+    }
+  }, 
+  {
+    "pk": 168, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 14, 
+      "posten": 9, 
+      "wert": "-1", 
+      "teilnehmer": 3
+    }
+  }, 
+  {
+    "pk": 169, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 14, 
+      "posten": 9, 
+      "wert": "-2", 
+      "teilnehmer": 4
+    }
+  }, 
+  {
+    "pk": 170, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 14, 
+      "posten": 9, 
+      "wert": "-2", 
+      "teilnehmer": 5
+    }
+  }, 
+  {
+    "pk": 172, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 14, 
+      "posten": 9, 
+      "wert": "-3", 
+      "teilnehmer": 7
+    }
+  }, 
+  {
+    "pk": 173, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 14, 
+      "posten": 9, 
+      "wert": "-1", 
+      "teilnehmer": 8
+    }
+  }, 
+  {
+    "pk": 174, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 14, 
+      "posten": 9, 
+      "wert": "-1", 
+      "teilnehmer": 9
+    }
+  }, 
+  {
+    "pk": 175, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 14, 
+      "posten": 9, 
+      "wert": "0", 
+      "teilnehmer": 10
+    }
+  }, 
+  {
+    "pk": 176, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 14, 
+      "posten": 9, 
+      "wert": "-1", 
+      "teilnehmer": 11
+    }
+  }, 
+  {
+    "pk": 177, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 14, 
+      "posten": 9, 
+      "wert": "-2", 
+      "teilnehmer": 12
+    }
+  }, 
+  {
+    "pk": 179, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 14, 
+      "posten": 9, 
+      "wert": "-1", 
+      "teilnehmer": 18
+    }
+  }, 
+  {
+    "pk": 180, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 14, 
+      "posten": 9, 
+      "wert": "0", 
+      "teilnehmer": 19
+    }
+  }, 
+  {
+    "pk": 181, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 15, 
+      "posten": 9, 
+      "wert": "5", 
+      "teilnehmer": 67
+    }
+  }, 
+  {
+    "pk": 182, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 15, 
+      "posten": 9, 
+      "wert": "9", 
+      "teilnehmer": 2
+    }
+  }, 
+  {
+    "pk": 183, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 15, 
+      "posten": 9, 
+      "wert": "9", 
+      "teilnehmer": 3
+    }
+  }, 
+  {
+    "pk": 184, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 15, 
+      "posten": 9, 
+      "wert": "5", 
+      "teilnehmer": 4
+    }
+  }, 
+  {
+    "pk": 185, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 15, 
+      "posten": 9, 
+      "wert": "9", 
+      "teilnehmer": 5
+    }
+  }, 
+  {
+    "pk": 187, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 15, 
+      "posten": 9, 
+      "wert": "8", 
+      "teilnehmer": 7
+    }
+  }, 
+  {
+    "pk": 188, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 15, 
+      "posten": 9, 
+      "wert": "9", 
+      "teilnehmer": 8
+    }
+  }, 
+  {
+    "pk": 189, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 15, 
+      "posten": 9, 
+      "wert": "5.5", 
+      "teilnehmer": 9
+    }
+  }, 
+  {
+    "pk": 190, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 15, 
+      "posten": 9, 
+      "wert": "9", 
+      "teilnehmer": 10
+    }
+  }, 
+  {
+    "pk": 191, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 15, 
+      "posten": 9, 
+      "wert": "9", 
+      "teilnehmer": 11
+    }
+  }, 
+  {
+    "pk": 192, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 15, 
+      "posten": 9, 
+      "wert": "8", 
+      "teilnehmer": 12
+    }
+  }, 
+  {
+    "pk": 194, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 15, 
+      "posten": 9, 
+      "wert": "9", 
+      "teilnehmer": 18
+    }
+  }, 
+  {
+    "pk": 195, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 15, 
+      "posten": 9, 
+      "wert": "8", 
+      "teilnehmer": 19
+    }
+  }, 
+  {
+    "pk": 196, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 11, 
+      "wert": "90", 
+      "teilnehmer": 67
+    }
+  }, 
+  {
+    "pk": 197, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 11, 
+      "wert": "122", 
+      "teilnehmer": 2
+    }
+  }, 
+  {
+    "pk": 198, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 11, 
+      "wert": "112", 
+      "teilnehmer": 3
+    }
+  }, 
+  {
+    "pk": 199, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 11, 
+      "wert": "123", 
+      "teilnehmer": 4
+    }
+  }, 
+  {
+    "pk": 200, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 11, 
+      "wert": "114", 
+      "teilnehmer": 5
+    }
+  }, 
+  {
+    "pk": 202, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 11, 
+      "wert": "115", 
+      "teilnehmer": 7
+    }
+  }, 
+  {
+    "pk": 203, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 11, 
+      "wert": "123", 
+      "teilnehmer": 8
+    }
+  }, 
+  {
+    "pk": 204, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 11, 
+      "wert": "145", 
+      "teilnehmer": 9
+    }
+  }, 
+  {
+    "pk": 205, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 11, 
+      "wert": "156", 
+      "teilnehmer": 10
+    }
+  }, 
+  {
+    "pk": 206, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 11, 
+      "wert": "123", 
+      "teilnehmer": 11
+    }
+  }, 
+  {
+    "pk": 207, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 11, 
+      "wert": "156", 
+      "teilnehmer": 12
+    }
+  }, 
+  {
+    "pk": 209, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 11, 
+      "wert": "156", 
+      "teilnehmer": 18
+    }
+  }, 
+  {
+    "pk": 210, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 11, 
+      "wert": "123", 
+      "teilnehmer": 19
+    }
+  }, 
+  {
+    "pk": 211, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 12, 
+      "wert": "56", 
+      "teilnehmer": 67
+    }
+  }, 
+  {
+    "pk": 212, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 12, 
+      "wert": "55", 
+      "teilnehmer": 2
+    }
+  }, 
+  {
+    "pk": 213, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 12, 
+      "wert": "57", 
+      "teilnehmer": 3
+    }
+  }, 
+  {
+    "pk": 214, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 12, 
+      "wert": "59", 
+      "teilnehmer": 4
+    }
+  }, 
+  {
+    "pk": 215, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 12, 
+      "wert": "63", 
+      "teilnehmer": 5
+    }
+  }, 
+  {
+    "pk": 217, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 12, 
+      "wert": "49", 
+      "teilnehmer": 7
+    }
+  }, 
+  {
+    "pk": 218, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 12, 
+      "wert": "55", 
+      "teilnehmer": 8
+    }
+  }, 
+  {
+    "pk": 219, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 12, 
+      "wert": "56", 
+      "teilnehmer": 9
+    }
+  }, 
+  {
+    "pk": 220, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 12, 
+      "wert": "64", 
+      "teilnehmer": 10
+    }
+  }, 
+  {
+    "pk": 221, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 12, 
+      "wert": "58", 
+      "teilnehmer": 11
+    }
+  }, 
+  {
+    "pk": 222, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 12, 
+      "wert": "66", 
+      "teilnehmer": 12
+    }
+  }, 
+  {
+    "pk": 224, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 12, 
+      "wert": "55", 
+      "teilnehmer": 18
+    }
+  }, 
+  {
+    "pk": 225, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 12, 
+      "wert": "68", 
+      "teilnehmer": 19
+    }
+  }, 
+  {
+    "pk": 226, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 1, 
+      "posten": 1, 
+      "wert": "0", 
+      "teilnehmer": 59
+    }
+  }, 
+  {
+    "pk": 227, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 1, 
+      "posten": 1, 
+      "wert": "0", 
+      "teilnehmer": 60
+    }
+  }, 
+  {
+    "pk": 228, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 1, 
+      "posten": 1, 
+      "wert": "0", 
+      "teilnehmer": 15
+    }
+  }, 
+  {
+    "pk": 235, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 1, 
+      "posten": 1, 
+      "wert": "0", 
+      "teilnehmer": 36
+    }
+  }, 
+  {
+    "pk": 239, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 1, 
+      "posten": 1, 
+      "wert": "0", 
+      "teilnehmer": 41
+    }
+  }, 
+  {
+    "pk": 240, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 1, 
+      "posten": 1, 
+      "wert": "0", 
+      "teilnehmer": 42
+    }
+  }, 
+  {
+    "pk": 241, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 2, 
+      "posten": 3, 
+      "wert": "0", 
+      "teilnehmer": 59
+    }
+  }, 
+  {
+    "pk": 242, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 2, 
+      "posten": 3, 
+      "wert": "0", 
+      "teilnehmer": 60
+    }
+  }, 
+  {
+    "pk": 243, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 2, 
+      "posten": 3, 
+      "wert": "0", 
+      "teilnehmer": 15
+    }
+  }, 
+  {
+    "pk": 250, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 2, 
+      "posten": 3, 
+      "wert": "0", 
+      "teilnehmer": 36
+    }
+  }, 
+  {
+    "pk": 254, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 2, 
+      "posten": 3, 
+      "wert": "0", 
+      "teilnehmer": 41
+    }
+  }, 
+  {
+    "pk": 255, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 2, 
+      "posten": 3, 
+      "wert": "0", 
+      "teilnehmer": 42
+    }
+  }, 
+  {
+    "pk": 256, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 3, 
+      "posten": 3, 
+      "wert": "10", 
+      "teilnehmer": 59
+    }
+  }, 
+  {
+    "pk": 257, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 3, 
+      "posten": 3, 
+      "wert": "10", 
+      "teilnehmer": 60
+    }
+  }, 
+  {
+    "pk": 258, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 3, 
+      "posten": 3, 
+      "wert": "10", 
+      "teilnehmer": 15
+    }
+  }, 
+  {
+    "pk": 265, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 3, 
+      "posten": 3, 
+      "wert": "10", 
+      "teilnehmer": 36
+    }
+  }, 
+  {
+    "pk": 269, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 3, 
+      "posten": 3, 
+      "wert": "10", 
+      "teilnehmer": 41
+    }
+  }, 
+  {
+    "pk": 270, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 3, 
+      "posten": 3, 
+      "wert": "10", 
+      "teilnehmer": 42
+    }
+  }, 
+  {
+    "pk": 271, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 4, 
+      "posten": 4, 
+      "wert": "0", 
+      "teilnehmer": 59
+    }
+  }, 
+  {
+    "pk": 272, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 4, 
+      "posten": 4, 
+      "wert": "0", 
+      "teilnehmer": 60
+    }
+  }, 
+  {
+    "pk": 273, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 4, 
+      "posten": 4, 
+      "wert": "0", 
+      "teilnehmer": 15
+    }
+  }, 
+  {
+    "pk": 280, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 4, 
+      "posten": 4, 
+      "wert": "0", 
+      "teilnehmer": 36
+    }
+  }, 
+  {
+    "pk": 284, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 4, 
+      "posten": 4, 
+      "wert": "0", 
+      "teilnehmer": 41
+    }
+  }, 
+  {
+    "pk": 285, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 4, 
+      "posten": 4, 
+      "wert": "0", 
+      "teilnehmer": 42
+    }
+  }, 
+  {
+    "pk": 286, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 5, 
+      "posten": 4, 
+      "wert": "10", 
+      "teilnehmer": 59
+    }
+  }, 
+  {
+    "pk": 287, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 5, 
+      "posten": 4, 
+      "wert": "10", 
+      "teilnehmer": 60
+    }
+  }, 
+  {
+    "pk": 288, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 5, 
+      "posten": 4, 
+      "wert": "10", 
+      "teilnehmer": 15
+    }
+  }, 
+  {
+    "pk": 295, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 5, 
+      "posten": 4, 
+      "wert": "10", 
+      "teilnehmer": 36
+    }
+  }, 
+  {
+    "pk": 299, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 5, 
+      "posten": 4, 
+      "wert": "10", 
+      "teilnehmer": 41
+    }
+  }, 
+  {
+    "pk": 300, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 5, 
+      "posten": 4, 
+      "wert": "10", 
+      "teilnehmer": 42
+    }
+  }, 
+  {
+    "pk": 301, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 14, 
+      "posten": 7, 
+      "wert": "0", 
+      "teilnehmer": 59
+    }
+  }, 
+  {
+    "pk": 302, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 14, 
+      "posten": 7, 
+      "wert": "0", 
+      "teilnehmer": 60
+    }
+  }, 
+  {
+    "pk": 303, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 14, 
+      "posten": 7, 
+      "wert": "0", 
+      "teilnehmer": 15
+    }
+  }, 
+  {
+    "pk": 310, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 14, 
+      "posten": 7, 
+      "wert": "0", 
+      "teilnehmer": 36
+    }
+  }, 
+  {
+    "pk": 314, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 14, 
+      "posten": 7, 
+      "wert": "0", 
+      "teilnehmer": 41
+    }
+  }, 
+  {
+    "pk": 315, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 14, 
+      "posten": 7, 
+      "wert": "0", 
+      "teilnehmer": 42
+    }
+  }, 
+  {
+    "pk": 316, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 15, 
+      "posten": 7, 
+      "wert": "10", 
+      "teilnehmer": 59
+    }
+  }, 
+  {
+    "pk": 317, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 15, 
+      "posten": 7, 
+      "wert": "10", 
+      "teilnehmer": 60
+    }
+  }, 
+  {
+    "pk": 318, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 15, 
+      "posten": 7, 
+      "wert": "10", 
+      "teilnehmer": 15
+    }
+  }, 
+  {
+    "pk": 325, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 15, 
+      "posten": 7, 
+      "wert": "10", 
+      "teilnehmer": 36
+    }
+  }, 
+  {
+    "pk": 329, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 15, 
+      "posten": 7, 
+      "wert": "10", 
+      "teilnehmer": 41
+    }
+  }, 
+  {
+    "pk": 330, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 15, 
+      "posten": 7, 
+      "wert": "10", 
+      "teilnehmer": 42
+    }
+  }, 
+  {
+    "pk": 331, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 8, 
+      "posten": 8, 
+      "wert": "0", 
+      "teilnehmer": 59
+    }
+  }, 
+  {
+    "pk": 332, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 8, 
+      "posten": 8, 
+      "wert": "0", 
+      "teilnehmer": 60
+    }
+  }, 
+  {
+    "pk": 333, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 8, 
+      "posten": 8, 
+      "wert": "0", 
+      "teilnehmer": 15
+    }
+  }, 
+  {
+    "pk": 340, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 8, 
+      "posten": 8, 
+      "wert": "0", 
+      "teilnehmer": 36
+    }
+  }, 
+  {
+    "pk": 344, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 8, 
+      "posten": 8, 
+      "wert": "0", 
+      "teilnehmer": 41
+    }
+  }, 
+  {
+    "pk": 345, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 8, 
+      "posten": 8, 
+      "wert": "0", 
+      "teilnehmer": 42
+    }
+  }, 
+  {
+    "pk": 346, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 9, 
+      "posten": 8, 
+      "wert": "10", 
+      "teilnehmer": 59
+    }
+  }, 
+  {
+    "pk": 347, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 9, 
+      "posten": 8, 
+      "wert": "10", 
+      "teilnehmer": 60
+    }
+  }, 
+  {
+    "pk": 348, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 9, 
+      "posten": 8, 
+      "wert": "10", 
+      "teilnehmer": 15
+    }
+  }, 
+  {
+    "pk": 355, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 9, 
+      "posten": 8, 
+      "wert": "10", 
+      "teilnehmer": 36
+    }
+  }, 
+  {
+    "pk": 359, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 9, 
+      "posten": 8, 
+      "wert": "10", 
+      "teilnehmer": 41
+    }
+  }, 
+  {
+    "pk": 360, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 9, 
+      "posten": 8, 
+      "wert": "10", 
+      "teilnehmer": 42
+    }
+  }, 
+  {
+    "pk": 361, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 10, 
+      "posten": 10, 
+      "wert": "0", 
+      "teilnehmer": 59
+    }
+  }, 
+  {
+    "pk": 362, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 10, 
+      "posten": 10, 
+      "wert": "0", 
+      "teilnehmer": 60
+    }
+  }, 
+  {
+    "pk": 363, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 10, 
+      "posten": 10, 
+      "wert": "0", 
+      "teilnehmer": 15
+    }
+  }, 
+  {
+    "pk": 370, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 10, 
+      "posten": 10, 
+      "wert": "0", 
+      "teilnehmer": 36
+    }
+  }, 
+  {
+    "pk": 374, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 10, 
+      "posten": 10, 
+      "wert": "0", 
+      "teilnehmer": 41
+    }
+  }, 
+  {
+    "pk": 375, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 10, 
+      "posten": 10, 
+      "wert": "0", 
+      "teilnehmer": 42
+    }
+  }, 
+  {
+    "pk": 376, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 11, 
+      "posten": 10, 
+      "wert": "15", 
+      "teilnehmer": 59
+    }
+  }, 
+  {
+    "pk": 377, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 11, 
+      "posten": 10, 
+      "wert": "15", 
+      "teilnehmer": 60
+    }
+  }, 
+  {
+    "pk": 378, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 11, 
+      "posten": 10, 
+      "wert": "15", 
+      "teilnehmer": 15
+    }
+  }, 
+  {
+    "pk": 385, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 11, 
+      "posten": 10, 
+      "wert": "15", 
+      "teilnehmer": 36
+    }
+  }, 
+  {
+    "pk": 389, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 11, 
+      "posten": 10, 
+      "wert": "15", 
+      "teilnehmer": 41
+    }
+  }, 
+  {
+    "pk": 390, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 11, 
+      "posten": 10, 
+      "wert": "15", 
+      "teilnehmer": 42
+    }
+  }, 
+  {
+    "pk": 391, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 14, 
+      "posten": 9, 
+      "wert": "0", 
+      "teilnehmer": 59
+    }
+  }, 
+  {
+    "pk": 392, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 14, 
+      "posten": 9, 
+      "wert": "0", 
+      "teilnehmer": 60
+    }
+  }, 
+  {
+    "pk": 393, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 14, 
+      "posten": 9, 
+      "wert": "0", 
+      "teilnehmer": 15
+    }
+  }, 
+  {
+    "pk": 400, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 14, 
+      "posten": 9, 
+      "wert": "0", 
+      "teilnehmer": 36
+    }
+  }, 
+  {
+    "pk": 404, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 14, 
+      "posten": 9, 
+      "wert": "0", 
+      "teilnehmer": 41
+    }
+  }, 
+  {
+    "pk": 405, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 14, 
+      "posten": 9, 
+      "wert": "0", 
+      "teilnehmer": 42
+    }
+  }, 
+  {
+    "pk": 406, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 15, 
+      "posten": 9, 
+      "wert": "10", 
+      "teilnehmer": 59
+    }
+  }, 
+  {
+    "pk": 407, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 15, 
+      "posten": 9, 
+      "wert": "10", 
+      "teilnehmer": 60
+    }
+  }, 
+  {
+    "pk": 408, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 15, 
+      "posten": 9, 
+      "wert": "10", 
+      "teilnehmer": 15
+    }
+  }, 
+  {
+    "pk": 415, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 15, 
+      "posten": 9, 
+      "wert": "10", 
+      "teilnehmer": 36
+    }
+  }, 
+  {
+    "pk": 419, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 15, 
+      "posten": 9, 
+      "wert": "10", 
+      "teilnehmer": 41
+    }
+  }, 
+  {
+    "pk": 420, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 15, 
+      "posten": 9, 
+      "wert": "10", 
+      "teilnehmer": 42
+    }
+  }, 
+  {
+    "pk": 421, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 1, 
+      "posten": 1, 
+      "wert": "0", 
+      "teilnehmer": 43
+    }
+  }, 
+  {
+    "pk": 422, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 1, 
+      "posten": 1, 
+      "wert": "0", 
+      "teilnehmer": 44
+    }
+  }, 
+  {
+    "pk": 423, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 2, 
+      "posten": 3, 
+      "wert": "0", 
+      "teilnehmer": 43
+    }
+  }, 
+  {
+    "pk": 424, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 2, 
+      "posten": 3, 
+      "wert": "0", 
+      "teilnehmer": 44
+    }
+  }, 
+  {
+    "pk": 425, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 3, 
+      "posten": 3, 
+      "wert": "10", 
+      "teilnehmer": 43
+    }
+  }, 
+  {
+    "pk": 426, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 3, 
+      "posten": 3, 
+      "wert": "10", 
+      "teilnehmer": 44
+    }
+  }, 
+  {
+    "pk": 427, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 4, 
+      "posten": 4, 
+      "wert": "0", 
+      "teilnehmer": 43
+    }
+  }, 
+  {
+    "pk": 428, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 4, 
+      "posten": 4, 
+      "wert": "0", 
+      "teilnehmer": 44
+    }
+  }, 
+  {
+    "pk": 429, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 5, 
+      "posten": 4, 
+      "wert": "10", 
+      "teilnehmer": 43
+    }
+  }, 
+  {
+    "pk": 430, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 5, 
+      "posten": 4, 
+      "wert": "10", 
+      "teilnehmer": 44
+    }
+  }, 
+  {
+    "pk": 431, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 14, 
+      "posten": 7, 
+      "wert": "0", 
+      "teilnehmer": 43
+    }
+  }, 
+  {
+    "pk": 432, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 14, 
+      "posten": 7, 
+      "wert": "0", 
+      "teilnehmer": 44
+    }
+  }, 
+  {
+    "pk": 433, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 15, 
+      "posten": 7, 
+      "wert": "10", 
+      "teilnehmer": 43
+    }
+  }, 
+  {
+    "pk": 434, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 15, 
+      "posten": 7, 
+      "wert": "10", 
+      "teilnehmer": 44
+    }
+  }, 
+  {
+    "pk": 435, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 8, 
+      "posten": 8, 
+      "wert": "0", 
+      "teilnehmer": 43
+    }
+  }, 
+  {
+    "pk": 436, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 8, 
+      "posten": 8, 
+      "wert": "0", 
+      "teilnehmer": 44
+    }
+  }, 
+  {
+    "pk": 437, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 9, 
+      "posten": 8, 
+      "wert": "10", 
+      "teilnehmer": 43
+    }
+  }, 
+  {
+    "pk": 438, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 9, 
+      "posten": 8, 
+      "wert": "10", 
+      "teilnehmer": 44
+    }
+  }, 
+  {
+    "pk": 439, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 10, 
+      "posten": 10, 
+      "wert": "0", 
+      "teilnehmer": 43
+    }
+  }, 
+  {
+    "pk": 440, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 10, 
+      "posten": 10, 
+      "wert": "0", 
+      "teilnehmer": 44
+    }
+  }, 
+  {
+    "pk": 441, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 11, 
+      "posten": 10, 
+      "wert": "15", 
+      "teilnehmer": 43
+    }
+  }, 
+  {
+    "pk": 442, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 11, 
+      "posten": 10, 
+      "wert": "15", 
+      "teilnehmer": 44
+    }
+  }, 
+  {
+    "pk": 443, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 14, 
+      "posten": 9, 
+      "wert": "0", 
+      "teilnehmer": 43
+    }
+  }, 
+  {
+    "pk": 444, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 14, 
+      "posten": 9, 
+      "wert": "0", 
+      "teilnehmer": 44
+    }
+  }, 
+  {
+    "pk": 445, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 15, 
+      "posten": 9, 
+      "wert": "10", 
+      "teilnehmer": 43
+    }
+  }, 
+  {
+    "pk": 446, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 15, 
+      "posten": 9, 
+      "wert": "10", 
+      "teilnehmer": 44
+    }
+  }, 
+  {
+    "pk": 447, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 11, 
+      "wert": "123", 
+      "teilnehmer": 15
+    }
+  }, 
+  {
+    "pk": 454, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 11, 
+      "wert": "131.3", 
+      "teilnehmer": 36
+    }
+  }, 
+  {
+    "pk": 458, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 11, 
+      "wert": "130.3", 
+      "teilnehmer": 41
+    }
+  }, 
+  {
+    "pk": 459, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 11, 
+      "wert": "133.8", 
+      "teilnehmer": 42
+    }
+  }, 
+  {
+    "pk": 460, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 11, 
+      "wert": "132.98", 
+      "teilnehmer": 43
+    }
+  }, 
+  {
+    "pk": 461, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 11, 
+      "wert": "131.91", 
+      "teilnehmer": 44
+    }
+  }, 
+  {
+    "pk": 462, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 12, 
+      "wert": "63.3", 
+      "teilnehmer": 15
+    }
+  }, 
+  {
+    "pk": 469, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 12, 
+      "wert": "69.3", 
+      "teilnehmer": 36
+    }
+  }, 
+  {
+    "pk": 473, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 12, 
+      "wert": "67.4", 
+      "teilnehmer": 41
+    }
+  }, 
+  {
+    "pk": 474, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 12, 
+      "wert": "55.76", 
+      "teilnehmer": 42
+    }
+  }, 
+  {
+    "pk": 475, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 12, 
+      "wert": "69.43", 
+      "teilnehmer": 43
+    }
+  }, 
+  {
+    "pk": 476, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 12, 
+      "wert": "78.43", 
+      "teilnehmer": 44
+    }
+  }, 
+  {
+    "pk": 477, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 11, 
+      "wert": "120", 
+      "teilnehmer": 55
+    }
+  }, 
+  {
+    "pk": 478, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 11, 
+      "wert": "123", 
+      "teilnehmer": 56
+    }
+  }, 
+  {
+    "pk": 479, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 11, 
+      "wert": "129", 
+      "teilnehmer": 57
+    }
+  }, 
+  {
+    "pk": 480, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 11, 
+      "wert": "111", 
+      "teilnehmer": 58
+    }
+  }, 
+  {
+    "pk": 481, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 11, 
+      "wert": "133", 
+      "teilnehmer": 59
+    }
+  }, 
+  {
+    "pk": 482, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 11, 
+      "wert": "120", 
+      "teilnehmer": 60
+    }
+  }, 
+  {
+    "pk": 483, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 12, 
+      "wert": "64.2", 
+      "teilnehmer": 55
+    }
+  }, 
+  {
+    "pk": 484, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 12, 
+      "wert": "67.3", 
+      "teilnehmer": 56
+    }
+  }, 
+  {
+    "pk": 485, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 12, 
+      "wert": "59.3", 
+      "teilnehmer": 57
+    }
+  }, 
+  {
+    "pk": 486, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 12, 
+      "wert": "71.3", 
+      "teilnehmer": 58
+    }
+  }, 
+  {
+    "pk": 487, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 12, 
+      "wert": "67.33", 
+      "teilnehmer": 59
+    }
+  }, 
+  {
+    "pk": 488, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 12, 
+      "wert": "68.32", 
+      "teilnehmer": 60
+    }
+  }, 
+  {
+    "pk": 492, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 11, 
+      "wert": "193.9", 
+      "teilnehmer": 53
+    }
+  }, 
+  {
+    "pk": 498, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 12, 
+      "wert": "55.4", 
+      "teilnehmer": 53
+    }
+  }, 
+  {
+    "pk": 501, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 13, 
+      "wert": "99", 
+      "teilnehmer": 20
+    }
+  }, 
+  {
+    "pk": 502, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 13, 
+      "wert": "88", 
+      "teilnehmer": 21
+    }
+  }, 
+  {
+    "pk": 503, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 13, 
+      "wert": "90", 
+      "teilnehmer": 63
+    }
+  }, 
+  {
+    "pk": 505, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 13, 
+      "wert": "77", 
+      "teilnehmer": 61
+    }
+  }, 
+  {
+    "pk": 506, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 13, 
+      "wert": "98", 
+      "teilnehmer": 64
+    }
+  }, 
+  {
+    "pk": 507, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 13, 
+      "wert": "99", 
+      "teilnehmer": 65
+    }
+  }, 
+  {
+    "pk": 508, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 2, 
+      "posten": 15, 
+      "wert": "0", 
+      "teilnehmer": 68
+    }
+  }, 
+  {
+    "pk": 509, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 2, 
+      "posten": 15, 
+      "wert": "-1", 
+      "teilnehmer": 69
+    }
+  }, 
+  {
+    "pk": 510, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 2, 
+      "posten": 15, 
+      "wert": "0", 
+      "teilnehmer": 70
+    }
+  }, 
+  {
+    "pk": 511, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 2, 
+      "posten": 15, 
+      "wert": "0", 
+      "teilnehmer": 71
+    }
+  }, 
+  {
+    "pk": 512, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 2, 
+      "posten": 15, 
+      "wert": "0", 
+      "teilnehmer": 75
+    }
+  }, 
+  {
+    "pk": 513, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 2, 
+      "posten": 15, 
+      "wert": "0", 
+      "teilnehmer": 72
+    }
+  }, 
+  {
+    "pk": 514, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 2, 
+      "posten": 15, 
+      "wert": "-1", 
+      "teilnehmer": 74
+    }
+  }, 
+  {
+    "pk": 515, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 2, 
+      "posten": 15, 
+      "wert": "-1", 
+      "teilnehmer": 76
+    }
+  }, 
+  {
+    "pk": 516, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 2, 
+      "posten": 15, 
+      "wert": "-1", 
+      "teilnehmer": 77
+    }
+  }, 
+  {
+    "pk": 517, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 2, 
+      "posten": 15, 
+      "wert": "0", 
+      "teilnehmer": 78
+    }
+  }, 
+  {
+    "pk": 518, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 2, 
+      "posten": 15, 
+      "wert": "0", 
+      "teilnehmer": 79
+    }
+  }, 
+  {
+    "pk": 519, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 2, 
+      "posten": 15, 
+      "wert": "-1", 
+      "teilnehmer": 80
+    }
+  }, 
+  {
+    "pk": 520, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 2, 
+      "posten": 15, 
+      "wert": "0", 
+      "teilnehmer": 81
+    }
+  }, 
+  {
+    "pk": 521, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 2, 
+      "posten": 15, 
+      "wert": "0", 
+      "teilnehmer": 82
+    }
+  }, 
+  {
+    "pk": 522, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 3, 
+      "posten": 15, 
+      "wert": "10", 
+      "teilnehmer": 68
+    }
+  }, 
+  {
+    "pk": 523, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 3, 
+      "posten": 15, 
+      "wert": "10", 
+      "teilnehmer": 69
+    }
+  }, 
+  {
+    "pk": 524, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 3, 
+      "posten": 15, 
+      "wert": "9.5", 
+      "teilnehmer": 70
+    }
+  }, 
+  {
+    "pk": 525, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 3, 
+      "posten": 15, 
+      "wert": "10", 
+      "teilnehmer": 71
+    }
+  }, 
+  {
+    "pk": 526, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 3, 
+      "posten": 15, 
+      "wert": "10", 
+      "teilnehmer": 75
+    }
+  }, 
+  {
+    "pk": 527, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 3, 
+      "posten": 15, 
+      "wert": "9.5", 
+      "teilnehmer": 72
+    }
+  }, 
+  {
+    "pk": 528, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 3, 
+      "posten": 15, 
+      "wert": "10", 
+      "teilnehmer": 74
+    }
+  }, 
+  {
+    "pk": 529, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 3, 
+      "posten": 15, 
+      "wert": "10", 
+      "teilnehmer": 76
+    }
+  }, 
+  {
+    "pk": 530, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 3, 
+      "posten": 15, 
+      "wert": "10", 
+      "teilnehmer": 77
+    }
+  }, 
+  {
+    "pk": 531, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 3, 
+      "posten": 15, 
+      "wert": "10", 
+      "teilnehmer": 78
+    }
+  }, 
+  {
+    "pk": 532, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 3, 
+      "posten": 15, 
+      "wert": "10", 
+      "teilnehmer": 79
+    }
+  }, 
+  {
+    "pk": 533, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 3, 
+      "posten": 15, 
+      "wert": "10", 
+      "teilnehmer": 80
+    }
+  }, 
+  {
+    "pk": 534, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 3, 
+      "posten": 15, 
+      "wert": "9.5", 
+      "teilnehmer": 81
+    }
+  }, 
+  {
+    "pk": 535, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 3, 
+      "posten": 15, 
+      "wert": "10", 
+      "teilnehmer": 82
+    }
+  }, 
+  {
+    "pk": 536, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 14, 
+      "posten": 17, 
+      "wert": "-1", 
+      "teilnehmer": 68
+    }
+  }, 
+  {
+    "pk": 537, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 14, 
+      "posten": 17, 
+      "wert": "0", 
+      "teilnehmer": 69
+    }
+  }, 
+  {
+    "pk": 538, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 14, 
+      "posten": 17, 
+      "wert": "0", 
+      "teilnehmer": 70
+    }
+  }, 
+  {
+    "pk": 539, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 14, 
+      "posten": 17, 
+      "wert": "0", 
+      "teilnehmer": 71
+    }
+  }, 
+  {
+    "pk": 540, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 14, 
+      "posten": 17, 
+      "wert": "0", 
+      "teilnehmer": 75
+    }
+  }, 
+  {
+    "pk": 541, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 14, 
+      "posten": 17, 
+      "wert": "-2", 
+      "teilnehmer": 72
+    }
+  }, 
+  {
+    "pk": 542, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 14, 
+      "posten": 17, 
+      "wert": "0", 
+      "teilnehmer": 74
+    }
+  }, 
+  {
+    "pk": 543, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 14, 
+      "posten": 17, 
+      "wert": "0", 
+      "teilnehmer": 76
+    }
+  }, 
+  {
+    "pk": 544, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 14, 
+      "posten": 17, 
+      "wert": "0", 
+      "teilnehmer": 77
+    }
+  }, 
+  {
+    "pk": 545, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 14, 
+      "posten": 17, 
+      "wert": "0", 
+      "teilnehmer": 78
+    }
+  }, 
+  {
+    "pk": 546, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 14, 
+      "posten": 17, 
+      "wert": "0", 
+      "teilnehmer": 79
+    }
+  }, 
+  {
+    "pk": 547, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 14, 
+      "posten": 17, 
+      "wert": "0", 
+      "teilnehmer": 80
+    }
+  }, 
+  {
+    "pk": 548, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 14, 
+      "posten": 17, 
+      "wert": "0", 
+      "teilnehmer": 81
+    }
+  }, 
+  {
+    "pk": 549, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 14, 
+      "posten": 17, 
+      "wert": "0", 
+      "teilnehmer": 82
+    }
+  }, 
+  {
+    "pk": 550, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 15, 
+      "posten": 17, 
+      "wert": "9", 
+      "teilnehmer": 68
+    }
+  }, 
+  {
+    "pk": 551, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 15, 
+      "posten": 17, 
+      "wert": "10", 
+      "teilnehmer": 69
+    }
+  }, 
+  {
+    "pk": 552, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 15, 
+      "posten": 17, 
+      "wert": "10", 
+      "teilnehmer": 70
+    }
+  }, 
+  {
+    "pk": 553, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 15, 
+      "posten": 17, 
+      "wert": "8", 
+      "teilnehmer": 71
+    }
+  }, 
+  {
+    "pk": 554, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 15, 
+      "posten": 17, 
+      "wert": "10", 
+      "teilnehmer": 75
+    }
+  }, 
+  {
+    "pk": 555, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 15, 
+      "posten": 17, 
+      "wert": "9", 
+      "teilnehmer": 72
+    }
+  }, 
+  {
+    "pk": 556, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 15, 
+      "posten": 17, 
+      "wert": "10", 
+      "teilnehmer": 74
+    }
+  }, 
+  {
+    "pk": 557, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 15, 
+      "posten": 17, 
+      "wert": "10", 
+      "teilnehmer": 76
+    }
+  }, 
+  {
+    "pk": 558, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 15, 
+      "posten": 17, 
+      "wert": "10", 
+      "teilnehmer": 77
+    }
+  }, 
+  {
+    "pk": 559, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 15, 
+      "posten": 17, 
+      "wert": "10", 
+      "teilnehmer": 78
+    }
+  }, 
+  {
+    "pk": 560, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 15, 
+      "posten": 17, 
+      "wert": "8", 
+      "teilnehmer": 79
+    }
+  }, 
+  {
+    "pk": 561, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 15, 
+      "posten": 17, 
+      "wert": "10", 
+      "teilnehmer": 80
+    }
+  }, 
+  {
+    "pk": 562, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 15, 
+      "posten": 17, 
+      "wert": "9", 
+      "teilnehmer": 81
+    }
+  }, 
+  {
+    "pk": 563, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 15, 
+      "posten": 17, 
+      "wert": "10", 
+      "teilnehmer": 82
+    }
+  }, 
+  {
+    "pk": 564, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 18, 
+      "wert": "43.2", 
+      "teilnehmer": 68
+    }
+  }, 
+  {
+    "pk": 565, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 18, 
+      "wert": "44.3", 
+      "teilnehmer": 69
+    }
+  }, 
+  {
+    "pk": 566, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 18, 
+      "wert": "49.5", 
+      "teilnehmer": 70
+    }
+  }, 
+  {
+    "pk": 567, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 18, 
+      "wert": "39.2", 
+      "teilnehmer": 71
+    }
+  }, 
+  {
+    "pk": 568, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 18, 
+      "wert": "50.3", 
+      "teilnehmer": 75
+    }
+  }, 
+  {
+    "pk": 569, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 18, 
+      "wert": "41.2", 
+      "teilnehmer": 72
+    }
+  }, 
+  {
+    "pk": 570, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 18, 
+      "wert": "44.3", 
+      "teilnehmer": 74
+    }
+  }, 
+  {
+    "pk": 571, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 18, 
+      "wert": "45.2", 
+      "teilnehmer": 76
+    }
+  }, 
+  {
+    "pk": 572, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 18, 
+      "wert": "41.1", 
+      "teilnehmer": 77
+    }
+  }, 
+  {
+    "pk": 573, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 18, 
+      "wert": "49.9", 
+      "teilnehmer": 78
+    }
+  }, 
+  {
+    "pk": 574, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 18, 
+      "wert": "40.3", 
+      "teilnehmer": 79
+    }
+  }, 
+  {
+    "pk": 575, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 18, 
+      "wert": "44.3", 
+      "teilnehmer": 80
+    }
+  }, 
+  {
+    "pk": 576, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 18, 
+      "wert": "51.3", 
+      "teilnehmer": 81
+    }
+  }, 
+  {
+    "pk": 577, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 18, 
+      "wert": "49.3", 
+      "teilnehmer": 82
+    }
+  }, 
+  {
+    "pk": 578, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 19, 
+      "wert": "87.5", 
+      "teilnehmer": 68
+    }
+  }, 
+  {
+    "pk": 579, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 19, 
+      "wert": "80.4", 
+      "teilnehmer": 69
+    }
+  }, 
+  {
+    "pk": 580, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 19, 
+      "wert": "88.3", 
+      "teilnehmer": 70
+    }
+  }, 
+  {
+    "pk": 581, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 19, 
+      "wert": "89.3", 
+      "teilnehmer": 71
+    }
+  }, 
+  {
+    "pk": 582, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 19, 
+      "wert": "93.4", 
+      "teilnehmer": 75
+    }
+  }, 
+  {
+    "pk": 583, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 19, 
+      "wert": "99.3", 
+      "teilnehmer": 72
+    }
+  }, 
+  {
+    "pk": 584, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 19, 
+      "wert": "80.3", 
+      "teilnehmer": 74
+    }
+  }, 
+  {
+    "pk": 585, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 19, 
+      "wert": "78.3", 
+      "teilnehmer": 76
+    }
+  }, 
+  {
+    "pk": 586, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 19, 
+      "wert": "94.4", 
+      "teilnehmer": 77
+    }
+  }, 
+  {
+    "pk": 587, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 19, 
+      "wert": "90.3", 
+      "teilnehmer": 78
+    }
+  }, 
+  {
+    "pk": 588, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 19, 
+      "wert": "86.4", 
+      "teilnehmer": 79
+    }
+  }, 
+  {
+    "pk": 589, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 19, 
+      "wert": "90.3", 
+      "teilnehmer": 80
+    }
+  }, 
+  {
+    "pk": 590, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 19, 
+      "wert": "99.3", 
+      "teilnehmer": 81
+    }
+  }, 
+  {
+    "pk": 591, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 19, 
+      "wert": "82.3", 
+      "teilnehmer": 82
+    }
+  }, 
+  {
+    "pk": 592, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 2, 
+      "posten": 15, 
+      "wert": "0", 
+      "teilnehmer": 83
+    }
+  }, 
+  {
+    "pk": 593, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 3, 
+      "posten": 15, 
+      "wert": "10", 
+      "teilnehmer": 83
+    }
+  }, 
+  {
+    "pk": 594, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 14, 
+      "posten": 17, 
+      "wert": "-1", 
+      "teilnehmer": 83
+    }
+  }, 
+  {
+    "pk": 595, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 15, 
+      "posten": 17, 
+      "wert": "10", 
+      "teilnehmer": 83
+    }
+  }, 
+  {
+    "pk": 596, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 18, 
+      "wert": "52.3", 
+      "teilnehmer": 83
+    }
+  }, 
+  {
+    "pk": 597, 
+    "model": "sasse.bewertung", 
+    "fields": {
+      "bewertungsart": 16, 
+      "posten": 19, 
+      "wert": "92.32", 
+      "teilnehmer": 83
+    }
+  }, 
+  {
+    "pk": 20, 
+    "model": "sasse.teilnehmer", 
+    "fields": {
+      "startnummer": 1, 
+      "disqualifiziert": false, 
+      "disziplin": 2, 
+      "ausgeschieden": false
+    }
+  }, 
+  {
+    "pk": 67, 
+    "model": "sasse.teilnehmer", 
+    "fields": {
+      "startnummer": 1, 
+      "disqualifiziert": false, 
+      "disziplin": 1, 
+      "ausgeschieden": false
+    }
+  }, 
+  {
+    "pk": 68, 
+    "model": "sasse.teilnehmer", 
+    "fields": {
+      "startnummer": 1, 
+      "disqualifiziert": false, 
+      "disziplin": 11, 
+      "ausgeschieden": false
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "sasse.teilnehmer", 
+    "fields": {
+      "startnummer": 2, 
+      "disqualifiziert": false, 
+      "disziplin": 1, 
+      "ausgeschieden": false
+    }
+  }, 
+  {
+    "pk": 21, 
+    "model": "sasse.teilnehmer", 
+    "fields": {
+      "startnummer": 2, 
+      "disqualifiziert": false, 
+      "disziplin": 2, 
+      "ausgeschieden": false
+    }
+  }, 
+  {
+    "pk": 69, 
+    "model": "sasse.teilnehmer", 
+    "fields": {
+      "startnummer": 2, 
+      "disqualifiziert": false, 
+      "disziplin": 11, 
+      "ausgeschieden": false
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "sasse.teilnehmer", 
+    "fields": {
+      "startnummer": 3, 
+      "disqualifiziert": false, 
+      "disziplin": 1, 
+      "ausgeschieden": false
+    }
+  }, 
+  {
+    "pk": 70, 
+    "model": "sasse.teilnehmer", 
+    "fields": {
+      "startnummer": 3, 
+      "disqualifiziert": false, 
+      "disziplin": 11, 
+      "ausgeschieden": false
+    }
+  }, 
+  {
+    "pk": 4, 
+    "model": "sasse.teilnehmer", 
+    "fields": {
+      "startnummer": 4, 
+      "disqualifiziert": false, 
+      "disziplin": 1, 
+      "ausgeschieden": false
+    }
+  }, 
+  {
+    "pk": 63, 
+    "model": "sasse.teilnehmer", 
+    "fields": {
+      "startnummer": 4, 
+      "disqualifiziert": false, 
+      "disziplin": 2, 
+      "ausgeschieden": false
+    }
+  }, 
+  {
+    "pk": 71, 
+    "model": "sasse.teilnehmer", 
+    "fields": {
+      "startnummer": 4, 
+      "disqualifiziert": false, 
+      "disziplin": 11, 
+      "ausgeschieden": false
+    }
+  }, 
+  {
+    "pk": 5, 
+    "model": "sasse.teilnehmer", 
+    "fields": {
+      "startnummer": 5, 
+      "disqualifiziert": false, 
+      "disziplin": 1, 
+      "ausgeschieden": false
+    }
+  }, 
+  {
+    "pk": 72, 
+    "model": "sasse.teilnehmer", 
+    "fields": {
+      "startnummer": 6, 
+      "disqualifiziert": false, 
+      "disziplin": 11, 
+      "ausgeschieden": false
+    }
+  }, 
+  {
+    "pk": 7, 
+    "model": "sasse.teilnehmer", 
+    "fields": {
+      "startnummer": 7, 
+      "disqualifiziert": false, 
+      "disziplin": 1, 
+      "ausgeschieden": false
+    }
+  }, 
+  {
+    "pk": 8, 
+    "model": "sasse.teilnehmer", 
+    "fields": {
+      "startnummer": 8, 
+      "disqualifiziert": false, 
+      "disziplin": 1, 
+      "ausgeschieden": false
+    }
+  }, 
+  {
+    "pk": 76, 
+    "model": "sasse.teilnehmer", 
+    "fields": {
+      "startnummer": 8, 
+      "disqualifiziert": false, 
+      "disziplin": 11, 
+      "ausgeschieden": false
+    }
+  }, 
+  {
+    "pk": 9, 
+    "model": "sasse.teilnehmer", 
+    "fields": {
+      "startnummer": 9, 
+      "disqualifiziert": false, 
+      "disziplin": 1, 
+      "ausgeschieden": false
+    }
+  }, 
+  {
+    "pk": 77, 
+    "model": "sasse.teilnehmer", 
+    "fields": {
+      "startnummer": 9, 
+      "disqualifiziert": true, 
+      "disziplin": 11, 
+      "ausgeschieden": false
+    }
+  }, 
+  {
+    "pk": 10, 
+    "model": "sasse.teilnehmer", 
+    "fields": {
+      "startnummer": 10, 
+      "disqualifiziert": false, 
+      "disziplin": 1, 
+      "ausgeschieden": false
+    }
+  }, 
+  {
+    "pk": 78, 
+    "model": "sasse.teilnehmer", 
+    "fields": {
+      "startnummer": 10, 
+      "disqualifiziert": false, 
+      "disziplin": 11, 
+      "ausgeschieden": false
+    }
+  }, 
+  {
+    "pk": 11, 
+    "model": "sasse.teilnehmer", 
+    "fields": {
+      "startnummer": 11, 
+      "disqualifiziert": false, 
+      "disziplin": 1, 
+      "ausgeschieden": false
+    }
+  }, 
+  {
+    "pk": 79, 
+    "model": "sasse.teilnehmer", 
+    "fields": {
+      "startnummer": 11, 
+      "disqualifiziert": false, 
+      "disziplin": 11, 
+      "ausgeschieden": false
+    }
+  }, 
+  {
+    "pk": 12, 
+    "model": "sasse.teilnehmer", 
+    "fields": {
+      "startnummer": 12, 
+      "disqualifiziert": false, 
+      "disziplin": 1, 
+      "ausgeschieden": false
+    }
+  }, 
+  {
+    "pk": 80, 
+    "model": "sasse.teilnehmer", 
+    "fields": {
+      "startnummer": 12, 
+      "disqualifiziert": false, 
+      "disziplin": 11, 
+      "ausgeschieden": false
+    }
+  }, 
+  {
+    "pk": 81, 
+    "model": "sasse.teilnehmer", 
+    "fields": {
+      "startnummer": 13, 
+      "disqualifiziert": false, 
+      "disziplin": 11, 
+      "ausgeschieden": false
+    }
+  }, 
+  {
+    "pk": 82, 
+    "model": "sasse.teilnehmer", 
+    "fields": {
+      "startnummer": 14, 
+      "disqualifiziert": false, 
+      "disziplin": 11, 
+      "ausgeschieden": false
+    }
+  }, 
+  {
+    "pk": 18, 
+    "model": "sasse.teilnehmer", 
+    "fields": {
+      "startnummer": 24, 
+      "disqualifiziert": false, 
+      "disziplin": 1, 
+      "ausgeschieden": false
+    }
+  }, 
+  {
+    "pk": 19, 
+    "model": "sasse.teilnehmer", 
+    "fields": {
+      "startnummer": 25, 
+      "disqualifiziert": false, 
+      "disziplin": 1, 
+      "ausgeschieden": false
+    }
+  }, 
+  {
+    "pk": 55, 
+    "model": "sasse.teilnehmer", 
+    "fields": {
+      "startnummer": 26, 
+      "disqualifiziert": false, 
+      "disziplin": 1, 
+      "ausgeschieden": false
+    }
+  }, 
+  {
+    "pk": 56, 
+    "model": "sasse.teilnehmer", 
+    "fields": {
+      "startnummer": 27, 
+      "disqualifiziert": false, 
+      "disziplin": 1, 
+      "ausgeschieden": false
+    }
+  }, 
+  {
+    "pk": 57, 
+    "model": "sasse.teilnehmer", 
+    "fields": {
+      "startnummer": 28, 
+      "disqualifiziert": false, 
+      "disziplin": 1, 
+      "ausgeschieden": false
+    }
+  }, 
+  {
+    "pk": 58, 
+    "model": "sasse.teilnehmer", 
+    "fields": {
+      "startnummer": 29, 
+      "disqualifiziert": false, 
+      "disziplin": 1, 
+      "ausgeschieden": false
+    }
+  }, 
+  {
+    "pk": 59, 
+    "model": "sasse.teilnehmer", 
+    "fields": {
+      "startnummer": 30, 
+      "disqualifiziert": false, 
+      "disziplin": 1, 
+      "ausgeschieden": false
+    }
+  }, 
+  {
+    "pk": 60, 
+    "model": "sasse.teilnehmer", 
+    "fields": {
+      "startnummer": 31, 
+      "disqualifiziert": false, 
+      "disziplin": 1, 
+      "ausgeschieden": false
+    }
+  }, 
+  {
+    "pk": 61, 
+    "model": "sasse.teilnehmer", 
+    "fields": {
+      "startnummer": 33, 
+      "disqualifiziert": false, 
+      "disziplin": 2, 
+      "ausgeschieden": false
+    }
+  }, 
+  {
+    "pk": 64, 
+    "model": "sasse.teilnehmer", 
+    "fields": {
+      "startnummer": 34, 
+      "disqualifiziert": false, 
+      "disziplin": 2, 
+      "ausgeschieden": false
+    }
+  }, 
+  {
+    "pk": 65, 
+    "model": "sasse.teilnehmer", 
+    "fields": {
+      "startnummer": 35, 
+      "disqualifiziert": false, 
+      "disziplin": 2, 
+      "ausgeschieden": false
+    }
+  }, 
+  {
+    "pk": 75, 
+    "model": "sasse.teilnehmer", 
+    "fields": {
+      "startnummer": 101, 
+      "disqualifiziert": false, 
+      "disziplin": 11, 
+      "ausgeschieden": false
+    }
+  }, 
+  {
+    "pk": 74, 
+    "model": "sasse.teilnehmer", 
+    "fields": {
+      "startnummer": 102, 
+      "disqualifiziert": false, 
+      "disziplin": 11, 
+      "ausgeschieden": false
+    }
+  }, 
+  {
+    "pk": 83, 
+    "model": "sasse.teilnehmer", 
+    "fields": {
+      "startnummer": 103, 
+      "disqualifiziert": false, 
+      "disziplin": 11, 
+      "ausgeschieden": false
+    }
+  }, 
+  {
+    "pk": 15, 
+    "model": "sasse.teilnehmer", 
+    "fields": {
+      "startnummer": 301, 
+      "disqualifiziert": false, 
+      "disziplin": 1, 
+      "ausgeschieden": false
+    }
+  }, 
+  {
+    "pk": 36, 
+    "model": "sasse.teilnehmer", 
+    "fields": {
+      "startnummer": 316, 
+      "disqualifiziert": false, 
+      "disziplin": 1, 
+      "ausgeschieden": false
+    }
+  }, 
+  {
+    "pk": 41, 
+    "model": "sasse.teilnehmer", 
+    "fields": {
+      "startnummer": 321, 
+      "disqualifiziert": false, 
+      "disziplin": 1, 
+      "ausgeschieden": false
+    }
+  }, 
+  {
+    "pk": 42, 
+    "model": "sasse.teilnehmer", 
+    "fields": {
+      "startnummer": 322, 
+      "disqualifiziert": false, 
+      "disziplin": 1, 
+      "ausgeschieden": false
+    }
+  }, 
+  {
+    "pk": 43, 
+    "model": "sasse.teilnehmer", 
+    "fields": {
+      "startnummer": 323, 
+      "disqualifiziert": false, 
+      "disziplin": 1, 
+      "ausgeschieden": false
+    }
+  }, 
+  {
+    "pk": 44, 
+    "model": "sasse.teilnehmer", 
+    "fields": {
+      "startnummer": 324, 
+      "disqualifiziert": false, 
+      "disziplin": 1, 
+      "ausgeschieden": false
+    }
+  }, 
+  {
+    "pk": 53, 
+    "model": "sasse.teilnehmer", 
+    "fields": {
+      "startnummer": 333, 
+      "disqualifiziert": false, 
+      "disziplin": 1, 
+      "ausgeschieden": false
+    }
+  }, 
+  {
+    "pk": 20, 
+    "model": "sasse.schiffeinzel", 
+    "fields": {
+      "steuermann": 312, 
+      "schiffsart": "", 
+      "kategorie": 4, 
+      "sektion": 10, 
+      "vorderfahrer": 300
+    }
+  }, 
+  {
+    "pk": 67, 
+    "model": "sasse.schiffeinzel", 
+    "fields": {
+      "steuermann": 312, 
+      "schiffsart": "", 
+      "kategorie": 4, 
+      "sektion": 10, 
+      "vorderfahrer": 300
+    }
+  }, 
+  {
+    "pk": 68, 
+    "model": "sasse.schiffeinzel", 
+    "fields": {
+      "steuermann": 312, 
+      "schiffsart": "", 
+      "kategorie": 4, 
+      "sektion": 10, 
+      "vorderfahrer": 300
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "sasse.schiffeinzel", 
+    "fields": {
+      "steuermann": 295, 
+      "schiffsart": "", 
+      "kategorie": 4, 
+      "sektion": 10, 
+      "vorderfahrer": 317
+    }
+  }, 
+  {
+    "pk": 21, 
+    "model": "sasse.schiffeinzel", 
+    "fields": {
+      "steuermann": 513, 
+      "schiffsart": "", 
+      "kategorie": 4, 
+      "sektion": 14, 
+      "vorderfahrer": 503
+    }
+  }, 
+  {
+    "pk": 69, 
+    "model": "sasse.schiffeinzel", 
+    "fields": {
+      "steuermann": 317, 
+      "schiffsart": "", 
+      "kategorie": 4, 
+      "sektion": 10, 
+      "vorderfahrer": 288
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "sasse.schiffeinzel", 
+    "fields": {
+      "steuermann": 304, 
+      "schiffsart": "", 
+      "kategorie": 4, 
+      "sektion": 10, 
+      "vorderfahrer": 312
+    }
+  }, 
+  {
+    "pk": 70, 
+    "model": "sasse.schiffeinzel", 
+    "fields": {
+      "steuermann": 295, 
+      "schiffsart": "", 
+      "kategorie": 4, 
+      "sektion": 10, 
+      "vorderfahrer": 293
+    }
+  }, 
+  {
+    "pk": 4, 
+    "model": "sasse.schiffeinzel", 
+    "fields": {
+      "steuermann": 304, 
+      "schiffsart": "", 
+      "kategorie": 6, 
+      "sektion": 10, 
+      "vorderfahrer": 294
+    }
+  }, 
+  {
+    "pk": 63, 
+    "model": "sasse.schiffeinzel", 
+    "fields": {
+      "steuermann": 312, 
+      "schiffsart": "", 
+      "kategorie": 5, 
+      "sektion": 10, 
+      "vorderfahrer": 317
+    }
+  }, 
+  {
+    "pk": 71, 
+    "model": "sasse.schiffeinzel", 
+    "fields": {
+      "steuermann": 329, 
+      "schiffsart": "", 
+      "kategorie": 5, 
+      "sektion": 10, 
+      "vorderfahrer": 305
+    }
+  }, 
+  {
+    "pk": 5, 
+    "model": "sasse.schiffeinzel", 
+    "fields": {
+      "steuermann": 304, 
+      "schiffsart": "", 
+      "kategorie": 6, 
+      "sektion": 10, 
+      "vorderfahrer": 294
+    }
+  }, 
+  {
+    "pk": 72, 
+    "model": "sasse.schiffeinzel", 
+    "fields": {
+      "steuermann": 1091, 
+      "schiffsart": "", 
+      "kategorie": 4, 
+      "sektion": 31, 
+      "vorderfahrer": 1092
+    }
+  }, 
+  {
+    "pk": 7, 
+    "model": "sasse.schiffeinzel", 
+    "fields": {
+      "steuermann": 317, 
+      "schiffsart": "", 
+      "kategorie": 5, 
+      "sektion": 10, 
+      "vorderfahrer": 329
+    }
+  }, 
+  {
+    "pk": 8, 
+    "model": "sasse.schiffeinzel", 
+    "fields": {
+      "steuermann": 304, 
+      "schiffsart": "", 
+      "kategorie": 6, 
+      "sektion": 10, 
+      "vorderfahrer": 294
+    }
+  }, 
+  {
+    "pk": 76, 
+    "model": "sasse.schiffeinzel", 
+    "fields": {
+      "steuermann": 1015, 
+      "schiffsart": "", 
+      "kategorie": 5, 
+      "sektion": 29, 
+      "vorderfahrer": 1016
+    }
+  }, 
+  {
+    "pk": 9, 
+    "model": "sasse.schiffeinzel", 
+    "fields": {
+      "steuermann": 312, 
+      "schiffsart": "", 
+      "kategorie": 4, 
+      "sektion": 10, 
+      "vorderfahrer": 304
+    }
+  }, 
+  {
+    "pk": 77, 
+    "model": "sasse.schiffeinzel", 
+    "fields": {
+      "steuermann": 1024, 
+      "schiffsart": "", 
+      "kategorie": 4, 
+      "sektion": 29, 
+      "vorderfahrer": 1025
+    }
+  }, 
+  {
+    "pk": 10, 
+    "model": "sasse.schiffeinzel", 
+    "fields": {
+      "steuermann": 312, 
+      "schiffsart": "", 
+      "kategorie": 4, 
+      "sektion": 10, 
+      "vorderfahrer": 300
+    }
+  }, 
+  {
+    "pk": 78, 
+    "model": "sasse.schiffeinzel", 
+    "fields": {
+      "steuermann": 1026, 
+      "schiffsart": "", 
+      "kategorie": 4, 
+      "sektion": 29, 
+      "vorderfahrer": 1023
+    }
+  }, 
+  {
+    "pk": 11, 
+    "model": "sasse.schiffeinzel", 
+    "fields": {
+      "steuermann": 304, 
+      "schiffsart": "", 
+      "kategorie": 4, 
+      "sektion": 10, 
+      "vorderfahrer": 294
+    }
+  }, 
+  {
+    "pk": 79, 
+    "model": "sasse.schiffeinzel", 
+    "fields": {
+      "steuermann": 503, 
+      "schiffsart": "", 
+      "kategorie": 4, 
+      "sektion": 14, 
+      "vorderfahrer": 1573
+    }
+  }, 
+  {
+    "pk": 12, 
+    "model": "sasse.schiffeinzel", 
+    "fields": {
+      "steuermann": 312, 
+      "schiffsart": "", 
+      "kategorie": 5, 
+      "sektion": 10, 
+      "vorderfahrer": 317
+    }
+  }, 
+  {
+    "pk": 80, 
+    "model": "sasse.schiffeinzel", 
+    "fields": {
+      "steuermann": 501, 
+      "schiffsart": "", 
+      "kategorie": 4, 
+      "sektion": 14, 
+      "vorderfahrer": 496
+    }
+  }, 
+  {
+    "pk": 81, 
+    "model": "sasse.schiffeinzel", 
+    "fields": {
+      "steuermann": 492, 
+      "schiffsart": "", 
+      "kategorie": 4, 
+      "sektion": 14, 
+      "vorderfahrer": 493
+    }
+  }, 
+  {
+    "pk": 82, 
+    "model": "sasse.schiffeinzel", 
+    "fields": {
+      "steuermann": 491, 
+      "schiffsart": "", 
+      "kategorie": 4, 
+      "sektion": 14, 
+      "vorderfahrer": 490
+    }
+  }, 
+  {
+    "pk": 18, 
+    "model": "sasse.schiffeinzel", 
+    "fields": {
+      "steuermann": 312, 
+      "schiffsart": "", 
+      "kategorie": 5, 
+      "sektion": 10, 
+      "vorderfahrer": 317
+    }
+  }, 
+  {
+    "pk": 19, 
+    "model": "sasse.schiffeinzel", 
+    "fields": {
+      "steuermann": 295, 
+      "schiffsart": "", 
+      "kategorie": 4, 
+      "sektion": 10, 
+      "vorderfahrer": 300
+    }
+  }, 
+  {
+    "pk": 55, 
+    "model": "sasse.schiffeinzel", 
+    "fields": {
+      "steuermann": 312, 
+      "schiffsart": "", 
+      "kategorie": 5, 
+      "sektion": 10, 
+      "vorderfahrer": 317
+    }
+  }, 
+  {
+    "pk": 56, 
+    "model": "sasse.schiffeinzel", 
+    "fields": {
+      "steuermann": 300, 
+      "schiffsart": "", 
+      "kategorie": 4, 
+      "sektion": 10, 
+      "vorderfahrer": 1564
+    }
+  }, 
+  {
+    "pk": 57, 
+    "model": "sasse.schiffeinzel", 
+    "fields": {
+      "steuermann": 295, 
+      "schiffsart": "", 
+      "kategorie": 4, 
+      "sektion": 10, 
+      "vorderfahrer": 288
+    }
+  }, 
+  {
+    "pk": 58, 
+    "model": "sasse.schiffeinzel", 
+    "fields": {
+      "steuermann": 295, 
+      "schiffsart": "", 
+      "kategorie": 4, 
+      "sektion": 10, 
+      "vorderfahrer": 288
+    }
+  }, 
+  {
+    "pk": 59, 
+    "model": "sasse.schiffeinzel", 
+    "fields": {
+      "steuermann": 312, 
+      "schiffsart": "", 
+      "kategorie": 4, 
+      "sektion": 10, 
+      "vorderfahrer": 300
+    }
+  }, 
+  {
+    "pk": 60, 
+    "model": "sasse.schiffeinzel", 
+    "fields": {
+      "steuermann": 312, 
+      "schiffsart": "", 
+      "kategorie": 4, 
+      "sektion": 10, 
+      "vorderfahrer": 300
+    }
+  }, 
+  {
+    "pk": 61, 
+    "model": "sasse.schiffeinzel", 
+    "fields": {
+      "steuermann": 312, 
+      "schiffsart": "", 
+      "kategorie": 5, 
+      "sektion": 10, 
+      "vorderfahrer": 317
+    }
+  }, 
+  {
+    "pk": 64, 
+    "model": "sasse.schiffeinzel", 
+    "fields": {
+      "steuermann": 312, 
+      "schiffsart": "", 
+      "kategorie": 5, 
+      "sektion": 10, 
+      "vorderfahrer": 317
+    }
+  }, 
+  {
+    "pk": 65, 
+    "model": "sasse.schiffeinzel", 
+    "fields": {
+      "steuermann": 312, 
+      "schiffsart": "", 
+      "kategorie": 4, 
+      "sektion": 10, 
+      "vorderfahrer": 300
+    }
+  }, 
+  {
+    "pk": 75, 
+    "model": "sasse.schiffeinzel", 
+    "fields": {
+      "steuermann": 312, 
+      "schiffsart": "", 
+      "kategorie": 4, 
+      "sektion": 10, 
+      "vorderfahrer": 304
+    }
+  }, 
+  {
+    "pk": 74, 
+    "model": "sasse.schiffeinzel", 
+    "fields": {
+      "steuermann": 1094, 
+      "schiffsart": "", 
+      "kategorie": 4, 
+      "sektion": 31, 
+      "vorderfahrer": 1092
+    }
+  }, 
+  {
+    "pk": 83, 
+    "model": "sasse.schiffeinzel", 
+    "fields": {
+      "steuermann": 488, 
+      "schiffsart": "", 
+      "kategorie": 4, 
+      "sektion": 14, 
+      "vorderfahrer": 492
+    }
+  }, 
+  {
+    "pk": 15, 
+    "model": "sasse.schiffeinzel", 
+    "fields": {
+      "steuermann": 300, 
+      "schiffsart": "", 
+      "kategorie": 4, 
+      "sektion": 10, 
+      "vorderfahrer": 312
+    }
+  }, 
+  {
+    "pk": 36, 
+    "model": "sasse.schiffeinzel", 
+    "fields": {
+      "steuermann": 300, 
+      "schiffsart": "", 
+      "kategorie": 5, 
+      "sektion": 10, 
+      "vorderfahrer": 312
+    }
+  }, 
+  {
+    "pk": 41, 
+    "model": "sasse.schiffeinzel", 
+    "fields": {
+      "steuermann": 503, 
+      "schiffsart": "", 
+      "kategorie": 4, 
+      "sektion": 14, 
+      "vorderfahrer": 312
+    }
+  }, 
+  {
+    "pk": 42, 
+    "model": "sasse.schiffeinzel", 
+    "fields": {
+      "steuermann": 503, 
+      "schiffsart": "", 
+      "kategorie": 4, 
+      "sektion": 14, 
+      "vorderfahrer": 312
+    }
+  }, 
+  {
+    "pk": 43, 
+    "model": "sasse.schiffeinzel", 
+    "fields": {
+      "steuermann": 503, 
+      "schiffsart": "", 
+      "kategorie": 4, 
+      "sektion": 14, 
+      "vorderfahrer": 312
+    }
+  }, 
+  {
+    "pk": 44, 
+    "model": "sasse.schiffeinzel", 
+    "fields": {
+      "steuermann": 312, 
+      "schiffsart": "", 
+      "kategorie": 4, 
+      "sektion": 10, 
+      "vorderfahrer": 300
+    }
+  }, 
+  {
+    "pk": 53, 
+    "model": "sasse.schiffeinzel", 
+    "fields": {
+      "steuermann": 312, 
+      "schiffsart": "", 
+      "kategorie": 4, 
+      "sektion": 10, 
+      "vorderfahrer": 300
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "sasse.richtzeit", 
+    "fields": {
+      "zeit": "55", 
+      "posten": 12
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "sasse.richtzeit", 
+    "fields": {
+      "zeit": "90", 
+      "posten": 13
+    }
+  }, 
+  {
+    "pk": 4, 
+    "model": "sasse.richtzeit", 
+    "fields": {
+      "zeit": "100", 
+      "posten": 11
+    }
+  }, 
+  {
+    "pk": 5, 
+    "model": "sasse.richtzeit", 
+    "fields": {
+      "zeit": "40", 
+      "posten": 18
+    }
+  }, 
+  {
+    "pk": 6, 
+    "model": "sasse.richtzeit", 
+    "fields": {
+      "zeit": "80", 
+      "posten": 19
+    }
+  }
+]

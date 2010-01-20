@@ -514,6 +514,20 @@ def notenliste(request, jahr, wettkampf, disziplin):
     return render_to_response('notenliste.html', {'wettkampf': w, 'disziplin':
         d, 'posten': posten, 'notenliste': list, 'searchform': filter_form})
 
+def new_bew(col, art):
+    """
+    Hilfsfunktion, damit ein Bewertung Objekt im Template einfach so verwendet
+    werden kann, d.h. eine korrekte String Representation hat.
+    """
+    wert = Decimal()
+    if col:
+        wert = Decimal(str(col))
+    return Bewertung(wert=wert, bewertungsart=art)
+
+# Hilfskonstanten
+ZEIT = Bewertungsart(einheit='ZEIT')
+PUNKT = Bewertungsart(einheit='PUNKT')
+
 def read_notenliste(disziplin, posten, sektion=None):
     from django.db import connection
     sql = render_to_string('notenliste.sql',
@@ -523,14 +537,6 @@ def read_notenliste(disziplin, posten, sektion=None):
         args.append(sektion.id)
     cursor = connection.cursor()
     cursor.execute(sql, args)
-    # Hilfsfunktion, damit Bewertung.__unicode__ im Template verwendet wird
-    def new_bew(col, art):
-        wert = Decimal()
-        if col:
-            wert = Decimal(str(col))
-        return Bewertung(wert=wert, bewertungsart=art)
-    ZEIT = Bewertungsart(einheit='ZEIT')
-    PUNKT = Bewertungsart(einheit='PUNKT')
     for row in cursor:
         dict = {}; i = 0
         dict['startnummer'] = row[i]; i += 1
@@ -548,6 +554,42 @@ def read_notenliste(disziplin, posten, sektion=None):
             noten.append(new_bew(row[i], PUNKT))
             i += 1
         dict['noten'] = noten
+        yield dict
+
+def read_rangliste(disziplin, kategorie, kranzlimite=None,
+        doppelstarter_mit_rang=False):
+    from django.db import connection
+    sql = render_to_string('rangliste.sql')
+    args = [disziplin.id, kategorie.id]
+    cursor = connection.cursor()
+    cursor.execute(sql, args)
+    rang = 1
+    punkt_tot_prev = None
+    zeit_tot_prev = None
+    for row in cursor:
+        dict = {}; i = 0
+        dict['kranz'] = False
+        dict['rang'] = None
+        dict['doppelstarter'] = False
+        dict['startnummer'] = row[i]; i+=1
+        dict['steuermann_ist_ds'] = row[i]; i+=1
+        dict['vorderfahrer_ist_ds'] = row[i]; i+=1
+        dict['steuermann'] = row[i]; i+=1
+        dict['vorderfahrer'] = row[i]; i+=1
+        dict['sektion'] = row[i]; i += 1
+        dict['kategorie'] = row[i]; i += 1
+        dict['zeit_tot'] = new_bew(row[i], ZEIT); i += 1
+        dict['punkt_tot'] = new_bew(row[i], PUNKT); i += 1
+        if dict['punkt_tot'].wert >= kranzlimite:
+            dict['kranz'] = True
+        if dict['steuermann_ist_ds'] or dict['vorderfahrer_ist_ds']:
+            dict['doppelstarter'] = True
+        if (not dict['doppelstarter']) or doppelstarter_mit_rang:
+            dict['rang'] = rang
+            if (punkt_tot_prev, zeit_tot_prev) != (dict['punkt_tot'].wert, dict['zeit_tot'].wert):
+                rang += 1
+        punkt_tot_prev = dict['punkt_tot'].wert
+        zeit_tot_prev = dict['zeit_tot'].wert
         yield dict
 
 #-----------

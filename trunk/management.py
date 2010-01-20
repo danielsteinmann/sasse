@@ -8,14 +8,15 @@ from sasse import models as sasse_app
 
 def install_views(sender, **kwargs):
     from django.db import connection
-    print "Installing view 'bewertung_in_punkte'"
     cursor = connection.cursor()
-    try:
-        cursor.execute("drop view bewertung_in_punkte")
-    except:
-        pass # View existiert noch nicht
-    sql = render_to_string('bewertung_in_punkte.sql')
-    cursor.execute(sql)
+    for view in ['bewertung_in_punkte', 'doppelstarter']:
+        print "Installing view '%s'" % view
+        try:
+            cursor.execute("drop view %s" % view)
+        except:
+            pass # View existiert noch nicht
+        sql = render_to_string('%s.sql' % view)
+        cursor.execute(sql)
 
 
 post_syncdb.connect(install_views, sender=sasse_app)
