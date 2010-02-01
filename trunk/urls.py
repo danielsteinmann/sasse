@@ -53,6 +53,10 @@ urlpatterns = patterns('',
         views.richtzeit_update, {}, "richtzeit_update"),
     (r'^(?P<jahr>\d+)/(?P<wettkampf>[-\w]+)/(?P<disziplin>[-\w]+)/notenliste/$',
         views.notenliste, {}, "notenliste"),
+    (r'^(?P<jahr>\d+)/(?P<wettkampf>[-\w]+)/(?P<disziplin>[-\w]+)/rangliste/$',
+        views.rangliste, {}, "rangliste"),
+    (r'^(?P<jahr>\d+)/(?P<wettkampf>[-\w]+)/(?P<disziplin>[-\w]+)/rangliste/(?P<kategorie>[-\w]+)/$',
+        views.rangliste, {}, "rangliste"),
 )
 
 #---- Wettkaempfe

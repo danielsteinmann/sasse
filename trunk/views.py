@@ -19,6 +19,7 @@ from models import Bewertung
 from models import Richtzeit
 from models import Sektion
 from models import Bewertungsart
+from models import Kranzlimite
 
 from forms import DisziplinForm
 from forms import PostenEditForm
@@ -505,14 +506,35 @@ def notenliste(request, jahr, wettkampf, disziplin):
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
     posten = d.posten_set.all().select_related()
     sektion = None
-    filter_form = SchiffeinzelFilterForm(d, request.GET)
+    filter_form = SchiffeinzelFilterForm(d, request.GET.copy())
     if filter_form.is_valid():
         sektion = filter_form.cleaned_data['sektion']
-        # TODO Eine Sektion auswählen, damit Liste nicht zu gross wird.
-        #      Oder Paging einführen
+        if sektion is None:
+            q = Schiffeinzel.objects.all().order_by('sektion')[:1]
+            if q.count() > 0:
+                sektion = q[0].sektion
+                filter_form.data['sektion'] = sektion.id
     list = read_notenliste(d, posten, sektion)
     return render_to_response('notenliste.html', {'wettkampf': w, 'disziplin':
         d, 'posten': posten, 'notenliste': list, 'searchform': filter_form})
+
+def rangliste(request, jahr, wettkampf, disziplin, kategorie=None):
+    assert request.method == 'GET'
+    w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
+    d = Disziplin.objects.get(wettkampf=w, name=disziplin)
+    if kategorie:
+        k = d.kategorien.get(name=kategorie)
+    else:
+        k = d.kategorien.all()[0]
+    kranzlimite = read_kranzlimite(d, k)
+    letzter_kranzrang = None
+    if not kranzlimite:
+        letzter_kranzrang = calc_letzter_kranzrang(d, k)
+    rangliste = read_rangliste(d, k, kranzlimite=kranzlimite, letzter_kranzrang=letzter_kranzrang)
+    list = sorted(rangliste, key=sort_rangliste)
+    return render_to_response('rangliste.html', {'wettkampf': w, 'disziplin':
+        d, 'kategorie': k, 'rangliste': list, 'kranzlimite': kranzlimite})
+
 
 def new_bew(col, art):
     """
@@ -556,8 +578,20 @@ def read_notenliste(disziplin, posten, sektion=None):
         dict['noten'] = noten
         yield dict
 
+def read_kranzlimite(disziplin, kategorie):
+    result = None
+    q = Kranzlimite.objects.filter(disziplin=disziplin, kategorie=kategorie)
+    if q.count() > 0:
+        result = q[0].wert
+    return result
+
+def calc_letzter_kranzrang(disziplin, kategorie):
+    anzahl_teilnehmer = Schiffeinzel.objects.filter(disziplin=disziplin,
+            kategorie=kategorie).count()
+    return anzahl_teilnehmer // 4
+
 def read_rangliste(disziplin, kategorie, kranzlimite=None,
-        doppelstarter_mit_rang=False):
+        doppelstarter_mit_rang=False, letzter_kranzrang=None):
     from django.db import connection
     sql = render_to_string('rangliste.sql')
     args = [disziplin.id, kategorie.id]
@@ -580,7 +614,7 @@ def read_rangliste(disziplin, kategorie, kranzlimite=None,
         dict['kategorie'] = row[i]; i += 1
         dict['zeit_tot'] = new_bew(row[i], ZEIT); i += 1
         dict['punkt_tot'] = new_bew(row[i], PUNKT); i += 1
-        if dict['punkt_tot'].wert >= kranzlimite:
+        if (kranzlimite and dict['punkt_tot'].wert >= kranzlimite) or (rang <= letzter_kranzrang):
             dict['kranz'] = True
         if dict['steuermann_ist_ds'] or dict['vorderfahrer_ist_ds']:
             dict['doppelstarter'] = True
@@ -591,6 +625,17 @@ def read_rangliste(disziplin, kategorie, kranzlimite=None,
         punkt_tot_prev = dict['punkt_tot'].wert
         zeit_tot_prev = dict['zeit_tot'].wert
         yield dict
+
+def sort_rangliste(dict):
+    if dict['kranz'] and not dict['doppelstarter']:
+        return 1
+    if dict['kranz'] and dict['doppelstarter']:
+        return 2
+    if not dict['kranz'] and not dict['doppelstarter']:
+        return 3
+    if not dict['kranz'] and dict['doppelstarter']:
+        return 4
+    return 5
 
 #-----------
 #    from django.db import connection

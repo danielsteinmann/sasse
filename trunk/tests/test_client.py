@@ -505,3 +505,48 @@ class RichtzeitPageTest(TestCase):
         response = self.client.get(e_f)
         self.failUnlessEqual(response.status_code, 200)
         self.assertContains(response, u'Die besten 10 Zeiten für Posten E-F:')
+
+
+class NotenlistePageTest(TestCase):
+    def setUp(self):
+        w = Wettkampf.objects.create(name="Test-Cup", von="2009-04-04")
+        d = w.disziplin_set.create(name="einzel")
+        durchfahrt = Postenart.objects.get(name="Durchfahrt")
+        zeitnote = Postenart.objects.get(name="Zeitnote")
+        zeit = zeitnote.bewertungsart_set.all()[0]
+        d.posten_set.create(name="C", postenart=durchfahrt, reihenfolge=1)
+        c_e = d.posten_set.create(name="C-E", postenart=zeitnote, reihenfolge=2)
+        e_f = d.posten_set.create(name="E-F", postenart=zeitnote, reihenfolge=3)
+        bremgarten = Sektion.objects.get(name="Bremgarten")
+        steinmann = Mitglied.objects.create(
+                name="Steinmann", vorname="Daniel", geschlecht="m",
+                geburtsdatum=datetime.date(1967, 4, 30), sektion=bremgarten)
+        kohler = Mitglied.objects.create(
+                name="Kohler", vorname="Bernhard", geschlecht="m",
+                geburtsdatum=datetime.date(1978, 1, 1), sektion=bremgarten)
+        kat_C = Kategorie.objects.get(name="C")
+        for startnr in range(1,20):
+            s = Schiffeinzel.objects.create(startnummer=startnr, disziplin=d,
+                    steuermann=steinmann, vorderfahrer=kohler,
+                    sektion=bremgarten, kategorie=kat_C)
+            wert = Decimal("50") + startnr
+            s.bewertung_set.create(wert=wert, posten=e_f, bewertungsart=zeit)
+
+    def test_notenliste(self):
+        notenliste = '/2009/Test-Cup/einzel/notenliste/'
+        response = self.client.get(notenliste)
+        self.failUnlessEqual(response.status_code, 200)
+
+
+class RanglistePageTest(TestCase):
+    fixtures = ['test_rangliste.json']
+
+    def test_rangliste(self):
+        rangliste = '/2010/F%C3%A4llbaum-Cup/Einzelfahren-II-III-C-D-F/rangliste/'
+        response = self.client.get(rangliste)
+        self.failUnlessEqual(response.status_code, 200)
+
+    def test_rangliste_kat_c(self):
+        rangliste = '/2010/F%C3%A4llbaum-Cup/Einzelfahren-II-III-C-D-F/rangliste/C/'
+        response = self.client.get(rangliste)
+        self.failUnlessEqual(response.status_code, 200)
