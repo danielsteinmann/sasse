@@ -19,10 +19,10 @@
   </tr>
 {% for row in rangliste %}
   {% ifchanged row.kranz %}{% if not forloop.first %}
-  <tr><td align="center" colspan="7">--- Kranzlimite: {{kranzlimite|default_if_none:"Default (ca 25%)"}} ---</td></tr>
+  <tr><td align="center" colspan="6">--- Kranzlimite: {{kranzlimite|default_if_none:"Default (ca 25%)"}} ---</td></tr>
   {% endif %}{% endifchanged %}
   <tr class="{% cycle "odd" "even" %}">
-    <td>{% if row.doppelstarter %}DS{% else %}{{row.rang}}{% endif %}</td>
+    <td align="center">{% if row.doppelstarter %}DS{% else %}{{row.rang}}{% endif %}</td>
     <td>{{row.steuermann}}{% if row.steuermann_ist_ds %}*{% endif %}
         / {{row.vorderfahrer}}{% if row.vorderfahrer_ist_ds %}*{% endif %}</td>
     <td>{{row.sektion}}</td>
