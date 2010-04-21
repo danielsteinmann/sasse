@@ -239,6 +239,17 @@ class SchiffeinzelEditForm(ModelForm):
         vorderfahrer = cleaned_data.get('vorderfahrer')
         self.set_display_value(steuermann, 'steuermann')
         self.set_display_value(vorderfahrer, 'vorderfahrer')
+        startnummer = cleaned_data.get('startnummer')
+        if startnummer:
+            q = Schiffeinzel.objects.filter(startnummer=startnummer,
+                    disziplin=self.data['disziplin'])
+            # Wenn ein persistenter Teilnemer editiert wird, muss dieser hier
+            # rausgefiltert werden, damit die Validierungsmeldung stimmt.
+            q = q.exclude(id=self.instance.id)
+            if q.count() > 0:
+                raise ValidationError(u"Die Startnummer '%d' ist bereits "
+                        "vergeben" % (startnummer))
+
         return cleaned_data
 
 
