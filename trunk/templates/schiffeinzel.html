@@ -8,11 +8,11 @@
   </tr>
   <tr>
     <th>Steuermann:</th>
-    <td><a href="#/mitglied/{{ teilnehmer.steuermann.nummer }}">{{ teilnehmer.steuermann.name }}&nbsp;{{ teilnehmer.steuermann.vorname }}</a>, Mitglied {{teilnehmer.steuermann.nummer }}, Sektion {{ teilnehmer.steuermann.sektion }}, Jahrgang {{ teilnehmer.steuermann.geburtsdatum.year }}</td>
+    <td><a href="/admin/sasse/mitglied/{{ teilnehmer.steuermann.id }}">{{ teilnehmer.steuermann.name }}&nbsp;{{ teilnehmer.steuermann.vorname }}</a>, Mitglied {{teilnehmer.steuermann.nummer }}, Sektion {{ teilnehmer.steuermann.sektion }}, Jahrgang {{ teilnehmer.steuermann.geburtsdatum.year }}</td>
   </tr>
   <tr>
     <th>Vorderfahrer:</th>
-    <td><a href="#/mitglied/{{ teilnehmer.vorderfahrer.nummer }}">{{ teilnehmer.vorderfahrer.name }}&nbsp;{{ teilnehmer.vorderfahrer.vorname }}</a>, Mitglied {{teilnehmer.vorderfahrer.nummer }}, Sektion {{ teilnehmer.vorderfahrer.sektion }}, Jahrgang {{ teilnehmer.vorderfahrer.geburtsdatum.year }}</td>
+    <td><a href="/admin/sasse/mitglied/{{ teilnehmer.vorderfahrer.id }}">{{ teilnehmer.vorderfahrer.name }}&nbsp;{{ teilnehmer.vorderfahrer.vorname }}</a>, Mitglied {{teilnehmer.vorderfahrer.nummer }}, Sektion {{ teilnehmer.vorderfahrer.sektion }}, Jahrgang {{ teilnehmer.vorderfahrer.geburtsdatum.year }}</td>
   </tr>
   <tr>
     <th>Sektion:</th>
