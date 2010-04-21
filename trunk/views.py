@@ -8,6 +8,7 @@ from django.http import Http404
 from django.shortcuts import render_to_response
 from django.forms.formsets import all_valid
 from django.template.loader import render_to_string
+from django.template import RequestContext
 
 from models import Wettkampf
 from models import Disziplin
@@ -290,8 +291,9 @@ def startliste_einzelfahren(request, jahr, wettkampf, disziplin):
         entryform = SchiffeinzelListForm(d, initial={'startnummer': nummer})
     return render_to_response('startliste_einzelfahren.html', {
         'wettkampf': w, 'disziplin': d, 'searchform': searchform,
-        'startliste': s, 'form': entryform,
-        })
+        'startliste': s, 'form': entryform},
+        context_instance=RequestContext(request)
+        )
 
 def startliste_einzelfahren_post(request, jahr, wettkampf, disziplin):
     assert request.method == 'POST'
@@ -310,8 +312,9 @@ def startliste_einzelfahren_post(request, jahr, wettkampf, disziplin):
         s = searchform.anzeigeliste()
     return render_to_response('startliste_einzelfahren.html', {
         'wettkampf': w, 'disziplin': d, 'searchform': searchform,
-        'startliste': s, 'form': entryform,
-        })
+        'startliste': s, 'form': entryform},
+        context_instance=RequestContext(request)
+        )
 
 def teilnehmer_get(request, jahr, wettkampf, disziplin, startnummer):
     assert request.method == 'GET'

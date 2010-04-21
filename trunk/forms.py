@@ -183,16 +183,10 @@ class SchiffeinzelFilterForm(Form):
         self.fields['startnummern'] = StartnummernSelectionField(disziplin)
         self.disziplin = disziplin
 
-    def anzeigeliste(self, visible=10):
+    def anzeigeliste(self):
         sektion = self.cleaned_data.get('sektion')
         startnummern = self.fields['startnummern'].startnummern_list
         result = Schiffeinzel.objects.filter(disziplin=self.disziplin)
-        if not startnummern and not sektion:
-            # Nur die letzten n Eintraege darstellen
-            last = result.count()
-            almostlast = last - visible
-            if almostlast > 0:
-                result = result.filter()[almostlast:last]
         if startnummern:
             result = result.filter(startnummer__in=startnummern)
         if sektion:

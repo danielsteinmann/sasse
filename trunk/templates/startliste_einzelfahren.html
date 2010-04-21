@@ -1,6 +1,7 @@
 {% extends "base_startliste.html" %}
-
 {% block content %}
+{% load pagination_tags %}
+{% autopaginate startliste 15 %}
 <form id="searchform" name="searchform" action="" method="GET">
 {% if searchform.non_field_errors %}
 {{ searchform.non_field_errors }}
@@ -32,6 +33,7 @@ Startnummern {{ searchform.startnummern }}
     <td>{{ teilnehmer.kategorie }}</td>
   </tr>
   {% endfor %}
+  {% if not page_obj.has_next %}
   {% if form.non_field_errors %}
   <tr>
     <td colspan="5">{{ form.non_field_errors }}</td>
@@ -43,9 +45,16 @@ Startnummern {{ searchform.startnummern }}
     <td>{{ form.vorderfahrer.errors }}{{ form.vorderfahrer }}</td>
     <td colspan="2">{{ form.sektion }}<input type="submit" value="Teilnehmer hinzufügen"/></td>
   </tr>
+  {% endif %}
 </table>
 <p>
-<a href="#Noch-nicht-implementiert">Mitglied erfassen</a>
+{% paginate %}
+<p>
+{% if page_obj.has_next %}
+<a href="?page={{ paginator.num_pages }}{{ getvars }}">Teilnehmer hinzufügen</a>
+|
+{% endif %}
+<a href="/admin/sasse/mitglied/">Mitglied erfassen</a>
 <script type="text/javascript">
   var first_field = document.getElementById('id_startnummer');
   first_field.focus();
