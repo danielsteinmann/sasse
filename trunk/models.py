@@ -100,6 +100,37 @@ class Postenart(models.Model):
 
 
 class Bewertungsart(models.Model):
+    """
+    einheit = (
+            ('note', 'note'),
+            ('zeit', 'zeit'),
+            )
+
+    Alle Stilabzüge:
+       select sum(punkt) as "Abzüge"
+        where signum = -1
+        group by posten
+
+    Notenblatt:
+       select posten.name
+            , posten.postenart
+            , sum(case when signum = -1 then punkt) as "Abzug"
+            , sum(case when signum = +1 and not einheit = 'stil_max' then punkt) as "Note"
+            , sum(zeit) as "Zeit"
+            , sum(punkt) as "Total"
+        where signum = -1
+          and teilnehmer = id
+        group by posten
+        order by posten.reihenfolge
+
+    Beispiel Abfahrt an einer Stange:
+      - Ziel: 10.0 (Lappen touchiert)
+      - Stil: 10.0 (Maximum)
+              -2.0 (Anprallen)
+              -1.0 (Kommando)
+
+      => 10.0 Ziel + 7.0 Stil = 17.0 Total
+    """
     EINHEIT_TYP = (
             ('PUNKT', 'Punkte'),
             ('ZEIT', 'Zeit'),
