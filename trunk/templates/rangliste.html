@@ -1,6 +1,5 @@
 {% extends "base_disziplin.html" %}
 {% block nav_rangliste %}selected{% endblock %}
-
 {% block content %}
 {% for k in disziplin.kategorien.all %}
 {% ifequal k.id kategorie.id %}<b>{{ k.name }}</b>

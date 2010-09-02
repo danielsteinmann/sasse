@@ -114,22 +114,23 @@ class Bewertungsart(models.Model):
     Notenblatt:
        select posten.name
             , posten.postenart
-            , sum(case when signum = -1 then punkt) as "Abzug"
-            , sum(case when signum = +1 and not einheit = 'stil_max' then punkt) as "Note"
+            , sum(case when signum = -1 then note) as "Abzug"
+            , sum(case when signum = +1 then note) as "Note"
             , sum(zeit) as "Zeit"
-            , sum(punkt) as "Total"
+            , sum(note) + posten.stil_max as "Total"
+         from bewertung_in_punkte
         where signum = -1
           and teilnehmer = id
         group by posten
         order by posten.reihenfolge
 
     Beispiel Abfahrt an einer Stange:
-      - Ziel: 10.0 (Lappen touchiert)
+      - Ziel:  9.5 (Lappen knapp nicht touchiert)
       - Stil: 10.0 (Maximum)
               -2.0 (Anprallen)
               -1.0 (Kommando)
 
-      => 10.0 Ziel + 7.0 Stil = 17.0 Total
+      => 9.5 Ziel + 7.0 Stil = 16.5 Total
     """
     EINHEIT_TYP = (
             ('PUNKT', 'Punkte'),
@@ -224,18 +225,20 @@ class Bewertung(models.Model):
     teilnehmer = models.ForeignKey('Teilnehmer')
     posten = models.ForeignKey('Posten')
     bewertungsart = models.ForeignKey('Bewertungsart')
-    wert = models.DecimalField(max_digits=6, decimal_places=2)
+    note = models.DecimalField(max_digits=6, decimal_places=1, default=0)
+    zeit = models.DecimalField(max_digits=6, decimal_places=2, default=0)
 
     class Meta:
         unique_together = ('teilnehmer', 'posten', 'bewertungsart')
 
     def __unicode__(self):
         if self.bewertungsart.einheit == 'ZEIT':
-            return u'%s' % (zeit2str(self.wert),)
+            return u'%s' % (zeit2str(self.zeit),)
         else:
-            if self.wert == 0:
+            wert = self.note
+            if wert == 0:
                 return u'0'
-            return u'%.01f' % (self.wert,)
+            return u'%.01f' % (wert,)
 
 
 class Teilnehmer(models.Model):

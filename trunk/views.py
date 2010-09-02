@@ -398,8 +398,9 @@ def postenblatt(request, jahr, wettkampf, disziplin, posten, template="postenbla
     filterform = PostenblattFilterForm(d, request.GET)
     if filterform.is_valid():
         s = filterform.selected_startnummern(visible=15)
-        sl = TeilnehmerContainerForm(startliste=s)
-        sets = create_postenblatt_formsets(posten=p, startliste=s)
+        if len(s) > 0:
+            sl = TeilnehmerContainerForm(startliste=s)
+            sets = create_postenblatt_formsets(posten=p, startliste=s)
     try:
         p_next = d.posten_set.filter(reihenfolge__gt=p.reihenfolge)[0]
         p_next_name = p_next.name
@@ -495,7 +496,7 @@ def read_topzeiten(posten, topn=10):
     Subklasse von 'Teilnehmer') zusammen mit den Topzeiten in *einem* SQL
     Select auszulesen kann. 
     """
-    result = Bewertung.objects.filter(posten=posten).order_by('wert')
+    result = Bewertung.objects.filter(posten=posten).order_by('zeit')
     result = result.select_related()[:topn]
     teilnehmer_ids = [z.teilnehmer_id for z in result]
     schiffe = Schiffeinzel.objects.select_related().in_bulk(teilnehmer_ids)
@@ -536,7 +537,8 @@ def rangliste(request, jahr, wettkampf, disziplin, kategorie=None):
     rangliste = read_rangliste(d, k, kranzlimite=kranzlimite, letzter_kranzrang=letzter_kranzrang)
     list = sorted(rangliste, key=sort_rangliste)
     return render_to_response('rangliste.html', {'wettkampf': w, 'disziplin':
-        d, 'kategorie': k, 'rangliste': list, 'kranzlimite': kranzlimite})
+        d, 'kategorie': k, 'rangliste': list, 'kranzlimite': kranzlimite},
+        context_instance=RequestContext(request))
 
 
 def new_bew(col, art):
@@ -547,7 +549,11 @@ def new_bew(col, art):
     wert = Decimal()
     if col:
         wert = Decimal(str(col))
-    return Bewertung(wert=wert, bewertungsart=art)
+    if art.einheit == 'ZEIT':
+        result = Bewertung(zeit=wert, bewertungsart=art)
+    else:
+        result = Bewertung(note=wert, bewertungsart=art)
+    return result
 
 # Hilfskonstanten
 ZEIT = Bewertungsart(einheit='ZEIT')
@@ -617,16 +623,16 @@ def read_rangliste(disziplin, kategorie, kranzlimite=None,
         dict['kategorie'] = row[i]; i += 1
         dict['zeit_tot'] = new_bew(row[i], ZEIT); i += 1
         dict['punkt_tot'] = new_bew(row[i], PUNKT); i += 1
-        if (kranzlimite and dict['punkt_tot'].wert >= kranzlimite) or (rang <= letzter_kranzrang):
+        if (kranzlimite and dict['punkt_tot'].note >= kranzlimite) or (rang <= letzter_kranzrang):
             dict['kranz'] = True
         if dict['steuermann_ist_ds'] or dict['vorderfahrer_ist_ds']:
             dict['doppelstarter'] = True
         if (not dict['doppelstarter']) or doppelstarter_mit_rang:
             dict['rang'] = rang
-            if (punkt_tot_prev, zeit_tot_prev) != (dict['punkt_tot'].wert, dict['zeit_tot'].wert):
+            if (punkt_tot_prev, zeit_tot_prev) != (dict['punkt_tot'].note, dict['zeit_tot'].zeit):
                 rang += 1
-        punkt_tot_prev = dict['punkt_tot'].wert
-        zeit_tot_prev = dict['zeit_tot'].wert
+        punkt_tot_prev = dict['punkt_tot'].note
+        zeit_tot_prev = dict['zeit_tot'].zeit
         yield dict
 
 def sort_rangliste(dict):

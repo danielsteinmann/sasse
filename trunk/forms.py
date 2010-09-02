@@ -185,10 +185,11 @@ class SchiffeinzelFilterForm(Form):
 
     def anzeigeliste(self):
         sektion = self.cleaned_data.get('sektion')
-        startnummern = self.fields['startnummern'].startnummern_list
+        startnummern = self.cleaned_data.get('startnummern')
         result = Schiffeinzel.objects.filter(disziplin=self.disziplin)
         if startnummern:
-            result = result.filter(startnummer__in=startnummern)
+            list = self.fields['startnummern'].startnummern_list
+            result = result.filter(startnummer__in=list)
         if sektion:
             result = result.filter(sektion=sektion)
         return result
@@ -256,6 +257,9 @@ class SchiffeinzelListForm(SchiffeinzelEditForm):
         # Folgende Felder werden in clean() gesetzt, deshalb nicht required
         self.fields['sektion'].required = False
         self.fields['kategorie'].required = False
+        # TODO Gruusig, dass ich dummy Werte wegen der Model-Validierung setzen muss
+        self.data['sektion'] = 1
+        self.data['kategorie'] = 1
 
     #
     # TODO Doppelstarter Info darstellen, falls gleicher Fahrer mit frühere
@@ -307,10 +311,11 @@ class PostenblattFilterForm(Form):
         self.fields['startnummern'] = StartnummernSelectionField(disziplin)
 
     def selected_startnummern(self, visible=15):
-        nummern = self.fields['startnummern'].startnummern_list
+        startnummern = self.cleaned_data.get('startnummern')
         result = Schiffeinzel.objects.filter(disziplin=self.disziplin)
-        if nummern:
-            result = result.filter(startnummer__in=nummern)
+        if startnummern:
+            list = self.fields['startnummern'].startnummern_list
+            result = result.filter(startnummer__in=list)
         result = result.filter()[:visible]
         return result
 
@@ -364,9 +369,12 @@ class BewertungForm(Form):
         if self.has_changed():
             b = Bewertung()
             b.id = self.cleaned_data['id']
-            # Wert wird wenn nötig als negative Zahl gespeichert, damit man
-            # einfacher mit SQL sum() arbeiten kann.
-            b.wert = self.cleaned_data['wert'] * self.bewertungsart.signum
+            if self.bewertungsart.einheit == 'ZEIT':
+                b.zeit = self.cleaned_data['wert']
+            else:
+                # Wert wird wenn nötig als negative Zahl gespeichert, damit man
+                # einfacher mit SQL sum() arbeiten kann.
+                b.note = self.cleaned_data['wert'] * self.bewertungsart.signum
             b.posten_id = self.posten.id
             b.bewertungsart_id = self.bewertungsart.id
             b.teilnehmer_id = self.teilnehmer_id
@@ -401,7 +409,10 @@ class BewertungBaseFormSet(BaseFormSet):
         instance = self.bewertung.get(teilnehmer_id)
         if instance is not None:
             initial['id'] = instance.id
-            initial['wert'] = instance.wert
+            if instance.bewertungsart.einheit == 'ZEIT':
+                initial['wert'] = instance.zeit
+            else:
+                initial['wert'] = instance.note
         kwargs["initial"] = initial
         kwargs["posten"] = self.posten
         kwargs["bewertungsart"] = self.bewertungsart

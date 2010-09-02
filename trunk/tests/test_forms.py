@@ -113,7 +113,7 @@ class DisziplinFormTest(TestCase):
             'name': saved_disziplin.name,
             'disziplinart': saved_disziplin.id,
             })
-        expected = u"Disziplin with this Wettkampf and Namen already exists."
+        expected = u"Disziplin with this Wettkampf and Name already exists."
         errors = newform.non_field_errors()
         self.failUnless(expected in errors, errors)
 
@@ -127,7 +127,7 @@ class DisziplinFormTest(TestCase):
             'name': saved_disziplin.name,
             'disziplinart': saved_disziplin.id,
             }, instance=new_disziplin)
-        expected = u"Disziplin with this Wettkampf and Namen already exists."
+        expected = u"Disziplin with this Wettkampf and Name already exists."
         errors = newform.non_field_errors()
         self.failUnless(expected in errors, errors)
 
@@ -200,11 +200,11 @@ class BewertungFormTest(TestCase):
                 teilnehmer_id=self.startnr_1.id, data={'wert': '1.0',})
         self.failUnless(create_form.is_valid(), create_form.errors)
         saved = create_form.save()
-        self.assertEquals(-1, saved.wert)
+        self.assertEquals(-1, saved.note)
         edit_form = BewertungForm(posten=self.posten_a,
                 bewertungsart=self.antreten_abzug,
                 teilnehmer_id=self.startnr_1.id,
-                initial={'id': saved.id, 'wert': saved.wert,})
+                initial={'id': saved.id, 'wert': saved.note,})
         self.assertEquals(+1, edit_form.initial['wert'])
 
 

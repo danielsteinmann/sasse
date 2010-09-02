@@ -57,16 +57,16 @@ class ZeitInPunkteTest(TestCase):
         p = d.posten_set.create(name="B-C", postenart=zeitnote, reihenfolge=1)
         t = d.teilnehmer_set.create(startnummer="1")
         p.richtzeit_set.create(zeit=richtzeit)
-        t.bewertung_set.create(wert=zeitwert, posten=p, bewertungsart=zeit)
+        t.bewertung_set.create(zeit=zeitwert, posten=p, bewertungsart=zeit)
         cursor = connection.cursor()
         cursor.execute("""
-            select zeitwert, richtzeit, punktwert
+            select zeit, note, richtzeit
               from bewertung_in_punkte
              where teilnehmer_id = %s and posten_id = %s
               """, [t.id, p.id])
         list = cursor.fetchall()
         self.assertEquals(1, len(list))
-        (zeitwert, richtzeit, punktwert) = list[0]
+        (zeitwert, punktwert, richtzeit) = list[0]
         result = punktwert
         if not isinstance(result, Decimal):
             # SQLLite liefert keinen Decimal zurück, MySQL aber schon

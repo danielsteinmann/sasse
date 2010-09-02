@@ -37,13 +37,13 @@ class UnicodeSlugField(RegexField):
 class PunkteField(DecimalField):
     def __init__(self, bewertungsart, *args, **kwargs):
         self.bewertungsart = bewertungsart
+        kwargs['min_value'] = kwargs.pop('min_value', Decimal('0'))
+        kwargs['max_value'] = kwargs.pop('max_value', Decimal('10.0'))
         super(PunkteField, self).__init__(*args, **kwargs)
         self.widget.attrs['size'] = 4
         # Wertebereich
         self.max_digits = 4
         self.decimal_places = 1
-        self.min_value = 0
-        self.max_value = 10
         valid_values = self.bewertungsart.wertebereich
         if valid_values and valid_values != "TODO":
             self.max_value = int(valid_values)

@@ -1,4 +1,3 @@
-{% load sasse %}
 Die besten {{ rangliste.count }} Zeiten für Posten {{ posten.name }}:
 <table class="list">
   <tr>
@@ -14,7 +13,7 @@ Die besten {{ rangliste.count }} Zeiten für Posten {{ posten.name }}:
     <td>{{row.schiff.steuermann.name}} / {{row.schiff.vorderfahrer.name}}</td>
     <td>{{row.schiff.sektion.name}}</td>
     <td class="kategorie">{{row.schiff.kategorie.name}}</td>
-    <td>{{row.wert|bewertung:'ZEIT'}}</td>
+    <td>{{row}}</td>
   </tr>
 {% endfor %}
 </table>

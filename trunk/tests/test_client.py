@@ -450,7 +450,7 @@ class RichtzeitPageTest(TestCase):
                     steuermann=steinmann, vorderfahrer=kohler,
                     sektion=bremgarten, kategorie=kat_C)
             wert = Decimal("50") + startnr
-            s.bewertung_set.create(wert=wert, posten=e_f, bewertungsart=zeit)
+            s.bewertung_set.create(zeit=wert, posten=e_f, bewertungsart=zeit)
 
     def test_richtzeiten_redirect_to_erster_zeitposten(self):
         richtzeiten = '/2009/Test-Cup/einzel/richtzeiten/'
@@ -530,7 +530,7 @@ class NotenlistePageTest(TestCase):
                     steuermann=steinmann, vorderfahrer=kohler,
                     sektion=bremgarten, kategorie=kat_C)
             wert = Decimal("50") + startnr
-            s.bewertung_set.create(wert=wert, posten=e_f, bewertungsart=zeit)
+            s.bewertung_set.create(zeit=wert, posten=e_f, bewertungsart=zeit)
 
     def test_notenliste(self):
         notenliste = '/2009/Test-Cup/einzel/notenliste/'
