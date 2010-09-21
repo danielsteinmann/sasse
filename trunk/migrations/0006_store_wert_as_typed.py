@@ -4,19 +4,27 @@ from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
 from django.db import connection
-from django.template.loader import render_to_string
 
 class Migration(SchemaMigration):
     
     def forwards(self, orm):
+        
+        # Adding field 'Bewertungsart.gruppe'
+        db.add_column('sasse_bewertungsart', 'gruppe', self.gf('django.db.models.fields.CharField')(default='ZIEL', max_length=6), keep_default=False)
+
+        # Adding field 'Bewertungsart.editierbar'
+        db.add_column('sasse_bewertungsart', 'editierbar', self.gf('django.db.models.fields.BooleanField')(default=True, blank=True), keep_default=False)
+    
+        # Rename view and change its content
         cursor = connection.cursor()
-        # File: templates/bewertung_in_punkte.sql
+        cursor.execute("drop view bewertung_in_punkte")
+        # File: templates/bewertung_calc.sql
         sql = """
 -- Alle Zeitbewertungen, konvertiert in Punkte
-create view bewertung_in_punkte as
-    select b.teilnehmer_id
-         , b.posten_id
-         , b.bewertungsart_id
+create view bewertung_calc as
+    select t.id as teilnehmer_id
+         , p.id as posten_id
+         , ba.id as bewertungsart_id
          , b.zeit
          , case
              -- Umrechnung von Zeit zu Note
@@ -27,38 +35,35 @@ create view bewertung_in_punkte as
                    else 20.00 - (b.zeit / (r.zeit / 10.00))
                  end
                , 2)
+             -- Falls keine Noten eingegeben wurden
+             when b.note is null then
+                ba.defaultwert
              else
-               b.note
-           end as note
+                b.note
+           -- signum machts moeglich, sum() in einem SQL Select zu verwenden, 
+           end * ba.signum as note
          , r.zeit as richtzeit
-      from sasse_bewertung b
-           join sasse_bewertungsart ba on (ba.id = b.bewertungsart_id)
-           left outer join sasse_richtzeit r on (r.posten_id = b.posten_id)
-"""
-        cursor.execute(sql)
-        # File: templates/doppelstarter.sql
-        sql = """
--- Doppelstarter ist derjeninge mit der groesseren Startnummer
-create view doppelstarter as
-    select tn.disziplin_id
-         , m.id mitglied_id
-         , min(tn.startnummer) normale_startnummer
-         , count(tn.id) anzahl_starts
-      from sasse_mitglied m
-           join sasse_schiffeinzel schiff on (
-               schiff.vorderfahrer_id = m.id or schiff.steuermann_id = m.id)
-           join sasse_teilnehmer tn on (tn.id = schiff.teilnehmer_ptr_id)
-     group by tn.disziplin_id, m.id
-    having count(tn.id) > 1
+      from sasse_teilnehmer t
+      join sasse_posten p on (p.disziplin_id = t.disziplin_id)
+      join sasse_bewertungsart ba on (ba.postenart_id = p.postenart_id)
+      -- Es sollen auch Bewertungen einfliessen, für welche nur
+      -- Defaults existieren, respektive kein User Input geschieht
+      left outer join sasse_bewertung b on (
+          b.teilnehmer_id = t.id
+          and b.posten_id = p.id
+          and b.bewertungsart_id = ba.id)
+      -- left join weil nur Zeitposten eine Richtzeit haben
+      left outer join sasse_richtzeit r on (r.posten_id = p.id)
 """
         cursor.execute(sql)
     
     def backwards(self, orm):
-        cursor = connection.cursor()
-        for view in ['bewertung_in_punkte', 'doppelstarter']:
-            cursor.execute("drop view %s" % view)
-            sql = render_to_string('%s.sql' % view)
-            cursor.execute(sql)
+        
+        # Deleting field 'Bewertungsart.gruppe'
+        db.delete_column('sasse_bewertungsart', 'gruppe')
+
+        # Deleting field 'Bewertungsart.editierbar'
+        db.delete_column('sasse_bewertungsart', 'editierbar')
     
     
     models = {
@@ -74,7 +79,9 @@ create view doppelstarter as
         'sasse.bewertungsart': {
             'Meta': {'object_name': 'Bewertungsart'},
             'defaultwert': ('django.db.models.fields.DecimalField', [], {'max_digits': '6', 'decimal_places': '2'}),
+            'editierbar': ('django.db.models.fields.BooleanField', [], {'default': 'True', 'blank': 'True'}),
             'einheit': ('django.db.models.fields.CharField', [], {'max_length': '6'}),
+            'gruppe': ('django.db.models.fields.CharField', [], {'default': "'ZIEL'", 'max_length': '6'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
             'postenart': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['sasse.Postenart']"}),
@@ -86,7 +93,7 @@ create view doppelstarter as
             'Meta': {'unique_together': "(['wettkampf', 'name'],)", 'object_name': 'Disziplin'},
             'disziplinart': ('django.db.models.fields.related.ForeignKey', [], {'default': '1', 'to': "orm['sasse.Disziplinart']"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'kategorien': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['sasse.Kategorie']", 'null': 'True', 'blank': 'True'}),
+            'kategorien': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'to': "orm['sasse.Kategorie']", 'null': 'True', 'blank': 'True'}),
             'name': ('django.db.models.fields.SlugField', [], {'max_length': '50', 'db_index': 'True'}),
             'wettkampf': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['sasse.Wettkampf']"})
         },
@@ -146,7 +153,7 @@ create view doppelstarter as
         },
         'sasse.postenart': {
             'Meta': {'object_name': 'Postenart'},
-            'disziplinarten': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['sasse.Disziplinart']"}),
+            'disziplinarten': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['sasse.Disziplinart']", 'symmetrical': 'False'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '50'})
         },

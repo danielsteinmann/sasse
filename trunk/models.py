@@ -101,48 +101,40 @@ class Postenart(models.Model):
 
 class Bewertungsart(models.Model):
     """
-    einheit = (
-            ('note', 'note'),
-            ('zeit', 'zeit'),
-            )
+    Beispiel: Abfahrt an einer Stange
 
-    Alle Stilabzüge:
-       select sum(punkt) as "Abzüge"
-        where signum = -1
-        group by posten
+       Gruppe Name        Punkte
+       ------ ----------- ------
+       Ziel   Distanznote    9.5 positiv           (Lappen knapp nicht)
+       Stil   Maximum       10.0 positiv, non-edit 
+       Stil   Anprallen     -2.0 negativ           (Abzug) 
+       Stil   Kommando      -1.0 negativ           (Abzug)
+                          ------
+                            16.5
 
-    Notenblatt:
-       select posten.name
-            , posten.postenart
-            , sum(case when signum = -1 then note) as "Abzug"
-            , sum(case when signum = +1 then note) as "Note"
-            , sum(zeit) as "Zeit"
-            , sum(note) + posten.stil_max as "Total"
-         from bewertung_in_punkte
-        where signum = -1
-          and teilnehmer = id
-        group by posten
-        order by posten.reihenfolge
+    Ergibt folgendes Notenblatt:
 
-    Beispiel Abfahrt an einer Stange:
-      - Ziel:  9.5 (Lappen knapp nicht touchiert)
-      - Stil: 10.0 (Maximum)
-              -2.0 (Anprallen)
-              -1.0 (Kommando)
-
-      => 9.5 Ziel + 7.0 Stil = 16.5 Total
+       Posten  Uebungsteil               Abzug   Note   Zeit Total
+       ------  ------------------------ ------ ------ ------ -----
+       C       Abfahrt bei einer Stange    3.0    9.5         16.5
     """
+    GRUPPE_TYP = (
+            ('ZIEL', 'Ziel'),
+            ('STIL', 'Stil'),
+            )
     EINHEIT_TYP = (
             ('PUNKT', 'Punkte'),
             ('ZEIT', 'Zeit'),
             )
-    name = models.CharField(max_length=50) # Note, Abzug, Zeit, Ziel, Distanz
-    signum = models.SmallIntegerField(default=1) # positiv: +1, negativ: -1
-    einheit = models.CharField(max_length=6, choices=EINHEIT_TYP)
-    wertebereich = models.CharField(max_length=50) # 1,2-10 oder ganze/gebrochene Sekunden
-    defaultwert = models.DecimalField(max_digits=6, decimal_places=2)
-    reihenfolge = models.SmallIntegerField(default=1) # Was kommt auf GUI zuerst
     postenart = models.ForeignKey('Postenart')
+    gruppe = models.CharField(max_length=6, choices=GRUPPE_TYP, default="ZIEL")
+    name = models.CharField(max_length=50)
+    signum = models.SmallIntegerField(default=1)
+    einheit = models.CharField(max_length=6, choices=EINHEIT_TYP)
+    defaultwert = models.DecimalField(max_digits=6, decimal_places=2)
+    wertebereich = models.CharField(max_length=50) # 1,2-10 oder ganze/gebrochene Sekunden
+    reihenfolge = models.SmallIntegerField(default=1) # Was kommt auf GUI zuerst
+    editierbar = models.BooleanField(default=True)
 
     class Meta:
         ordering = ['postenart', 'reihenfolge']

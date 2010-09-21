@@ -32,7 +32,7 @@ select tn.startnummer as Startnr
      , max(kat.name) as Kategorie
      , sum(b.zeit) as Zeit
      , sum(b.note) as Total
-  from bewertung_in_punkte b
+  from bewertung_calc b
   join sasse_teilnehmer tn on (tn.id = b.teilnehmer_id)
   join sasse_posten p on (p.id = b.posten_id)
   join sasse_schiffeinzel schiff on (schiff.teilnehmer_ptr_id = tn.id)

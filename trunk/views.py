@@ -34,12 +34,6 @@ from forms import WettkampfForm
 from forms import create_postenblatt_formsets
 from forms import RichtzeitForm
 
-# TODO: Mögliche Apps:
-#  - basis: Stammdaten
-#  - event: Wettkampf, Disziplin, Posten, Bewertung, Teilnehmer, Richtzeit, Kranzlimite
-#  - einzelfahren: Startliste
-#  - sektionsfahren: Startliste
-#  - spezialwettkaempfe: Schnüren, Schwimmen, Bootfährenbau
 
 def wettkaempfe_get(request):
     assert request.method == 'GET'

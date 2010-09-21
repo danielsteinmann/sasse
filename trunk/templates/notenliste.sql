@@ -13,7 +13,7 @@ select tn.startnummer as Startnr
      , sum(case when b.posten_id = {{ p.id }} then b.note end) as '{{ p.name }}'
 {% endifequal %}
 {% endfor %}
-  from bewertung_in_punkte b
+  from bewertung_calc b
        join sasse_teilnehmer tn on (tn.id = b.teilnehmer_id)
        join sasse_posten p on (p.id = b.posten_id)
        join sasse_schiffeinzel schiff on (schiff.teilnehmer_ptr_id = tn.id)

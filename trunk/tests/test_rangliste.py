@@ -61,7 +61,7 @@ class ZeitInPunkteTest(TestCase):
         cursor = connection.cursor()
         cursor.execute("""
             select zeit, note, richtzeit
-              from bewertung_in_punkte
+              from bewertung_calc
              where teilnehmer_id = %s and posten_id = %s
               """, [t.id, p.id])
         list = cursor.fetchall()

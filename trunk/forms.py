@@ -320,9 +320,6 @@ class PostenblattFilterForm(Form):
         return result
 
 
-# TODO: Problem mit Abzug lösen, wo man z.B. 3 Punkte Abzug eingibt, aber auf
-# der Datenbank eine 7 speichern muss (10 ist das Maximum, 3 ist der Abzug).
-# Das gilt für die meisten Posten, ausser die Anmeldung.
 class BewertungForm(Form):
     id = IntegerField(required=False, widget=HiddenInput())
 
@@ -331,50 +328,25 @@ class BewertungForm(Form):
         self.bewertungsart = kwargs.pop("bewertungsart")
         self.teilnehmer_id = kwargs.pop("teilnehmer_id")
         super(BewertungForm, self).__init__(*args, **kwargs)
-        # Definiere Typ von Bewertungsfeld
+        # Dynamisches Bewertungsfeld einfügen
         if self.bewertungsart.einheit == 'ZEIT':
             wert_field = ZeitInSekundenField()
         else:
             wert_field = PunkteField(self.bewertungsart)
+        self.fields['wert'] = wert_field
         # Definiere Initial Value von Bewertungsfeld
         if self.initial.get('id') is None:
-            wert_initial = self.bewertungsart.defaultwert
-        else:
-            # Wert wird wenn nötig als negative Zahl gespeichert, damit man
-            # einfacher mit SQL sum() arbeiten kann (siehe save()). Darum
-            # hier das Vorzeichen wieder kehren.
-            wert_initial = self.initial['wert']
-            if wert_initial != 0:
-                # Vermeide Darstellung von '-0'
-                wert_initial = wert_initial * self.bewertungsart.signum
-        # Dynamisches Bewertungsfeld einfügen
-        self.fields['wert'] = wert_field
-        self.initial['wert'] = wert_initial
-
-    def has_changed(self):
-        """
-        Mit diesem Trick liefert form.cleaned_data.get('wert') *immer* einen
-        Wert zurück, auch wenn der Benutzer nichts ändert und somit den
-        Default Wert speichern möchte.
-
-        Das ist nötig für die Erstellung der Rangliste, weil für jeden
-        Teilnehmer/Posten/Bewertungsart ein Record in Bewertung stehen muss.
-        """
-        if self.initial.get('id') is None:
-            return True
-        else:
-            return super(BewertungForm, self).has_changed()
+            self.initial['wert'] = self.bewertungsart.defaultwert
 
     def save(self):
         if self.has_changed():
+            wert = self.cleaned_data['wert']
             b = Bewertung()
             b.id = self.cleaned_data['id']
             if self.bewertungsart.einheit == 'ZEIT':
-                b.zeit = self.cleaned_data['wert']
+                b.zeit = wert
             else:
-                # Wert wird wenn nötig als negative Zahl gespeichert, damit man
-                # einfacher mit SQL sum() arbeiten kann.
-                b.note = self.cleaned_data['wert'] * self.bewertungsart.signum
+                b.note = wert
             b.posten_id = self.posten.id
             b.bewertungsart_id = self.bewertungsart.id
             b.teilnehmer_id = self.teilnehmer_id
@@ -490,7 +462,8 @@ def create_postenblatt_formsets(posten, startliste=None, data=None):
         ids = TeilnehmerContainerForm(data=data).teilnehmer_ids()
     FormSet = formset_factory(form=BewertungForm, formset=BewertungBaseFormSet)
     result = []
-    for art in Bewertungsart.objects.filter(postenart=posten.postenart):
+    for art in Bewertungsart.objects.filter(postenart=posten.postenart,
+            editierbar=True):
         formset = FormSet(posten=posten, bewertungsart=art, prefix=art.name,
                 teilnehmer_ids=ids, data=data)
         result.append(formset)

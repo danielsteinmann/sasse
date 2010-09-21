@@ -4426,7 +4426,7 @@
     "pk": 1, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-1.5", 
+      "note": "1.5", 
       "zeit": "0", 
       "bewertungsart": 1, 
       "posten": 1, 
@@ -4437,7 +4437,7 @@
     "pk": 3, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-1", 
+      "note": "1", 
       "zeit": "0", 
       "bewertungsart": 1, 
       "posten": 1, 
@@ -4448,7 +4448,7 @@
     "pk": 4, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-1", 
+      "note": "1", 
       "zeit": "0", 
       "bewertungsart": 1, 
       "posten": 1, 
@@ -4459,7 +4459,7 @@
     "pk": 5, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-1", 
+      "note": "1", 
       "zeit": "0", 
       "bewertungsart": 1, 
       "posten": 1, 
@@ -4470,7 +4470,7 @@
     "pk": 7, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-1", 
+      "note": "1", 
       "zeit": "0", 
       "bewertungsart": 1, 
       "posten": 1, 
@@ -4481,7 +4481,7 @@
     "pk": 8, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-2", 
+      "note": "2", 
       "zeit": "0", 
       "bewertungsart": 1, 
       "posten": 1, 
@@ -4492,7 +4492,7 @@
     "pk": 9, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-1", 
+      "note": "1", 
       "zeit": "0", 
       "bewertungsart": 1, 
       "posten": 1, 
@@ -4503,7 +4503,7 @@
     "pk": 10, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-1", 
+      "note": "1", 
       "zeit": "0", 
       "bewertungsart": 1, 
       "posten": 1, 
@@ -4514,7 +4514,7 @@
     "pk": 11, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-1", 
+      "note": "1", 
       "zeit": "0", 
       "bewertungsart": 1, 
       "posten": 1, 
@@ -4525,7 +4525,7 @@
     "pk": 12, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-1", 
+      "note": "1", 
       "zeit": "0", 
       "bewertungsart": 1, 
       "posten": 1, 
@@ -4536,7 +4536,7 @@
     "pk": 14, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-1", 
+      "note": "1", 
       "zeit": "0", 
       "bewertungsart": 1, 
       "posten": 1, 
@@ -4547,7 +4547,7 @@
     "pk": 15, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-1", 
+      "note": "1", 
       "zeit": "0", 
       "bewertungsart": 1, 
       "posten": 1, 
@@ -4558,7 +4558,7 @@
     "pk": 16, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-1", 
+      "note": "1", 
       "zeit": "0", 
       "bewertungsart": 2, 
       "posten": 3, 
@@ -4569,7 +4569,7 @@
     "pk": 17, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-1", 
+      "note": "1", 
       "zeit": "0", 
       "bewertungsart": 2, 
       "posten": 3, 
@@ -4580,7 +4580,7 @@
     "pk": 18, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-1", 
+      "note": "1", 
       "zeit": "0", 
       "bewertungsart": 2, 
       "posten": 3, 
@@ -4591,7 +4591,7 @@
     "pk": 19, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-1", 
+      "note": "1", 
       "zeit": "0", 
       "bewertungsart": 2, 
       "posten": 3, 
@@ -4602,7 +4602,7 @@
     "pk": 20, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-2", 
+      "note": "2", 
       "zeit": "0", 
       "bewertungsart": 2, 
       "posten": 3, 
@@ -4613,7 +4613,7 @@
     "pk": 22, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-1", 
+      "note": "1", 
       "zeit": "0", 
       "bewertungsart": 2, 
       "posten": 3, 
@@ -4624,7 +4624,7 @@
     "pk": 23, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-2", 
+      "note": "2", 
       "zeit": "0", 
       "bewertungsart": 2, 
       "posten": 3, 
@@ -4635,7 +4635,7 @@
     "pk": 24, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-1", 
+      "note": "1", 
       "zeit": "0", 
       "bewertungsart": 2, 
       "posten": 3, 
@@ -4646,7 +4646,7 @@
     "pk": 25, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-1", 
+      "note": "1", 
       "zeit": "0", 
       "bewertungsart": 2, 
       "posten": 3, 
@@ -4657,7 +4657,7 @@
     "pk": 26, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-2", 
+      "note": "2", 
       "zeit": "0", 
       "bewertungsart": 2, 
       "posten": 3, 
@@ -4668,7 +4668,7 @@
     "pk": 27, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-1", 
+      "note": "1", 
       "zeit": "0", 
       "bewertungsart": 2, 
       "posten": 3, 
@@ -4690,7 +4690,7 @@
     "pk": 30, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-1", 
+      "note": "1", 
       "zeit": "0", 
       "bewertungsart": 2, 
       "posten": 3, 
@@ -4844,7 +4844,7 @@
     "pk": 46, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-1", 
+      "note": "1", 
       "zeit": "0", 
       "bewertungsart": 4, 
       "posten": 4, 
@@ -4855,7 +4855,7 @@
     "pk": 47, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-2", 
+      "note": "2", 
       "zeit": "0", 
       "bewertungsart": 4, 
       "posten": 4, 
@@ -4866,7 +4866,7 @@
     "pk": 48, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-1", 
+      "note": "1", 
       "zeit": "0", 
       "bewertungsart": 4, 
       "posten": 4, 
@@ -4877,7 +4877,7 @@
     "pk": 49, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-3", 
+      "note": "3", 
       "zeit": "0", 
       "bewertungsart": 4, 
       "posten": 4, 
@@ -4888,7 +4888,7 @@
     "pk": 50, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-1", 
+      "note": "1", 
       "zeit": "0", 
       "bewertungsart": 4, 
       "posten": 4, 
@@ -4899,7 +4899,7 @@
     "pk": 52, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-2", 
+      "note": "2", 
       "zeit": "0", 
       "bewertungsart": 4, 
       "posten": 4, 
@@ -4910,7 +4910,7 @@
     "pk": 53, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-1", 
+      "note": "1", 
       "zeit": "0", 
       "bewertungsart": 4, 
       "posten": 4, 
@@ -4921,7 +4921,7 @@
     "pk": 54, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-1", 
+      "note": "1", 
       "zeit": "0", 
       "bewertungsart": 4, 
       "posten": 4, 
@@ -4932,7 +4932,7 @@
     "pk": 55, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-1", 
+      "note": "1", 
       "zeit": "0", 
       "bewertungsart": 4, 
       "posten": 4, 
@@ -4943,7 +4943,7 @@
     "pk": 56, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-3", 
+      "note": "3", 
       "zeit": "0", 
       "bewertungsart": 4, 
       "posten": 4, 
@@ -4954,7 +4954,7 @@
     "pk": 57, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-1.5", 
+      "note": "1.5", 
       "zeit": "0", 
       "bewertungsart": 4, 
       "posten": 4, 
@@ -4965,7 +4965,7 @@
     "pk": 59, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-1", 
+      "note": "1", 
       "zeit": "0", 
       "bewertungsart": 4, 
       "posten": 4, 
@@ -5130,7 +5130,7 @@
     "pk": 76, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-3", 
+      "note": "3", 
       "zeit": "0", 
       "bewertungsart": 14, 
       "posten": 7, 
@@ -5141,7 +5141,7 @@
     "pk": 77, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-1", 
+      "note": "1", 
       "zeit": "0", 
       "bewertungsart": 14, 
       "posten": 7, 
@@ -5152,7 +5152,7 @@
     "pk": 78, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-1", 
+      "note": "1", 
       "zeit": "0", 
       "bewertungsart": 14, 
       "posten": 7, 
@@ -5163,7 +5163,7 @@
     "pk": 79, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-2", 
+      "note": "2", 
       "zeit": "0", 
       "bewertungsart": 14, 
       "posten": 7, 
@@ -5174,7 +5174,7 @@
     "pk": 80, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-5", 
+      "note": "5", 
       "zeit": "0", 
       "bewertungsart": 14, 
       "posten": 7, 
@@ -5185,7 +5185,7 @@
     "pk": 82, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-9", 
+      "note": "9", 
       "zeit": "0", 
       "bewertungsart": 14, 
       "posten": 7, 
@@ -5196,7 +5196,7 @@
     "pk": 83, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-9.5", 
+      "note": "9.5", 
       "zeit": "0", 
       "bewertungsart": 14, 
       "posten": 7, 
@@ -5207,7 +5207,7 @@
     "pk": 84, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-7", 
+      "note": "7", 
       "zeit": "0", 
       "bewertungsart": 14, 
       "posten": 7, 
@@ -5218,7 +5218,7 @@
     "pk": 85, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-9", 
+      "note": "9", 
       "zeit": "0", 
       "bewertungsart": 14, 
       "posten": 7, 
@@ -5229,7 +5229,7 @@
     "pk": 86, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-9", 
+      "note": "9", 
       "zeit": "0", 
       "bewertungsart": 14, 
       "posten": 7, 
@@ -5251,7 +5251,7 @@
     "pk": 89, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-7", 
+      "note": "7", 
       "zeit": "0", 
       "bewertungsart": 14, 
       "posten": 7, 
@@ -5262,7 +5262,7 @@
     "pk": 90, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-9", 
+      "note": "9", 
       "zeit": "0", 
       "bewertungsart": 14, 
       "posten": 7, 
@@ -5416,7 +5416,7 @@
     "pk": 106, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-7", 
+      "note": "7", 
       "zeit": "0", 
       "bewertungsart": 8, 
       "posten": 8, 
@@ -5427,7 +5427,7 @@
     "pk": 107, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-1", 
+      "note": "1", 
       "zeit": "0", 
       "bewertungsart": 8, 
       "posten": 8, 
@@ -5438,7 +5438,7 @@
     "pk": 108, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-2", 
+      "note": "2", 
       "zeit": "0", 
       "bewertungsart": 8, 
       "posten": 8, 
@@ -5449,7 +5449,7 @@
     "pk": 109, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-1", 
+      "note": "1", 
       "zeit": "0", 
       "bewertungsart": 8, 
       "posten": 8, 
@@ -5460,7 +5460,7 @@
     "pk": 110, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-1", 
+      "note": "1", 
       "zeit": "0", 
       "bewertungsart": 8, 
       "posten": 8, 
@@ -5471,7 +5471,7 @@
     "pk": 112, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-6", 
+      "note": "6", 
       "zeit": "0", 
       "bewertungsart": 8, 
       "posten": 8, 
@@ -5482,7 +5482,7 @@
     "pk": 113, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-1", 
+      "note": "1", 
       "zeit": "0", 
       "bewertungsart": 8, 
       "posten": 8, 
@@ -5493,7 +5493,7 @@
     "pk": 114, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-1", 
+      "note": "1", 
       "zeit": "0", 
       "bewertungsart": 8, 
       "posten": 8, 
@@ -5504,7 +5504,7 @@
     "pk": 115, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-1", 
+      "note": "1", 
       "zeit": "0", 
       "bewertungsart": 8, 
       "posten": 8, 
@@ -5515,7 +5515,7 @@
     "pk": 116, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-1", 
+      "note": "1", 
       "zeit": "0", 
       "bewertungsart": 8, 
       "posten": 8, 
@@ -5526,7 +5526,7 @@
     "pk": 117, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-4", 
+      "note": "4", 
       "zeit": "0", 
       "bewertungsart": 8, 
       "posten": 8, 
@@ -5537,7 +5537,7 @@
     "pk": 119, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-2", 
+      "note": "2", 
       "zeit": "0", 
       "bewertungsart": 8, 
       "posten": 8, 
@@ -5548,7 +5548,7 @@
     "pk": 120, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-1", 
+      "note": "1", 
       "zeit": "0", 
       "bewertungsart": 8, 
       "posten": 8, 
@@ -5702,7 +5702,7 @@
     "pk": 136, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-1", 
+      "note": "1", 
       "zeit": "0", 
       "bewertungsart": 10, 
       "posten": 10, 
@@ -5713,7 +5713,7 @@
     "pk": 137, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-2", 
+      "note": "2", 
       "zeit": "0", 
       "bewertungsart": 10, 
       "posten": 10, 
@@ -5724,7 +5724,7 @@
     "pk": 138, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-3", 
+      "note": "3", 
       "zeit": "0", 
       "bewertungsart": 10, 
       "posten": 10, 
@@ -5735,7 +5735,7 @@
     "pk": 139, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-1", 
+      "note": "1", 
       "zeit": "0", 
       "bewertungsart": 10, 
       "posten": 10, 
@@ -5746,7 +5746,7 @@
     "pk": 140, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-1", 
+      "note": "1", 
       "zeit": "0", 
       "bewertungsart": 10, 
       "posten": 10, 
@@ -5757,7 +5757,7 @@
     "pk": 142, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-5", 
+      "note": "5", 
       "zeit": "0", 
       "bewertungsart": 10, 
       "posten": 10, 
@@ -5768,7 +5768,7 @@
     "pk": 143, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-1", 
+      "note": "1", 
       "zeit": "0", 
       "bewertungsart": 10, 
       "posten": 10, 
@@ -5779,7 +5779,7 @@
     "pk": 144, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-5", 
+      "note": "5", 
       "zeit": "0", 
       "bewertungsart": 10, 
       "posten": 10, 
@@ -5801,7 +5801,7 @@
     "pk": 146, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-1", 
+      "note": "1", 
       "zeit": "0", 
       "bewertungsart": 10, 
       "posten": 10, 
@@ -5812,7 +5812,7 @@
     "pk": 147, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-1", 
+      "note": "1", 
       "zeit": "0", 
       "bewertungsart": 10, 
       "posten": 10, 
@@ -5823,7 +5823,7 @@
     "pk": 149, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-1", 
+      "note": "1", 
       "zeit": "0", 
       "bewertungsart": 10, 
       "posten": 10, 
@@ -5988,7 +5988,7 @@
     "pk": 166, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-1", 
+      "note": "1", 
       "zeit": "0", 
       "bewertungsart": 14, 
       "posten": 9, 
@@ -5999,7 +5999,7 @@
     "pk": 167, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-1", 
+      "note": "1", 
       "zeit": "0", 
       "bewertungsart": 14, 
       "posten": 9, 
@@ -6010,7 +6010,7 @@
     "pk": 168, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-1", 
+      "note": "1", 
       "zeit": "0", 
       "bewertungsart": 14, 
       "posten": 9, 
@@ -6021,7 +6021,7 @@
     "pk": 169, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-2", 
+      "note": "2", 
       "zeit": "0", 
       "bewertungsart": 14, 
       "posten": 9, 
@@ -6032,7 +6032,7 @@
     "pk": 170, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-2", 
+      "note": "2", 
       "zeit": "0", 
       "bewertungsart": 14, 
       "posten": 9, 
@@ -6043,7 +6043,7 @@
     "pk": 172, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-3", 
+      "note": "3", 
       "zeit": "0", 
       "bewertungsart": 14, 
       "posten": 9, 
@@ -6054,7 +6054,7 @@
     "pk": 173, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-1", 
+      "note": "1", 
       "zeit": "0", 
       "bewertungsart": 14, 
       "posten": 9, 
@@ -6065,7 +6065,7 @@
     "pk": 174, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-1", 
+      "note": "1", 
       "zeit": "0", 
       "bewertungsart": 14, 
       "posten": 9, 
@@ -6087,7 +6087,7 @@
     "pk": 176, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-1", 
+      "note": "1", 
       "zeit": "0", 
       "bewertungsart": 14, 
       "posten": 9, 
@@ -6098,7 +6098,7 @@
     "pk": 177, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-2", 
+      "note": "2", 
       "zeit": "0", 
       "bewertungsart": 14, 
       "posten": 9, 
@@ -6109,7 +6109,7 @@
     "pk": 179, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-1", 
+      "note": "1", 
       "zeit": "0", 
       "bewertungsart": 14, 
       "posten": 9, 
@@ -8067,7 +8067,7 @@
     "pk": 509, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-1", 
+      "note": "1", 
       "zeit": "0", 
       "bewertungsart": 2, 
       "posten": 15, 
@@ -8122,7 +8122,7 @@
     "pk": 514, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-1", 
+      "note": "1", 
       "zeit": "0", 
       "bewertungsart": 2, 
       "posten": 15, 
@@ -8133,7 +8133,7 @@
     "pk": 515, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-1", 
+      "note": "1", 
       "zeit": "0", 
       "bewertungsart": 2, 
       "posten": 15, 
@@ -8144,7 +8144,7 @@
     "pk": 516, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-1", 
+      "note": "1", 
       "zeit": "0", 
       "bewertungsart": 2, 
       "posten": 15, 
@@ -8177,7 +8177,7 @@
     "pk": 519, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-1", 
+      "note": "1", 
       "zeit": "0", 
       "bewertungsart": 2, 
       "posten": 15, 
@@ -8364,7 +8364,7 @@
     "pk": 536, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-1", 
+      "note": "1", 
       "zeit": "0", 
       "bewertungsart": 14, 
       "posten": 17, 
@@ -8419,7 +8419,7 @@
     "pk": 541, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-2", 
+      "note": "2", 
       "zeit": "0", 
       "bewertungsart": 14, 
       "posten": 17, 
@@ -9002,7 +9002,7 @@
     "pk": 594, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "-1", 
+      "note": "1", 
       "zeit": "0", 
       "bewertungsart": 14, 
       "posten": 17, 
