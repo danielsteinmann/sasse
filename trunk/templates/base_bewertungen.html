@@ -12,6 +12,8 @@
   | <a href="{% url richtzeiten wettkampf.jahr, wettkampf.name, disziplin.name %}">Richtzeiten</a></li>
   <li class="{% block nav_notenliste %}{% endblock %}">
   | <a href="{% url notenliste wettkampf.jahr, wettkampf.name, disziplin.name %}">Notenliste</a></li>
+  <li class="{% block nav_notenblatt %}{% endblock %}">
+  | <a href="{% url notenblatt wettkampf.jahr, wettkampf.name, disziplin.name %}">Notenblatt</a></li>
 </ul>
 {% endblock %}
 {% endblock %}

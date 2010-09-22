@@ -534,6 +534,19 @@ def rangliste(request, jahr, wettkampf, disziplin, kategorie=None):
         d, 'kategorie': k, 'rangliste': list, 'kranzlimite': kranzlimite},
         context_instance=RequestContext(request))
 
+def notenblatt(request, jahr, wettkampf, disziplin, startnummer=None):
+    assert request.method == 'GET'
+    w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
+    d = Disziplin.objects.get(wettkampf=w, name=disziplin)
+    if startnummer:
+        s = Schiffeinzel.objects.select_related().get(disziplin=d, startnummer=startnummer)
+    else:
+        s = Schiffeinzel.objects.select_related().filter(disziplin=d)[0]
+    posten_werte = read_notenblatt(d, s)
+    return render_to_response('notenblatt.html', {'wettkampf': w, 'disziplin':
+        d, 'schiff': s, 'posten_werte': posten_werte},
+        context_instance=RequestContext(request))
+
 
 def new_bew(col, art):
     """
@@ -639,6 +652,40 @@ def sort_rangliste(dict):
     if not dict['kranz'] and dict['doppelstarter']:
         return 4
     return 5
+
+def read_notenblatt(disziplin, teilnehmer=None, sektion=None):
+    from django.db import connection
+    sql = render_to_string('notenblatt.sql',
+            {"teilnehmer": teilnehmer, "sektion": sektion})
+    args = [disziplin.id]
+    if teilnehmer:
+        args.append(teilnehmer.id)
+    if sektion:
+        args.append(sektion.id)
+    cursor = connection.cursor()
+    cursor.execute(sql, args)
+    zeit_sum = 0
+    total_sum = 0
+    for row in cursor:
+        dict = {}; i = 0
+        dict['posten'] = row[i]; i += 1
+        dict['posten_art'] = row[i]; i += 1
+        dict['abzug'] = new_bew(row[i], PUNKT); i += 1
+        dict['note'] = new_bew(row[i], PUNKT); i += 1
+        dict['zeit'] = new_bew(row[i], ZEIT); i += 1
+        dict['total'] = new_bew(row[i], PUNKT); i += 1
+        zeit_sum += dict['zeit'].zeit
+        total_sum += dict['total'].note
+        if dict['posten_art'] == 'Zeitnote':
+            dict['abzug'] = None
+            dict['note'] = None
+        else:
+            dict['zeit'] = None
+        yield dict
+    dict = {}
+    dict['zeit'] = new_bew(zeit_sum, ZEIT)
+    dict['total'] = new_bew(total_sum, PUNKT)
+    yield dict
 
 #-----------
 #    from django.db import connection

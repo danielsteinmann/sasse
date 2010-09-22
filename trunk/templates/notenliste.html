@@ -38,7 +38,7 @@ Nach Sektion {{ searchform.sektion }}
     <td class="note">{{note}}</td>
 {% endfor %}
     <td class="note">{{row.zeit_tot}}</td>
-    <td class="note"><a href="#/notenblatt/{{ row.startnummer }}">{{row.punkt_tot}}</a></td>
+    <td class="note"><a title="Notenblatt" href="{% url notenblatt wettkampf.jahr, wettkampf.name, disziplin.name, row.startnummer %}">{{row.punkt_tot}}</a></td>
   </tr>
 {% endfor %}
 </table>

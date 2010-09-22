@@ -57,6 +57,10 @@ urlpatterns = patterns('',
         views.rangliste, {}, "rangliste"),
     (r'^(?P<jahr>\d+)/(?P<wettkampf>[-\w]+)/(?P<disziplin>[-\w]+)/rangliste/(?P<kategorie>[-\w]+)/$',
         views.rangliste, {}, "rangliste"),
+    (r'^(?P<jahr>\d+)/(?P<wettkampf>[-\w]+)/(?P<disziplin>[-\w]+)/notenblatt/$',
+        views.notenblatt, {}, "notenblatt"),
+    (r'^(?P<jahr>\d+)/(?P<wettkampf>[-\w]+)/(?P<disziplin>[-\w]+)/notenblatt/(?P<startnummer>\d+)/$',
+        views.notenblatt, {}, "notenblatt"),
 )
 
 #---- Wettkaempfe

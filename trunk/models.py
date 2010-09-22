@@ -225,12 +225,13 @@ class Bewertung(models.Model):
 
     def __unicode__(self):
         if self.bewertungsart.einheit == 'ZEIT':
-            return u'%s' % (zeit2str(self.zeit),)
+            wert = self.zeit
+            return u'%s' % (zeit2str(wert),)
         else:
             wert = self.note
             if wert == 0:
                 return u'0'
-            return u'%.01f' % (wert,)
+            return u'%.1f' % (wert,)
 
 
 class Teilnehmer(models.Model):

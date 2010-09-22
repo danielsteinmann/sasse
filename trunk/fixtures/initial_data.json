@@ -566,6 +566,7 @@
     "model": "sasse.bewertungsart", 
     "fields": {
       "name": "Abzug", 
+      "gruppe": "STIL", 
       "defaultwert": "0", 
       "reihenfolge": 1, 
       "postenart": 1, 
@@ -579,6 +580,7 @@
     "model": "sasse.bewertungsart", 
     "fields": {
       "name": "Abzug", 
+      "gruppe": "STIL", 
       "defaultwert": "0", 
       "reihenfolge": 1, 
       "postenart": 2, 
@@ -592,6 +594,7 @@
     "model": "sasse.bewertungsart", 
     "fields": {
       "name": "Note", 
+      "gruppe": "ZIEL", 
       "defaultwert": "10", 
       "reihenfolge": 2, 
       "postenart": 2, 
@@ -605,6 +608,7 @@
     "model": "sasse.bewertungsart", 
     "fields": {
       "name": "Abzug", 
+      "gruppe": "STIL", 
       "defaultwert": "0", 
       "reihenfolge": 1, 
       "postenart": 3, 
@@ -618,6 +622,7 @@
     "model": "sasse.bewertungsart", 
     "fields": {
       "name": "Note", 
+      "gruppe": "ZIEL", 
       "defaultwert": "10", 
       "reihenfolge": 2, 
       "postenart": 3, 
@@ -631,6 +636,7 @@
     "model": "sasse.bewertungsart", 
     "fields": {
       "name": "Abzug", 
+      "gruppe": "STIL", 
       "defaultwert": "0", 
       "reihenfolge": 1, 
       "postenart": 4, 
@@ -644,6 +650,7 @@
     "model": "sasse.bewertungsart", 
     "fields": {
       "name": "Note", 
+      "gruppe": "ZIEL", 
       "defaultwert": "10", 
       "reihenfolge": 2, 
       "postenart": 4, 
@@ -657,6 +664,7 @@
     "model": "sasse.bewertungsart", 
     "fields": {
       "name": "Abzug", 
+      "gruppe": "STIL", 
       "defaultwert": "0", 
       "reihenfolge": 1, 
       "postenart": 5, 
@@ -670,6 +678,7 @@
     "model": "sasse.bewertungsart", 
     "fields": {
       "name": "Note", 
+      "gruppe": "ZIEL", 
       "defaultwert": "10", 
       "reihenfolge": 2, 
       "postenart": 5, 
@@ -683,6 +692,7 @@
     "model": "sasse.bewertungsart", 
     "fields": {
       "name": "Abzug", 
+      "gruppe": "STIL", 
       "defaultwert": "0", 
       "reihenfolge": 1, 
       "postenart": 6, 
@@ -696,6 +706,7 @@
     "model": "sasse.bewertungsart", 
     "fields": {
       "name": "Note", 
+      "gruppe": "ZIEL", 
       "defaultwert": "15", 
       "reihenfolge": 2, 
       "postenart": 6, 
@@ -709,6 +720,7 @@
     "model": "sasse.bewertungsart", 
     "fields": {
       "name": "Abzug", 
+      "gruppe": "STIL", 
       "defaultwert": "0", 
       "reihenfolge": 1, 
       "postenart": 7, 
@@ -722,6 +734,7 @@
     "model": "sasse.bewertungsart", 
     "fields": {
       "name": "Note", 
+      "gruppe": "ZIEL", 
       "defaultwert": "10", 
       "reihenfolge": 2, 
       "postenart": 7, 
@@ -735,6 +748,7 @@
     "model": "sasse.bewertungsart", 
     "fields": {
       "name": "Abzug", 
+      "gruppe": "STIL", 
       "defaultwert": "0", 
       "reihenfolge": 1, 
       "postenart": 8, 
@@ -748,6 +762,7 @@
     "model": "sasse.bewertungsart", 
     "fields": {
       "name": "Note", 
+      "gruppe": "ZIEL", 
       "defaultwert": "10", 
       "reihenfolge": 2, 
       "postenart": 8, 
@@ -761,6 +776,7 @@
     "model": "sasse.bewertungsart", 
     "fields": {
       "name": "Zeit", 
+      "gruppe": "ZIEL", 
       "defaultwert": "0", 
       "reihenfolge": 1, 
       "postenart": 9, 

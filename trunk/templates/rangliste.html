@@ -27,7 +27,7 @@
     <td>{{row.sektion}}</td>
     <td class="startnummer"><a href="{% url teilnehmer_get wettkampf.jahr, wettkampf.name, disziplin.name, row.startnummer %}">{{row.startnummer}}</a></td>
     <td class="note">{{row.zeit_tot}}</td>
-    <td class="note"><a title="Notenblatt" href="#/notenblatt/{{ row.startnummer }}">{{row.punkt_tot}}</a></td>
+    <td class="note"><a title="Notenblatt" href="{% url notenblatt wettkampf.jahr, wettkampf.name, disziplin.name, row.startnummer %}">{{row.punkt_tot}}</a></td>
   </tr>
 {% endfor %}
 </table>
