@@ -9,6 +9,7 @@ from django.shortcuts import render_to_response
 from django.forms.formsets import all_valid
 from django.template.loader import render_to_string
 from django.template import RequestContext
+from django.forms.formsets import formset_factory
 
 from models import Wettkampf
 from models import Disziplin
@@ -33,6 +34,7 @@ from forms import TeilnehmerContainerForm
 from forms import WettkampfForm
 from forms import create_postenblatt_formsets
 from forms import RichtzeitForm
+from forms import KranzlimiteForm
 
 
 def wettkaempfe_get(request):
@@ -525,10 +527,7 @@ def rangliste(request, jahr, wettkampf, disziplin, kategorie=None):
     else:
         k = d.kategorien.all()[0]
     kranzlimite = read_kranzlimite(d, k)
-    letzter_kranzrang = None
-    if not kranzlimite:
-        letzter_kranzrang = calc_letzter_kranzrang(d, k)
-    rangliste = read_rangliste(d, k, kranzlimite=kranzlimite, letzter_kranzrang=letzter_kranzrang)
+    rangliste = read_rangliste(d, k, kranzlimite=kranzlimite)
     list = sorted(rangliste, key=sort_rangliste)
     return render_to_response('rangliste.html', {'wettkampf': w, 'disziplin':
         d, 'kategorie': k, 'rangliste': list, 'kranzlimite': kranzlimite},
@@ -547,6 +546,56 @@ def notenblatt(request, jahr, wettkampf, disziplin, startnummer=None):
         d, 'schiff': s, 'posten_werte': posten_werte},
         context_instance=RequestContext(request))
 
+def kranzlimiten(request, jahr, wettkampf, disziplin):
+    assert request.method == 'GET'
+    w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
+    d = Disziplin.objects.get(wettkampf=w, name=disziplin)
+    kranzlimiten = read_kranzlimiten(d)
+    return render_to_response('kranzlimiten.html', {'wettkampf': w,
+        'disziplin': d, 'kranzlimiten': kranzlimiten},
+        context_instance=RequestContext(request))
+
+def kranzlimiten_update(request, jahr, wettkampf, disziplin):
+    if request.method == 'POST':
+        return kranzlimiten_put(request, jahr, wettkampf, disziplin)
+    assert request.method == 'GET'
+    w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
+    d = Disziplin.objects.get(wettkampf=w, name=disziplin)
+    limite_pro_kategorie = {}
+    for kl in Kranzlimite.objects.filter(disziplin=d):
+        limite_pro_kategorie[kl.kategorie_id] = kl
+    initial = []
+    kategorien = d.kategorien.all()
+    for k in kategorien:
+        kl = limite_pro_kategorie.get(k.id)
+        if kl is None:
+            kl = Kranzlimite(disziplin=d, kategorie=k)
+        dict = {'kl_id': kl.id, 'kl_wert': kl.wert, 'kat_id': k.id, 'kat_name': k.name,}
+        initial.append(dict)
+    KranzlimiteFormSet = formset_factory(KranzlimiteForm, extra=0)
+    formset = KranzlimiteFormSet(initial=initial)
+    return render_to_response('kranzlimiten_update.html',
+            {'wettkampf': w, 'disziplin': d, 'formset': formset})
+
+def kranzlimiten_put(request, jahr, wettkampf, disziplin):
+    assert request.method == 'POST'
+    w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
+    d = Disziplin.objects.get(wettkampf=w, name=disziplin)
+    KranzlimiteFormSet = formset_factory(KranzlimiteForm, extra=0)
+    formset = KranzlimiteFormSet(request.POST)
+    if formset.is_valid():
+        for form in formset.forms:
+            data = form.cleaned_data
+            kl = Kranzlimite(id=data['kl_id'], wert=data['kl_wert'],
+                    kategorie_id=data['kat_id'], disziplin=d)
+            if kl.wert:
+                kl.save()
+            elif kl.id and not kl.wert:
+                kl.delete()
+        url = reverse(kranzlimiten, args=[jahr, wettkampf, d.name])
+        return HttpResponseRedirect(url)
+    return render_to_response('kranzlimiten_update.html',
+            {'wettkampf': w, 'disziplin': d, 'formset': formset})
 
 def new_bew(col, art):
     """
@@ -600,11 +649,6 @@ def read_kranzlimite(disziplin, kategorie):
     if q.count() > 0:
         result = q[0].wert
     return result
-
-def calc_letzter_kranzrang(disziplin, kategorie):
-    anzahl_teilnehmer = Schiffeinzel.objects.filter(disziplin=disziplin,
-            kategorie=kategorie).count()
-    return anzahl_teilnehmer // 4
 
 def read_rangliste(disziplin, kategorie, kranzlimite=None,
         doppelstarter_mit_rang=False, letzter_kranzrang=None):
@@ -686,6 +730,23 @@ def read_notenblatt(disziplin, teilnehmer=None, sektion=None):
     dict['zeit'] = new_bew(zeit_sum, ZEIT)
     dict['total'] = new_bew(total_sum, PUNKT)
     yield dict
+
+def read_kranzlimiten(disziplin):
+    from django.db import connection
+    sql = render_to_string('kranzlimiten.sql', {"disziplin": disziplin})
+    args = [disziplin.id]
+    cursor = connection.cursor()
+    cursor.execute(sql, args)
+    for row in cursor:
+        dict = {}; i = 0
+        dict['kategorie'] = row[i]; i += 1
+        dict['limite_in_punkte'] = new_bew(row[i], PUNKT); i += 1
+        dict['limite_in_prozent'] = row[i]; i += 1
+        dict['anzahl_raenge'] = row[i]; i += 1
+        dict['anzahl_raenge_ueber_limite'] = row[i]; i += 1
+        dict['doppelstarter'] = row[i]; i += 1
+        dict['doppelstarter_ueber_limite'] = row[i]; i += 1
+        yield dict
 
 #-----------
 #    from django.db import connection

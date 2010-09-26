@@ -1,5 +1,5 @@
-{% extends "base_disziplin.html" %}
-{% block nav_rangliste %}selected{% endblock %}
+{% extends "base_ranglisten.html" %}
+{% block nav_rang_kat %}selected{% endblock %}
 {% block content %}
 {% for k in disziplin.kategorien.all %}
 {% ifequal k.id kategorie.id %}<b>{{ k.name }}</b>
@@ -18,7 +18,7 @@
   </tr>
 {% for row in rangliste %}
   {% ifchanged row.kranz %}{% if not forloop.first %}
-  <tr><td align="center" colspan="6">--- Kranzlimite: {{kranzlimite|default_if_none:"Default (ca 25%)"}} ---</td></tr>
+  <tr><td align="center" colspan="6">--- <a href="{% url kranzlimiten wettkampf.jahr, wettkampf.name, disziplin.name %}">Kranzlimite:</a> {{kranzlimite|default_if_none:"Default (ca 25%)"}} ---</td></tr>
   {% endif %}{% endifchanged %}
   <tr class="{% cycle "odd" "even" %}">
     <td align="center">{% if row.doppelstarter %}DS{% else %}{{row.rang}}{% endif %}</td>

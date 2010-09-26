@@ -22,6 +22,7 @@ from django.forms import ValidationError
 
 from django.forms.formsets import BaseFormSet
 from django.forms.formsets import formset_factory
+from django.forms.models import BaseModelFormSet
 
 from models import Bewertung
 from models import Bewertungsart
@@ -35,6 +36,7 @@ from models import Sektion
 from models import Teilnehmer
 from models import Wettkampf
 from models import Richtzeit
+from models import Kranzlimite
 
 from fields import MitgliedSearchField
 from fields import UnicodeSlugField
@@ -483,3 +485,10 @@ class RichtzeitForm(ModelForm):
         self.fields['zeit'] = ZeitInSekundenField()
         self.fields['posten'].widget = HiddenInput()
         self.initial['posten'] = posten.id
+
+
+class KranzlimiteForm(Form):
+    kat_id = IntegerField(widget=HiddenInput())
+    kat_name = CharField(widget=TextInput(attrs={'size': '2', 'readonly': 'True'}))
+    kl_id = IntegerField(required=False, widget=HiddenInput())
+    kl_wert = DecimalField(required=False)

@@ -1,0 +1,20 @@
+{% extends "base_ranglisten.html" %}
+{% block nav_kranzlimiten %}selected{% endblock %}
+{% block content %}
+<form action="" method="POST">
+  {{ formset.management_form }}
+  <table class="list">
+    <tr>
+      <th>Kategorie</th>
+      <th>Limite</th>
+    </tr>
+  {% for form in formset.forms %}
+    <tr>
+      <td>{{ form.kl_id }}{{ form.kat_id }}{{ form.kat_name }}</td>
+      <td>{{ form.kl_wert.errors }}{{ form.kl_wert }}</td>
+    </tr>
+  {% endfor %}
+  </table>
+<input type="submit" value="Änderungen speichern"/>
+</form>
+{% endblock %}

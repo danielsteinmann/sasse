@@ -1,0 +1,34 @@
+{% extends "base_ranglisten.html" %}
+{% block nav_kranzlimiten %}selected{% endblock %}
+{% block content %}
+<table class="list">
+  <tr>
+    <th>Kategorie</th>
+    <th colspan="2">Limite</th>
+    <th colspan="2">#Rangierungen</th>
+    <th colspan="2">#Doppelstarter</th>
+  </tr>
+  <tr>
+    <th></th>
+    <th>[pkt]</th>
+    <th>[%]</th>
+    <th>Total</th>
+    <th>&gt;Limite</th>
+    <th>Total</th>
+    <th>&gt;Limite</th>
+  </tr>
+{% for row in kranzlimiten %}
+  <tr class="{% cycle "odd" "even" %}">
+    <td><a href="{% url rangliste wettkampf.jahr, wettkampf.name, disziplin.name, row.kategorie %}">{{row.kategorie}}</a></td>
+    <td class="note">{{row.limite_in_punkte}}</td>
+    <td class="note">{{row.limite_in_prozent}}</td>
+    <td class="note">{{row.anzahl_raenge}}</td>
+    <td class="note">{{row.anzahl_raenge_ueber_limite}}</td>
+    <td class="note">{{row.doppelstarter}}</td>
+    <td class="note">{{row.doppelstarter_ueber_limite}}</td>
+  </tr>
+{% endfor %}
+</table>
+<p>
+<a href="{% url kranzlimiten_update wettkampf.jahr, wettkampf.name, disziplin.name %}">Ändern</a>
+{% endblock %}

@@ -12,7 +12,6 @@ from sasse.models import Postenart
 from sasse.models import Kategorie
 from sasse.models import Schiffeinzel
 from sasse.views import read_rangliste, sort_rangliste
-from sasse.views import calc_letzter_kranzrang
 
 
 class ZeitInPunkteTest(TestCase):
@@ -184,28 +183,3 @@ class RanglisteTest(TestCase):
                 {'rang':   13, 'kranz': False, 'doppelstarter': False, 'startnummer':  13},
                 ]
         self.assertEquals(expected, actual)
-
-        # Default Kranzlimite
-        letzter_kranzrang = calc_letzter_kranzrang(disziplin, kat_C)
-        self.assertEquals(3, letzter_kranzrang)
-        actual = []
-        for row in read_rangliste(disziplin, kat_C, letzter_kranzrang=letzter_kranzrang):
-            actual.append(dict(rang=row['rang'], kranz=row['kranz'],
-                doppelstarter=row['doppelstarter'], startnummer=row['startnummer']))
-        expected = [
-                {'rang': None, 'kranz': True,  'doppelstarter':  True, 'startnummer': 102},
-                {'rang':    1, 'kranz': True,  'doppelstarter': False, 'startnummer':   2},
-                {'rang':    2, 'kranz': True,  'doppelstarter': False, 'startnummer':  14},
-                {'rang':    3, 'kranz': True,  'doppelstarter': False, 'startnummer':  11},
-                {'rang':    4, 'kranz': False, 'doppelstarter': False, 'startnummer':   9},
-                {'rang':    5, 'kranz': False, 'doppelstarter': False, 'startnummer':  12},
-                {'rang':    6, 'kranz': False, 'doppelstarter': False, 'startnummer':   1},
-                {'rang':    7, 'kranz': False, 'doppelstarter': False, 'startnummer':  10},
-                {'rang':    8, 'kranz': False, 'doppelstarter': False, 'startnummer':   3},
-                {'rang': None, 'kranz': False, 'doppelstarter':  True, 'startnummer': 101},
-                {'rang': None, 'kranz': False, 'doppelstarter':  True, 'startnummer': 103},
-                {'rang':    9, 'kranz': False, 'doppelstarter': False, 'startnummer':   6},
-                {'rang':   10, 'kranz': False, 'doppelstarter': False, 'startnummer':  13},
-                ]
-        self.assertEquals(expected, actual)
-
