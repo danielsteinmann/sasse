@@ -1,15 +1,11 @@
 select tn.startnummer as Startnr
-/*
      , case when (
-          select min(t.startnummer) normale_startnummer
-            from sasse_mitglied m
-                 join sasse_schiffeinzel schiff on (
-                  schiff.vorderfahrer_id = m.id or schiff.steuermann_id = m.id)
-                 join sasse_teilnehmer t on (t.id = schiff.teilnehmer_ptr_id)
-           where t.disziplin_id = p.disziplin_id
-             and m.id in (vorne.id, hinten.id)
-       ) = tn.startnummer then 0 else 1 end as IstDS
-*/
+          select kl.wert
+            from sasse_kranzlimite kl
+           where 1=1
+             and kl.disziplin_id = tn.disziplin_id
+             and kl.kategorie_id = schiff.kategorie_id
+       ) > sum(b.note) then 0 else 1 end as MitKranz
      , case when (
           select min(t.startnummer) normale_startnummer
             from sasse_mitglied m

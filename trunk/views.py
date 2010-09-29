@@ -527,11 +527,56 @@ def rangliste(request, jahr, wettkampf, disziplin, kategorie=None):
     else:
         k = d.kategorien.all()[0]
     kranzlimite = read_kranzlimite(d, k)
-    rangliste = read_rangliste(d, k, kranzlimite=kranzlimite)
+    rangliste = read_rangliste(d, k)
     list = sorted(rangliste, key=sort_rangliste)
     return render_to_response('rangliste.html', {'wettkampf': w, 'disziplin':
         d, 'kategorie': k, 'rangliste': list, 'kranzlimite': kranzlimite},
         context_instance=RequestContext(request))
+
+def rangliste_pdf(request, jahr, wettkampf, disziplin, kategorie):
+    from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, TableStyle
+    from reportlab.platypus import KeepTogether
+    from reportlab.platypus import Table as Platypus_Table
+    from reportlab.lib import colors
+    from reportlab.lib.pagesizes import A4
+    from reportlab.lib.styles import getSampleStyleSheet
+    from django.http import HttpResponse
+    w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
+    d = Disziplin.objects.get(wettkampf=w, name=disziplin)
+    k = d.kategorien.get(name=kategorie)
+
+    from django.db import connection
+    sql = render_to_string('rangliste.sql')
+    cursor = connection.cursor()
+    cursor.execute(sql, [d.id, k.id])
+    header = [[item[0] for item in cursor.description]]
+    content = cursor.fetchall()
+    data = header + content
+
+    #kranzlimite = read_kranzlimite(d, k)
+    #rangliste = read_rangliste(d, k, kranzlimite=kranzlimite)
+    #list = sorted(rangliste, key=sort_rangliste)
+    #data = [rang.values() for rang in list]
+
+    response = HttpResponse(mimetype='application/pdf')
+    filename = "rangliste-%s.pdf" % k.name
+    response['Content-Disposition'] = 'attachment; filename=%s' % filename
+    doc = SimpleDocTemplate(response, pagesize=A4)
+    styles = getSampleStyleSheet()
+    Document = [Paragraph("Rangliste %s" % w.name, styles["Normal"])]
+    Document.append(Spacer(1,50))
+    LIST_STYLE = TableStyle(
+            [('LINEABOVE', (0,0), (-1,0), 2, colors.green),
+                ('LINEABOVE', (0,1), (-1,-1), 0.25, colors.black),
+                ('LINEBELOW', (0,-1), (-1,-1), 2, colors.green),
+                ('ALIGN', (1,1), (-1,-1), 'RIGHT'),
+                ('ROWBACKGROUNDS', (0, 0), (-1, -1), (colors.lightyellow, None)),
+                ]
+            )
+    t = Platypus_Table(data, style=LIST_STYLE)
+    Document.append(t)
+    doc.build(Document)
+    return response
 
 def notenblatt(request, jahr, wettkampf, disziplin, startnummer=None):
     assert request.method == 'GET'
@@ -650,8 +695,7 @@ def read_kranzlimite(disziplin, kategorie):
         result = q[0].wert
     return result
 
-def read_rangliste(disziplin, kategorie, kranzlimite=None,
-        doppelstarter_mit_rang=False, letzter_kranzrang=None):
+def read_rangliste(disziplin, kategorie, doppelstarter_mit_rang=False):
     from django.db import connection
     sql = render_to_string('rangliste.sql')
     args = [disziplin.id, kategorie.id]
@@ -662,10 +706,10 @@ def read_rangliste(disziplin, kategorie, kranzlimite=None,
     zeit_tot_prev = None
     for row in cursor:
         dict = {}; i = 0
-        dict['kranz'] = False
         dict['rang'] = None
         dict['doppelstarter'] = False
         dict['startnummer'] = row[i]; i+=1
+        dict['kranz'] = row[i]; i+=1
         dict['steuermann_ist_ds'] = row[i]; i+=1
         dict['vorderfahrer_ist_ds'] = row[i]; i+=1
         dict['steuermann'] = row[i]; i+=1
@@ -674,8 +718,6 @@ def read_rangliste(disziplin, kategorie, kranzlimite=None,
         dict['kategorie'] = row[i]; i += 1
         dict['zeit_tot'] = new_bew(row[i], ZEIT); i += 1
         dict['punkt_tot'] = new_bew(row[i], PUNKT); i += 1
-        if (kranzlimite and dict['punkt_tot'].note >= kranzlimite) or (rang <= letzter_kranzrang):
-            dict['kranz'] = True
         if dict['steuermann_ist_ds'] or dict['vorderfahrer_ist_ds']:
             dict['doppelstarter'] = True
         if (not dict['doppelstarter']) or doppelstarter_mit_rang:

@@ -11,6 +11,7 @@ from sasse.models import Disziplin
 from sasse.models import Postenart
 from sasse.models import Kategorie
 from sasse.models import Schiffeinzel
+from sasse.models import Kranzlimite
 from sasse.views import read_rangliste, sort_rangliste
 
 
@@ -98,6 +99,9 @@ class RanglisteTest(TestCase):
                 wettkampf__von__year="2010")
         kat_C = Kategorie.objects.get(name='C')
         cursor = connection.cursor()
+        kranzlimite = Kranzlimite(disziplin=disziplin, kategorie=kat_C,
+                wert=Decimal("36.0"))
+        kranzlimite.save()
         RANGLISTE = render_to_string('rangliste.sql')
 
         # Ohne Doppelstarter
@@ -115,9 +119,8 @@ class RanglisteTest(TestCase):
         self.assertEquals(13, len(list(rangliste)))
 
         # Annotierte Rangliste
-        kranzlimite = Decimal("36.0")
         actual = []
-        for row in read_rangliste(disziplin, kat_C, kranzlimite):
+        for row in read_rangliste(disziplin, kat_C):
             actual.append(dict(rang=row['rang'], kranz=row['kranz'],
                 doppelstarter=row['doppelstarter'], startnummer=row['startnummer']))
         expected = [
@@ -138,9 +141,8 @@ class RanglisteTest(TestCase):
         self.assertEquals(expected, actual)
 
         # Sortierte Rangliste
-        kranzlimite = Decimal("36.0")
         actual = []
-        rangliste = read_rangliste(disziplin, kat_C, kranzlimite)
+        rangliste = read_rangliste(disziplin, kat_C)
         for row in sorted(rangliste, key=sort_rangliste):
             actual.append(dict(rang=row['rang'], kranz=row['kranz'],
                 doppelstarter=row['doppelstarter'], startnummer=row['startnummer']))
@@ -162,9 +164,8 @@ class RanglisteTest(TestCase):
         self.assertEquals(expected, actual)
 
         # Doppelstarter nicht separat ausgewiesen
-        kranzlimite = Decimal("36.0")
         actual = []
-        for row in read_rangliste(disziplin, kat_C, kranzlimite, doppelstarter_mit_rang=True):
+        for row in read_rangliste(disziplin, kat_C, doppelstarter_mit_rang=True):
             actual.append(dict(rang=row['rang'], kranz=row['kranz'],
                 doppelstarter=row['doppelstarter'], startnummer=row['startnummer']))
         expected = [
