@@ -1,12 +1,5 @@
 [
   {
-    "pk": 0, 
-    "model": "sasse.sektion", 
-    "fields": {
-      "name": "Verband"
-    }
-  }, 
-  {
     "pk": 1, 
     "model": "sasse.sektion", 
     "fields": {
@@ -210,17 +203,17 @@
     }
   }, 
   {
-    "pk": 31, 
-    "model": "sasse.sektion", 
-    "fields": {
-      "name": "Sch\u00f6nenwerd"
-    }
-  }, 
-  {
     "pk": 32, 
     "model": "sasse.sektion", 
     "fields": {
       "name": "Schwaderloch"
+    }
+  }, 
+  {
+    "pk": 31, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "name": "Sch\u00f6nenwerd"
     }
   }, 
   {
@@ -252,6 +245,13 @@
     }
   }, 
   {
+    "pk": 0, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "name": "Verband"
+    }
+  }, 
+  {
     "pk": 37, 
     "model": "sasse.sektion", 
     "fields": {
@@ -280,17 +280,17 @@
     }
   }, 
   {
-    "pk": 41, 
-    "model": "sasse.sektion", 
-    "fields": {
-      "name": "Z\u00fcrich"
-    }
-  }, 
-  {
     "pk": 42, 
     "model": "sasse.sektion", 
     "fields": {
       "name": "Zurzach"
+    }
+  }, 
+  {
+    "pk": 41, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "name": "Z\u00fcrich"
     }
   }, 
   {
@@ -336,42 +336,137 @@
     }
   }, 
   {
-    "pk": 1, 
-    "model": "sasse.postenart", 
-    "fields": {
-      "disziplinarten": [1], 
-      "name": "Allgemeines und Antreten (Einzelfahren)"
-    }
-  }, 
-  {
     "pk": 2, 
     "model": "sasse.postenart", 
     "fields": {
-      "disziplinarten": [1, 2], 
+      "disziplinarten": [
+        1, 
+        2
+      ], 
       "name": "Abfahrt bei einer Stange"
+    }
+  }, 
+  {
+    "pk": 18, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [
+        2
+      ], 
+      "name": "Abfahrt und Ueberfahrt in Linie"
     }
   }, 
   {
     "pk": 3, 
     "model": "sasse.postenart", 
     "fields": {
-      "disziplinarten": [1, 2], 
+      "disziplinarten": [
+        1, 
+        2
+      ], 
       "name": "Abfahrt unterhalb eines markierten Felsens"
     }
   }, 
   {
-    "pk": 4, 
+    "pk": 20, 
     "model": "sasse.postenart", 
     "fields": {
-      "disziplinarten": [1, 2], 
-      "name": "Umfahren eines markierten Felsens"
+      "disziplinarten": [
+        2
+      ], 
+      "name": "Abmeldung"
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [
+        1
+      ], 
+      "name": "Allgemeines und Antreten"
+    }
+  }, 
+  {
+    "pk": 10, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [
+        2
+      ], 
+      "name": "Anmeldung (Sektionsfahren)"
+    }
+  }, 
+  {
+    "pk": 50, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [
+        3
+      ], 
+      "name": "Bootsf\u00e4hrenbau"
+    }
+  }, 
+  {
+    "pk": 8, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [
+        1, 
+        2
+      ], 
+      "name": "Durchfahrt"
+    }
+  }, 
+  {
+    "pk": 7, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [
+        1, 
+        2
+      ], 
+      "name": "Einfahren in die Br\u00fcckenlinie"
+    }
+  }, 
+  {
+    "pk": 52, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [
+        4
+      ], 
+      "name": "Einzelschn\u00fcren"
+    }
+  }, 
+  {
+    "pk": 11, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [
+        2
+      ], 
+      "name": "Gemeinsame Stachelfahrt"
+    }
+  }, 
+  {
+    "pk": 53, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [
+        5
+      ], 
+      "name": "Gruppenschn\u00fcren"
     }
   }, 
   {
     "pk": 5, 
     "model": "sasse.postenart", 
     "fields": {
-      "disziplinarten": [1, 2], 
+      "disziplinarten": [
+        1, 
+        2
+      ], 
       "name": "Landung auf bestimmtes Ziel"
     }
   }, 
@@ -379,120 +474,66 @@
     "pk": 6, 
     "model": "sasse.postenart", 
     "fields": {
-      "disziplinarten": [1], 
-      "name": "Landung auf h\u00f6chstes Ziel (Einzelfahren)"
-    }
-  }, 
-  {
-    "pk": 7, 
-    "model": "sasse.postenart", 
-    "fields": {
-      "disziplinarten": [1, 2], 
-      "name": "Einfahren in die Br\u00fcckenlinie"
-    }
-  }, 
-  {
-    "pk": 8, 
-    "model": "sasse.postenart", 
-    "fields": {
-      "disziplinarten": [1, 2], 
-      "name": "Durchfahrt"
-    }
-  }, 
-  {
-    "pk": 9, 
-    "model": "sasse.postenart", 
-    "fields": {
-      "disziplinarten": [1, 2, 3, 4, 5, 6], 
-      "name": "Zeitnote"
-    }
-  }, 
-  {
-    "pk": 10, 
-    "model": "sasse.postenart", 
-    "fields": {
-      "disziplinarten": [2], 
-      "name": "Anmeldung (Sektionsfahren)"
-    }
-  }, 
-  {
-    "pk": 11, 
-    "model": "sasse.postenart", 
-    "fields": {
-      "disziplinarten": [2], 
-      "name": "Gemeinsame Stachelfahrt"
+      "disziplinarten": [
+        1
+      ], 
+      "name": "Landung auf h\u00f6chstes Ziel"
     }
   }, 
   {
     "pk": 13, 
     "model": "sasse.postenart", 
     "fields": {
-      "disziplinarten": [2], 
+      "disziplinarten": [
+        2
+      ], 
       "name": "Landung auf h\u00f6chstes Ziel (Sektionsfahren)"
-    }
-  }, 
-  {
-    "pk": 18, 
-    "model": "sasse.postenart", 
-    "fields": {
-      "disziplinarten": [2], 
-      "name": "Abfahrt und Ueberfahrt in Linie"
     }
   }, 
   {
     "pk": 19, 
     "model": "sasse.postenart", 
     "fields": {
-      "disziplinarten": [2], 
+      "disziplinarten": [
+        2
+      ], 
       "name": "Landung in Linie"
-    }
-  }, 
-  {
-    "pk": 20, 
-    "model": "sasse.postenart", 
-    "fields": {
-      "disziplinarten": [2], 
-      "name": "Abmeldung"
-    }
-  }, 
-  {
-    "pk": 21, 
-    "model": "sasse.postenart", 
-    "fields": {
-      "disziplinarten": [1], 
-      "name": "Stachelfahrt"
-    }
-  }, 
-  {
-    "pk": 50, 
-    "model": "sasse.postenart", 
-    "fields": {
-      "disziplinarten": [3], 
-      "name": "Bootsf\u00e4hrenbau"
     }
   }, 
   {
     "pk": 51, 
     "model": "sasse.postenart", 
     "fields": {
-      "disziplinarten": [6], 
+      "disziplinarten": [
+        6
+      ], 
       "name": "Schwimmen"
     }
   }, 
   {
-    "pk": 52, 
+    "pk": 4, 
     "model": "sasse.postenart", 
     "fields": {
-      "disziplinarten": [4], 
-      "name": "Einzelschn\u00fcren"
+      "disziplinarten": [
+        1, 
+        2
+      ], 
+      "name": "Umfahren eines markierten Felsens"
     }
   }, 
   {
-    "pk": 53, 
+    "pk": 9, 
     "model": "sasse.postenart", 
     "fields": {
-      "disziplinarten": [5], 
-      "name": "Gruppenschn\u00fcren"
+      "disziplinarten": [
+        1, 
+        2, 
+        3, 
+        4, 
+        5, 
+        6
+      ], 
+      "name": "Zeitnote"
     }
   }, 
   {
@@ -560,18 +601,19 @@
       "alter_bis": 99, 
       "name": "F"
     }
-  },
+  }, 
   {
-    "pk": 1, 
+    "pk": 17, 
     "model": "sasse.bewertungsart", 
     "fields": {
-      "name": "Abzug", 
       "gruppe": "STIL", 
-      "defaultwert": "0", 
-      "reihenfolge": 1, 
-      "postenart": 1, 
-      "signum": -1, 
-      "wertebereich": "TODO", 
+      "name": "Max", 
+      "defaultwert": "10", 
+      "editierbar": false, 
+      "reihenfolge": 0, 
+      "postenart": 2, 
+      "signum": 1, 
+      "wertebereich": "10", 
       "einheit": "PUNKT"
     }
   }, 
@@ -579,13 +621,14 @@
     "pk": 2, 
     "model": "sasse.bewertungsart", 
     "fields": {
-      "name": "Abzug", 
       "gruppe": "STIL", 
+      "name": "Abzug", 
       "defaultwert": "0", 
+      "editierbar": true, 
       "reihenfolge": 1, 
       "postenart": 2, 
       "signum": -1, 
-      "wertebereich": "TODO", 
+      "wertebereich": "0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10", 
       "einheit": "PUNKT"
     }
   }, 
@@ -593,13 +636,29 @@
     "pk": 3, 
     "model": "sasse.bewertungsart", 
     "fields": {
-      "name": "Note", 
       "gruppe": "ZIEL", 
+      "name": "Distanznote", 
       "defaultwert": "10", 
+      "editierbar": true, 
       "reihenfolge": 2, 
       "postenart": 2, 
       "signum": 1, 
-      "wertebereich": "TODO", 
+      "wertebereich": "3, 5, 6, 7, 7.5, 8, 8.5, 9, 9.5, 10", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 18, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "gruppe": "STIL", 
+      "name": "Max", 
+      "defaultwert": "10", 
+      "editierbar": false, 
+      "reihenfolge": 0, 
+      "postenart": 3, 
+      "signum": 1, 
+      "wertebereich": "10", 
       "einheit": "PUNKT"
     }
   }, 
@@ -607,13 +666,14 @@
     "pk": 4, 
     "model": "sasse.bewertungsart", 
     "fields": {
-      "name": "Abzug", 
       "gruppe": "STIL", 
+      "name": "Abzug", 
       "defaultwert": "0", 
+      "editierbar": true, 
       "reihenfolge": 1, 
       "postenart": 3, 
       "signum": -1, 
-      "wertebereich": "TODO", 
+      "wertebereich": "0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10", 
       "einheit": "PUNKT"
     }
   }, 
@@ -621,139 +681,59 @@
     "pk": 5, 
     "model": "sasse.bewertungsart", 
     "fields": {
-      "name": "Note", 
       "gruppe": "ZIEL", 
+      "name": "Distanznote", 
       "defaultwert": "10", 
+      "editierbar": true, 
       "reihenfolge": 2, 
       "postenart": 3, 
       "signum": 1, 
-      "wertebereich": "TODO", 
-      "einheit": "PUNKT"
-    }
-  },
-  {
-    "pk": 6, 
-    "model": "sasse.bewertungsart", 
-    "fields": {
-      "name": "Abzug", 
-      "gruppe": "STIL", 
-      "defaultwert": "0", 
-      "reihenfolge": 1, 
-      "postenart": 4, 
-      "signum": -1, 
-      "wertebereich": "TODO", 
+      "wertebereich": "3, 5, 6, 7, 7.5, 8, 8.5, 9, 9.5, 10", 
       "einheit": "PUNKT"
     }
   }, 
   {
-    "pk": 7, 
+    "pk": 1, 
     "model": "sasse.bewertungsart", 
     "fields": {
-      "name": "Note", 
-      "gruppe": "ZIEL", 
+      "gruppe": "STIL", 
+      "name": "Sanktion", 
+      "defaultwert": "0", 
+      "editierbar": true, 
+      "reihenfolge": 1, 
+      "postenart": 1, 
+      "signum": -1, 
+      "wertebereich": "0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 23, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "gruppe": "STIL", 
+      "name": "Max", 
       "defaultwert": "10", 
-      "reihenfolge": 2, 
-      "postenart": 4, 
+      "editierbar": false, 
+      "reihenfolge": 0, 
+      "postenart": 8, 
       "signum": 1, 
-      "wertebereich": "TODO", 
-      "einheit": "PUNKT"
-    }
-  },
-  {
-    "pk": 8, 
-    "model": "sasse.bewertungsart", 
-    "fields": {
-      "name": "Abzug", 
-      "gruppe": "STIL", 
-      "defaultwert": "0", 
-      "reihenfolge": 1, 
-      "postenart": 5, 
-      "signum": -1, 
-      "wertebereich": "TODO", 
+      "wertebereich": "10", 
       "einheit": "PUNKT"
     }
   }, 
-  {
-    "pk": 9, 
-    "model": "sasse.bewertungsart", 
-    "fields": {
-      "name": "Note", 
-      "gruppe": "ZIEL", 
-      "defaultwert": "10", 
-      "reihenfolge": 2, 
-      "postenart": 5, 
-      "signum": 1, 
-      "wertebereich": "TODO", 
-      "einheit": "PUNKT"
-    }
-  },
-  {
-    "pk": 10, 
-    "model": "sasse.bewertungsart", 
-    "fields": {
-      "name": "Abzug", 
-      "gruppe": "STIL", 
-      "defaultwert": "0", 
-      "reihenfolge": 1, 
-      "postenart": 6, 
-      "signum": -1, 
-      "wertebereich": "TODO", 
-      "einheit": "PUNKT"
-    }
-  }, 
-  {
-    "pk": 11, 
-    "model": "sasse.bewertungsart", 
-    "fields": {
-      "name": "Note", 
-      "gruppe": "ZIEL", 
-      "defaultwert": "15", 
-      "reihenfolge": 2, 
-      "postenart": 6, 
-      "signum": 1, 
-      "wertebereich": "15", 
-      "einheit": "PUNKT"
-    }
-  },
-  {
-    "pk": 12, 
-    "model": "sasse.bewertungsart", 
-    "fields": {
-      "name": "Abzug", 
-      "gruppe": "STIL", 
-      "defaultwert": "0", 
-      "reihenfolge": 1, 
-      "postenart": 7, 
-      "signum": -1, 
-      "wertebereich": "TODO", 
-      "einheit": "PUNKT"
-    }
-  }, 
-  {
-    "pk": 13, 
-    "model": "sasse.bewertungsart", 
-    "fields": {
-      "name": "Note", 
-      "gruppe": "ZIEL", 
-      "defaultwert": "10", 
-      "reihenfolge": 2, 
-      "postenart": 7, 
-      "signum": 1, 
-      "wertebereich": "TODO", 
-      "einheit": "PUNKT"
-    }
-  },
   {
     "pk": 14, 
     "model": "sasse.bewertungsart", 
     "fields": {
-      "name": "Abzug", 
       "gruppe": "STIL", 
+      "name": "Abzug", 
       "defaultwert": "0", 
+      "editierbar": true, 
       "reihenfolge": 1, 
       "postenart": 8, 
       "signum": -1, 
-      "wertebereich": "TODO", 
+      "wertebereich": "0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10", 
       "einheit": "PUNKT"
     }
   }, 
@@ -761,27 +741,209 @@
     "pk": 15, 
     "model": "sasse.bewertungsart", 
     "fields": {
-      "name": "Note", 
       "gruppe": "ZIEL", 
+      "name": "Zielnote", 
       "defaultwert": "10", 
+      "editierbar": true, 
       "reihenfolge": 2, 
       "postenart": 8, 
       "signum": 1, 
-      "wertebereich": "TODO", 
+      "wertebereich": "10, 8, 6, 0", 
       "einheit": "PUNKT"
     }
-  },
+  }, 
+  {
+    "pk": 22, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "gruppe": "STIL", 
+      "name": "Max", 
+      "defaultwert": "10", 
+      "editierbar": false, 
+      "reihenfolge": 0, 
+      "postenart": 7, 
+      "signum": 1, 
+      "wertebereich": "10", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 12, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "gruppe": "STIL", 
+      "name": "Abzug", 
+      "defaultwert": "0", 
+      "editierbar": true, 
+      "reihenfolge": 1, 
+      "postenart": 7, 
+      "signum": -1, 
+      "wertebereich": "0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 13, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "gruppe": "ZIEL", 
+      "name": "Zielnote", 
+      "defaultwert": "10", 
+      "editierbar": true, 
+      "reihenfolge": 2, 
+      "postenart": 7, 
+      "signum": 1, 
+      "wertebereich": "10, 8, 6, 0", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 20, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "gruppe": "STIL", 
+      "name": "Max", 
+      "defaultwert": "10", 
+      "editierbar": false, 
+      "reihenfolge": 0, 
+      "postenart": 5, 
+      "signum": 1, 
+      "wertebereich": "10", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 8, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "gruppe": "STIL", 
+      "name": "Abzug", 
+      "defaultwert": "0", 
+      "editierbar": true, 
+      "reihenfolge": 1, 
+      "postenart": 5, 
+      "signum": -1, 
+      "wertebereich": "0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 9, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "gruppe": "ZIEL", 
+      "name": "Zielnote", 
+      "defaultwert": "10", 
+      "editierbar": true, 
+      "reihenfolge": 2, 
+      "postenart": 5, 
+      "signum": 1, 
+      "wertebereich": "3, 5, 6, 7, 7.5, 8, 8.5, 9, 9.5, 10", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 21, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "gruppe": "STIL", 
+      "name": "Max", 
+      "defaultwert": "10", 
+      "editierbar": false, 
+      "reihenfolge": 0, 
+      "postenart": 6, 
+      "signum": 1, 
+      "wertebereich": "10", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 10, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "gruppe": "STIL", 
+      "name": "Abzug", 
+      "defaultwert": "0", 
+      "editierbar": true, 
+      "reihenfolge": 1, 
+      "postenart": 6, 
+      "signum": -1, 
+      "wertebereich": "0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 11, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "gruppe": "ZIEL", 
+      "name": "Zielnote", 
+      "defaultwert": "15", 
+      "editierbar": true, 
+      "reihenfolge": 2, 
+      "postenart": 6, 
+      "signum": 1, 
+      "wertebereich": "3, 5, 6, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12, 12.5, 13, 13.5, 14, 14.5, 15", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 19, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "gruppe": "STIL", 
+      "name": "Max", 
+      "defaultwert": "10", 
+      "editierbar": false, 
+      "reihenfolge": 0, 
+      "postenart": 4, 
+      "signum": 1, 
+      "wertebereich": "10", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 6, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "gruppe": "STIL", 
+      "name": "Abzug", 
+      "defaultwert": "0", 
+      "editierbar": true, 
+      "reihenfolge": 1, 
+      "postenart": 4, 
+      "signum": -1, 
+      "wertebereich": "0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 7, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "gruppe": "ZIEL", 
+      "name": "Distanznote", 
+      "defaultwert": "10", 
+      "editierbar": true, 
+      "reihenfolge": 2, 
+      "postenart": 4, 
+      "signum": 1, 
+      "wertebereich": "3, 5, 6, 7, 7.5, 8, 8.5, 9, 9.5, 10", 
+      "einheit": "PUNKT"
+    }
+  }, 
   {
     "pk": 16, 
     "model": "sasse.bewertungsart", 
     "fields": {
-      "name": "Zeit", 
       "gruppe": "ZIEL", 
+      "name": "Zeit", 
       "defaultwert": "0", 
+      "editierbar": true, 
       "reihenfolge": 1, 
       "postenart": 9, 
       "signum": 1, 
-      "wertebereich": "TODO", 
+      "wertebereich": "0", 
       "einheit": "ZEIT"
     }
   }

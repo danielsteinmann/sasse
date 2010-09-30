@@ -132,9 +132,9 @@ class Bewertungsart(models.Model):
     signum = models.SmallIntegerField(default=1)
     einheit = models.CharField(max_length=6, choices=EINHEIT_TYP)
     defaultwert = models.DecimalField(max_digits=6, decimal_places=2)
-    wertebereich = models.CharField(max_length=50) # 1,2-10 oder ganze/gebrochene Sekunden
+    wertebereich = models.CharField(max_length=200)
     reihenfolge = models.SmallIntegerField(default=1) # Was kommt auf GUI zuerst
-    editierbar = models.BooleanField(default=True)
+    editierbar = models.BooleanField(default=True) # Erscheint es auf dem GUI
 
     class Meta:
         ordering = ['postenart', 'reihenfolge']

@@ -147,7 +147,8 @@ class StartnummernSelectionFieldTest(TestCase):
 class PunkteFieldTest(TestCase):
     def setUp(self):
         art = Bewertungsart.objects.create(postenart_id=1,
-                name="Abzug", signum=-1, einheit="PUNKT", wertebereich="TODO",
+                name="Abzug", signum=-1, einheit="PUNKT",
+                wertebereich="0, 1, 9.5, 10",
                 defaultwert=3)
         self.sut = PunkteField(art)
 

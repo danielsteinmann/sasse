@@ -179,7 +179,7 @@ class PostenPageTest(TestCase):
         self.failUnlessEqual(response.status_code, 200)
         response = self.client.post(addURL, {})
         self.assertContains(response, 'This field is required')
-        antreten = Postenart.objects.get(name="Allgemeines und Antreten (Einzelfahren)")
+        antreten = Postenart.objects.get(name="Allgemeines und Antreten")
         response = self.client.post(addURL, {
             'name': u'A0',
             'postenart': antreten.id,
@@ -322,10 +322,10 @@ class PostenblattPageTest(TestCase):
             'Abzug-INITIAL_FORMS': 0,
             'Abzug-0-wert': 0,
             'Abzug-1-wert': 0,
-            'Note-TOTAL_FORMS': 2,
-            'Note-INITIAL_FORMS': 0,
-            'Note-0-wert': 10,
-            'Note-1-wert': 10,
+            'Zielnote-TOTAL_FORMS': 2,
+            'Zielnote-INITIAL_FORMS': 0,
+            'Zielnote-0-wert': 10,
+            'Zielnote-1-wert': 10,
             })
         self.assertRedirects(response, postenblatt_D)
         response = self.client.get(postenblatt_D_update)
@@ -341,13 +341,13 @@ class PostenblattPageTest(TestCase):
             'Abzug-INITIAL_FORMS': 0,
             'Abzug-0-wert': '7.3',
             'Abzug-1-wert': 'xx',
-            'Note-TOTAL_FORMS': 2,
-            'Note-INITIAL_FORMS': 0,
-            'Note-0-wert': 10,
-            'Note-1-wert': 10,
+            'Zielnote-TOTAL_FORMS': 2,
+            'Zielnote-INITIAL_FORMS': 0,
+            'Zielnote-0-wert': 10,
+            'Zielnote-1-wert': 10,
             })
         self.failUnlessEqual(response.status_code, 200)
-        self.assertContains(response, 'Nur ganze Zahlen oder Vielfaches von 0.5 erlaubt')
+        self.assertContains(response, 'Nur folgende Zahlen sind erlaubt:')
 
     def test_speichern_und_weiter(self):
         postenblatt_D_update = '/2009/Test-Cup/klein/postenblatt/D/update/'
@@ -360,10 +360,10 @@ class PostenblattPageTest(TestCase):
             'Abzug-INITIAL_FORMS': 0,
             'Abzug-0-wert': 0,
             'Abzug-1-wert': 0,
-            'Note-TOTAL_FORMS': 2,
-            'Note-INITIAL_FORMS': 0,
-            'Note-0-wert': 10,
-            'Note-1-wert': 10,
+            'Zielnote-TOTAL_FORMS': 2,
+            'Zielnote-INITIAL_FORMS': 0,
+            'Zielnote-0-wert': 10,
+            'Zielnote-1-wert': 10,
             'save_and_next': 'Blabla',
             'posten_next_name': 'F',
             })
@@ -382,10 +382,10 @@ class PostenblattPageTest(TestCase):
             'Abzug-INITIAL_FORMS': 0,
             'Abzug-0-wert': 0,
             'Abzug-1-wert': 0,
-            'Note-TOTAL_FORMS': 2,
-            'Note-INITIAL_FORMS': 0,
-            'Note-0-wert': 10,
-            'Note-1-wert': 10,
+            'Zielnote-TOTAL_FORMS': 2,
+            'Zielnote-INITIAL_FORMS': 0,
+            'Zielnote-0-wert': 10,
+            'Zielnote-1-wert': 10,
             'save_and_finish': 'Blabla',
             })
         self.assertRedirects(response, postenblatt_D)
@@ -401,10 +401,10 @@ class PostenblattPageTest(TestCase):
             'Abzug-INITIAL_FORMS': 0,
             'Abzug-0-wert': 0,
             'Abzug-1-wert': 0,
-            'Note-TOTAL_FORMS': 2,
-            'Note-INITIAL_FORMS': 0,
-            'Note-0-wert': 10,
-            'Note-1-wert': 10,
+            'Zielnote-TOTAL_FORMS': 2,
+            'Zielnote-INITIAL_FORMS': 0,
+            'Zielnote-0-wert': 10,
+            'Zielnote-1-wert': 10,
             })
         self.assertRedirects(response, postenblatt_D)
         response = self.client.post(postenblatt_D_update, {
@@ -417,12 +417,12 @@ class PostenblattPageTest(TestCase):
             'Abzug-0-id': 1,
             'Abzug-1-wert': 0,
             'Abzug-1-id': 2,
-            'Note-TOTAL_FORMS': 2,
-            'Note-INITIAL_FORMS': 0,
-            'Note-0-wert': 10,
-            'Note-0-id': 3,
-            'Note-1-wert': 10,
-            'Note-1-id': 4,
+            'Zielnote-TOTAL_FORMS': 2,
+            'Zielnote-INITIAL_FORMS': 0,
+            'Zielnote-0-wert': 10,
+            'Zielnote-0-id': 3,
+            'Zielnote-1-wert': 10,
+            'Zielnote-1-id': 4,
             })
         self.assertRedirects(response, postenblatt_D)
 
@@ -500,8 +500,6 @@ class RichtzeitPageTest(TestCase):
         e_f = '/2009/Test-Cup/einzel/richtzeit/E-F/'
         response = self.client.get(c_e)
         self.failUnlessEqual(response.status_code, 200)
-        # TODO
-        #self.assertContains(response, 'Noch keine Zeitnoten erfasst')
         response = self.client.get(e_f)
         self.failUnlessEqual(response.status_code, 200)
         self.assertContains(response, u'Die besten 10 Zeiten für Posten E-F:')

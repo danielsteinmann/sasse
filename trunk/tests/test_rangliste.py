@@ -99,9 +99,6 @@ class RanglisteTest(TestCase):
                 wettkampf__von__year="2010")
         kat_C = Kategorie.objects.get(name='C')
         cursor = connection.cursor()
-        kranzlimite = Kranzlimite(disziplin=disziplin, kategorie=kat_C,
-                wert=Decimal("36.0"))
-        kranzlimite.save()
         RANGLISTE = render_to_string('rangliste.sql')
 
         # Ohne Doppelstarter

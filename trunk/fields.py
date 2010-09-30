@@ -33,13 +33,17 @@ class UnicodeSlugField(RegexField):
         super(UnicodeSlugField, self).__init__(unicode_slug_re, *args, **kwargs)
 
 
-# TODO: Richtiger Wertebereich überprüfen
 class PunkteField(DecimalField):
     def __init__(self, bewertungsart, *args, **kwargs):
         max_value = Decimal('10.0')
-        range = bewertungsart.wertebereich
-        if range and range != "TODO":
-            max_value = Decimal(range)
+        self.gueltige_werte_str = bewertungsart.wertebereich
+        self.gueltige_werte = [Decimal("0"), Decimal("0.5")]
+        if self.gueltige_werte_str:
+            for v in self.gueltige_werte_str.split(','):
+                value = Decimal(v)
+                if value > max_value:
+                    max_value = value
+                self.gueltige_werte.append(value)
         kwargs['max_digits'] = kwargs.pop('max_digits', 4)
         kwargs['decimal_places'] = kwargs.pop('decimal_places', 1)
         kwargs['min_value'] = kwargs.pop('min_value', Decimal('0'))
@@ -49,8 +53,8 @@ class PunkteField(DecimalField):
 
     def clean(self, value):
         value = super(PunkteField, self).clean(value)
-        if value % 1 not in (0, Decimal('0.5')):
-            msg = u'Nur ganze Zahlen oder Vielfaches von 0.5 erlaubt'
+        if value not in self.gueltige_werte:
+            msg = u'Nur folgende Zahlen sind erlaubt: %s' % self.gueltige_werte_str
             raise ValidationError(msg)
         return value
 

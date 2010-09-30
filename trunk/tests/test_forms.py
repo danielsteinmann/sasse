@@ -155,9 +155,10 @@ class BewertungFormTest(TestCase):
         kat_C = Kategorie.objects.get(name="C")
         einzelfahren = Disziplinart.objects.get(name="Einzelfahren")
         antreten = Postenart.objects.get(
-                name="Allgemeines und Antreten (Einzelfahren)")
+                name="Allgemeines und Antreten")
         self.antreten_abzug = Bewertungsart.objects.create(postenart=antreten,
-                name="Abzug", signum=-1, einheit="PUNKT", wertebereich="TODO",
+                name="Abzug", signum=-1, einheit="PUNKT",
+                wertebereich="0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10",
                 defaultwert=3)
         # Bewegungsdaten
         testcup = Wettkampf.objects.create(name="Test-Cup",
