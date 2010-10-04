@@ -1,6 +1,8 @@
 {% extends "base_ranglisten.html" %}
 {% block nav_rang_kat %}selected{% endblock %}
 {% block content %}
+{% load pagination_tags %}
+{% autopaginate rangliste 20 %}
 {% for k in disziplin.kategorien.all %}
 {% ifequal k.id kategorie.id %}<b>{{ k.name }}</b>
 {% else %}<a href="{% url rangliste wettkampf.jahr, wettkampf.name, disziplin.name, k.name %}">{{ k.name }}</a>
@@ -33,4 +35,6 @@
   </tr>
 {% endfor %}
 </table>
+<p>
+{% paginate %}
 {% endblock %}

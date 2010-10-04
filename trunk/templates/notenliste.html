@@ -2,11 +2,13 @@
 {% block nav_notenliste %}selected{% endblock %}
 
 {% block content %}
-<form id="searchform" name="searchform" action="" method="GET">
+{% load pagination_tags %}
+{% autopaginate notenliste 20 %}
+<form action="" method="GET">
 {% if searchform.non_field_errors %}
 {{ searchform.non_field_errors }}
 {% endif %}
-{{ searchform.startnummern.errors }}
+{{ searchform.sektion.errors }}
 Nach Sektion {{ searchform.sektion }}
 <input type="submit" value="filtern">
 </form>
@@ -42,4 +44,6 @@ Nach Sektion {{ searchform.sektion }}
   </tr>
 {% endfor %}
 </table>
+<p>
+{% paginate %}
 {% endblock %}

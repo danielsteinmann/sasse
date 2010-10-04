@@ -509,14 +509,10 @@ def notenliste(request, jahr, wettkampf, disziplin):
     filter_form = SchiffeinzelFilterForm(d, request.GET.copy())
     if filter_form.is_valid():
         sektion = filter_form.cleaned_data['sektion']
-        if sektion is None:
-            q = Schiffeinzel.objects.all().order_by('sektion')[:1]
-            if q.count() > 0:
-                sektion = q[0].sektion
-                filter_form.data['sektion'] = sektion.id
-    list = read_notenliste(d, posten, sektion)
+    notenliste = read_notenliste(d, posten, sektion)
     return render_to_response('notenliste.html', {'wettkampf': w, 'disziplin':
-        d, 'posten': posten, 'notenliste': list, 'searchform': filter_form})
+        d, 'posten': posten, 'notenliste': list(notenliste), 'searchform': filter_form},
+        context_instance=RequestContext(request))
 
 def rangliste(request, jahr, wettkampf, disziplin, kategorie=None):
     assert request.method == 'GET'
@@ -528,10 +524,10 @@ def rangliste(request, jahr, wettkampf, disziplin, kategorie=None):
         k = d.kategorien.all()[0]
     kranzlimite = read_kranzlimite(d, k)
     rangliste = read_rangliste(d, k)
-    list = sorted(rangliste, key=sort_rangliste)
+    rangliste_sorted = sorted(rangliste, key=sort_rangliste)
     return render_to_response('rangliste.html', {'wettkampf': w, 'disziplin':
-        d, 'kategorie': k, 'rangliste': list, 'kranzlimite': kranzlimite},
-        context_instance=RequestContext(request))
+        d, 'kategorie': k, 'rangliste': rangliste_sorted,
+        'kranzlimite': kranzlimite}, context_instance=RequestContext(request))
 
 def rangliste_pdf(request, jahr, wettkampf, disziplin, kategorie):
     from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, TableStyle
