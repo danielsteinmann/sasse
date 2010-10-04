@@ -32,8 +32,6 @@ class Mitglied(models.Model):
     geburtsdatum = models.DateField()
     geschlecht = models.CharField(max_length=1, choices=GESCHLECHT_ART)
     sektion = models.ForeignKey('Sektion')
-    # Für Vater/Sohn Rangliste
-    parent = models.ForeignKey('Mitglied', null=True)
 
     class Meta:
         ordering = ['name', 'vorname', 'sektion']

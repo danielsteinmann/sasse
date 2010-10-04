@@ -954,7 +954,6 @@
       "geburtsdatum": "1995-03-25", 
       "nummer": "14137", 
       "name": "Aitchison", 
-      "parent": null, 
       "sektion": 14, 
       "vorname": "Brendan", 
       "geschlecht": "m"
@@ -967,7 +966,6 @@
       "geburtsdatum": "1989-11-14", 
       "nummer": "31163", 
       "name": "Ammann", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Jonas", 
       "geschlecht": "m"
@@ -980,7 +978,6 @@
       "geburtsdatum": "1989-01-05", 
       "nummer": "10118", 
       "name": "Anderegg", 
-      "parent": null, 
       "sektion": 10, 
       "vorname": "Patrik", 
       "geschlecht": "m"
@@ -993,7 +990,6 @@
       "geburtsdatum": "1927-04-14", 
       "nummer": "14001", 
       "name": "Appenzeller", 
-      "parent": null, 
       "sektion": 14, 
       "vorname": "Hans", 
       "geschlecht": "m"
@@ -1006,7 +1002,6 @@
       "geburtsdatum": "1957-06-22", 
       "nummer": "31002", 
       "name": "Arnet", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Oskar", 
       "geschlecht": "m"
@@ -1019,7 +1014,6 @@
       "geburtsdatum": "1985-07-04", 
       "nummer": "31108", 
       "name": "Ascari", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Alexander", 
       "geschlecht": "m"
@@ -1032,7 +1026,6 @@
       "geburtsdatum": "1986-10-14", 
       "nummer": "31097", 
       "name": "Ascari", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Phillip", 
       "geschlecht": "m"
@@ -1045,7 +1038,6 @@
       "geburtsdatum": "1992-05-22", 
       "nummer": "14122", 
       "name": "Asuna", 
-      "parent": null, 
       "sektion": 14, 
       "vorname": "Alvaro", 
       "geschlecht": "m"
@@ -1058,7 +1050,6 @@
       "geburtsdatum": "1989-06-27", 
       "nummer": "31131", 
       "name": "Baldini", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Benjamin", 
       "geschlecht": "m"
@@ -1071,7 +1062,6 @@
       "geburtsdatum": "1940-01-02", 
       "nummer": "31003", 
       "name": "Baumann", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Ren\u00e9", 
       "geschlecht": "m"
@@ -1084,7 +1074,6 @@
       "geburtsdatum": "1969-02-09", 
       "nummer": "29002", 
       "name": "Baumer", 
-      "parent": null, 
       "sektion": 29, 
       "vorname": "Markus", 
       "geschlecht": "m"
@@ -1097,7 +1086,6 @@
       "geburtsdatum": "1993-03-20", 
       "nummer": "31164", 
       "name": "Bergamin", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Caspar", 
       "geschlecht": "m"
@@ -1110,7 +1098,6 @@
       "geburtsdatum": "1931-09-25", 
       "nummer": "31004", 
       "name": "Berger", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Alwin", 
       "geschlecht": "m"
@@ -1123,7 +1110,6 @@
       "geburtsdatum": "1962-08-11", 
       "nummer": "14003", 
       "name": "Bohnenblust", 
-      "parent": null, 
       "sektion": 14, 
       "vorname": "Andr\u00e9", 
       "geschlecht": "m"
@@ -1136,7 +1122,6 @@
       "geburtsdatum": "1936-05-26", 
       "nummer": "14004", 
       "name": "Bohnenblust", 
-      "parent": null, 
       "sektion": 14, 
       "vorname": "Hans", 
       "geschlecht": "m"
@@ -1149,7 +1134,6 @@
       "geburtsdatum": "1989-10-08", 
       "nummer": "14124", 
       "name": "Borbua", 
-      "parent": null, 
       "sektion": 14, 
       "vorname": "Adrien", 
       "geschlecht": "m"
@@ -1162,7 +1146,6 @@
       "geburtsdatum": "1994-09-14", 
       "nummer": "10144", 
       "name": "Brem", 
-      "parent": null, 
       "sektion": 10, 
       "vorname": "Fabian", 
       "geschlecht": "m"
@@ -1175,7 +1158,6 @@
       "geburtsdatum": "1993-03-23", 
       "nummer": "10135", 
       "name": "Brem", 
-      "parent": null, 
       "sektion": 10, 
       "vorname": "Roman", 
       "geschlecht": "m"
@@ -1188,7 +1170,6 @@
       "geburtsdatum": "1918-10-04", 
       "nummer": "29006", 
       "name": "Breu", 
-      "parent": null, 
       "sektion": 29, 
       "vorname": "Hans", 
       "geschlecht": "m"
@@ -1201,7 +1182,6 @@
       "geburtsdatum": "1943-01-26", 
       "nummer": "29007", 
       "name": "Brodbeck", 
-      "parent": null, 
       "sektion": 29, 
       "vorname": "Ruedi", 
       "geschlecht": "m"
@@ -1214,7 +1194,6 @@
       "geburtsdatum": "1991-02-23", 
       "nummer": "14126", 
       "name": "Bruggmann", 
-      "parent": null, 
       "sektion": 14, 
       "vorname": "Carola", 
       "geschlecht": "m"
@@ -1227,7 +1206,6 @@
       "geburtsdatum": "1989-11-18", 
       "nummer": "14125", 
       "name": "Bruggmann", 
-      "parent": null, 
       "sektion": 14, 
       "vorname": "Natascha", 
       "geschlecht": "m"
@@ -1240,7 +1218,6 @@
       "geburtsdatum": "1987-11-15", 
       "nummer": "10112", 
       "name": "Brunner", 
-      "parent": null, 
       "sektion": 10, 
       "vorname": "Lukas", 
       "geschlecht": "m"
@@ -1253,7 +1230,6 @@
       "geburtsdatum": "1974-03-11", 
       "nummer": "29008", 
       "name": "Buchschacher", 
-      "parent": null, 
       "sektion": 29, 
       "vorname": "Michael", 
       "geschlecht": "m"
@@ -1266,7 +1242,6 @@
       "geburtsdatum": "1956-09-27", 
       "nummer": "14007", 
       "name": "Bumbacher", 
-      "parent": null, 
       "sektion": 14, 
       "vorname": "Bruno", 
       "geschlecht": "m"
@@ -1279,7 +1254,6 @@
       "geburtsdatum": "1936-06-12", 
       "nummer": "10003", 
       "name": "Burkart", 
-      "parent": null, 
       "sektion": 10, 
       "vorname": "Adolf", 
       "geschlecht": "m"
@@ -1292,7 +1266,6 @@
       "geburtsdatum": "1983-09-17", 
       "nummer": "10089", 
       "name": "B\u00e4r", 
-      "parent": null, 
       "sektion": 10, 
       "vorname": "Dominik", 
       "geschlecht": "m"
@@ -1305,7 +1278,6 @@
       "geburtsdatum": "1985-03-13", 
       "nummer": "10092", 
       "name": "B\u00e4r", 
-      "parent": null, 
       "sektion": 10, 
       "vorname": "Patricia", 
       "geschlecht": "m"
@@ -1318,7 +1290,6 @@
       "geburtsdatum": "1987-03-31", 
       "nummer": "31153", 
       "name": "B\u00e4rtschi", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Diego", 
       "geschlecht": "m"
@@ -1331,7 +1302,6 @@
       "geburtsdatum": "1942-08-17", 
       "nummer": "29010", 
       "name": "B\u00fchrer", 
-      "parent": null, 
       "sektion": 29, 
       "vorname": "Heinz", 
       "geschlecht": "m"
@@ -1344,7 +1314,6 @@
       "geburtsdatum": "1950-12-17", 
       "nummer": "10002", 
       "name": "B\u00fcrgisser", 
-      "parent": null, 
       "sektion": 10, 
       "vorname": "Bruno", 
       "geschlecht": "m"
@@ -1357,7 +1326,6 @@
       "geburtsdatum": "1993-01-21", 
       "nummer": "14138", 
       "name": "Dellsperger", 
-      "parent": null, 
       "sektion": 14, 
       "vorname": "Pierre", 
       "geschlecht": "m"
@@ -1370,7 +1338,6 @@
       "geburtsdatum": "1941-01-14", 
       "nummer": "10139", 
       "name": "Dietiker", 
-      "parent": null, 
       "sektion": 10, 
       "vorname": "Hans", 
       "geschlecht": "m"
@@ -1383,7 +1350,6 @@
       "geburtsdatum": "1952-07-02", 
       "nummer": "10006", 
       "name": "Dux", 
-      "parent": null, 
       "sektion": 10, 
       "vorname": "Heinrich", 
       "geschlecht": "m"
@@ -1396,7 +1362,6 @@
       "geburtsdatum": "1967-03-01", 
       "nummer": "14008", 
       "name": "D\u00f6rig", 
-      "parent": null, 
       "sektion": 14, 
       "vorname": "Ralf", 
       "geschlecht": "m"
@@ -1409,7 +1374,6 @@
       "geburtsdatum": "1992-06-30", 
       "nummer": "31160", 
       "name": "D\u00f6tlinger", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Patrick", 
       "geschlecht": "m"
@@ -1422,7 +1386,6 @@
       "geburtsdatum": "1943-09-15", 
       "nummer": "14009", 
       "name": "Ebersold", 
-      "parent": null, 
       "sektion": 14, 
       "vorname": "Peter", 
       "geschlecht": "m"
@@ -1435,7 +1398,6 @@
       "geburtsdatum": "1980-05-15", 
       "nummer": "14084", 
       "name": "Ehrsam", 
-      "parent": null, 
       "sektion": 14, 
       "vorname": "Harry", 
       "geschlecht": "m"
@@ -1448,7 +1410,6 @@
       "geburtsdatum": "1973-02-28", 
       "nummer": "31008", 
       "name": "Eichenberger", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Michel", 
       "geschlecht": "m"
@@ -1461,7 +1422,6 @@
       "geburtsdatum": "1946-10-30", 
       "nummer": "14011", 
       "name": "Fischer", 
-      "parent": null, 
       "sektion": 14, 
       "vorname": "Fritz", 
       "geschlecht": "m"
@@ -1474,7 +1434,6 @@
       "geburtsdatum": "1991-07-26", 
       "nummer": "14131", 
       "name": "Fischer", 
-      "parent": null, 
       "sektion": 14, 
       "vorname": "Nicole", 
       "geschlecht": "m"
@@ -1487,7 +1446,6 @@
       "geburtsdatum": "1977-05-16", 
       "nummer": "14074", 
       "name": "Fischer", 
-      "parent": null, 
       "sektion": 14, 
       "vorname": "Peter", 
       "geschlecht": "m"
@@ -1500,7 +1458,6 @@
       "geburtsdatum": "1962-08-02", 
       "nummer": "14014", 
       "name": "Fischer", 
-      "parent": null, 
       "sektion": 14, 
       "vorname": "Werner", 
       "geschlecht": "m"
@@ -1513,7 +1470,6 @@
       "geburtsdatum": "1989-09-11", 
       "nummer": "31129", 
       "name": "Fricker", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Patrick", 
       "geschlecht": "m"
@@ -1526,7 +1482,6 @@
       "geburtsdatum": "1947-12-01", 
       "nummer": "31009", 
       "name": "F\u00e4s", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Walter", 
       "geschlecht": "m"
@@ -1539,7 +1494,6 @@
       "geburtsdatum": "1983-02-09", 
       "nummer": "31106", 
       "name": "F\u00fceg", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Dominik", 
       "geschlecht": "m"
@@ -1552,7 +1506,6 @@
       "geburtsdatum": "1973-09-06", 
       "nummer": "31011", 
       "name": "Galliker", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Heino", 
       "geschlecht": "m"
@@ -1565,7 +1518,6 @@
       "geburtsdatum": "1973-09-06", 
       "nummer": "31012", 
       "name": "Galliker", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Roger", 
       "geschlecht": "m"
@@ -1578,7 +1530,6 @@
       "geburtsdatum": "1986-09-15", 
       "nummer": "31135", 
       "name": "Gardelli", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Kay", 
       "geschlecht": "m"
@@ -1591,7 +1542,6 @@
       "geburtsdatum": "1986-04-28", 
       "nummer": "29142", 
       "name": "Gasser", 
-      "parent": null, 
       "sektion": 29, 
       "vorname": "Andreas", 
       "geschlecht": "m"
@@ -1604,7 +1554,6 @@
       "geburtsdatum": "1958-06-03", 
       "nummer": "29018", 
       "name": "Gasser", 
-      "parent": null, 
       "sektion": 29, 
       "vorname": "Paul", 
       "geschlecht": "m"
@@ -1617,7 +1566,6 @@
       "geburtsdatum": "1931-05-22", 
       "nummer": "29019", 
       "name": "Gasser", 
-      "parent": null, 
       "sektion": 29, 
       "vorname": "Wolfgang", 
       "geschlecht": "m"
@@ -1630,7 +1578,6 @@
       "geburtsdatum": "1967-01-04", 
       "nummer": "14017", 
       "name": "Gehrig", 
-      "parent": null, 
       "sektion": 14, 
       "vorname": "Bruno", 
       "geschlecht": "m"
@@ -1643,7 +1590,6 @@
       "geburtsdatum": "1971-04-27", 
       "nummer": "31013", 
       "name": "Geissb\u00fchler", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Martin", 
       "geschlecht": "m"
@@ -1656,7 +1602,6 @@
       "geburtsdatum": "1985-09-10", 
       "nummer": "29203", 
       "name": "Geuggis", 
-      "parent": null, 
       "sektion": 29, 
       "vorname": "Dominik", 
       "geschlecht": "m"
@@ -1669,7 +1614,6 @@
       "geburtsdatum": "1990-06-24", 
       "nummer": "14120", 
       "name": "Giardino", 
-      "parent": null, 
       "sektion": 14, 
       "vorname": "Pietro", 
       "geschlecht": "m"
@@ -1682,7 +1626,6 @@
       "geburtsdatum": "1970-12-04", 
       "nummer": "31093", 
       "name": "Glanzmann", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Daniel", 
       "geschlecht": "m"
@@ -1695,7 +1638,6 @@
       "geburtsdatum": "1990-05-09", 
       "nummer": "31125", 
       "name": "Grazioli", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Marco", 
       "geschlecht": "m"
@@ -1708,7 +1650,6 @@
       "geburtsdatum": "1993-05-20", 
       "nummer": "10141", 
       "name": "Greber", 
-      "parent": null, 
       "sektion": 10, 
       "vorname": "Kevin", 
       "geschlecht": "m"
@@ -1721,7 +1662,6 @@
       "geburtsdatum": "1989-03-30", 
       "nummer": "10130", 
       "name": "Greber", 
-      "parent": null, 
       "sektion": 10, 
       "vorname": "Marco", 
       "geschlecht": "m"
@@ -1734,7 +1674,6 @@
       "geburtsdatum": "1931-12-10", 
       "nummer": "29022", 
       "name": "Greutmann", 
-      "parent": null, 
       "sektion": 29, 
       "vorname": "Ren\u00e9", 
       "geschlecht": "m"
@@ -1747,7 +1686,6 @@
       "geburtsdatum": "1972-07-27", 
       "nummer": "31014", 
       "name": "Gross", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Philippe", 
       "geschlecht": "m"
@@ -1760,7 +1698,6 @@
       "geburtsdatum": "1973-08-05", 
       "nummer": "29024", 
       "name": "Grossenbacher", 
-      "parent": null, 
       "sektion": 29, 
       "vorname": "Markus", 
       "geschlecht": "m"
@@ -1773,7 +1710,6 @@
       "geburtsdatum": "1976-05-01", 
       "nummer": "10106", 
       "name": "Gr\u00fctter", 
-      "parent": null, 
       "sektion": 10, 
       "vorname": "Christian", 
       "geschlecht": "m"
@@ -1786,7 +1722,6 @@
       "geburtsdatum": "1944-12-28", 
       "nummer": "31016", 
       "name": "Gugger", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Alfred", 
       "geschlecht": "m"
@@ -1799,7 +1734,6 @@
       "geburtsdatum": "1953-06-15", 
       "nummer": "31017", 
       "name": "Gugger", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Daniel", 
       "geschlecht": "m"
@@ -1812,7 +1746,6 @@
       "geburtsdatum": "1938-07-12", 
       "nummer": "14015", 
       "name": "G\u00e4hwiler", 
-      "parent": null, 
       "sektion": 14, 
       "vorname": "Max", 
       "geschlecht": "m"
@@ -1825,7 +1758,6 @@
       "geburtsdatum": "1982-01-06", 
       "nummer": "10097", 
       "name": "G\u00fcttinger", 
-      "parent": null, 
       "sektion": 10, 
       "vorname": "Reto", 
       "geschlecht": "m"
@@ -1838,7 +1770,6 @@
       "geburtsdatum": "1975-02-15", 
       "nummer": "10047", 
       "name": "Hafner", 
-      "parent": null, 
       "sektion": 10, 
       "vorname": "Urs", 
       "geschlecht": "m"
@@ -1851,7 +1782,6 @@
       "geburtsdatum": "1980-09-27", 
       "nummer": "14087", 
       "name": "Hagenbuch", 
-      "parent": null, 
       "sektion": 14, 
       "vorname": "Roman", 
       "geschlecht": "m"
@@ -1864,7 +1794,6 @@
       "geburtsdatum": "1986-04-03", 
       "nummer": "31148", 
       "name": "Hallauer", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Manuel", 
       "geschlecht": "m"
@@ -1877,7 +1806,6 @@
       "geburtsdatum": "1959-04-26", 
       "nummer": "10105", 
       "name": "Haller", 
-      "parent": null, 
       "sektion": 10, 
       "vorname": "Hansruedi", 
       "geschlecht": "m"
@@ -1890,7 +1818,6 @@
       "geburtsdatum": "1915-09-05", 
       "nummer": "10008", 
       "name": "Hausherr", 
-      "parent": null, 
       "sektion": 10, 
       "vorname": "Max", 
       "geschlecht": "m"
@@ -1903,7 +1830,6 @@
       "geburtsdatum": "1939-10-21", 
       "nummer": "10009", 
       "name": "Hausherr", 
-      "parent": null, 
       "sektion": 10, 
       "vorname": "Rudolf", 
       "geschlecht": "m"
@@ -1916,7 +1842,6 @@
       "geburtsdatum": "1971-06-27", 
       "nummer": "31066", 
       "name": "Heller", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Stefan", 
       "geschlecht": "m"
@@ -1929,7 +1854,6 @@
       "geburtsdatum": "1951-12-05", 
       "nummer": "31021", 
       "name": "Hengartner", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Karl", 
       "geschlecht": "m"
@@ -1942,7 +1866,6 @@
       "geburtsdatum": "1940-10-27", 
       "nummer": "10010", 
       "name": "Hiltmann", 
-      "parent": null, 
       "sektion": 10, 
       "vorname": "Marcel", 
       "geschlecht": "m"
@@ -1955,7 +1878,6 @@
       "geburtsdatum": "1970-03-19", 
       "nummer": "10011", 
       "name": "Hiltmann", 
-      "parent": null, 
       "sektion": 10, 
       "vorname": "Patrick", 
       "geschlecht": "m"
@@ -1968,7 +1890,6 @@
       "geburtsdatum": "1950-01-16", 
       "nummer": "10041", 
       "name": "Hirsiger", 
-      "parent": null, 
       "sektion": 10, 
       "vorname": "Erich", 
       "geschlecht": "m"
@@ -1981,7 +1902,6 @@
       "geburtsdatum": "1935-10-01", 
       "nummer": "10140", 
       "name": "Hirzel", 
-      "parent": null, 
       "sektion": 10, 
       "vorname": "Theodor", 
       "geschlecht": "m"
@@ -1994,7 +1914,6 @@
       "geburtsdatum": "1923-07-29", 
       "nummer": "29030", 
       "name": "Hodler", 
-      "parent": null, 
       "sektion": 29, 
       "vorname": "Werner", 
       "geschlecht": "m"
@@ -2007,7 +1926,6 @@
       "geburtsdatum": "1973-07-29", 
       "nummer": "29033", 
       "name": "Hofer", 
-      "parent": null, 
       "sektion": 29, 
       "vorname": "Patrick", 
       "geschlecht": "m"
@@ -2020,7 +1938,6 @@
       "geburtsdatum": "1963-09-15", 
       "nummer": "10012", 
       "name": "Hofmann", 
-      "parent": null, 
       "sektion": 10, 
       "vorname": "Daniel", 
       "geschlecht": "m"
@@ -2033,7 +1950,6 @@
       "geburtsdatum": "1977-02-09", 
       "nummer": "10065", 
       "name": "Honegger", 
-      "parent": null, 
       "sektion": 10, 
       "vorname": "Patricia", 
       "geschlecht": "f"
@@ -2046,7 +1962,6 @@
       "geburtsdatum": "1983-06-26", 
       "nummer": "31089", 
       "name": "Hoppler", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Ren\u00e9", 
       "geschlecht": "m"
@@ -2059,7 +1974,6 @@
       "geburtsdatum": "1973-12-27", 
       "nummer": "10037", 
       "name": "Hoppler", 
-      "parent": null, 
       "sektion": 10, 
       "vorname": "Sven", 
       "geschlecht": "m"
@@ -2072,7 +1986,6 @@
       "geburtsdatum": "1991-10-19", 
       "nummer": "31151", 
       "name": "Howald", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Fabrizio", 
       "geschlecht": "m"
@@ -2085,7 +1998,6 @@
       "geburtsdatum": "1957-11-08", 
       "nummer": "31022", 
       "name": "Howald", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Markus", 
       "geschlecht": "m"
@@ -2098,7 +2010,6 @@
       "geburtsdatum": "1991-10-19", 
       "nummer": "31152", 
       "name": "Howald", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Patric", 
       "geschlecht": "m"
@@ -2111,7 +2022,6 @@
       "geburtsdatum": "1985-06-25", 
       "nummer": "31105", 
       "name": "Huber", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Andreas", 
       "geschlecht": "m"
@@ -2124,7 +2034,6 @@
       "geburtsdatum": "1990-09-04", 
       "nummer": "31149", 
       "name": "Huber", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Christian", 
       "geschlecht": "m"
@@ -2137,7 +2046,6 @@
       "geburtsdatum": "1968-05-20", 
       "nummer": "31023", 
       "name": "Huber", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Hugo", 
       "geschlecht": "m"
@@ -2150,7 +2058,6 @@
       "geburtsdatum": "1932-12-17", 
       "nummer": "29036", 
       "name": "Huber", 
-      "parent": null, 
       "sektion": 29, 
       "vorname": "Kurt", 
       "geschlecht": "m"
@@ -2163,7 +2070,6 @@
       "geburtsdatum": "1988-03-29", 
       "nummer": "31128", 
       "name": "Huber", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Thomas", 
       "geschlecht": "m"
@@ -2176,7 +2082,6 @@
       "geburtsdatum": "1936-07-19", 
       "nummer": "14056", 
       "name": "Huggler", 
-      "parent": null, 
       "sektion": 14, 
       "vorname": "Armin", 
       "geschlecht": "m"
@@ -2189,7 +2094,6 @@
       "geburtsdatum": "1987-10-12", 
       "nummer": "31145", 
       "name": "Humbel", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Lukas", 
       "geschlecht": "m"
@@ -2202,7 +2106,6 @@
       "geburtsdatum": "1967-09-27", 
       "nummer": "31141", 
       "name": "Hunkeler", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Philippe", 
       "geschlecht": "m"
@@ -2215,7 +2118,6 @@
       "geburtsdatum": "1929-11-14", 
       "nummer": "29031", 
       "name": "H\u00f6hn", 
-      "parent": null, 
       "sektion": 29, 
       "vorname": "Jakob", 
       "geschlecht": "m"
@@ -2228,7 +2130,6 @@
       "geburtsdatum": "1989-06-07", 
       "nummer": "31161", 
       "name": "H\u00fcbscher", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Fabian", 
       "geschlecht": "m"
@@ -2241,7 +2142,6 @@
       "geburtsdatum": "1954-05-17", 
       "nummer": "14057", 
       "name": "Isenring", 
-      "parent": null, 
       "sektion": 14, 
       "vorname": "Ivo", 
       "geschlecht": "m"
@@ -2254,7 +2154,6 @@
       "geburtsdatum": "1986-01-21", 
       "nummer": "10098", 
       "name": "Jakob", 
-      "parent": null, 
       "sektion": 10, 
       "vorname": "Denise", 
       "geschlecht": "f"
@@ -2267,7 +2166,6 @@
       "geburtsdatum": "1986-08-07", 
       "nummer": "10119", 
       "name": "Jutzeler", 
-      "parent": null, 
       "sektion": 10, 
       "vorname": "Raphael", 
       "geschlecht": "m"
@@ -2280,7 +2178,6 @@
       "geburtsdatum": "1914-01-16", 
       "nummer": "29037", 
       "name": "J\u00e4ger", 
-      "parent": null, 
       "sektion": 29, 
       "vorname": "Albert", 
       "geschlecht": "m"
@@ -2293,7 +2190,6 @@
       "geburtsdatum": "1926-03-15", 
       "nummer": "29038", 
       "name": "Kalt", 
-      "parent": null, 
       "sektion": 29, 
       "vorname": "Karl", 
       "geschlecht": "m"
@@ -2306,7 +2202,6 @@
       "geburtsdatum": "1934-08-08", 
       "nummer": "29039", 
       "name": "Karrer", 
-      "parent": null, 
       "sektion": 29, 
       "vorname": "David", 
       "geschlecht": "m"
@@ -2319,7 +2214,6 @@
       "geburtsdatum": "1943-07-22", 
       "nummer": "14059", 
       "name": "Keller", 
-      "parent": null, 
       "sektion": 14, 
       "vorname": "Florian", 
       "geschlecht": "m"
@@ -2332,7 +2226,6 @@
       "geburtsdatum": "1923-07-21", 
       "nummer": "29041", 
       "name": "Keller", 
-      "parent": null, 
       "sektion": 29, 
       "vorname": "Karl", 
       "geschlecht": "m"
@@ -2345,7 +2238,6 @@
       "geburtsdatum": "1969-03-28", 
       "nummer": "14060", 
       "name": "Keller", 
-      "parent": null, 
       "sektion": 14, 
       "vorname": "Roland", 
       "geschlecht": "m"
@@ -2358,7 +2250,6 @@
       "geburtsdatum": "1955-09-09", 
       "nummer": "29116", 
       "name": "Kessler", 
-      "parent": null, 
       "sektion": 29, 
       "vorname": "Bruno", 
       "geschlecht": "m"
@@ -2371,7 +2262,6 @@
       "geburtsdatum": "1986-07-21", 
       "nummer": "10123", 
       "name": "Keusch", 
-      "parent": null, 
       "sektion": 10, 
       "vorname": "Stephan", 
       "geschlecht": "m"
@@ -2384,7 +2274,6 @@
       "geburtsdatum": "1969-04-10", 
       "nummer": "14062", 
       "name": "Knecht", 
-      "parent": null, 
       "sektion": 14, 
       "vorname": "Philipp", 
       "geschlecht": "m"
@@ -2397,7 +2286,6 @@
       "geburtsdatum": "1970-02-22", 
       "nummer": "10044", 
       "name": "Koch", 
-      "parent": null, 
       "sektion": 10, 
       "vorname": "Bernhard", 
       "geschlecht": "m"
@@ -2410,7 +2298,6 @@
       "geburtsdatum": "1978-11-14", 
       "nummer": "10078", 
       "name": "Kohler", 
-      "parent": null, 
       "sektion": 10, 
       "vorname": "Bernhard", 
       "geschlecht": "m"
@@ -2423,7 +2310,6 @@
       "geburtsdatum": "1989-11-04", 
       "nummer": "10128", 
       "name": "Kohler", 
-      "parent": null, 
       "sektion": 10, 
       "vorname": "Bruno", 
       "geschlecht": "m"
@@ -2436,7 +2322,6 @@
       "geburtsdatum": "1983-06-03", 
       "nummer": "14116", 
       "name": "Kohler", 
-      "parent": null, 
       "sektion": 14, 
       "vorname": "Marcel", 
       "geschlecht": "m"
@@ -2449,7 +2334,6 @@
       "geburtsdatum": "1949-06-10", 
       "nummer": "14064", 
       "name": "Kohler", 
-      "parent": null, 
       "sektion": 14, 
       "vorname": "Max", 
       "geschlecht": "m"
@@ -2462,7 +2346,6 @@
       "geburtsdatum": "1947-10-23", 
       "nummer": "10018", 
       "name": "Kohler", 
-      "parent": null, 
       "sektion": 10, 
       "vorname": "Thomas", 
       "geschlecht": "m"
@@ -2475,7 +2358,6 @@
       "geburtsdatum": "1989-09-15", 
       "nummer": "31165", 
       "name": "Kyburz", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Stefan", 
       "geschlecht": "m"
@@ -2488,7 +2370,6 @@
       "geburtsdatum": "1932-10-10", 
       "nummer": "29044", 
       "name": "Labhart", 
-      "parent": null, 
       "sektion": 29, 
       "vorname": "Rolf", 
       "geschlecht": "m"
@@ -2501,7 +2382,6 @@
       "geburtsdatum": "1974-01-04", 
       "nummer": "31027", 
       "name": "Lanz", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Patrick", 
       "geschlecht": "m"
@@ -2514,7 +2394,6 @@
       "geburtsdatum": "1993-01-31", 
       "nummer": "10142", 
       "name": "Leemann", 
-      "parent": null, 
       "sektion": 10, 
       "vorname": "Reto", 
       "geschlecht": "m"
@@ -2527,7 +2406,6 @@
       "geburtsdatum": "1978-08-19", 
       "nummer": "31085", 
       "name": "Lehner", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Roland", 
       "geschlecht": "m"
@@ -2540,7 +2418,6 @@
       "geburtsdatum": "1956-10-10", 
       "nummer": "31028", 
       "name": "Leutwiler", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Kurt", 
       "geschlecht": "m"
@@ -2553,7 +2430,6 @@
       "geburtsdatum": "1978-04-19", 
       "nummer": "31077", 
       "name": "Loberti", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Flavio", 
       "geschlecht": "m"
@@ -2566,7 +2442,6 @@
       "geburtsdatum": "1986-07-05", 
       "nummer": "29208", 
       "name": "L\u00fcchinger", 
-      "parent": null, 
       "sektion": 29, 
       "vorname": "Matthias", 
       "geschlecht": "m"
@@ -2579,7 +2454,6 @@
       "geburtsdatum": "1994-08-20", 
       "nummer": "14134", 
       "name": "Madassery", 
-      "parent": null, 
       "sektion": 14, 
       "vorname": "Anish", 
       "geschlecht": "m"
@@ -2592,7 +2466,6 @@
       "geburtsdatum": "1988-11-08", 
       "nummer": "14135", 
       "name": "Madassery", 
-      "parent": null, 
       "sektion": 14, 
       "vorname": "Anoop", 
       "geschlecht": "m"
@@ -2605,7 +2478,6 @@
       "geburtsdatum": "1993-07-03", 
       "nummer": "31166", 
       "name": "Mancini", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Lukas", 
       "geschlecht": "m"
@@ -2618,7 +2490,6 @@
       "geburtsdatum": "1963-09-30", 
       "nummer": "31067", 
       "name": "Marti", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Daniel", 
       "geschlecht": "m"
@@ -2631,7 +2502,6 @@
       "geburtsdatum": "1996-03-19", 
       "nummer": "31167", 
       "name": "Marti", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Sven", 
       "geschlecht": "m"
@@ -2644,7 +2514,6 @@
       "geburtsdatum": "1986-09-08", 
       "nummer": "29166", 
       "name": "Marty", 
-      "parent": null, 
       "sektion": 29, 
       "vorname": "Stefan", 
       "geschlecht": "m"
@@ -2657,7 +2526,6 @@
       "geburtsdatum": "1931-01-11", 
       "nummer": "14034", 
       "name": "Meier", 
-      "parent": null, 
       "sektion": 14, 
       "vorname": "Hans", 
       "geschlecht": "m"
@@ -2670,7 +2538,6 @@
       "geburtsdatum": "1934-06-12", 
       "nummer": "31031", 
       "name": "Meier", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Karl", 
       "geschlecht": "m"
@@ -2683,7 +2550,6 @@
       "geburtsdatum": "1990-01-03", 
       "nummer": "14123", 
       "name": "Meier", 
-      "parent": null, 
       "sektion": 14, 
       "vorname": "Pascal", 
       "geschlecht": "m"
@@ -2696,7 +2562,6 @@
       "geburtsdatum": "1943-03-05", 
       "nummer": "31034", 
       "name": "Moor", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Peter", 
       "geschlecht": "m"
@@ -2709,7 +2574,6 @@
       "geburtsdatum": "1937-10-22", 
       "nummer": "31035", 
       "name": "Moor", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Werner", 
       "geschlecht": "m"
@@ -2722,7 +2586,6 @@
       "geburtsdatum": "1956-05-28", 
       "nummer": "14039", 
       "name": "Moser", 
-      "parent": null, 
       "sektion": 14, 
       "vorname": "Bruno", 
       "geschlecht": "m"
@@ -2735,7 +2598,6 @@
       "geburtsdatum": "1958-01-03", 
       "nummer": "14038", 
       "name": "Moser", 
-      "parent": null, 
       "sektion": 14, 
       "vorname": "Fredi", 
       "geschlecht": "m"
@@ -2748,7 +2610,6 @@
       "geburtsdatum": "1921-01-25", 
       "nummer": "14040", 
       "name": "M\u00fcller", 
-      "parent": null, 
       "sektion": 14, 
       "vorname": "Arthur", 
       "geschlecht": "m"
@@ -2761,7 +2622,6 @@
       "geburtsdatum": "1971-02-19", 
       "nummer": "10020", 
       "name": "M\u00fcller", 
-      "parent": null, 
       "sektion": 10, 
       "vorname": "Christoph", 
       "geschlecht": "m"
@@ -2774,7 +2634,6 @@
       "geburtsdatum": "1944-10-19", 
       "nummer": "14042", 
       "name": "M\u00fcller", 
-      "parent": null, 
       "sektion": 14, 
       "vorname": "Ernst", 
       "geschlecht": "m"
@@ -2787,7 +2646,6 @@
       "geburtsdatum": "1990-07-08", 
       "nummer": "29213", 
       "name": "M\u00fcller", 
-      "parent": null, 
       "sektion": 29, 
       "vorname": "J\u00e9r\u00f4me", 
       "geschlecht": "m"
@@ -2800,7 +2658,6 @@
       "geburtsdatum": "1990-12-13", 
       "nummer": "10127", 
       "name": "M\u00fcller", 
-      "parent": null, 
       "sektion": 10, 
       "vorname": "L\u00e9my", 
       "geschlecht": "m"
@@ -2813,7 +2670,6 @@
       "geburtsdatum": "1956-04-02", 
       "nummer": "29052", 
       "name": "Neidhart", 
-      "parent": null, 
       "sektion": 29, 
       "vorname": "Dominik", 
       "geschlecht": "m"
@@ -2826,7 +2682,6 @@
       "geburtsdatum": "1986-04-03", 
       "nummer": "31103", 
       "name": "Nussbaumer", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Alexander", 
       "geschlecht": "m"
@@ -2839,7 +2694,6 @@
       "geburtsdatum": "1963-08-29", 
       "nummer": "31037", 
       "name": "Nussbaumer", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Martin", 
       "geschlecht": "m"
@@ -2852,7 +2706,6 @@
       "geburtsdatum": "1957-01-31", 
       "nummer": "31038", 
       "name": "Nussbaumer", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Urs", 
       "geschlecht": "m"
@@ -2865,7 +2718,6 @@
       "geburtsdatum": "1930-04-13", 
       "nummer": "29120", 
       "name": "Oertli", 
-      "parent": null, 
       "sektion": 29, 
       "vorname": "Paul", 
       "geschlecht": "m"
@@ -2878,7 +2730,6 @@
       "geburtsdatum": "1968-05-15", 
       "nummer": "29053", 
       "name": "Oertli", 
-      "parent": null, 
       "sektion": 29, 
       "vorname": "Urs", 
       "geschlecht": "m"
@@ -2891,7 +2742,6 @@
       "geburtsdatum": "1934-08-14", 
       "nummer": "10021", 
       "name": "Oggenfuss", 
-      "parent": null, 
       "sektion": 10, 
       "vorname": "Gottfried", 
       "geschlecht": "m"
@@ -2904,7 +2754,6 @@
       "geburtsdatum": "1952-09-07", 
       "nummer": "29054", 
       "name": "Oster", 
-      "parent": null, 
       "sektion": 29, 
       "vorname": "Beat", 
       "geschlecht": "m"
@@ -2917,7 +2766,6 @@
       "geburtsdatum": "1990-12-10", 
       "nummer": "14129", 
       "name": "Pallavicini", 
-      "parent": null, 
       "sektion": 14, 
       "vorname": "Laura", 
       "geschlecht": "m"
@@ -2930,7 +2778,6 @@
       "geburtsdatum": "1986-07-08", 
       "nummer": "14106", 
       "name": "Peyer", 
-      "parent": null, 
       "sektion": 14, 
       "vorname": "Patrick", 
       "geschlecht": "m"
@@ -2943,7 +2790,6 @@
       "geburtsdatum": "1984-10-18", 
       "nummer": "14105", 
       "name": "Peyer", 
-      "parent": null, 
       "sektion": 14, 
       "vorname": "Raphael", 
       "geschlecht": "m"
@@ -2956,7 +2802,6 @@
       "geburtsdatum": "1967-03-08", 
       "nummer": "29103", 
       "name": "Pezzotti", 
-      "parent": null, 
       "sektion": 29, 
       "vorname": "Marco", 
       "geschlecht": "m"
@@ -2969,7 +2814,6 @@
       "geburtsdatum": "1990-10-26", 
       "nummer": "14130", 
       "name": "Portner", 
-      "parent": null, 
       "sektion": 14, 
       "vorname": "Tobias", 
       "geschlecht": "m"
@@ -2982,7 +2826,6 @@
       "geburtsdatum": "1990-03-31", 
       "nummer": "29214", 
       "name": "Rapold", 
-      "parent": null, 
       "sektion": 29, 
       "vorname": "Samuel", 
       "geschlecht": "m"
@@ -2995,7 +2838,6 @@
       "geburtsdatum": "1941-03-10", 
       "nummer": "29058", 
       "name": "Renggli", 
-      "parent": null, 
       "sektion": 29, 
       "vorname": "Anton", 
       "geschlecht": "m"
@@ -3008,7 +2850,6 @@
       "geburtsdatum": "1944-04-08", 
       "nummer": "29062", 
       "name": "Rohner", 
-      "parent": null, 
       "sektion": 29, 
       "vorname": "Walter", 
       "geschlecht": "m"
@@ -3021,7 +2862,6 @@
       "geburtsdatum": "1968-06-02", 
       "nummer": "14045", 
       "name": "Rufer", 
-      "parent": null, 
       "sektion": 14, 
       "vorname": "Urs", 
       "geschlecht": "m"
@@ -3034,7 +2874,6 @@
       "geburtsdatum": "1962-04-20", 
       "nummer": "29067", 
       "name": "Rust", 
-      "parent": null, 
       "sektion": 29, 
       "vorname": "Beda", 
       "geschlecht": "m"
@@ -3047,7 +2886,6 @@
       "geburtsdatum": "1940-07-05", 
       "nummer": "29066", 
       "name": "R\u00fcegg", 
-      "parent": null, 
       "sektion": 29, 
       "vorname": "Markus", 
       "geschlecht": "m"
@@ -3060,7 +2898,6 @@
       "geburtsdatum": "1976-05-30", 
       "nummer": "31078", 
       "name": "R\u00fcegg", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Markus", 
       "geschlecht": "m"
@@ -3073,7 +2910,6 @@
       "geburtsdatum": "1965-11-14", 
       "nummer": "31044", 
       "name": "Salzmann", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Martin", 
       "geschlecht": "m"
@@ -3086,7 +2922,6 @@
       "geburtsdatum": "1954-10-15", 
       "nummer": "31045", 
       "name": "Sandmeier", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Markus", 
       "geschlecht": "m"
@@ -3099,7 +2934,6 @@
       "geburtsdatum": "1947-02-05", 
       "nummer": "31046", 
       "name": "Sandmeier", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Ulrich", 
       "geschlecht": "m"
@@ -3112,7 +2946,6 @@
       "geburtsdatum": "1987-07-12", 
       "nummer": "29192", 
       "name": "Sauter", 
-      "parent": null, 
       "sektion": 29, 
       "vorname": "Toni", 
       "geschlecht": "m"
@@ -3125,7 +2958,6 @@
       "geburtsdatum": "1932-12-26", 
       "nummer": "10023", 
       "name": "Schaufelb\u00fchl", 
-      "parent": null, 
       "sektion": 10, 
       "vorname": "Heinrich", 
       "geschlecht": "m"
@@ -3138,7 +2970,6 @@
       "geburtsdatum": "1981-10-23", 
       "nummer": "31114", 
       "name": "Schenker", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Michael", 
       "geschlecht": "m"
@@ -3151,7 +2982,6 @@
       "geburtsdatum": "1993-03-01", 
       "nummer": "31169", 
       "name": "Schenker", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Michael", 
       "geschlecht": "m"
@@ -3164,7 +2994,6 @@
       "geburtsdatum": "1993-03-01", 
       "nummer": "31170", 
       "name": "Schenker", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Sebastian", 
       "geschlecht": "m"
@@ -3177,7 +3006,6 @@
       "geburtsdatum": "1921-01-28", 
       "nummer": "31048", 
       "name": "Schenker", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Walter", 
       "geschlecht": "m"
@@ -3190,7 +3018,6 @@
       "geburtsdatum": "1954-05-13", 
       "nummer": "10064", 
       "name": "Schertenleib", 
-      "parent": null, 
       "sektion": 10, 
       "vorname": "Heinz", 
       "geschlecht": "m"
@@ -3203,7 +3030,6 @@
       "geburtsdatum": "1921-11-20", 
       "nummer": "29068", 
       "name": "Schlatter", 
-      "parent": null, 
       "sektion": 29, 
       "vorname": "Ernst", 
       "geschlecht": "m"
@@ -3216,7 +3042,6 @@
       "geburtsdatum": "1992-05-11", 
       "nummer": "10143", 
       "name": "Schmid", 
-      "parent": null, 
       "sektion": 10, 
       "vorname": "Daniel", 
       "geschlecht": "m"
@@ -3229,7 +3054,6 @@
       "geburtsdatum": "1971-11-14", 
       "nummer": "10024", 
       "name": "Schmid", 
-      "parent": null, 
       "sektion": 10, 
       "vorname": "Stephan", 
       "geschlecht": "m"
@@ -3242,7 +3066,6 @@
       "geburtsdatum": "1957-11-15", 
       "nummer": "31051", 
       "name": "Schmiedichen", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "G\u00fcnther", 
       "geschlecht": "m"
@@ -3255,7 +3078,6 @@
       "geburtsdatum": "1969-05-23", 
       "nummer": "31052", 
       "name": "Schnegg", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Harry", 
       "geschlecht": "m"
@@ -3268,7 +3090,6 @@
       "geburtsdatum": "1986-09-26", 
       "nummer": "14104", 
       "name": "Schweizer", 
-      "parent": null, 
       "sektion": 14, 
       "vorname": "Yves", 
       "geschlecht": "m"
@@ -3281,7 +3102,6 @@
       "geburtsdatum": "1995-07-05", 
       "nummer": "31168", 
       "name": "Sch\u00e4rli", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Tobias", 
       "geschlecht": "m"
@@ -3294,7 +3114,6 @@
       "geburtsdatum": "1985-10-04", 
       "nummer": "10095", 
       "name": "Sch\u00f6llhammer", 
-      "parent": null, 
       "sektion": 10, 
       "vorname": "Donat", 
       "geschlecht": "m"
@@ -3307,7 +3126,6 @@
       "geburtsdatum": "1944-03-12", 
       "nummer": "29072", 
       "name": "Sch\u00f6n", 
-      "parent": null, 
       "sektion": 29, 
       "vorname": "Hans", 
       "geschlecht": "m"
@@ -3320,7 +3138,6 @@
       "geburtsdatum": "1973-06-19", 
       "nummer": "29073", 
       "name": "Sch\u00f6n", 
-      "parent": null, 
       "sektion": 29, 
       "vorname": "Roland", 
       "geschlecht": "m"
@@ -3333,7 +3150,6 @@
       "geburtsdatum": "1934-11-07", 
       "nummer": "10025", 
       "name": "Seiler", 
-      "parent": null, 
       "sektion": 10, 
       "vorname": "Pius", 
       "geschlecht": "m"
@@ -3346,7 +3162,6 @@
       "geburtsdatum": "1993-06-20", 
       "nummer": "14136", 
       "name": "Siegrist", 
-      "parent": null, 
       "sektion": 14, 
       "vorname": "Dominic-Sandro", 
       "geschlecht": "m"
@@ -3359,7 +3174,6 @@
       "geburtsdatum": "1989-05-04", 
       "nummer": "14118", 
       "name": "Siegrist", 
-      "parent": null, 
       "sektion": 14, 
       "vorname": "Markus", 
       "geschlecht": "m"
@@ -3372,7 +3186,6 @@
       "geburtsdatum": "1958-04-12", 
       "nummer": "14117", 
       "name": "Siegrist", 
-      "parent": null, 
       "sektion": 14, 
       "vorname": "Roland", 
       "geschlecht": "m"
@@ -3385,7 +3198,6 @@
       "geburtsdatum": "1984-06-27", 
       "nummer": "10086", 
       "name": "Sigel", 
-      "parent": null, 
       "sektion": 10, 
       "vorname": "Jan", 
       "geschlecht": "m"
@@ -3398,7 +3210,6 @@
       "geburtsdatum": "1989-05-15", 
       "nummer": "14133", 
       "name": "Sonderegger", 
-      "parent": null, 
       "sektion": 14, 
       "vorname": "Kay", 
       "geschlecht": "m"
@@ -3411,7 +3222,6 @@
       "geburtsdatum": "1960-08-06", 
       "nummer": "29076", 
       "name": "Spengler", 
-      "parent": null, 
       "sektion": 29, 
       "vorname": "Rolf", 
       "geschlecht": "m"
@@ -3424,7 +3234,6 @@
       "geburtsdatum": "1962-06-09", 
       "nummer": "29077", 
       "name": "Spengler", 
-      "parent": null, 
       "sektion": 29, 
       "vorname": "Urs", 
       "geschlecht": "m"
@@ -3437,7 +3246,6 @@
       "geburtsdatum": "1935-02-16", 
       "nummer": "31055", 
       "name": "Spielmann", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Gerhard", 
       "geschlecht": "m"
@@ -3450,7 +3258,6 @@
       "geburtsdatum": "1946-09-23", 
       "nummer": "29078", 
       "name": "Stamm", 
-      "parent": null, 
       "sektion": 29, 
       "vorname": "Christian", 
       "geschlecht": "m"
@@ -3463,7 +3270,6 @@
       "geburtsdatum": "1943-08-16", 
       "nummer": "29080", 
       "name": "Stamm", 
-      "parent": null, 
       "sektion": 29, 
       "vorname": "Erich", 
       "geschlecht": "m"
@@ -3476,7 +3282,6 @@
       "geburtsdatum": "1944-09-10", 
       "nummer": "29079", 
       "name": "Stamm", 
-      "parent": null, 
       "sektion": 29, 
       "vorname": "Peter", 
       "geschlecht": "m"
@@ -3489,7 +3294,6 @@
       "geburtsdatum": "1990-10-19", 
       "nummer": "14127", 
       "name": "Staub", 
-      "parent": null, 
       "sektion": 14, 
       "vorname": "Cornel", 
       "geschlecht": "m"
@@ -3502,7 +3306,6 @@
       "geburtsdatum": "1989-06-29", 
       "nummer": "31127", 
       "name": "Staub", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Mike", 
       "geschlecht": "m"
@@ -3515,7 +3318,6 @@
       "geburtsdatum": "1986-03-20", 
       "nummer": "31116", 
       "name": "Staub", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Reto", 
       "geschlecht": "m"
@@ -3528,7 +3330,6 @@
       "geburtsdatum": "1978-12-18", 
       "nummer": "10068", 
       "name": "Staubli", 
-      "parent": null, 
       "sektion": 10, 
       "vorname": "Ren\u00e9", 
       "geschlecht": "m"
@@ -3541,7 +3342,6 @@
       "geburtsdatum": "1967-04-30", 
       "nummer": "10043", 
       "name": "Steinmann", 
-      "parent": null, 
       "sektion": 10, 
       "vorname": "Daniel", 
       "geschlecht": "m"
@@ -3554,7 +3354,6 @@
       "geburtsdatum": "1938-11-03", 
       "nummer": "10028", 
       "name": "Steinmann", 
-      "parent": null, 
       "sektion": 10, 
       "vorname": "Hanspeter", 
       "geschlecht": "m"
@@ -3567,7 +3366,6 @@
       "geburtsdatum": "1976-04-13", 
       "nummer": "10051", 
       "name": "Steinmann", 
-      "parent": null, 
       "sektion": 10, 
       "vorname": "Marco", 
       "geschlecht": "m"
@@ -3580,7 +3378,6 @@
       "geburtsdatum": "1971-03-09", 
       "nummer": "10029", 
       "name": "Stenz", 
-      "parent": null, 
       "sektion": 10, 
       "vorname": "Alois", 
       "geschlecht": "m"
@@ -3593,7 +3390,6 @@
       "geburtsdatum": "1975-09-18", 
       "nummer": "10071", 
       "name": "Stenz", 
-      "parent": null, 
       "sektion": 10, 
       "vorname": "Markus", 
       "geschlecht": "m"
@@ -3606,7 +3402,6 @@
       "geburtsdatum": "1991-11-24", 
       "nummer": "10125", 
       "name": "Stettler", 
-      "parent": null, 
       "sektion": 10, 
       "vorname": "Reto", 
       "geschlecht": "m"
@@ -3619,7 +3414,6 @@
       "geburtsdatum": "1985-12-19", 
       "nummer": "14103", 
       "name": "Stich", 
-      "parent": null, 
       "sektion": 14, 
       "vorname": "Christian", 
       "geschlecht": "m"
@@ -3632,7 +3426,6 @@
       "geburtsdatum": "1988-10-06", 
       "nummer": "10110", 
       "name": "Struck", 
-      "parent": null, 
       "sektion": 10, 
       "vorname": "Roman", 
       "geschlecht": "m"
@@ -3645,7 +3438,6 @@
       "geburtsdatum": "1988-12-18", 
       "nummer": "10126", 
       "name": "Stulz", 
-      "parent": null, 
       "sektion": 10, 
       "vorname": "Manuel", 
       "geschlecht": "m"
@@ -3658,7 +3450,6 @@
       "geburtsdatum": "1971-02-18", 
       "nummer": "10031", 
       "name": "Stutz", 
-      "parent": null, 
       "sektion": 10, 
       "vorname": "Cornel", 
       "geschlecht": "m"
@@ -3671,7 +3462,6 @@
       "geburtsdatum": "1965-04-17", 
       "nummer": "10042", 
       "name": "Stutz", 
-      "parent": null, 
       "sektion": 10, 
       "vorname": "Erich", 
       "geschlecht": "m"
@@ -3684,7 +3474,6 @@
       "geburtsdatum": "1964-04-09", 
       "nummer": "10033", 
       "name": "Stutz", 
-      "parent": null, 
       "sektion": 10, 
       "vorname": "Peter", 
       "geschlecht": "m"
@@ -3697,7 +3486,6 @@
       "geburtsdatum": "1981-10-07", 
       "nummer": "31112", 
       "name": "St\u00f6ckli", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Andr\u00e9", 
       "geschlecht": "m"
@@ -3710,7 +3498,6 @@
       "geburtsdatum": "1978-11-12", 
       "nummer": "31075", 
       "name": "St\u00f6ckli", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Oliver", 
       "geschlecht": "m"
@@ -3723,7 +3510,6 @@
       "geburtsdatum": "1992-07-07", 
       "nummer": "10129", 
       "name": "St\u00f6ckli", 
-      "parent": null, 
       "sektion": 10, 
       "vorname": "Reto", 
       "geschlecht": "m"
@@ -3736,7 +3522,6 @@
       "geburtsdatum": "1986-03-05", 
       "nummer": "10122", 
       "name": "St\u00f6ckli", 
-      "parent": null, 
       "sektion": 10, 
       "vorname": "Roger", 
       "geschlecht": "m"
@@ -3749,7 +3534,6 @@
       "geburtsdatum": "1991-03-14", 
       "nummer": "10137", 
       "name": "St\u00f6ckli", 
-      "parent": null, 
       "sektion": 10, 
       "vorname": "Roman", 
       "geschlecht": "m"
@@ -3762,7 +3546,6 @@
       "geburtsdatum": "1951-11-13", 
       "nummer": "31058", 
       "name": "St\u00f6ckli", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Urs", 
       "geschlecht": "m"
@@ -3775,7 +3558,6 @@
       "geburtsdatum": "1952-10-10", 
       "nummer": "31059", 
       "name": "St\u00fccheli", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Meinrad", 
       "geschlecht": "m"
@@ -3788,7 +3570,6 @@
       "geburtsdatum": "1981-08-29", 
       "nummer": "31091", 
       "name": "St\u00fccheli", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Sandro", 
       "geschlecht": "m"
@@ -3801,7 +3582,6 @@
       "geburtsdatum": "1987-12-16", 
       "nummer": "31133", 
       "name": "Tsch\u00e4ppeler", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Michael", 
       "geschlecht": "m"
@@ -3814,7 +3594,6 @@
       "geburtsdatum": "1945-10-28", 
       "nummer": "10081", 
       "name": "T\u00f6ngi", 
-      "parent": null, 
       "sektion": 10, 
       "vorname": "Klaus", 
       "geschlecht": "m"
@@ -3827,7 +3606,6 @@
       "geburtsdatum": "1990-01-28", 
       "nummer": "29210", 
       "name": "Ulrich", 
-      "parent": null, 
       "sektion": 29, 
       "vorname": "Marcel", 
       "geschlecht": "m"
@@ -3840,7 +3618,6 @@
       "geburtsdatum": "1963-06-10", 
       "nummer": "14021", 
       "name": "Ungricht", 
-      "parent": null, 
       "sektion": 14, 
       "vorname": "Gusti", 
       "geschlecht": "m"
@@ -3853,7 +3630,6 @@
       "geburtsdatum": "1984-09-28", 
       "nummer": "31162", 
       "name": "Urbinello", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Damiano", 
       "geschlecht": "m"
@@ -3866,7 +3642,6 @@
       "geburtsdatum": "1971-06-07", 
       "nummer": "29086", 
       "name": "Utzinger", 
-      "parent": null, 
       "sektion": 29, 
       "vorname": "Stefan", 
       "geschlecht": "m"
@@ -3879,7 +3654,6 @@
       "geburtsdatum": "1987-10-08", 
       "nummer": "10111", 
       "name": "Villiger", 
-      "parent": null, 
       "sektion": 10, 
       "vorname": "Manuel", 
       "geschlecht": "m"
@@ -3892,7 +3666,6 @@
       "geburtsdatum": "1978-09-24", 
       "nummer": "29124", 
       "name": "Vogelsanger", 
-      "parent": null, 
       "sektion": 29, 
       "vorname": "Marc", 
       "geschlecht": "m"
@@ -3905,7 +3678,6 @@
       "geburtsdatum": "1987-06-17", 
       "nummer": "10132", 
       "name": "Vollenweider", 
-      "parent": null, 
       "sektion": 10, 
       "vorname": "Roland", 
       "geschlecht": "m"
@@ -3918,7 +3690,6 @@
       "geburtsdatum": "1985-07-09", 
       "nummer": "29147", 
       "name": "Wagner", 
-      "parent": null, 
       "sektion": 29, 
       "vorname": "Stefan", 
       "geschlecht": "m"
@@ -3931,7 +3702,6 @@
       "geburtsdatum": "1989-01-04", 
       "nummer": "10131", 
       "name": "Waltensp\u00fcl", 
-      "parent": null, 
       "sektion": 10, 
       "vorname": "Oliver", 
       "geschlecht": "m"
@@ -3944,7 +3714,6 @@
       "geburtsdatum": "1992-12-21", 
       "nummer": "31159", 
       "name": "Walter", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Fabian", 
       "geschlecht": "m"
@@ -3957,7 +3726,6 @@
       "geburtsdatum": "1944-11-18", 
       "nummer": "29090", 
       "name": "Wangler", 
-      "parent": null, 
       "sektion": 29, 
       "vorname": "Werner", 
       "geschlecht": "m"
@@ -3970,7 +3738,6 @@
       "geburtsdatum": "1970-01-16", 
       "nummer": "31061", 
       "name": "Wanner", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Frank", 
       "geschlecht": "m"
@@ -3983,7 +3750,6 @@
       "geburtsdatum": "1942-03-17", 
       "nummer": "29091", 
       "name": "Wanner", 
-      "parent": null, 
       "sektion": 29, 
       "vorname": "Heinz", 
       "geschlecht": "m"
@@ -3996,7 +3762,6 @@
       "geburtsdatum": "1945-02-24", 
       "nummer": "14025", 
       "name": "Weber", 
-      "parent": null, 
       "sektion": 14, 
       "vorname": "Hansruedi", 
       "geschlecht": "m"
@@ -4009,7 +3774,6 @@
       "geburtsdatum": "1990-04-06", 
       "nummer": "29226", 
       "name": "Wehrle", 
-      "parent": null, 
       "sektion": 29, 
       "vorname": "Christian", 
       "geschlecht": "m"
@@ -4022,7 +3786,6 @@
       "geburtsdatum": "1960-07-10", 
       "nummer": "29093", 
       "name": "Wehrli", 
-      "parent": null, 
       "sektion": 29, 
       "vorname": "Alexander", 
       "geschlecht": "m"
@@ -4035,7 +3798,6 @@
       "geburtsdatum": "1932-01-02", 
       "nummer": "29094", 
       "name": "Wehrli", 
-      "parent": null, 
       "sektion": 29, 
       "vorname": "Richard", 
       "geschlecht": "m"
@@ -4048,7 +3810,6 @@
       "geburtsdatum": "1964-08-02", 
       "nummer": "29095", 
       "name": "Wehrli", 
-      "parent": null, 
       "sektion": 29, 
       "vorname": "Urs", 
       "geschlecht": "m"
@@ -4061,7 +3822,6 @@
       "geburtsdatum": "1992-01-15", 
       "nummer": "31171", 
       "name": "Wehrli", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Yanik", 
       "geschlecht": "m"
@@ -4074,7 +3834,6 @@
       "geburtsdatum": "1926-07-04", 
       "nummer": "29096", 
       "name": "Weibel", 
-      "parent": null, 
       "sektion": 29, 
       "vorname": "Arthur", 
       "geschlecht": "m"
@@ -4087,7 +3846,6 @@
       "geburtsdatum": "1989-09-07", 
       "nummer": "10109", 
       "name": "Wendel", 
-      "parent": null, 
       "sektion": 10, 
       "vorname": "Mirco", 
       "geschlecht": "m"
@@ -4100,7 +3858,6 @@
       "geburtsdatum": "1984-01-19", 
       "nummer": "10085", 
       "name": "Wendel", 
-      "parent": null, 
       "sektion": 10, 
       "vorname": "Patrik", 
       "geschlecht": "m"
@@ -4113,7 +3870,6 @@
       "geburtsdatum": "1984-03-01", 
       "nummer": "10100", 
       "name": "Wendel", 
-      "parent": null, 
       "sektion": 10, 
       "vorname": "Peter", 
       "geschlecht": "m"
@@ -4126,7 +3882,6 @@
       "geburtsdatum": "1958-02-13", 
       "nummer": "10080", 
       "name": "Wendel", 
-      "parent": null, 
       "sektion": 10, 
       "vorname": "Ren\u00e9", 
       "geschlecht": "m"
@@ -4139,7 +3894,6 @@
       "geburtsdatum": "1959-10-25", 
       "nummer": "29097", 
       "name": "Werner", 
-      "parent": null, 
       "sektion": 29, 
       "vorname": "Hans", 
       "geschlecht": "m"
@@ -4152,7 +3906,6 @@
       "geburtsdatum": "1973-11-16", 
       "nummer": "31063", 
       "name": "Widmer", 
-      "parent": null, 
       "sektion": 31, 
       "vorname": "Roger", 
       "geschlecht": "m"
@@ -4165,7 +3918,6 @@
       "geburtsdatum": "1928-09-08", 
       "nummer": "29098", 
       "name": "Widtmann", 
-      "parent": null, 
       "sektion": 29, 
       "vorname": "Jean", 
       "geschlecht": "m"
@@ -4178,7 +3930,6 @@
       "geburtsdatum": "1989-12-10", 
       "nummer": "10138", 
       "name": "Wietlisbach", 
-      "parent": null, 
       "sektion": 10, 
       "vorname": "David", 
       "geschlecht": "m"
@@ -4191,7 +3942,6 @@
       "geburtsdatum": "1980-05-26", 
       "nummer": "14082", 
       "name": "Wildhaber", 
-      "parent": null, 
       "sektion": 14, 
       "vorname": "Urs", 
       "geschlecht": "m"
@@ -4204,7 +3954,6 @@
       "geburtsdatum": "1986-10-19", 
       "nummer": "10102", 
       "name": "Wirth", 
-      "parent": null, 
       "sektion": 10, 
       "vorname": "Daniel", 
       "geschlecht": "m"
@@ -4217,7 +3966,6 @@
       "geburtsdatum": "1987-04-15", 
       "nummer": "14111", 
       "name": "W\u00e4chter", 
-      "parent": null, 
       "sektion": 14, 
       "vorname": "Flavio", 
       "geschlecht": "m"
@@ -4230,7 +3978,6 @@
       "geburtsdatum": "1991-09-22", 
       "nummer": "14132", 
       "name": "Zamboni", 
-      "parent": null, 
       "sektion": 14, 
       "vorname": "Valeria", 
       "geschlecht": "m"
@@ -4243,7 +3990,6 @@
       "geburtsdatum": "1988-08-19", 
       "nummer": "10146", 
       "name": "Zandegiacomo", 
-      "parent": null, 
       "sektion": 10, 
       "vorname": "Miriam", 
       "geschlecht": "m"
@@ -4256,7 +4002,6 @@
       "geburtsdatum": "1945-09-22", 
       "nummer": "14031", 
       "name": "Zimmerli", 
-      "parent": null, 
       "sektion": 14, 
       "vorname": "Hans-Peter", 
       "geschlecht": "m"
@@ -4269,7 +4014,6 @@
       "geburtsdatum": "1966-09-08", 
       "nummer": "14067", 
       "name": "Zimmermann", 
-      "parent": null, 
       "sektion": 14, 
       "vorname": "Robert", 
       "geschlecht": "m"
