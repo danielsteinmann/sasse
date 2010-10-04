@@ -3,6 +3,7 @@ from django.contrib import admin
 
 from models import Mitglied
 from models import Sektion
+from models import Kategorie
 from models import Disziplinart
 from models import Postenart
 from models import Bewertungsart
@@ -36,3 +37,4 @@ admin.site.register(Mitglied, MitgliedAdmin)
 admin.site.register(Sektion)
 admin.site.register(Disziplinart, DisziplinartAdmin)
 admin.site.register(Postenart, PostenartAdmin)
+admin.site.register(Kategorie)

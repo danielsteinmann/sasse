@@ -30,7 +30,7 @@ class get_kategorie_Test(TestCase):
                 name="Wendel", vorname="René", geschlecht="m",
                 geburtsdatum=datetime.date(1958, 1, 1),
                 sektion=bremgarten)
-        self.frau_F = Mitglied.objects.create(
+        self.frau_C = Mitglied.objects.create(
                 name="Honegger", vorname="Patricia", geschlecht="f",
                 geburtsdatum=datetime.date(1977, 1, 1),
                 sektion=bremgarten)
@@ -38,12 +38,17 @@ class get_kategorie_Test(TestCase):
                 name="Leemann", vorname="Sarah", geschlecht="f",
                 geburtsdatum=datetime.date(1993, 1, 1),
                 sektion=bremgarten)
+        self.frau_I = Mitglied.objects.create(
+                name="Ganzjung", vorname="Madame", geschlecht="f",
+                geburtsdatum=datetime.date(1995, 1, 1),
+                sektion=bremgarten)
 
     def testFrauNichtInKatF(self):
-        self.assertEquals(self.kat_II, get_kategorie(self.jahr, self.frau_II))
+        self.assertEquals(self.kat_I, get_kategorie(self.jahr, self.frau_I))
 
     def testFrau(self):
-        self.assertEquals(self.kat_F, get_kategorie(self.jahr, self.frau_F))
+        self.assertEquals(self.kat_F, get_kategorie(self.jahr, self.frau_C))
+        self.assertEquals(self.kat_F, get_kategorie(self.jahr, self.frau_II))
 
     def testMannKatC(self):
         self.assertEquals(self.kat_C, get_kategorie(self.jahr, self.mann_C))

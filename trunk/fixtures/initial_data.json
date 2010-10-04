@@ -596,7 +596,7 @@
     "model": "sasse.kategorie", 
     "fields": {
       "geschlecht": "f", 
-      "alter_von": 21, 
+      "alter_von": 15, 
       "disziplinart": 1, 
       "alter_bis": 99, 
       "name": "F"
