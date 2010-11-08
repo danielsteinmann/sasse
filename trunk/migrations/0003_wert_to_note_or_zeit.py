@@ -5,6 +5,7 @@ from django.db import models
 from sasse.models import *
 
 class Migration:
+    no_dry_run = True
     
     def forwards(self, orm):
         for b in orm.Bewertung.objects.select_related('bewertungsart').all():

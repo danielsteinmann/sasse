@@ -6,6 +6,7 @@ from django.db import models
 from django.db import connection
 
 class Migration(SchemaMigration):
+    no_dry_run = True
     
     def forwards(self, orm):
         

@@ -610,9 +610,9 @@ def rangliste_pdf(request, jahr, wettkampf, disziplin, kategorie):
     sql = render_to_string('rangliste.sql')
     cursor = connection.cursor()
     cursor.execute(sql, [d.id, k.id])
-    header = [[item[0] for item in cursor.description]]
-    content = cursor.fetchall()
-    data = header + content
+    data = [[item[0] for item in cursor.description]]
+    for row in cursor:
+        data.append(row)
 
     #kranzlimite = read_kranzlimite(d, k)
     #rangliste = read_rangliste(d, k, kranzlimite=kranzlimite)

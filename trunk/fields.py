@@ -40,7 +40,7 @@ class PunkteField(DecimalField):
         self.gueltige_werte = [Decimal("0"), Decimal("0.5")]
         if self.gueltige_werte_str:
             for v in self.gueltige_werte_str.split(','):
-                value = Decimal(v)
+                value = Decimal(v.strip())
                 if value > max_value:
                     max_value = value
                 self.gueltige_werte.append(value)

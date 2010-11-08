@@ -4,9 +4,9 @@ from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
 from django.db import connection
-from django.template.loader import render_to_string
 
 class Migration(SchemaMigration):
+    no_dry_run = True
     
     def forwards(self, orm):
         cursor = connection.cursor()
@@ -57,8 +57,6 @@ create view doppelstarter as
         cursor = connection.cursor()
         for view in ['bewertung_in_punkte', 'doppelstarter']:
             cursor.execute("drop view %s" % view)
-            sql = render_to_string('%s.sql' % view)
-            cursor.execute(sql)
     
     
     models = {
