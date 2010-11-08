@@ -21,22 +21,22 @@
 <p>
 <b>Posten {{ posten.name }}: {{ posten.postenart.name }}</b>
 <table class="list">
-    <tr>
-        <th class="startnummer">Startnr:</th>
-        {% for t in startliste.teilnehmer_forms %}
-        <th class="startnummer" width="30">{{ t.startnummer }}</th>
-        {% endfor %}
-    </tr>
-    {% for set in formset %}
-    <tr>
-        <th class="note">{{ set.bewertungsart.name }}:</th>
-        {% for form in set.forms %}
-        <td class="note" {% if not form.initial.id %}bgcolor="LightGreen"{% endif %}>
-          {{ form.initial.wert|bewertung:form.bewertungsart.einheit }}
-        </td>
-        {% endfor %}
-    </tr>
+  <tr>
+    <td></td>
+    {% for cell in header_row %}
+    <th class="note" width="30">{{ cell }}</th>
     {% endfor %}
+  </tr>
+  {% for first_cell, next_cells in data_rows %}
+  <tr>
+    <th class="note">{{ first_cell }}</th>
+    {% for cell in next_cells %}
+    <td class="note" {% if not cell.initial.id %}bgcolor="LightGreen"{% endif %}>
+      {{ cell.initial.wert|bewertung:cell.bewertungsart.einheit }}
+    </td>
+    {% endfor %}
+  </tr>
+  {% endfor %}
 </table>
 <p>
 <a href="{% url postenblatt_update wettkampf.jahr, wettkampf.name, disziplin.name, posten.name %}?{{ query }}">Ändern</a>

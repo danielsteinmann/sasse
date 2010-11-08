@@ -1,27 +1,28 @@
 {% extends "base_bewertungen.html" %}
 
 {% block content %}
+<b>Posten {{ posten.name }}: {{ posten.postenart.name }}</b>
 <form id="postenblattform" name="postenblattform" action="" method="POST">
-  <b>Posten {{ posten.name }}: {{ posten.postenart.name }}</b>
   {% for set in formset %}{{ set.management_form }}{% endfor %}
+  {% for form in teilnehmer_forms.teilnehmer_forms %}{{ form.teilnehmer }}{% endfor %}
+  {{ teilnehmer_forms.total }}
   <table class="list">
-      <tr>
-          {{ startliste.total }}
-          <th class="startnummer">Startnr:</th>
-          {% for t in startliste.teilnehmer_forms %}
-          <th>{{ t.startnummer }}{{ t.teilnehmer }}</th>
-          {% endfor %}
-      </tr>
-      {% for set in formset %}
-      <tr>
-          <th class="note">{{ set.bewertungsart.name }}:</th>
-          {% for form in set.forms %}
-          <td {% if not form.initial.id %}bgcolor="LightGreen"{% endif %}>
-              {{ form.wert.errors }}{{ form.wert }}{{ form.id }}
-          </td>
-          {% endfor %}
-      </tr>
+    <tr>
+      <td></td>
+      {% for cell in header_row %}
+      <th class="note" width="30">{{ cell }}</th>
       {% endfor %}
+    </tr>
+    {% for first_cell, next_cells in data_rows %}
+    <tr>
+      <th class="note">{{ first_cell }}</th>
+      {% for cell in next_cells %}
+      <td class="note" {% if not cell.initial.id %}bgcolor="LightGreen"{% endif %}>
+        {{ cell.wert.errors }}{{ cell.wert }}{{ cell.id }}
+      </td>
+      {% endfor %}
+    </tr>
+    {% endfor %}
   </table>
 <p>
 {% if posten_next_name %}

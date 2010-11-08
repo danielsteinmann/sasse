@@ -438,7 +438,6 @@ class TeilnehmerContainerForm(Form):
         for i, t in enumerate(self.startliste):
             form = TeilnehmerForm(prefix=self.PREFIX % i)
             form.initial['teilnehmer'] = t.id
-            form.startnummer = t.startnummer
             result.append(form)
         return result
 
@@ -458,12 +457,15 @@ class TeilnehmerContainerForm(Form):
 
 
 def create_postenblatt_formsets(posten, startliste=None, data=None):
+    result = []
+    if not (startliste or data):
+        # Passiert z.B. wenn der Filter keine Startnummern ergibt
+        return []
     if startliste:
         ids = [t.id for t in startliste]
     else:
         ids = TeilnehmerContainerForm(data=data).teilnehmer_ids()
     FormSet = formset_factory(form=BewertungForm, formset=BewertungBaseFormSet)
-    result = []
     for art in Bewertungsart.objects.filter(postenart=posten.postenart,
             editierbar=True):
         formset = FormSet(posten=posten, bewertungsart=art, prefix=art.name,

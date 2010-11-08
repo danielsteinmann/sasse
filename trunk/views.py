@@ -379,7 +379,7 @@ def bewertungen(request, jahr, wettkampf, disziplin):
     url = reverse(postenblatt, args=[jahr, wettkampf, disziplin, p.name])
     return HttpResponseRedirect(url)
 
-def postenblatt(request, jahr, wettkampf, disziplin, posten, template="postenblatt.html"):
+def postenblatt(request, jahr, wettkampf, disziplin, posten):
     assert request.method == 'GET'
     p = Posten.objects.select_related().get(
             name=posten,
@@ -389,34 +389,61 @@ def postenblatt(request, jahr, wettkampf, disziplin, posten, template="postenbla
     d = p.disziplin
     w = d.wettkampf
     query = request.META.get('QUERY_STRING')
-    sl = None
-    sets = []
+    orientation = get_orientation(p, request)
+    header_row = []
+    data_rows = []
     filterform = PostenblattFilterForm(d, request.GET)
     if filterform.is_valid():
-        s = filterform.selected_startnummern(visible=15)
-        if len(s) > 0:
-            sl = TeilnehmerContainerForm(startliste=s)
-            sets = create_postenblatt_formsets(posten=p, startliste=s)
+        startnummern = filterform.selected_startnummern(visible=15)
+        sets = create_postenblatt_formsets(posten=p, startliste=startnummern)
+        header_row, data_rows = create_postenblatt_table(startnummern, sets, orientation)
+    return render_to_response('postenblatt.html', {'wettkampf': w, 'disziplin':
+        d, 'posten': p, 'filterform': filterform, 'header_row': header_row,
+        'data_rows': data_rows, 'query': query,})
+
+def postenblatt_update(request, jahr, wettkampf, disziplin, posten):
+    if request.method == 'POST':
+        return postenblatt_post(request, jahr, wettkampf, disziplin, posten)
+    assert request.method == 'GET'
+    p = Posten.objects.select_related().get(
+            name=posten,
+            disziplin__name=disziplin,
+            disziplin__wettkampf__name=wettkampf,
+            disziplin__wettkampf__von__year=jahr)
+    d = p.disziplin
+    w = d.wettkampf
+    header_row = []
+    data_rows = []
+    teilnehmer_forms = []
+    sets = []
     try:
         p_next = d.posten_set.filter(reihenfolge__gt=p.reihenfolge)[0]
         p_next_name = p_next.name
     except IndexError:
         # Aktueller Posten ist der Letzte in der Postenliste
         p_next_name = None
-    return render_to_response(template, {'wettkampf': w, 'disziplin':
-        d, 'posten': p, 'startliste': sl, 'filterform': filterform, 'formset':
-        sets, 'query': query, 'posten_next_name': p_next_name })
-
-def postenblatt_update(request, jahr, wettkampf, disziplin, posten):
-    if request.method == 'POST':
-        return postenblatt_post(request, jahr, wettkampf, disziplin, posten)
+    filterform = PostenblattFilterForm(d, request.GET)
+    if filterform.is_valid():
+        startnummern = filterform.selected_startnummern(visible=15)
+        teilnehmer_forms = TeilnehmerContainerForm(startliste=startnummern)
+        sets = create_postenblatt_formsets(posten=p, startliste=startnummern)
+        orientation = get_orientation(p, request)
+        header_row, data_rows = create_postenblatt_table(startnummern, sets, orientation)
+    return render_to_response("postenblatt_update.html", {'wettkampf': w,
+        'disziplin': d, 'posten': p, 'teilnehmer_forms': teilnehmer_forms,
+        'formset': sets, 'header_row': header_row, 'data_rows': data_rows,
+        'posten_next_name': p_next_name})
     return postenblatt(request, jahr, wettkampf, disziplin, posten, "postenblatt_update.html")
 
 def postenblatt_post(request, jahr, wettkampf, disziplin, posten):
     assert request.method == 'POST'
-    w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
-    d = Disziplin.objects.get(wettkampf=w, name=disziplin)
-    p = Posten.objects.get(disziplin=d, name=posten)
+    p = Posten.objects.select_related().get(
+            name=posten,
+            disziplin__name=disziplin,
+            disziplin__wettkampf__name=wettkampf,
+            disziplin__wettkampf__von__year=jahr)
+    d = p.disziplin
+    w = d.wettkampf
     p_next_name = request.POST.get('posten_next_name')
     sets = create_postenblatt_formsets(posten=p, data=request.POST)
     if all_valid(sets):
@@ -435,13 +462,51 @@ def postenblatt_post(request, jahr, wettkampf, disziplin, posten):
         if query:
             url = "%s?%s" % (url, query)
         return HttpResponseRedirect(url)
+    header_row = []
+    data_rows = []
+    teilnehmer_forms = []
+    #TODO Man sollte nicht die Filterform, sondern folgendes verwenden:
+    #   teilnehmer_forms = TeilnehmerContainerForm(data=request.POST)
+    #   startnummern = teilnehmer_forms.teilnehmer_ids()
+    # Diese Form wir in create_postenblatt_formsets() erzeugt.
     filterform = PostenblattFilterForm(d, request.GET)
     filterform.is_valid()
-    s = filterform.selected_startnummern(visible=15)
-    sl = TeilnehmerContainerForm(startliste=s)
+    startnummern = filterform.selected_startnummern(visible=15)
+    teilnehmer_forms = TeilnehmerContainerForm(startliste=startnummern)
+    orientation = get_orientation(p, request)
+    header_row, data_rows = create_postenblatt_table(startnummern, sets, orientation)
     return render_to_response('postenblatt_update.html', {'wettkampf': w,
-        'disziplin': d, 'posten': p, 'startliste': sl, 'filterform': filterform,
-        'formset': sets, 'posten_next_name': p_next_name})
+        'disziplin': d, 'posten': p, 'teilnehmer_forms': teilnehmer_forms,
+        'formset': sets, 'header_row': header_row, 'data_rows': data_rows,
+        'posten_next_name': p_next_name})
+
+def get_orientation(posten, request):
+    orientation = 'HORIZONTAL'
+    if posten.postenart.name == 'Zeitnote':
+        orientation = 'VERTIKAL'
+    if request.GET.has_key('o'):
+        orientation = request.GET['o']
+    return orientation
+
+def create_postenblatt_table(startnummern, sets, orientation='HORIZONTAL'):
+    header_row = []
+    data_rows = []
+    bewertungsarten = [s.bewertungsart.name for s in sets]
+    if orientation == 'HORIZONTAL':
+        # Startnummern horizontal, Bewertungsart vertikal
+        header_row = startnummern
+        for i, set in enumerate(sets):
+            first_cell = bewertungsarten[i]
+            next_cells = [set.forms[k] for k in range(len(startnummern))]
+            data_rows.append((first_cell, next_cells))
+    else:
+        # Startnummern vertikal, Bewertungsart horizontal
+        header_row = bewertungsarten
+        for i, startnummer in enumerate(startnummern):
+            first_cell = startnummer
+            next_cells = [set.forms[i] for set in sets]
+            data_rows.append((first_cell, next_cells))
+    return header_row, data_rows
 
 def richtzeiten(request, jahr, wettkampf, disziplin):
     assert request.method == 'GET'

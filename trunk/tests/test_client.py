@@ -289,27 +289,22 @@ class PostenblattPageTest(TestCase):
         # Default Anzahl Teilnehmer
         response = self.client.get(postenblatt_D)
         self.failUnlessEqual(response.status_code, 200)
-        teilnehmer_count = len(response.context['startliste'].teilnehmer_forms())
+        teilnehmer_count = len(response.context['header_row'])
         self.assertEquals(15, teilnehmer_count)
         # Gefilterte Anzahl Teilnehmer
         response = self.client.get(postenblatt_D, {'startnummern': '1,2'})
         self.failUnlessEqual(response.status_code, 200)
-        teilnehmer_count = len(response.context['startliste'].teilnehmer_forms())
+        teilnehmer_count = len(response.context['header_row'])
         self.assertEquals(2, teilnehmer_count)
         # Ungültiger Filter
         response = self.client.get(postenblatt_D, {'startnummern': 'XXX'})
         self.assertContains(response, 'Bitte nur ganze Zahlen, Bindestrich oder Komma eingeben')
-        self.assertEquals(None, response.context['startliste'])
 
     def test_naechster_posten(self):
-        postenblatt_D = '/2009/Test-Cup/klein/postenblatt/D/'
-        postenblatt_F = '/2009/Test-Cup/klein/postenblatt/F/'
-        response = self.client.get(postenblatt_D)
+        postenblatt_D_update = '/2009/Test-Cup/klein/postenblatt/D/update/'
+        response = self.client.get(postenblatt_D_update)
         self.failUnlessEqual(response.status_code, 200)
         self.assertEquals('F', response.context['posten_next_name'])
-        response = self.client.get(postenblatt_F)
-        self.failUnlessEqual(response.status_code, 200)
-        self.assertEquals(None, response.context['posten_next_name'])
 
     def test_speichern_defaults(self):
         postenblatt_D = '/2009/Test-Cup/klein/postenblatt/D/'
@@ -332,7 +327,7 @@ class PostenblattPageTest(TestCase):
         self.failUnlessEqual(response.status_code, 200)
 
     def test_speichern_mit_ungueltigem_wert(self):
-        postenblatt_D_update = '/2009/Test-Cup/klein/postenblatt/D/update/'
+        postenblatt_D_update = '/2009/Test-Cup/klein/postenblatt/D/update/?startnummern=1,2'
         response = self.client.post(postenblatt_D_update, {
             'total': 2,
             'stnr-0-teilnehmer': 1,
