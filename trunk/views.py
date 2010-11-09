@@ -30,7 +30,7 @@ from forms import SchiffeinzelEditForm
 from forms import SchiffeinzelListForm
 from forms import SchiffeinzelFilterForm
 from forms import PostenblattFilterForm
-from forms import TeilnehmerContainerForm
+from forms import TeilnehmerForm
 from forms import WettkampfForm
 from forms import create_postenblatt_formsets
 from forms import RichtzeitForm
@@ -395,7 +395,8 @@ def postenblatt(request, jahr, wettkampf, disziplin, posten):
     filterform = PostenblattFilterForm(d, request.GET)
     if filterform.is_valid():
         startnummern = filterform.selected_startnummern(visible=15)
-        sets = create_postenblatt_formsets(posten=p, startliste=startnummern)
+        teilnehmer_ids = [t.id for t in startnummern]
+        sets = create_postenblatt_formsets(p, teilnehmer_ids)
         header_row, data_rows = create_postenblatt_table(startnummern, sets, orientation)
     return render_to_response('postenblatt.html', {'wettkampf': w, 'disziplin':
         d, 'posten': p, 'filterform': filterform, 'header_row': header_row,
@@ -414,26 +415,26 @@ def postenblatt_update(request, jahr, wettkampf, disziplin, posten):
     w = d.wettkampf
     header_row = []
     data_rows = []
-    teilnehmer_forms = []
+    teilnehmer_formset = []
     sets = []
-    try:
-        p_next = d.posten_set.filter(reihenfolge__gt=p.reihenfolge)[0]
-        p_next_name = p_next.name
-    except IndexError:
-        # Aktueller Posten ist der Letzte in der Postenliste
-        p_next_name = None
+    p_next_name = None
     filterform = PostenblattFilterForm(d, request.GET)
     if filterform.is_valid():
         startnummern = filterform.selected_startnummern(visible=15)
-        teilnehmer_forms = TeilnehmerContainerForm(startliste=startnummern)
-        sets = create_postenblatt_formsets(posten=p, startliste=startnummern)
+        TeilnehmerFormSet = formset_factory(TeilnehmerForm, extra=0)
+        initial = [{'id': t.id, 'startnummer': t.startnummer} for t in startnummern]
+        teilnehmer_formset = TeilnehmerFormSet(initial=initial, prefix='stnr')
+        teilnehmer_ids = [t.id for t in startnummern]
+        sets = create_postenblatt_formsets(p, teilnehmer_ids)
         orientation = get_orientation(p, request)
         header_row, data_rows = create_postenblatt_table(startnummern, sets, orientation)
+        p_next_list = list(d.posten_set.filter(reihenfolge__gt=p.reihenfolge))
+        if p_next_list:
+            p_next_name = p_next_list[0].name
     return render_to_response("postenblatt_update.html", {'wettkampf': w,
-        'disziplin': d, 'posten': p, 'teilnehmer_forms': teilnehmer_forms,
+        'disziplin': d, 'posten': p, 'teilnehmer_formset': teilnehmer_formset,
         'formset': sets, 'header_row': header_row, 'data_rows': data_rows,
         'posten_next_name': p_next_name})
-    return postenblatt(request, jahr, wettkampf, disziplin, posten, "postenblatt_update.html")
 
 def postenblatt_post(request, jahr, wettkampf, disziplin, posten):
     assert request.method == 'POST'
@@ -445,7 +446,13 @@ def postenblatt_post(request, jahr, wettkampf, disziplin, posten):
     d = p.disziplin
     w = d.wettkampf
     p_next_name = request.POST.get('posten_next_name')
-    sets = create_postenblatt_formsets(posten=p, data=request.POST)
+    TeilnehmerFormSet = formset_factory(TeilnehmerForm)
+    teilnehmer_formset = TeilnehmerFormSet(data=request.POST, prefix='stnr')
+    if not teilnehmer_formset.is_valid():
+        # Sollte nicht passieren
+        raise Exception(u"%s" % teilnehmer_formset.errors)
+    teilnehmer_ids = [f.cleaned_data['id'] for f in teilnehmer_formset.forms]
+    sets = create_postenblatt_formsets(p, teilnehmer_ids, data=request.POST)
     if all_valid(sets):
         for formset in sets:
             formset.save()
@@ -462,21 +469,11 @@ def postenblatt_post(request, jahr, wettkampf, disziplin, posten):
         if query:
             url = "%s?%s" % (url, query)
         return HttpResponseRedirect(url)
-    header_row = []
-    data_rows = []
-    teilnehmer_forms = []
-    #TODO Man sollte nicht die Filterform, sondern folgendes verwenden:
-    #   teilnehmer_forms = TeilnehmerContainerForm(data=request.POST)
-    #   startnummern = teilnehmer_forms.teilnehmer_ids()
-    # Diese Form wir in create_postenblatt_formsets() erzeugt.
-    filterform = PostenblattFilterForm(d, request.GET)
-    filterform.is_valid()
-    startnummern = filterform.selected_startnummern(visible=15)
-    teilnehmer_forms = TeilnehmerContainerForm(startliste=startnummern)
     orientation = get_orientation(p, request)
+    startnummern = [f.cleaned_data['startnummer'] for f in teilnehmer_formset.forms]
     header_row, data_rows = create_postenblatt_table(startnummern, sets, orientation)
     return render_to_response('postenblatt_update.html', {'wettkampf': w,
-        'disziplin': d, 'posten': p, 'teilnehmer_forms': teilnehmer_forms,
+        'disziplin': d, 'posten': p, 'teilnehmer_formset': teilnehmer_formset,
         'formset': sets, 'header_row': header_row, 'data_rows': data_rows,
         'posten_next_name': p_next_name})
 

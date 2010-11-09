@@ -3,9 +3,8 @@
 {% block content %}
 <b>Posten {{ posten.name }}: {{ posten.postenart.name }}</b>
 <form id="postenblattform" name="postenblattform" action="" method="POST">
+  {{ teilnehmer_formset }}
   {% for set in formset %}{{ set.management_form }}{% endfor %}
-  {% for form in teilnehmer_forms.teilnehmer_forms %}{{ form.teilnehmer }}{% endfor %}
-  {{ teilnehmer_forms.total }}
   <table class="list">
     <tr>
       <td></td>

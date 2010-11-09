@@ -310,9 +310,12 @@ class PostenblattPageTest(TestCase):
         postenblatt_D = '/2009/Test-Cup/klein/postenblatt/D/'
         postenblatt_D_update = '/2009/Test-Cup/klein/postenblatt/D/update/'
         response = self.client.post(postenblatt_D_update, {
-            'total': 2,
-            'stnr-0-teilnehmer': 1,
-            'stnr-1-teilnehmer': 2,
+            'stnr-TOTAL_FORMS': 2,
+            'stnr-INITIAL_FORMS': 0,
+            'stnr-0-id': 1,
+            'stnr-1-id': 2,
+            'stnr-0-startnummer': 1,
+            'stnr-1-startnummer': 2,
             'Abzug-TOTAL_FORMS': 2,
             'Abzug-INITIAL_FORMS': 0,
             'Abzug-0-wert': 0,
@@ -329,9 +332,12 @@ class PostenblattPageTest(TestCase):
     def test_speichern_mit_ungueltigem_wert(self):
         postenblatt_D_update = '/2009/Test-Cup/klein/postenblatt/D/update/?startnummern=1,2'
         response = self.client.post(postenblatt_D_update, {
-            'total': 2,
-            'stnr-0-teilnehmer': 1,
-            'stnr-1-teilnehmer': 2,
+            'stnr-TOTAL_FORMS': 2,
+            'stnr-INITIAL_FORMS': 0,
+            'stnr-0-id': 1,
+            'stnr-1-id': 2,
+            'stnr-0-startnummer': 1,
+            'stnr-1-startnummer': 2,
             'Abzug-TOTAL_FORMS': 2,
             'Abzug-INITIAL_FORMS': 0,
             'Abzug-0-wert': '7.3',
@@ -348,9 +354,12 @@ class PostenblattPageTest(TestCase):
         postenblatt_D_update = '/2009/Test-Cup/klein/postenblatt/D/update/'
         postenblatt_F_update = '/2009/Test-Cup/klein/postenblatt/F/update/'
         response = self.client.post(postenblatt_D_update, {
-            'total': 2,
-            'stnr-0-teilnehmer': 1,
-            'stnr-1-teilnehmer': 2,
+            'stnr-TOTAL_FORMS': 2,
+            'stnr-INITIAL_FORMS': 0,
+            'stnr-0-id': 1,
+            'stnr-1-id': 2,
+            'stnr-0-startnummer': 1,
+            'stnr-1-startnummer': 2,
             'Abzug-TOTAL_FORMS': 2,
             'Abzug-INITIAL_FORMS': 0,
             'Abzug-0-wert': 0,
@@ -370,9 +379,12 @@ class PostenblattPageTest(TestCase):
         postenblatt_D = '/2009/Test-Cup/klein/postenblatt/D/'
         postenblatt_F_update = '/2009/Test-Cup/klein/postenblatt/F/update/'
         response = self.client.post(postenblatt_F_update, {
-            'total': 2,
-            'stnr-0-teilnehmer': 1,
-            'stnr-1-teilnehmer': 2,
+            'stnr-TOTAL_FORMS': 2,
+            'stnr-INITIAL_FORMS': 0,
+            'stnr-0-id': 1,
+            'stnr-1-id': 2,
+            'stnr-0-startnummer': 1,
+            'stnr-1-startnummer': 2,
             'Abzug-TOTAL_FORMS': 2,
             'Abzug-INITIAL_FORMS': 0,
             'Abzug-0-wert': 0,
@@ -389,9 +401,12 @@ class PostenblattPageTest(TestCase):
         postenblatt_D = '/2009/Test-Cup/klein/postenblatt/D/'
         postenblatt_D_update = '/2009/Test-Cup/klein/postenblatt/D/update/'
         response = self.client.post(postenblatt_D_update, {
-            'total': 2,
-            'stnr-0-teilnehmer': 1,
-            'stnr-1-teilnehmer': 2,
+            'stnr-TOTAL_FORMS': 2,
+            'stnr-INITIAL_FORMS': 0,
+            'stnr-0-id': 1,
+            'stnr-1-id': 2,
+            'stnr-0-startnummer': 1,
+            'stnr-1-startnummer': 2,
             'Abzug-TOTAL_FORMS': 2,
             'Abzug-INITIAL_FORMS': 0,
             'Abzug-0-wert': 0,
@@ -404,8 +419,12 @@ class PostenblattPageTest(TestCase):
         self.assertRedirects(response, postenblatt_D)
         response = self.client.post(postenblatt_D_update, {
             'total': 2,
-            'stnr-0-teilnehmer': 1,
-            'stnr-1-teilnehmer': 2,
+            'stnr-TOTAL_FORMS': 2,
+            'stnr-INITIAL_FORMS': 0,
+            'stnr-0-id': 1,
+            'stnr-1-id': 2,
+            'stnr-0-startnummer': 1,
+            'stnr-1-startnummer': 2,
             'Abzug-TOTAL_FORMS': 2,
             'Abzug-INITIAL_FORMS': 0,
             'Abzug-0-wert': 0,
