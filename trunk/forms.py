@@ -312,6 +312,14 @@ class PostenblattFilterForm(Form):
         super(PostenblattFilterForm, self).__init__(*args, **kwargs)
         self.fields['startnummern'] = StartnummernSelectionField(disziplin)
 
+    def clean(self):
+        cleaned_data = self.cleaned_data
+        startnummern_value = cleaned_data.get('startnummern')
+        if startnummern_value and not self.selected_startnummern().count():
+            msg = u"Für diesen Filter gibt es keine Startnummern."
+            raise ValidationError(msg)
+        return cleaned_data
+
     def selected_startnummern(self, visible=15):
         startnummern = self.cleaned_data.get('startnummern')
         result = Schiffeinzel.objects.filter(disziplin=self.disziplin)
@@ -458,9 +466,6 @@ class TeilnehmerContainerForm(Form):
 
 def create_postenblatt_formsets(posten, startliste=None, data=None):
     result = []
-    if not (startliste or data):
-        # Passiert z.B. wenn der Filter keine Startnummern ergibt
-        return []
     if startliste:
         ids = [t.id for t in startliste]
     else:
