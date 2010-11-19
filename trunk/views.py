@@ -603,18 +603,38 @@ def rangliste_pdf(request, jahr, wettkampf, disziplin, kategorie):
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
     k = d.kategorien.get(name=kategorie)
 
-    from django.db import connection
-    sql = render_to_string('rangliste.sql')
-    cursor = connection.cursor()
-    cursor.execute(sql, [d.id, k.id])
-    data = [[item[0] for item in cursor.description]]
-    for row in cursor:
-        data.append(row)
+    kranzlimite = read_kranzlimite(d, k)
+    rangliste = read_rangliste(d, k)
+    list = sorted(rangliste, key=sort_rangliste)
 
-    #kranzlimite = read_kranzlimite(d, k)
-    #rangliste = read_rangliste(d, k, kranzlimite=kranzlimite)
-    #list = sorted(rangliste, key=sort_rangliste)
-    #data = [rang.values() for rang in list]
+    header = [['Rang', 'Steuermann', 'Vorderfahrer', 'Sektion', 'Zeit', 'Punkte']]
+    colwidths = (30, 100, 100, 100, 50, 40)
+    def filter_rangliste(rangliste):
+        mit_kranz = []
+        mit_kranz_ds = []
+        ohne_kranz = []
+        ohne_kranz_ds = []
+        for row in rangliste:
+            record = []
+            record.append(row['rang'])
+            record.append(row['steuermann'])
+            record.append(row['vorderfahrer'])
+            record.append(row['sektion'])
+            record.append(row['zeit_tot'])
+            record.append(row['punkt_tot'])
+            if row['kranz']:
+                if not row['doppelstarter']:
+                    mit_kranz.append(record)
+                else:
+                    mit_kranz_ds.append(record)
+            else:
+                if not row['doppelstarter']:
+                    ohne_kranz.append(record)
+                else:
+                    ohne_kranz_ds.append(record)
+        return (mit_kranz, mit_kranz_ds, ohne_kranz, ohne_kranz_ds)
+
+    mit_kranz, mit_kranz_ds, ohne_kranz, ohne_kranz_ds = filter_rangliste(list)
 
     response = HttpResponse(mimetype='application/pdf')
     filename = "rangliste-%s.pdf" % k.name
@@ -622,17 +642,26 @@ def rangliste_pdf(request, jahr, wettkampf, disziplin, kategorie):
     doc = SimpleDocTemplate(response, pagesize=A4)
     styles = getSampleStyleSheet()
     Document = [Paragraph("Rangliste %s" % w.name, styles["Normal"])]
-    Document.append(Spacer(1,50))
     LIST_STYLE = TableStyle(
             [('LINEABOVE', (0,0), (-1,0), 2, colors.green),
                 ('LINEABOVE', (0,1), (-1,-1), 0.25, colors.black),
                 ('LINEBELOW', (0,-1), (-1,-1), 2, colors.green),
-                ('ALIGN', (1,1), (-1,-1), 'RIGHT'),
-                ('ROWBACKGROUNDS', (0, 0), (-1, -1), (colors.lightyellow, None)),
+                ('ALIGN', (0,0), (-1,-1), 'LEFT'),
+                ('ROWBACKGROUNDS', (0,0), (-1,-1), (colors.lightyellow, None)),
                 ]
             )
-    t = Platypus_Table(data, style=LIST_STYLE)
-    Document.append(t)
+    Document.append(Spacer(1,20))
+    Document.append(Paragraph("Mit Kranz", styles["Normal"]))
+    Document.append(Platypus_Table(header+mit_kranz, colwidths, style=LIST_STYLE))
+    Document.append(Spacer(1,20))
+    Document.append(Paragraph("Doppelstarter mit Kranz", styles["Normal"]))
+    Document.append(Platypus_Table(header+mit_kranz_ds, colwidths, style=LIST_STYLE))
+    Document.append(Spacer(1,20))
+    Document.append(Paragraph("Ohne Kranz", styles["Normal"]))
+    Document.append(Platypus_Table(header+ohne_kranz, colwidths, style=LIST_STYLE))
+    Document.append(Spacer(1,20))
+    Document.append(Paragraph("Doppelstarter ohne Kranz", styles["Normal"]))
+    Document.append(Platypus_Table(header+ohne_kranz_ds, colwidths, style=LIST_STYLE))
     doc.build(Document)
     return response
 
@@ -641,12 +670,18 @@ def notenblatt(request, jahr, wettkampf, disziplin, startnummer=None):
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
     if startnummer:
-        s = Schiffeinzel.objects.select_related().get(disziplin=d, startnummer=startnummer)
+        s = Schiffeinzel.objects.select_related().get(disziplin=d,
+                startnummer=startnummer)
     else:
         s = Schiffeinzel.objects.select_related().filter(disziplin=d)[0]
+    try:
+        next = Schiffeinzel.objects.filter(disziplin=d,
+                startnummer__gt=s.startnummer)[0].startnummer
+    except IndexError:
+        next = None
     posten_werte = read_notenblatt(d, s)
     return render_to_response('notenblatt.html', {'wettkampf': w, 'disziplin':
-        d, 'schiff': s, 'posten_werte': posten_werte},
+        d, 'schiff': s, 'posten_werte': posten_werte, 'next': next},
         context_instance=RequestContext(request))
 
 def kranzlimiten(request, jahr, wettkampf, disziplin):

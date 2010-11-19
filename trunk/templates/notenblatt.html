@@ -52,4 +52,8 @@
 {% endif %}
 {% endfor %}
 </table>
+<p>
+{% if next %}
+<a href="{% url notenblatt wettkampf.jahr, wettkampf.name, disziplin.name, next %}">Weiter</a>
+{% endif %}
 {% endblock %}
