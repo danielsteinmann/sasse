@@ -603,7 +603,6 @@ def rangliste_pdf(request, jahr, wettkampf, disziplin, kategorie):
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
     k = d.kategorien.get(name=kategorie)
 
-    kranzlimite = read_kranzlimite(d, k)
     rangliste = read_rangliste(d, k)
     list = sorted(rangliste, key=sort_rangliste)
 
