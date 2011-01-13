@@ -22,6 +22,7 @@ from models import Richtzeit
 from models import Sektion
 from models import Bewertungsart
 from models import Kranzlimite
+from models import Kategorie
 
 from forms import DisziplinForm
 from forms import PostenEditForm
@@ -702,7 +703,16 @@ def kranzlimiten_update(request, jahr, wettkampf, disziplin):
     for kl in Kranzlimite.objects.filter(disziplin=d):
         limite_pro_kategorie[kl.kategorie_id] = kl
     initial = []
-    kategorien = d.kategorien.all()
+    # Nur Kategorien, zu denen in denen auch tatsächlich Schiffe fahren;
+    # deshalb geht d.kategorien.all() nicht.
+    kategorien = Kategorie.objects.raw("""
+        select distinct kat.*
+          from sasse_kategorie kat
+          join sasse_schiffeinzel schiff on (schiff.kategorie_id = kat.id)
+          join sasse_teilnehmer tn on (tn.id = schiff.teilnehmer_ptr_id)
+         where tn.disziplin_id = %s
+         order by kat.name
+         """, [d.id])
     for k in kategorien:
         kl = limite_pro_kategorie.get(k.id)
         if kl is None:
