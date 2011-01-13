@@ -706,11 +706,14 @@ def kranzlimiten_update(request, jahr, wettkampf, disziplin):
     # Nur Kategorien, zu denen in denen auch tatsächlich Schiffe fahren;
     # deshalb geht d.kategorien.all() nicht.
     kategorien = Kategorie.objects.raw("""
-        select distinct kat.*
+        select kat.*
           from sasse_kategorie kat
-          join sasse_schiffeinzel schiff on (schiff.kategorie_id = kat.id)
-          join sasse_teilnehmer tn on (tn.id = schiff.teilnehmer_ptr_id)
-         where tn.disziplin_id = %s
+         where kat.id in (
+                select distinct kategorie_id
+                  from sasse_schiffeinzel schiff
+                  join sasse_teilnehmer tn on (tn.id = schiff.teilnehmer_ptr_id)
+                 where tn.disziplin_id = %s
+               )
          order by kat.name
          """, [d.id])
     for k in kategorien:
