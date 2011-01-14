@@ -24,29 +24,29 @@ class ZeitInPunkteTest(TestCase):
         zeitwert = richtzeit
         self.assertEquals(Decimal("10.0"), self.z2p(zeitwert, richtzeit))
 
-    def test_doppelte_richtzeit(self):
+    def test_dreifache_richtzeit(self):
         richtzeit = Decimal("60.0")
-        zeitwert = 2 * richtzeit
+        zeitwert = 3 * richtzeit
         self.assertEquals(0, self.z2p(zeitwert, richtzeit))
 
-    def test_mehr_als_doppelt(self):
+    def test_mehr_als_dreifach(self):
         richtzeit = Decimal("60.0")
-        zeitwert = Decimal("130.0")
+        zeitwert = 3 * richtzeit + Decimal("10")
         self.assertEquals(0, self.z2p(zeitwert, richtzeit))
 
     def test_neun_komma_fuenf(self):
         richtzeit = Decimal("60.0")
-        zeitwert = Decimal("63.0")
+        zeitwert = Decimal("66.0")
         self.assertEquals(Decimal("9.5"), self.z2p(zeitwert, richtzeit))
 
     def test_neun_komma_neun(self):
         richtzeit = Decimal("100.0")
-        zeitwert = Decimal("101.0")
+        zeitwert = Decimal("102.0")
         self.assertEquals(Decimal("9.9"), self.z2p(zeitwert, richtzeit))
 
     def test_mehr_als_zehn(self):
         richtzeit = Decimal("60.0")
-        zeitwert = Decimal("54.0")
+        zeitwert = Decimal("48.0")
         self.assertEquals(Decimal("11.0"), self.z2p(zeitwert, richtzeit))
 
     def z2p(self, zeitwert, richtzeit):
@@ -92,7 +92,7 @@ class RanglisteTest(TestCase):
     """
     fixtures = ['test_rangliste.json']
 
-    def test_rangliste_ohne_ds(self):
+    def test_rangliste(self):
         disziplin = Disziplin.objects.get(
                 name="Einzelfahren-II-III-C-D-F",
                 wettkampf__name="Fällbaum-Cup",
@@ -121,19 +121,19 @@ class RanglisteTest(TestCase):
             actual.append(dict(rang=row['rang'], kranz=row['kranz'],
                 doppelstarter=row['doppelstarter'], startnummer=row['startnummer']))
         expected = [
+                {'rang':    1, 'kranz': True,  'doppelstarter': False, 'startnummer':  14},
                 {'rang': None, 'kranz': True,  'doppelstarter':  True, 'startnummer': 102},
-                {'rang':    1, 'kranz': True,  'doppelstarter': False, 'startnummer':   2},
-                {'rang':    2, 'kranz': True,  'doppelstarter': False, 'startnummer':  14},
-                {'rang':    3, 'kranz': True,  'doppelstarter': False, 'startnummer':  11},
-                {'rang':    4, 'kranz': True,  'doppelstarter': False, 'startnummer':   9},
-                {'rang':    5, 'kranz': True,  'doppelstarter': False, 'startnummer':  12},
-                {'rang':    6, 'kranz': True,  'doppelstarter': False, 'startnummer':   1},
-                {'rang':    7, 'kranz': True,  'doppelstarter': False, 'startnummer':  10},
-                {'rang':    8, 'kranz': True,  'doppelstarter': False, 'startnummer':   3},
+                {'rang':    2, 'kranz': True,  'doppelstarter': False, 'startnummer':   2},
+                {'rang':    3, 'kranz': False, 'doppelstarter': False, 'startnummer':  10},
+                {'rang':    4, 'kranz': False, 'doppelstarter': False, 'startnummer':   9},
                 {'rang': None, 'kranz': False, 'doppelstarter':  True, 'startnummer': 101},
+                {'rang':    5, 'kranz': False, 'doppelstarter': False, 'startnummer':  12},
+                {'rang':    6, 'kranz': False, 'doppelstarter': False, 'startnummer':   3},
+                {'rang':    7, 'kranz': False, 'doppelstarter': False, 'startnummer':  11},
+                {'rang':    8, 'kranz': False, 'doppelstarter': False, 'startnummer':   1},
                 {'rang': None, 'kranz': False, 'doppelstarter':  True, 'startnummer': 103},
-                {'rang':    9, 'kranz': False, 'doppelstarter': False, 'startnummer':   6},
-                {'rang':   10, 'kranz': False, 'doppelstarter': False, 'startnummer':  13},
+                {'rang':    9, 'kranz': False, 'doppelstarter': False, 'startnummer':  13},
+                {'rang':   10, 'kranz': False, 'doppelstarter': False, 'startnummer':   6},
                 ]
         self.assertEquals(expected, actual)
 
@@ -144,17 +144,17 @@ class RanglisteTest(TestCase):
             actual.append(dict(rang=row['rang'], kranz=row['kranz'],
                 doppelstarter=row['doppelstarter'], startnummer=row['startnummer']))
         expected = [
-                {'rang':    1, 'kranz': True,  'doppelstarter': False, 'startnummer':   2},
-                {'rang':    2, 'kranz': True,  'doppelstarter': False, 'startnummer':  14},
-                {'rang':    3, 'kranz': True,  'doppelstarter': False, 'startnummer':  11},
-                {'rang':    4, 'kranz': True,  'doppelstarter': False, 'startnummer':   9},
-                {'rang':    5, 'kranz': True,  'doppelstarter': False, 'startnummer':  12},
-                {'rang':    6, 'kranz': True,  'doppelstarter': False, 'startnummer':   1},
-                {'rang':    7, 'kranz': True,  'doppelstarter': False, 'startnummer':  10},
-                {'rang':    8, 'kranz': True,  'doppelstarter': False, 'startnummer':   3},
+                {'rang':    1, 'kranz': True,  'doppelstarter': False, 'startnummer':  14},
+                {'rang':    2, 'kranz': True,  'doppelstarter': False, 'startnummer':   2},
                 {'rang': None, 'kranz': True,  'doppelstarter':  True, 'startnummer': 102},
-                {'rang':    9, 'kranz': False, 'doppelstarter': False, 'startnummer':   6},
-                {'rang':   10, 'kranz': False, 'doppelstarter': False, 'startnummer':  13},
+                {'rang':    3, 'kranz': False, 'doppelstarter': False, 'startnummer':  10},
+                {'rang':    4, 'kranz': False, 'doppelstarter': False, 'startnummer':   9},
+                {'rang':    5, 'kranz': False, 'doppelstarter': False, 'startnummer':  12},
+                {'rang':    6, 'kranz': False, 'doppelstarter': False, 'startnummer':   3},
+                {'rang':    7, 'kranz': False, 'doppelstarter': False, 'startnummer':  11},
+                {'rang':    8, 'kranz': False, 'doppelstarter': False, 'startnummer':   1},
+                {'rang':    9, 'kranz': False, 'doppelstarter': False, 'startnummer':  13},
+                {'rang':   10, 'kranz': False, 'doppelstarter': False, 'startnummer':   6},
                 {'rang': None, 'kranz': False, 'doppelstarter':  True, 'startnummer': 101},
                 {'rang': None, 'kranz': False, 'doppelstarter':  True, 'startnummer': 103},
                 ]
@@ -166,18 +166,18 @@ class RanglisteTest(TestCase):
             actual.append(dict(rang=row['rang'], kranz=row['kranz'],
                 doppelstarter=row['doppelstarter'], startnummer=row['startnummer']))
         expected = [
-                {'rang':    1, 'kranz': True,  'doppelstarter':  True, 'startnummer': 102},
-                {'rang':    2, 'kranz': True,  'doppelstarter': False, 'startnummer':   2},
-                {'rang':    3, 'kranz': True,  'doppelstarter': False, 'startnummer':  14},
-                {'rang':    4, 'kranz': True,  'doppelstarter': False, 'startnummer':  11},
-                {'rang':    5, 'kranz': True,  'doppelstarter': False, 'startnummer':   9},
-                {'rang':    6, 'kranz': True,  'doppelstarter': False, 'startnummer':  12},
-                {'rang':    7, 'kranz': True,  'doppelstarter': False, 'startnummer':   1},
-                {'rang':    8, 'kranz': True,  'doppelstarter': False, 'startnummer':  10},
-                {'rang':    9, 'kranz': True,  'doppelstarter': False, 'startnummer':   3},
-                {'rang':   10, 'kranz': False, 'doppelstarter':  True, 'startnummer': 101},
+                {'rang':    1, 'kranz': True,  'doppelstarter': False, 'startnummer':  14},
+                {'rang':    2, 'kranz': True,  'doppelstarter':  True, 'startnummer': 102},
+                {'rang':    3, 'kranz': True,  'doppelstarter': False, 'startnummer':   2},
+                {'rang':    4, 'kranz': False, 'doppelstarter': False, 'startnummer':  10},
+                {'rang':    5, 'kranz': False, 'doppelstarter': False, 'startnummer':   9},
+                {'rang':    6, 'kranz': False, 'doppelstarter':  True, 'startnummer': 101},
+                {'rang':    7, 'kranz': False, 'doppelstarter': False, 'startnummer':  12},
+                {'rang':    8, 'kranz': False, 'doppelstarter': False, 'startnummer':   3},
+                {'rang':    9, 'kranz': False, 'doppelstarter': False, 'startnummer':  11},
+                {'rang':   10, 'kranz': False, 'doppelstarter': False, 'startnummer':   1},
                 {'rang':   11, 'kranz': False, 'doppelstarter':  True, 'startnummer': 103},
-                {'rang':   12, 'kranz': False, 'doppelstarter': False, 'startnummer':   6},
-                {'rang':   13, 'kranz': False, 'doppelstarter': False, 'startnummer':  13},
+                {'rang':   12, 'kranz': False, 'doppelstarter': False, 'startnummer':  13},
+                {'rang':   13, 'kranz': False, 'doppelstarter': False, 'startnummer':   6},
                 ]
         self.assertEquals(expected, actual)

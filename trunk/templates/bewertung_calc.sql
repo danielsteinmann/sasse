@@ -9,8 +9,8 @@ create view bewertung_calc as
              when ba.einheit = 'ZEIT' then
                round(
                  case
-                   when b.zeit > (2 * r.zeit) then 0
-                   else 20.00 - (b.zeit / (r.zeit / 10.00))
+                   when b.zeit > (3 * r.zeit) then 0
+                   else 15.00 - (b.zeit / (r.zeit / 5.00))
                  end
                , 2)
              -- Falls keine Noten eingegeben wurden
