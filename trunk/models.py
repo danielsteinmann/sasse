@@ -312,6 +312,19 @@ class Schiffeinzel(Teilnehmer):
 class Richtzeit(models.Model):
     """
     Zeit in Sekunden, welche 10 Punkte auf dem Notenblatt ergeben.
+    
+    Zweimal Richtzeit = 0:
+      0s   = 20 Punkte
+      50s  = 15 Punkte
+      100s = 10 Punkte
+      150s = 5 Punkte
+      200s = 0 Punkte     ==> 20 - (Zeit / (Richtzeit / 10))
+
+    Dreimal Richtzeit = 0:
+      0s   = 15 Punkte
+      100s = 10 Punkte
+      200s = 5 Punkte
+      300s = 0 Punkte     ==> 15 - (Zeit / (Richtzeit / 5))
     """
     posten = models.ForeignKey('Posten')
     zeit = models.DecimalField(max_digits=6, decimal_places=2)
