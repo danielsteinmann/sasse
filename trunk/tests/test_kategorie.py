@@ -21,40 +21,39 @@ class get_kategorie_Test(TestCase):
         self.kat_C = Kategorie.objects.get(name='C')
         self.kat_D = Kategorie.objects.get(name='D')
         self.kat_F = Kategorie.objects.get(name='F')
-        bremgarten = Sektion.objects.create(name="Bremgarten")
-        self.mann_C = Mitglied.objects.create(
-                name="Steinmann", vorname="Daniel", geschlecht="m",
-                geburtsdatum=datetime.date(1967, 4, 30),
-                sektion=bremgarten)
-        self.mann_D = Mitglied.objects.create(
-                name="Wendel", vorname="René", geschlecht="m",
-                geburtsdatum=datetime.date(1958, 1, 1),
-                sektion=bremgarten)
-        self.frau_C = Mitglied.objects.create(
-                name="Honegger", vorname="Patricia", geschlecht="f",
-                geburtsdatum=datetime.date(1977, 1, 1),
-                sektion=bremgarten)
-        self.frau_II = Mitglied.objects.create(
-                name="Leemann", vorname="Sarah", geschlecht="f",
-                geburtsdatum=datetime.date(1993, 1, 1),
-                sektion=bremgarten)
-        self.frau_I = Mitglied.objects.create(
-                name="Ganzjung", vorname="Madame", geschlecht="f",
-                geburtsdatum=datetime.date(1995, 1, 1),
-                sektion=bremgarten)
+        self.sektion = Sektion.objects.create(name="Wurstlikon")
 
-    def testFrauNichtInKatF(self):
-        self.assertEquals(self.kat_I, get_kategorie(self.jahr, self.frau_I))
+    def testMannAlleJahre(self):
+        for alter in range(1,100):
+            jahrgang = self.jahr - alter
+            ein_mann = Mitglied.objects.create(
+                nummer=alter, name="Hans", vorname="Muster", geschlecht="m",
+                geburtsdatum=datetime.date(jahrgang, 1, 1),
+                sektion=self.sektion)
+            kat = get_kategorie(self.jahr, ein_mann)
+            if alter < 15:
+                self.assertEquals(self.kat_I, kat)
+            elif alter < 18:
+                self.assertEquals(self.kat_II, kat)
+            elif alter < 21:
+                self.assertEquals(self.kat_III, kat)
+            elif alter < 43:
+                self.assertEquals(self.kat_C, kat)
+            else:
+                self.assertEquals(self.kat_D, kat)
 
-    def testFrau(self):
-        self.assertEquals(self.kat_F, get_kategorie(self.jahr, self.frau_C))
-        self.assertEquals(self.kat_F, get_kategorie(self.jahr, self.frau_II))
-
-    def testMannKatC(self):
-        self.assertEquals(self.kat_C, get_kategorie(self.jahr, self.mann_C))
-
-    def testMannKatD(self):
-        self.assertEquals(self.kat_D, get_kategorie(self.jahr, self.mann_D))
+    def testFrauAlleJahre(self):
+        for alter in range(1,100):
+            jahrgang = self.jahr - alter
+            ein_mann = Mitglied.objects.create(
+                nummer=alter, name="Nina", vorname="Meier", geschlecht="f",
+                geburtsdatum=datetime.date(jahrgang, 1, 1),
+                sektion=self.sektion)
+            kat = get_kategorie(self.jahr, ein_mann)
+            if alter < 15:
+                self.assertEquals(self.kat_I, kat)
+            else:
+                self.assertEquals(self.kat_F, kat)
 
 
 class get_startkategorie_Test(unittest.TestCase):
