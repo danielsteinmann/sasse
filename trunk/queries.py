@@ -85,7 +85,11 @@ def read_rangliste(disziplin, kategorie, doppelstarter_mit_rang=False):
         dict['steuermann_ist_ds'] = row[i]; i+=1
         dict['vorderfahrer_ist_ds'] = row[i]; i+=1
         dict['steuermann'] = row[i]; i+=1
+        dict['steuermann'] += ' ' + row[i]; i+=1
+        dict['steuermann_jg'] = row[i]; i+=1
         dict['vorderfahrer'] = row[i]; i+=1
+        dict['vorderfahrer'] += ' ' + row[i]; i+=1
+        dict['vorderfahrer_jg'] = row[i]; i+=1
         dict['sektion'] = row[i]; i += 1
         dict['kategorie'] = row[i]; i += 1
         dict['zeit_tot'] = new_bew(row[i], ZEIT); i += 1

@@ -3,14 +3,11 @@
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.http import Http404
+from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.forms.formsets import all_valid
 from django.template import RequestContext
 from django.forms.formsets import formset_factory
-
-from reportlab.platypus import SimpleDocTemplate
-from reportlab.lib.pagesizes import A4
-from reportlab.lib.units import cm
 
 from models import Wettkampf
 from models import Disziplin
@@ -44,8 +41,8 @@ from queries import read_rangliste
 from queries import sort_rangliste
 from queries import read_startende_kategorien
 
-from reports import create_rangliste_pdf
-from reports import rangliste_header_footer
+from reports import create_rangliste_doctemplate
+from reports import create_rangliste_flowables
 
 
 def wettkaempfe_get(request):
@@ -589,24 +586,32 @@ def rangliste(request, jahr, wettkampf, disziplin, kategorie=None):
         'kranzlimite': kranzlimite}, context_instance=RequestContext(request))
 
 def rangliste_pdf(request, jahr, wettkampf, disziplin, kategorie):
-    from django.http import HttpResponse
+    #return rangliste_pdf_all(request, jahr, wettkampf, disziplin)
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
     k = d.kategorien.get(name=kategorie)
-
     rangliste = read_rangliste(d, k)
     rangliste_sorted = sorted(rangliste, key=sort_rangliste)
-
+    doc = create_rangliste_doctemplate(w, d)
+    flowables = create_rangliste_flowables(rangliste_sorted, k)
     response = HttpResponse(mimetype='application/pdf')
-    pdf_filename = "rangliste-%s.pdf" % k.name
-    #response['Content-Disposition'] = 'attachment; filename=%s' % pdf_filename
-    response['Content-Disposition'] = 'filename=%s' % pdf_filename
-    doc = SimpleDocTemplate(response, topMargin=1.5*cm, bottomMargin=1.5*cm, pagesize=A4)
-    doc.wettkampf = w
-    doc.disziplin = d
-    doc.kategorie = k
-    flowables = create_rangliste_pdf(rangliste_sorted)
-    doc.build(flowables, onFirstPage=rangliste_header_footer, onLaterPages=rangliste_header_footer)
+    response['Content-Disposition'] = 'filename=%s' % "rangliste-%s.pdf" % d.name
+    doc.build(flowables, filename=response)
+    return response
+
+def rangliste_pdf_all(request, jahr, wettkampf, disziplin):
+    w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
+    d = Disziplin.objects.get(wettkampf=w, name=disziplin)
+    response = HttpResponse(mimetype='application/pdf')
+    response['Content-Disposition'] = 'filename=%s' % "rangliste-%s.pdf" % d.name
+    doc = create_rangliste_doctemplate(w, d)
+    flowables = []
+    #for d in w.disziplin_set.all():
+    for k in d.kategorien.all():
+        rangliste = read_rangliste(d, k)
+        rangliste_sorted = sorted(rangliste, key=sort_rangliste)
+        flowables += create_rangliste_flowables(rangliste_sorted, k)
+    doc.build(flowables, filename=response)
     return response
 
 def notenblatt(request, jahr, wettkampf, disziplin, startnummer=None):
