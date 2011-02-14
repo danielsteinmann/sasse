@@ -180,7 +180,7 @@ def read_startende_kategorien(disziplin):
         select kat.*
           from sasse_kategorie kat
          where kat.id in (
-                select distinct kategorie_id
+                select distinct schiff.kategorie_id
                   from sasse_schiffeinzel schiff
                   join sasse_teilnehmer tn on (tn.id = schiff.teilnehmer_ptr_id)
                  where tn.disziplin_id = %s

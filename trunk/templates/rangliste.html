@@ -3,7 +3,7 @@
 {% block content %}
 {% load pagination_tags %}
 {% autopaginate rangliste 20 %}
-{% for k in disziplin.kategorien.all %}
+{% for k in kategorien %}
 {% ifequal k.id kategorie.id %}<b>{{ k.name }}</b>
 {% else %}<a href="{% url rangliste wettkampf.jahr, wettkampf.name, disziplin.name, k.name %}">{{ k.name }}</a>
 {% endifequal %}{% if not forloop.last %}|{% endif %}

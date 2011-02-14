@@ -574,16 +574,20 @@ def rangliste(request, jahr, wettkampf, disziplin, kategorie=None):
     assert request.method == 'GET'
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
+    gestartete_kategorien = read_startende_kategorien(d)
     if kategorie:
         k = d.kategorien.get(name=kategorie)
+    elif list(gestartete_kategorien):
+        k = gestartete_kategorien[0]
     else:
-        k = d.kategorien.all()[0]
+        raise Http404(u"Die Startliste ist noch leer" % d)
     kranzlimite = read_kranzlimite(d, k)
     rangliste = read_rangliste(d, k)
     rangliste_sorted = sorted(rangliste, key=sort_rangliste)
     return render_to_response('rangliste.html', {'wettkampf': w, 'disziplin':
-        d, 'kategorie': k, 'rangliste': rangliste_sorted,
-        'kranzlimite': kranzlimite}, context_instance=RequestContext(request))
+        d, 'kategorie': k, 'kategorien': gestartete_kategorien, 'rangliste':
+        rangliste_sorted, 'kranzlimite': kranzlimite},
+        context_instance=RequestContext(request))
 
 def rangliste_pdf(request, jahr, wettkampf, disziplin, kategorie):
     #return rangliste_pdf_all(request, jahr, wettkampf, disziplin)
