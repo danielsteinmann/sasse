@@ -5,9 +5,11 @@
 {% block subnav %}
 <ul class="subnav">
   <li class="{% block nav_rang_kat %}{% endblock %}">
-    <a href="{% url rangliste wettkampf.jahr, wettkampf.name, disziplin.name %}">Kategorien</a></li>
-  <li class="{% block nav_kranzlimiten %}{% endblock %}">
-  | <a href="{% url kranzlimiten wettkampf.jahr, wettkampf.name, disziplin.name %}">Kranzlimiten</a></li>
+    <a href="{% url rangliste wettkampf.jahr, wettkampf.name, disziplin.name %}">Ranglisten</a></li>
+  <li class="{% block nav_notenliste %}{% endblock %}">
+  | <a href="{% url notenliste wettkampf.jahr, wettkampf.name, disziplin.name %}">Notenliste</a></li>
+  <li class="{% block nav_notenblatt %}{% endblock %}">
+  | <a href="{% url notenblatt wettkampf.jahr, wettkampf.name, disziplin.name %}">Notenblatt</a></li>
 </ul>
 {% endblock %}
 {% endblock %}
