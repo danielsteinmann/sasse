@@ -64,16 +64,11 @@ def get_startkategorie(a, b):
 
 def get_kategorie(aktuelles_jahr, mitglied):
     alter = aktuelles_jahr - mitglied.geburtsdatum.year
-    try:
-        return Kategorie.objects.get(
-                geschlecht=mitglied.geschlecht,
-                alter_von__lte=alter, alter_bis__gte=alter)
-    except Kategorie.DoesNotExist:
-        # Passiert, wenn das Mitglied eine Frau ist, welche das Alter für die
-        # Kategorie 'F' noch nicht erreicht hat.
-        return Kategorie.objects.get(
-                geschlecht='m',
-                alter_von__lte=alter, alter_bis__gte=alter)
+    return Kategorie.objects.get(
+            Q(geschlecht='e') | Q(geschlecht=mitglied.geschlecht),
+            Q(alter_von__lte=alter),
+            Q(alter_bis__gte=alter)
+            )
 
 
 class WettkampfForm(ModelForm):

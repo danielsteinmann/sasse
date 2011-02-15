@@ -45,11 +45,11 @@ class get_kategorie_Test(TestCase):
     def testFrauAlleJahre(self):
         for alter in range(1,100):
             jahrgang = self.jahr - alter
-            ein_mann = Mitglied.objects.create(
+            eine_frau = Mitglied.objects.create(
                 nummer=alter, name="Nina", vorname="Meier", geschlecht="f",
                 geburtsdatum=datetime.date(jahrgang, 1, 1),
                 sektion=self.sektion)
-            kat = get_kategorie(self.jahr, ein_mann)
+            kat = get_kategorie(self.jahr, eine_frau)
             if alter < 15:
                 self.assertEquals(self.kat_I, kat)
             else:

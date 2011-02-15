@@ -540,11 +540,12 @@
     "pk": 1, 
     "model": "sasse.kategorie", 
     "fields": {
-      "geschlecht": "m", 
+      "geschlecht": "e", 
       "alter_von": 0, 
       "disziplinart": 1, 
       "alter_bis": 14, 
-      "name": "I"
+      "name": "I",
+      "reihenfolge": "1"
     }
   }, 
   {
@@ -555,7 +556,8 @@
       "alter_von": 15, 
       "disziplinart": 1, 
       "alter_bis": 17, 
-      "name": "II"
+      "name": "II",
+      "reihenfolge": "2"
     }
   }, 
   {
@@ -566,7 +568,8 @@
       "alter_von": 18, 
       "disziplinart": 1, 
       "alter_bis": 20, 
-      "name": "III"
+      "name": "III",
+      "reihenfolge": "3"
     }
   }, 
   {
@@ -577,7 +580,8 @@
       "alter_von": 21, 
       "disziplinart": 1, 
       "alter_bis": 42, 
-      "name": "C"
+      "name": "C",
+      "reihenfolge": "4"
     }
   }, 
   {
@@ -588,7 +592,8 @@
       "alter_von": 43, 
       "disziplinart": 1, 
       "alter_bis": 99, 
-      "name": "D"
+      "name": "D",
+      "reihenfolge": "5"
     }
   }, 
   {
@@ -599,7 +604,8 @@
       "alter_von": 15, 
       "disziplinart": 1, 
       "alter_bis": 99, 
-      "name": "F"
+      "name": "F",
+      "reihenfolge": "6"
     }
   }, 
   {

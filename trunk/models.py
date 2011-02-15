@@ -8,10 +8,10 @@ SCHIFFS_ART = (
         ('w', 'Weidling'),
         )
 
-GESCHLECHT_ART = (
+GESCHLECHT_ART = [
         ('f', 'Frau'),
         ('m', 'Mann'),
-        )
+        ]
 
 # Stammdaten (importiert)
 
@@ -146,7 +146,11 @@ class Kategorie(models.Model):
     name = models.CharField(max_length=10)
     alter_von = models.PositiveSmallIntegerField()
     alter_bis = models.PositiveSmallIntegerField()
-    geschlecht = models.CharField(max_length=1, choices=GESCHLECHT_ART)
+    geschlecht = models.CharField(max_length=1, choices=GESCHLECHT_ART + [('e', 'egal')])
+    reihenfolge = models.SmallIntegerField(default=1) # Was kommt auf GUI zuerst
+
+    class Meta:
+        ordering = ['reihenfolge']
 
     def __unicode__(self):
         return u'%s' % (self.name,)

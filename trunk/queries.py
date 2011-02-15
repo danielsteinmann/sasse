@@ -185,6 +185,6 @@ def read_startende_kategorien(disziplin):
                   join sasse_teilnehmer tn on (tn.id = schiff.teilnehmer_ptr_id)
                  where tn.disziplin_id = %s
                )
-         order by kat.name
+         order by kat.reihenfolge
          """, [disziplin.id])
     return kategorien
