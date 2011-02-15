@@ -2,20 +2,27 @@
 
 from datetime import datetime
 
-from reportlab.platypus import Paragraph, TableStyle
+from reportlab.lib import colors
+from reportlab.lib.enums import TA_LEFT, TA_CENTER
+from reportlab.lib.pagesizes import A4
+from reportlab.lib.styles import ParagraphStyle
+from reportlab.lib.units import cm
 from reportlab.platypus import BaseDocTemplate
-from reportlab.platypus import Table as Platypus_Table
 from reportlab.platypus import PageBreak
+from reportlab.platypus import Paragraph
+from reportlab.platypus import TableStyle
+from reportlab.platypus import Table as Platypus_Table
 from reportlab.platypus.doctemplate import PageTemplate
 from reportlab.platypus.flowables import DocExec
 from reportlab.platypus.frames import Frame
-from reportlab.lib import colors
-from reportlab.lib.styles import ParagraphStyle
-from reportlab.lib.styles import getSampleStyleSheet
-from reportlab.lib.pagesizes import A4
-from reportlab.lib.units import cm
 
 PAGE_WIDTH, PAGE_HEIGHT = A4
+LEFT = ParagraphStyle('left', fontName='Helvetica', fontSize=8, alignment=TA_LEFT)
+CENTER = ParagraphStyle('center', parent=LEFT, alignment=TA_CENTER)
+DS_MARKER = '<font size=-2> (DS)</font>'
+
+def _extract_jahrgang(geburtstag):
+    return ' <font size=-2>' + geburtstag.strftime('%Y') + "</font>"
 
 def create_rangliste_doctemplate(wettkampf, disziplin):
     f = Frame(1*cm, 1*cm, PAGE_WIDTH-2*cm, PAGE_HEIGHT-2.5*cm, id='normal')
@@ -25,28 +32,27 @@ def create_rangliste_doctemplate(wettkampf, disziplin):
     doc.disziplin = disziplin
     return doc
 
-def create_rangliste_flowables(rangliste, kategorie):
+def create_rangliste_flowables(rangliste, kategorie, kranzlimite):
     result = []
-    data = []
-    styles = getSampleStyleSheet()
-    data.append(['Rang', 'Steuermann', 'Vorderfahrer', 'Sektion', 'Zeit', 'Punkte'])
+    data = [['Rang', 'Steuermann', 'Vorderfahrer', 'Sektion', 'Stnr', 'Zeit', 'Punkte']]
+    col_widths = (30, 140, 140, 80, 30, 40, 30)
     anzahl_ohne_kranz = 0
-    ps_left = ParagraphStyle('left', fontName='Helvetica', fontSize=8, alignemt=0)
-    ps_center = ParagraphStyle('center', parent=ps_left, alignment=1)
     for row in rangliste:
         if not row['kranz']: anzahl_ohne_kranz += 1
         if row['doppelstarter']: row['rang'] = 'DS'
-        if row['steuermann_ist_ds']: row['steuermann'] += ' (DS)'
-        if row['vorderfahrer_ist_ds']: row['vorderfahrer'] += ' (DS)'
+        if row['steuermann_ist_ds']: row['steuermann'] += DS_MARKER
+        if row['vorderfahrer_ist_ds']: row['vorderfahrer'] += DS_MARKER
+        row['steuermann'] += _extract_jahrgang(row['steuermann_jg'])
+        row['vorderfahrer'] += _extract_jahrgang(row['vorderfahrer_jg'])
         record = []
-        record.append(Paragraph(unicode(row['rang']), ps_center))
-        record.append(Paragraph(row['steuermann'], ps_left))
-        record.append(Paragraph(row['vorderfahrer'], ps_left))
-        record.append(Paragraph(row['sektion'], ps_left))
-        record.append(Paragraph(unicode(row['zeit_tot']), ps_center))
-        record.append(Paragraph(unicode(row['punkt_tot']), ps_center))
+        record.append(Paragraph(unicode(row['rang']), CENTER))
+        record.append(Paragraph(row['steuermann'], LEFT))
+        record.append(Paragraph(row['vorderfahrer'], LEFT))
+        record.append(Paragraph(row['sektion'], LEFT))
+        record.append(Paragraph(unicode(row['startnummer']), CENTER))
+        record.append(Paragraph(unicode(row['zeit_tot']), CENTER))
+        record.append(Paragraph(unicode(row['punkt_tot']), CENTER))
         data.append(record)
-    col_widths = (30, 120, 120, 80, 50, 30)
     table_props = [
         ('LINEBELOW', (0,0), (-1,0), 1, colors.black),
         ('FONT', (0,0), (-1,0), 'Helvetica-Bold', 8),
@@ -60,14 +66,13 @@ def create_rangliste_flowables(rangliste, kategorie):
         ]
     if anzahl_ohne_kranz:
         kranzlimite_row = len(data) - anzahl_ohne_kranz
-        data.insert(kranzlimite_row, [Paragraph('Kranzlimite', ps_left)])
+        data.insert(kranzlimite_row, [Paragraph('Kranzlimite: %s Punkte' % (kranzlimite), LEFT)])
         table_props.extend([
             ('SPAN', (0,kranzlimite_row), (-1,kranzlimite_row)),
             ('BACKGROUND', (0,kranzlimite_row), (-1,kranzlimite_row), colors.lightgrey),
             ])
     result.append(DocExec("kategorie_name = '%s'" % kategorie.name))
-    table_style = TableStyle(table_props)
-    result.append(Platypus_Table(data, repeatRows=1, colWidths=col_widths, style=table_style))
+    result.append(Platypus_Table(data, repeatRows=1, colWidths=col_widths, style=TableStyle(table_props)))
     result.append(PageBreak())
     return result
 

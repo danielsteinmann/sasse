@@ -14,22 +14,23 @@
 <table class="list">
   <tr>
     <th class="startnummer">Rang</th>
-    <th>Fahrerpaar</th>
+    <th>Steuermann</th>
+    <th>Vorderfahrer</th>
     <th>Sektion</th>
-    <th class="startnummer">Startnr</th>
+    <th class="startnummer">Stnr</th>
     <th class="note">Zeit</th>
     <th class="note">Punkte</th>
   </tr>
 {% for row in rangliste %}
   {% ifchanged row.kranz %}{% if not forloop.first %}
-  <tr><td align="center" colspan="6">--- <a href="{% url kranzlimiten wettkampf.jahr, wettkampf.name, disziplin.name %}">Kranzlimite:</a> {{kranzlimite|default_if_none:"Default (ca 25%)"}} ---</td></tr>
+  <tr><td colspan="7"><a href="{% url kranzlimiten wettkampf.jahr, wettkampf.name, disziplin.name %}">Kranzlimite:</a> {{kranzlimite}} Punkte</td></tr>
   {% endif %}{% endifchanged %}
   <tr class="{% cycle "odd" "even" %}">
     <td align="center">{% if row.doppelstarter %}DS{% else %}{{row.rang}}{% endif %}</td>
-    <td>{{row.steuermann}}{% if row.steuermann_ist_ds %}*{% endif %}
-        / {{row.vorderfahrer}}{% if row.vorderfahrer_ist_ds %}*{% endif %}</td>
+    <td>{{row.steuermann}}<font size="-2">{% if row.steuermann_ist_ds %} (DS){% endif %} {{row.steuermann_jg|date:"Y"}}</font></td>
+    <td>{{row.vorderfahrer}}<font size="-2">{% if row.vorderfahrer_ist_ds %} (DS){% endif %} {{row.vorderfahrer_jg|date:"Y"}}</font></td>
     <td>{{row.sektion}}</td>
-    <td class="startnummer"><a href="{% url teilnehmer_get wettkampf.jahr, wettkampf.name, disziplin.name, row.startnummer %}">{{row.startnummer}}</a></td>
+    <td align="center"><a href="{% url teilnehmer_get wettkampf.jahr, wettkampf.name, disziplin.name, row.startnummer %}">{{row.startnummer}}</a></td>
     <td class="note">{{row.zeit_tot}}</td>
     <td class="note"><a title="Notenblatt" href="{% url notenblatt wettkampf.jahr, wettkampf.name, disziplin.name, row.startnummer %}">{{row.punkt_tot}}</a></td>
   </tr>

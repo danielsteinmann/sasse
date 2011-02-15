@@ -594,10 +594,11 @@ def rangliste_pdf(request, jahr, wettkampf, disziplin, kategorie):
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
     k = d.kategorien.get(name=kategorie)
+    kranzlimite = read_kranzlimite(d, k)
     rangliste = read_rangliste(d, k)
     rangliste_sorted = sorted(rangliste, key=sort_rangliste)
     doc = create_rangliste_doctemplate(w, d)
-    flowables = create_rangliste_flowables(rangliste_sorted, k)
+    flowables = create_rangliste_flowables(rangliste_sorted, k, kranzlimite)
     response = HttpResponse(mimetype='application/pdf')
     response['Content-Disposition'] = 'filename=%s' % "rangliste-%s.pdf" % d.name
     doc.build(flowables, filename=response)

@@ -18,17 +18,17 @@ Startnummern {{ searchform.startnummern }}
 <form id="myform" name="myform" action="" method="POST">
 <table class="list">
   <tr>
-    <th>Startnr</th>
+    <th>Stnr</th>
     <th>Steuermann</th>
     <th>Vorderfahrer</th>
     <th>Sektion</th>
-    <th>Kategorie</th>
+    <th>Kat</th>
   </tr>
   {% for teilnehmer in startliste %}
   <tr class="{% cycle 'odd' 'even' %}">
-    <td><a href="{% url teilnehmer_get wettkampf.jahr, wettkampf.name, disziplin.name, teilnehmer.startnummer %}">{{ teilnehmer.startnummer }}</a>
-    <td><a href="/admin/sasse/mitglied/{{ teilnehmer.steuermann_id }}" title="Sektion {{ teilnehmer.steuermann.sektion }}, Jahrgang {{ teilnehmer.steuermann.geburtsdatum.year }}, Mitglied {{ teilnehmer.steuermann.nummer }}">{{ teilnehmer.steuermann.name }} {{ teilnehmer.steuermann.vorname }}, {{ teilnehmer.steuermann.geburtsdatum.year }}</a></td>
-    <td><a href="/admin/sasse/mitglied/{{ teilnehmer.vorderfahrer_id }}" title="Sektion {{ teilnehmer.vorderfahrer.sektion }}, Jahrgang {{ teilnehmer.vorderfahrer.geburtsdatum.year }}, Mitglied {{ teilnehmer.vorderfahrer.nummer }}">{{ teilnehmer.vorderfahrer.name }}&nbsp;{{ teilnehmer.vorderfahrer.vorname }}, {{ teilnehmer.vorderfahrer.geburtsdatum.year }}</a></td>
+    <td><a href="{% url teilnehmer_get wettkampf.jahr, wettkampf.name, disziplin.name, teilnehmer.startnummer %}">{{ teilnehmer.startnummer }}</a></td>
+    <td>{{ teilnehmer.steuermann.name }}&nbsp;{{ teilnehmer.steuermann.vorname }}<font size="-2"> {{ teilnehmer.steuermann.geburtsdatum.year }}</font></td>
+    <td>{{ teilnehmer.vorderfahrer.name }}&nbsp;{{ teilnehmer.vorderfahrer.vorname }}<font size="-2"> {{ teilnehmer.vorderfahrer.geburtsdatum.year }}</font></td>
     <td>{{ teilnehmer.sektion }}</td>
     <td>{{ teilnehmer.kategorie }}</td>
   </tr>

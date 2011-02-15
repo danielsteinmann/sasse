@@ -24,10 +24,10 @@ select tn.startnummer as Startnr
        ) = tn.startnummer then 0 else 1 end as VorderfahrerIstDS
      , max(hinten.name) as Steuermann
      , max(hinten.vorname) as SteuermannVorname
-     , max(hinten.geburtsdatum) as SteuermannGeburi
+     , hinten.geburtsdatum as SteuermannGeburi
      , max(vorne.name) as Vorderfahrer
      , max(vorne.vorname) as VorderfahrerVorname
-     , max(vorne.geburtsdatum) as VorderfahrerGeburi
+     , vorne.geburtsdatum as VorderfahrerGeburi
      , max(sektion.name) as Sektion
      , max(kat.name) as Kategorie
      , sum(b.zeit) as Zeit
