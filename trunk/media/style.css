@@ -125,39 +125,47 @@ Plugin URI: http://www.mis-algoritmos.com/2007/09/09/wp-digg-style-pagination-pl
 Author: Victor De la Rocha
 Author URI: http://www.mis-algoritmos.com
 */
-
-/*CSS Digg style pagination*/
+/*CSS Yahoo new version style pagination*/
+/*    Leicht angepasst von Daniel Steinmann*/
 div.pagination {
     padding: 3px;
     margin: 3px;
-    text-align:left;
+    text-align: left;
+    font-family:Tahoma,Helvetica,sans-serif;
+    font-size:.85em;
 }
 div.pagination a {
-    padding: 2px 5px 2px 5px;
-    margin: 2px;
-    border: 1px solid #AAAADD;
-
-    text-decoration: none; /* no underline */
-    color: #000099;
+    border: 1px solid #ccdbe4;
+    margin-right: 1px;
+    padding: 2px 5px;
+    background-position:bottom;
+    text-decoration: none;
+    color: #0061de;		
 }
-div.pagination a:hover, div.digg a:active {
-    border: 1px solid #000099;
-
-    color: #000;
+div.pagination a:hover, div.pagination a:active {
+    border: 1px solid #2b55af;
+    background-color: #3666d4;
+    color: #fff;
 }
 div.pagination span.current {
-    padding: 2px 5px 2px 5px;
-    margin: 2px;
-    border: 1px solid #000099;
-
-    font-weight: bold;
-    background-color: #000099;
-    color: #FFF;
+    border: 1px solid #2b55af;
+    background-color: #3666d4;
+    color: #fff;
+    margin-right: 1px;
+    padding: 2px 4px;
 }
 div.pagination span.disabled {
-    padding: 2px 5px 2px 5px;
-    margin: 2px;
-    border: 1px solid #EEE;
-
-    color: #DDD;
+    display:none;
+}
+div.pagination a.next {
+    margin: 0 0 0 10px;
+}
+div.pagination a.next:hover {
+    border: 1px solid #2b55af;
+}
+div.pagination a.prev {
+    margin:0 10px 0 0;
+}
+div.pagination a.prev:hover {
+    border: 1px solid #2b55af;
 }
