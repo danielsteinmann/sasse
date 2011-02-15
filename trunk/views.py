@@ -590,7 +590,6 @@ def rangliste(request, jahr, wettkampf, disziplin, kategorie=None):
         context_instance=RequestContext(request))
 
 def rangliste_pdf(request, jahr, wettkampf, disziplin, kategorie):
-    #return rangliste_pdf_all(request, jahr, wettkampf, disziplin)
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
     k = d.kategorien.get(name=kategorie)
@@ -600,7 +599,7 @@ def rangliste_pdf(request, jahr, wettkampf, disziplin, kategorie):
     doc = create_rangliste_doctemplate(w, d)
     flowables = create_rangliste_flowables(rangliste_sorted, k, kranzlimite)
     response = HttpResponse(mimetype='application/pdf')
-    response['Content-Disposition'] = 'filename=%s' % "rangliste-%s.pdf" % d.name
+    response['Content-Disposition'] = 'filename=rangliste-%s-kat-%s' % (w.name, k.name)
     doc.build(flowables, filename=response)
     return response
 
@@ -608,14 +607,14 @@ def rangliste_pdf_all(request, jahr, wettkampf, disziplin):
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
     response = HttpResponse(mimetype='application/pdf')
-    response['Content-Disposition'] = 'filename=%s' % "rangliste-%s.pdf" % d.name
+    response['Content-Disposition'] = 'filename=rangliste-%s' % w.name
     doc = create_rangliste_doctemplate(w, d)
     flowables = []
-    #for d in w.disziplin_set.all():
-    for k in d.kategorien.all():
+    for k in read_startende_kategorien(d):
+        kranzlimite = read_kranzlimite(d, k)
         rangliste = read_rangliste(d, k)
         rangliste_sorted = sorted(rangliste, key=sort_rangliste)
-        flowables += create_rangliste_flowables(rangliste_sorted, k)
+        flowables += create_rangliste_flowables(rangliste_sorted, k, kranzlimite)
     doc.build(flowables, filename=response)
     return response
 
