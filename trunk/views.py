@@ -8,6 +8,7 @@ from django.shortcuts import render_to_response
 from django.forms.formsets import all_valid
 from django.template import RequestContext
 from django.forms.formsets import formset_factory
+from django.utils.encoding import smart_str
 
 from models import Wettkampf
 from models import Disziplin
@@ -599,7 +600,7 @@ def rangliste_pdf(request, jahr, wettkampf, disziplin, kategorie):
     doc = create_rangliste_doctemplate(w, d)
     flowables = create_rangliste_flowables(rangliste_sorted, k, kranzlimite)
     response = HttpResponse(mimetype='application/pdf')
-    response['Content-Disposition'] = 'filename=rangliste-%s-kat-%s' % (w.name, k.name)
+    response['Content-Disposition'] = smart_str(u'filename=rangliste-%s-kat-%s' % (w.name, k.name))
     doc.build(flowables, filename=response)
     return response
 
@@ -607,7 +608,7 @@ def rangliste_pdf_all(request, jahr, wettkampf, disziplin):
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
     response = HttpResponse(mimetype='application/pdf')
-    response['Content-Disposition'] = 'filename=rangliste-%s' % w.name
+    response['Content-Disposition'] = smart_str(u'filename=rangliste-%s' % w.name)
     doc = create_rangliste_doctemplate(w, d)
     flowables = []
     for k in read_startende_kategorien(d):
