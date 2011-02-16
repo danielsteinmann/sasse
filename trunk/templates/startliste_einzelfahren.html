@@ -12,6 +12,9 @@ Startnummern {{ searchform.startnummern }}
 <input type="submit" value="filtern">
 | <a href="#" title="Startnummern '1,4-15' zeigt Startnummern 1,4,5,...,15.
 '800-' zeigt Startnummern ab 800">Filter Tipps</a>
+{% if page_obj.has_next %}
+<br/>oder <a href="?page={{ paginator.num_pages }}{{ getvars }}">Teilnehmer hinzufügen</a>
+{% endif %}
 </form>
 
 {% if not searchform.errors %}
@@ -49,12 +52,6 @@ Startnummern {{ searchform.startnummern }}
 </table>
 <p>
 {% paginate %}
-<p>
-{% if page_obj.has_next %}
-<a href="?page={{ paginator.num_pages }}{{ getvars }}">Teilnehmer hinzufügen</a>
-|
-{% endif %}
-<a href="/admin/sasse/mitglied/">Mitglied erfassen</a>
 <script type="text/javascript">
   var first_field = document.getElementById('id_startnummer');
   first_field.focus();
