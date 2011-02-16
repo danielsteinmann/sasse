@@ -3,23 +3,23 @@
 {% block content %}
 <table class="list">
   <tr>
-    <th>Kategorie</th>
-    <th colspan="2">Limite</th>
-    <th colspan="2">#Rangierungen</th>
-    <th colspan="2">#Doppelstarter</th>
+    <th class="kategorie">Kategorie</th>
+    <th style="text-align:center" colspan="2">Kranzlimite</th>
+    <th style="text-align:center" colspan="2">Anz. Rangierungen</th>
+    <th style="text-align:center" colspan="2">Anz. Doppelstarter</th>
   </tr>
   <tr>
     <th></th>
-    <th>[pkt]</th>
-    <th>[%]</th>
-    <th>Total</th>
-    <th>&gt;Limite</th>
-    <th>Total</th>
-    <th>&gt;Limite</th>
+    <th class="note">[pkt]</th>
+    <th class="note">[%]</th>
+    <th class="note">Total</th>
+    <th class="note">Mit Kranz</th>
+    <th class="note">Total</th>
+    <th class="note">Mit Kranz</th>
   </tr>
 {% for row in kranzlimiten %}
   <tr class="{% cycle "odd" "even" %}">
-    <td><a href="{% url rangliste wettkampf.jahr, wettkampf.name, disziplin.name, row.kategorie %}">{{row.kategorie}}</a></td>
+    <td class="kategorie"><a href="{% url rangliste wettkampf.jahr, wettkampf.name, disziplin.name, row.kategorie %}">{{row.kategorie}}</a></td>
     <td class="note">{{row.limite_in_punkte}}</td>
     <td class="note">{{row.limite_in_prozent}}</td>
     <td class="note">{{row.anzahl_raenge}}</td>

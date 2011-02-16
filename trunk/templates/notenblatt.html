@@ -2,55 +2,55 @@
 {% block nav_notenblatt %}selected{% endblock %}
 {% block content %}
 <table class="display">
-    <tr>
-        <th>Startnummer:</th>
-        <td><a href="{% url teilnehmer_get wettkampf.jahr, wettkampf.name, disziplin.name, schiff.startnummer %}">{{schiff.startnummer}}</a></td>
-    </tr>
-    <tr>
-        <th>Steuermann:</th>
-        <td>{{ schiff.steuermann.name }} {{ schiff.steuermann.vorname }}</td>
-    </tr>
-    <tr>
-        <th>Vorderfahrer:</th>
-        <td>{{ schiff.vorderfahrer.name }} {{ schiff.vorderfahrer.vorname }}</td>
-    </tr>
-    <tr>
-        <th>Sektion:</th>
-        <td>{{ schiff.sektion.name }}</td>
-    </tr>
-    <tr>
-        <th>Startkategorie:</th>
-        <td>{{ schiff.kategorie.name }}</td>
-    </tr>
+  <tr>
+    <th>Startnummer:</th>
+    <td><a href="{% url teilnehmer_get wettkampf.jahr, wettkampf.name, disziplin.name, schiff.startnummer %}">{{schiff.startnummer}}</a></td>
+  </tr>
+  <tr>
+    <th>Steuermann:</th>
+    <td>{{schiff.steuermann.name}} {{schiff.steuermann.vorname}}</td>
+  </tr>
+  <tr>
+    <th>Vorderfahrer:</th>
+    <td>{{schiff.vorderfahrer.name}} {{schiff.vorderfahrer.vorname}}</td>
+  </tr>
+  <tr>
+    <th>Sektion:</th>
+    <td>{{schiff.sektion.name}}</td>
+  </tr>
+  <tr>
+    <th>Startkategorie:</th>
+    <td>{{schiff.kategorie.name}}</td>
+  </tr>
 </table>
 <p></p>
 <table class="list">
   <tr>
-    <th>Posten</th>
+    <th class="posten">Posten</th>
     <th>Übungsteil</th>
     <th class="note">Abzug</th>
     <th class="note">Note</th>
-    <th class="note">Zeit</th>
+    <th class="zeit">Zeit</th>
     <th class="note">Total</th>
   </tr>
-{% for row in posten_werte %}
-{% if not forloop.last %}
+  {% for row in posten_werte %}
+  {% if not forloop.last %}
   <tr class="{% cycle "odd" "even" %}">
-    <td>{{row.posten}}</td>
+    <td class="posten">{{row.posten}}</td>
     <td>{{row.posten_art}}</td>
     <td class="note">{{row.abzug|default:""}}</td>
     <td class="note">{{row.note|default:""}}</td>
-    <td class="note">{{row.zeit|default:""}}</td>
+    <td class="zeit">{{row.zeit|default:""}}</td>
     <td class="note">{{row.total}}</td>
   </tr>
-{% else %}
+  {% else %}
   <tr style="font-weight: bold;">
     <td colspan="4" align="center">Total</td>
     <td class="note">{{row.zeit}}</td>
     <td class="note">{{row.total}}</td>
   </tr>
-{% endif %}
-{% endfor %}
+  {% endif %}
+  {% endfor %}
 </table>
 <p>
 {% if next %}

@@ -5,7 +5,7 @@ Die besten {{ rangliste.count }} Zeiten für Posten {{ posten.name }}:
     <th>Fahrerpaar</th>
     <th>Sektion</th>
     <th class="kategorie">Kat</th>
-    <th class="note">Zeit</th>
+    <th class="zeit">Zeit</th>
   </tr>
 {% for row in rangliste %}
   <tr class="{% cycle 'odd' 'even' %}">
@@ -13,7 +13,7 @@ Die besten {{ rangliste.count }} Zeiten für Posten {{ posten.name }}:
     <td>{{row.schiff.steuermann.name}} / {{row.schiff.vorderfahrer.name}}</td>
     <td>{{row.schiff.sektion.name}}</td>
     <td class="kategorie">{{row.schiff.kategorie.name}}</td>
-    <td>{{row}}</td>
+    <td class="zeit">{{row}}</td>
   </tr>
 {% endfor %}
 </table>

@@ -4,13 +4,13 @@
 <form id="myform" name="myform" action="" method="POST">
 <table class="list">
   <tr>
-    <th>Posten</th>
+    <th class="posten">Posten</th>
     <th>Art</th>
     <th>Reihenfolge</th>
   </tr>
   {% for p in posten %}
   <tr class="{% cycle 'odd' 'even' as rowcolors %}">
-    <td><a href="{% url posten_get wettkampf.jahr, wettkampf.name, disziplin.name, p.name %}">{{ p.name}}</a>
+    <td class="posten"><a href="{% url posten_get wettkampf.jahr, wettkampf.name, disziplin.name, p.name %}">{{ p.name}}</a>
     <td>{{ p.postenart }}</td>
     <td>{{ p.reihenfolge }}</td>
   </tr>

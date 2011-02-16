@@ -32,13 +32,22 @@ table.list td {
     padding: 2px 4px 2px 4px;
 }
 table.list .startnummer {
-    text-align: right;
+    text-align: center;
+}
+table.list .posten {
+    text-align: center;
+}
+table.list .kategorie {
+    text-align: center;
+}
+table.list .rang {
+    text-align: center;
 }
 table.list .note {
     text-align: right;
 }
-table.list .kategorie {
-    text-align: right;
+table.list .zeit {
+    text-align: center;
 }
 /* Data as entry form */
 table.form {

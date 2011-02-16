@@ -18,19 +18,19 @@ Startnummern {{ searchform.startnummern }}
 <form id="myform" name="myform" action="" method="POST">
 <table class="list">
   <tr>
-    <th>Stnr</th>
+    <th class="startnummer">Stnr</th>
     <th>Steuermann</th>
     <th>Vorderfahrer</th>
     <th>Sektion</th>
-    <th>Kat</th>
+    <th class="kategorie">Kat</th>
   </tr>
   {% for teilnehmer in startliste %}
   <tr class="{% cycle 'odd' 'even' %}">
-    <td><a href="{% url teilnehmer_get wettkampf.jahr, wettkampf.name, disziplin.name, teilnehmer.startnummer %}">{{ teilnehmer.startnummer }}</a></td>
+    <td class="startnummer"><a href="{% url teilnehmer_get wettkampf.jahr, wettkampf.name, disziplin.name, teilnehmer.startnummer %}">{{ teilnehmer.startnummer }}</a></td>
     <td>{{ teilnehmer.steuermann.name }}&nbsp;{{ teilnehmer.steuermann.vorname }}<font size="-2"> {{ teilnehmer.steuermann.geburtsdatum.year }}</font></td>
     <td>{{ teilnehmer.vorderfahrer.name }}&nbsp;{{ teilnehmer.vorderfahrer.vorname }}<font size="-2"> {{ teilnehmer.vorderfahrer.geburtsdatum.year }}</font></td>
     <td>{{ teilnehmer.sektion }}</td>
-    <td>{{ teilnehmer.kategorie }}</td>
+    <td class="kategorie">{{ teilnehmer.kategorie }}</td>
   </tr>
   {% endfor %}
   {% if not page_obj.has_next %}
