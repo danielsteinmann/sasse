@@ -138,10 +138,10 @@ def read_notenblatt(disziplin, teilnehmer=None, sektion=None):
         zeit_sum += dict['zeit'].zeit
         total_sum += dict['total'].note
         if dict['posten_art'] == 'Zeitnote':
-            dict['abzug'] = None
-            dict['note'] = None
+            dict['abzug'] = ""
+            dict['note'] = ""
         else:
-            dict['zeit'] = None
+            dict['zeit'] = ""
         yield dict
     dict = {}
     dict['zeit'] = new_bew(zeit_sum, ZEIT)

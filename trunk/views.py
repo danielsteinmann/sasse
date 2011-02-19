@@ -44,6 +44,8 @@ from queries import read_startende_kategorien
 
 from reports import create_rangliste_doctemplate
 from reports import create_rangliste_flowables
+from reports import create_notenblatt_doctemplate
+from reports import create_notenblatt_flowables
 
 
 def wettkaempfe_get(request):
@@ -637,6 +639,20 @@ def notenblatt(request, jahr, wettkampf, disziplin, startnummer=None):
     return render_to_response('notenblatt.html', {'wettkampf': w, 'disziplin':
         d, 'schiff': s, 'posten_werte': posten_werte, 'next': next},
         context_instance=RequestContext(request))
+
+def notenblatt_pdf(request, jahr, wettkampf, disziplin, startnummer):
+    assert request.method == 'GET'
+    w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
+    d = Disziplin.objects.get(wettkampf=w, name=disziplin)
+    s = Schiffeinzel.objects.select_related().get(disziplin=d,
+            startnummer=startnummer)
+    posten_werte = read_notenblatt(d, s)
+    doc = create_notenblatt_doctemplate(w, d)
+    flowables = create_notenblatt_flowables(posten_werte, s)
+    response = HttpResponse(mimetype='application/pdf')
+    response['Content-Disposition'] = smart_str(u'filename=notenblatt-%s' % startnummer)
+    doc.build(flowables, filename=response)
+    return response
 
 def kranzlimiten(request, jahr, wettkampf, disziplin):
     assert request.method == 'GET'

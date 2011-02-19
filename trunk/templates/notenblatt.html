@@ -38,9 +38,9 @@
   <tr class="{% cycle "odd" "even" %}">
     <td class="posten">{{row.posten}}</td>
     <td>{{row.posten_art}}</td>
-    <td class="note">{{row.abzug|default:""}}</td>
-    <td class="note">{{row.note|default:""}}</td>
-    <td class="zeit">{{row.zeit|default:""}}</td>
+    <td class="note">{{row.abzug}}</td>
+    <td class="note">{{row.note}}</td>
+    <td class="zeit">{{row.zeit}}</td>
     <td class="note">{{row.total}}</td>
   </tr>
   {% else %}
@@ -53,7 +53,8 @@
   {% endfor %}
 </table>
 <p>
+<a href="{% url notenblatt_pdf wettkampf.jahr, wettkampf.name, disziplin.name, schiff.startnummer %}">PDF</a>
 {% if next %}
-<a href="{% url notenblatt wettkampf.jahr, wettkampf.name, disziplin.name, next %}">Weiter</a>
+| <a href="{% url notenblatt wettkampf.jahr, wettkampf.name, disziplin.name, next %}">Weiter</a>
 {% endif %}
 {% endblock %}

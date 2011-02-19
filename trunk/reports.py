@@ -3,13 +3,14 @@
 from datetime import datetime
 
 from reportlab.lib import colors
-from reportlab.lib.enums import TA_LEFT, TA_CENTER
+from reportlab.lib.enums import TA_LEFT, TA_CENTER, TA_RIGHT
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.styles import ParagraphStyle
 from reportlab.lib.units import cm
 from reportlab.platypus import BaseDocTemplate
 from reportlab.platypus import PageBreak
 from reportlab.platypus import Paragraph
+from reportlab.platypus import Spacer
 from reportlab.platypus import TableStyle
 from reportlab.platypus import Table as Platypus_Table
 from reportlab.platypus.doctemplate import PageTemplate
@@ -19,6 +20,7 @@ from reportlab.platypus.frames import Frame
 PAGE_WIDTH, PAGE_HEIGHT = A4
 LEFT = ParagraphStyle('left', fontName='Helvetica', fontSize=8, alignment=TA_LEFT)
 CENTER = ParagraphStyle('center', parent=LEFT, alignment=TA_CENTER)
+RIGHT = ParagraphStyle('right', parent=LEFT, alignment=TA_RIGHT)
 DS_MARKER = '<font size=-2> (DS)</font>'
 
 def _extract_jahrgang(geburtstag):
@@ -89,3 +91,67 @@ def write_rangliste_header_footer(canvas, doc):
     #canvas.drawString(2*cm, 1*cm, "%s" % (current_datetime,))
     canvas.drawCentredString(PAGE_WIDTH/2, 1*cm, "Seite %d" % (doc.page,))
     canvas.restoreState()
+
+
+#
+# Notenblatt
+#
+
+def create_notenblatt_doctemplate(wettkampf, disziplin):
+    f = Frame(2.5*cm, 1*cm, PAGE_WIDTH-2*cm, PAGE_HEIGHT-2.5*cm, id='normal')
+    pt = PageTemplate(id="Notenblatt", frames=f)
+    doc = BaseDocTemplate(None, pageTemplates=[pt], pagesize=A4)
+    return doc
+
+def create_notenblatt_flowables(posten_werte, schiffeinzel):
+    result = []
+    data = [
+            ["Startnummer:", unicode(schiffeinzel.startnummer)],
+            ["Kategorie:", schiffeinzel.kategorie],
+            ["Sektion:", schiffeinzel.sektion],
+            ["Steuermann:", "%s %s" % (schiffeinzel.steuermann.name, schiffeinzel.steuermann.vorname)],
+            ["Vorderfahrer:", "%s %s" % (schiffeinzel.vorderfahrer.name, schiffeinzel.vorderfahrer.vorname)],
+            ]
+    col_widths = (70, 100)
+    table_props = [
+        ('FONT', (0,0), (0,-1), 'Helvetica-Bold', 8),
+        ('TOPPADDING', (0,0), (-1,-1), 1),
+        ('BOTTOMPADDING', (0,0), (-1,-1), 1),
+        ]
+    result.append(Platypus_Table(data, hAlign="LEFT", colWidths=col_widths, style=TableStyle(table_props)))
+    result.append(Spacer(1, 30))
+    header = []
+    header.append(Paragraph('<strong>Posten</strong>', CENTER))
+    header.append(Paragraph('<strong>Übungsteil</strong>', LEFT))
+    header.append(Paragraph('<strong>Abzug</strong>', RIGHT))
+    header.append(Paragraph('<strong>Note</strong>', RIGHT))
+    header.append(Paragraph('<strong>Zeit</strong>', CENTER))
+    header.append(Paragraph('<strong>Total</strong>', RIGHT))
+    data = []
+    data.append(header)
+    col_widths = (40, 200, 30, 30, 40, 30)
+    for row in posten_werte:
+        record = []
+        if row.get('posten'):
+            record.append(Paragraph(row['posten'], CENTER))
+            record.append(Paragraph(row['posten_art'], LEFT))
+            record.append(Paragraph(unicode(row['abzug']), RIGHT))
+            record.append(Paragraph(unicode(row['note']), RIGHT))
+            record.append(Paragraph(unicode(row['zeit']), CENTER))
+            record.append(Paragraph(unicode(row['total']), RIGHT))
+        else:
+            record.append("")
+            record.append("")
+            record.append("")
+            record.append("")
+            record.append(Paragraph("<strong>" + unicode(row['zeit']) + "</strong>", CENTER))
+            record.append(Paragraph("<strong>" + unicode(row['total']) + "</strong>", RIGHT))
+        data.append(record)
+    table_props = [
+        ('LINEBELOW', (0,0), (-1,0), 1, colors.black),
+        ('LINEABOVE', (0,-1), (-1,-1), 1, colors.black),
+        ('ROWBACKGROUNDS', (0,1), (-1,-1), (None, colors.HexColor(0xf0f0f0))),
+        ]
+    result.append(Platypus_Table(data, hAlign="LEFT", colWidths=col_widths, style=TableStyle(table_props)))
+    return result
+
