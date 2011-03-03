@@ -107,7 +107,7 @@ def write_rangliste_header_footer(canvas, doc):
 
 def create_notenblatt_doctemplate(wettkampf, disziplin):
     f = Frame(2.5*cm, 1*cm, PAGE_WIDTH-2*cm, PAGE_HEIGHT-3*cm, id='normal')
-    pt = PageTemplate(id="Notenblatt", frames=f, onPage=write_notenblatt_header_footer)
+    pt = PageTemplate(id="Notenblatt", frames=f, onPageEnd=write_notenblatt_header_footer)
     doc = BaseDocTemplate(None, pageTemplates=[pt], pagesize=A4)
     doc.wettkampf = wettkampf
     doc.disziplin = disziplin
@@ -127,11 +127,11 @@ def create_notenblatt_flowables(posten_werte, schiffeinzel):
     steuermann = schiffeinzel.steuermann
     vorderfahrer = schiffeinzel.vorderfahrer
     data = [
+            ["Startnummer:", unicode(schiffeinzel.startnummer)],
             ["Steuermann:", "%s %s" % (steuermann.name, steuermann.vorname)],
             ["Vorderfahrer:", "%s %s" % (vorderfahrer.name, vorderfahrer.vorname)],
             ["Sektion:", schiffeinzel.sektion],
             ["Kategorie:", schiffeinzel.kategorie],
-            ["Startnummer:", unicode(schiffeinzel.startnummer)],
             ]
     col_widths = (70, 150)
     table_props = [
@@ -140,6 +140,7 @@ def create_notenblatt_flowables(posten_werte, schiffeinzel):
         ('TOPPADDING', (0,0), (-1,-1), 1),
         ('BOTTOMPADDING', (0,0), (-1,-1), 1),
         ]
+    result.append(DocExec("startnummer = '%d'" % schiffeinzel.startnummer))
     result.append(Platypus_Table(data, hAlign="LEFT", colWidths=col_widths, style=TableStyle(table_props)))
     result.append(Spacer(1, 30))
     # --------
@@ -170,5 +171,5 @@ def create_notenblatt_flowables(posten_werte, schiffeinzel):
         ('ROWBACKGROUNDS', (0,1), (-1,-2), (None, colors.HexColor(0xf0f0f0))),
         ]
     result.append(Platypus_Table(data, hAlign="LEFT", colWidths=col_widths, style=TableStyle(table_props)))
+    result.append(PageBreak())
     return result
-
