@@ -9,9 +9,9 @@
 {{ searchform.startnummern.errors }}
 Nach Sektion {{ searchform.sektion }} oder
 Startnummern {{ searchform.startnummern }}
-<input type="submit" value="filtern">
-| <a href="#" title="Startnummern '1,4-15' zeigt Startnummern 1,4,5,...,15.
-'800-' zeigt Startnummern ab 800">Filter Tipps</a>
+<input title="Startnummern '1,4-15' zeigt Startnummern 1,4,5,...,15.
+'800-' zeigt Startnummern ab 800" type="submit" value="filtern">
+<input type="submit" name="startliste_pdf" value="drucken">
 {% if page_obj.has_next %}
 <br/>oder <a href="?page={{ paginator.num_pages }}{{ getvars }}">Teilnehmer hinzufügen</a>
 {% endif %}

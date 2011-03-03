@@ -46,6 +46,8 @@ from reports import create_rangliste_doctemplate
 from reports import create_rangliste_flowables
 from reports import create_notenblatt_doctemplate
 from reports import create_notenblatt_flowables
+from reports import create_startliste_doctemplate
+from reports import create_startliste_flowables
 
 
 def wettkaempfe_get(request):
@@ -294,6 +296,8 @@ def startliste_einzelfahren(request, jahr, wettkampf, disziplin):
     searchform = SchiffeinzelFilterForm(d, request.GET)
     if searchform.is_valid():
         s = searchform.anzeigeliste()
+        if request.GET.has_key('startliste_pdf'):
+            return startliste_einzelfahren_pdf(w, d, s)
         nummer = request.GET.get('startnummer')
         if not nummer:
             nummer = searchform.naechste_nummer(s)
@@ -307,6 +311,14 @@ def startliste_einzelfahren(request, jahr, wettkampf, disziplin):
         'startliste': s, 'form': entryform},
         context_instance=RequestContext(request)
         )
+
+def startliste_einzelfahren_pdf(w, d, schiffe):
+    doc = create_startliste_doctemplate(w, d)
+    flowables = create_startliste_flowables(schiffe)
+    response = HttpResponse(mimetype='application/pdf')
+    response['Content-Disposition'] = smart_str(u'filename=startliste')
+    doc.build(flowables, filename=response)
+    return response
 
 def startliste_einzelfahren_post(request, jahr, wettkampf, disziplin):
     assert request.method == 'POST'
@@ -573,9 +585,9 @@ def notenliste(request, jahr, wettkampf, disziplin):
     sektion = None
     filter_form = SchiffeinzelFilterForm(d, request.GET.copy())
     if filter_form.is_valid():
-        sektion = filter_form.cleaned_data['sektion']
         if request.GET.has_key('notenblaetter_pdf'):
-            return notenblaetter_pdf(request, jahr, wettkampf, disziplin, sektion)
+            return notenblaetter_pdf(w, d, filter_form.anzeigeliste())
+        sektion = filter_form.cleaned_data['sektion']
     notenliste = read_notenliste(d, posten, sektion)
     return render_to_response('notenliste.html', {'wettkampf': w, 'disziplin':
         d, 'posten': posten, 'notenliste': list(notenliste), 'searchform': filter_form},
@@ -662,18 +674,12 @@ def notenblatt_pdf(request, jahr, wettkampf, disziplin, startnummer):
     doc.build(flowables, filename=response)
     return response
 
-def notenblaetter_pdf(request, jahr, wettkampf, disziplin, sektion_id):
-    assert request.method == 'GET'
-    w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
-    d = Disziplin.objects.get(wettkampf=w, name=disziplin)
-    startnummern = Schiffeinzel.objects.select_related().filter(disziplin=d).order_by('startnummer')
-    if sektion_id:
-        startnummern = startnummern.filter(sektion=sektion_id)
+def notenblaetter_pdf(w, d, schiffe):
     response = HttpResponse(mimetype='application/pdf')
     response['Content-Disposition'] = smart_str(u'filename=notenblaetter')
     doc = create_notenblatt_doctemplate(w, d)
     flowables = []
-    for s in startnummern:
+    for s in schiffe:
         posten_werte = read_notenblatt(d, s)
         flowables += create_notenblatt_flowables(posten_werte, s)
     doc.build(flowables, filename=response)

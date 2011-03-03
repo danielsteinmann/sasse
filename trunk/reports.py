@@ -173,3 +173,58 @@ def create_notenblatt_flowables(posten_werte, schiffeinzel):
     result.append(Platypus_Table(data, hAlign="LEFT", colWidths=col_widths, style=TableStyle(table_props)))
     result.append(PageBreak())
     return result
+
+#
+# Startliste
+#
+
+def create_startliste_doctemplate(wettkampf, disziplin):
+    f = Frame(1*cm, 1*cm, PAGE_WIDTH-2*cm, PAGE_HEIGHT-2.5*cm, id='normal')
+    pt = PageTemplate(id="Startliste", frames=f, onPageEnd=write_startliste_header_footer)
+    doc = BaseDocTemplate(None, pageTemplates=[pt], pagesize=A4)
+    doc.wettkampf = wettkampf
+    doc.disziplin = disziplin
+    return doc
+
+def write_startliste_header_footer(canvas, doc):
+    canvas.saveState()
+    canvas.setFont('Helvetica-Bold', 10)
+    canvas.drawString(1.3*cm, PAGE_HEIGHT-1*cm, "Startliste %s" % (doc.disziplin.disziplinart))
+    canvas.drawRightString(PAGE_WIDTH-1*cm, PAGE_HEIGHT-1*cm, "%s %d" % (doc.wettkampf.name, doc.wettkampf.jahr()))
+    canvas.setFont('Helvetica', 8)
+    canvas.drawCentredString(PAGE_WIDTH/2, 1*cm, "Seite %d" % (doc.page,))
+    canvas.restoreState()
+
+def create_startliste_flowables(schiffe):
+    data = [['Stnr', 'Steuermann', 'Vorderfahrer', 'Kat', 'Sektion']]
+    col_widths = (30, 180, 180, 25, 120)
+    ss = _create_style_sheet(10)
+    def mitglied_str(mitglied):
+        return "%s %s<font size=-4> %s, %s, %s</font>" % (
+                mitglied.name, mitglied.vorname,
+                mitglied.nummer, mitglied.geburtsdatum.strftime('%Y'),
+                mitglied.geschlecht)
+    for s in schiffe:
+        steuermann = s.steuermann
+        vorderfahrer = s.vorderfahrer
+        record = []
+        record.append(Paragraph(unicode(s.startnummer), ss['center']))
+        record.append(Paragraph(mitglied_str(steuermann), ss['left']))
+        record.append(Paragraph(mitglied_str(vorderfahrer), ss['left']))
+        record.append(Paragraph(s.kategorie.name, ss['center']))
+        record.append(Paragraph(s.sektion.name, ss['left']))
+        data.append(record)
+    table_props = [
+        ('LINEBELOW', (0,0), (-1,0), 1, colors.black),
+        ('FONT', (0,0), (-1,0), 'Helvetica-Bold', 10),
+        ('FONT', (0,1), (-1,-1), 'Helvetica', 10),
+        ('ALIGN', (0,0), (0,-1), 'CENTER'),
+        ('ALIGN', (-2,0), (-2,-1), 'CENTER'),
+        ('TOPPADDING', (0,0), (-1,-1), 4),
+        ('BOTTOMPADDING', (0,0), (-1,-1), 4),
+        ('ROWBACKGROUNDS', (0,1), (-1,-1), (None, colors.HexColor(0xf0f0f0))),
+        ]
+    result = []
+    result.append(Platypus_Table(data, repeatRows=1, hAlign="LEFT", colWidths=col_widths, style=TableStyle(table_props)))
+    result.append(PageBreak())
+    return result
