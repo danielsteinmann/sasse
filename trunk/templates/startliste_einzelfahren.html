@@ -7,14 +7,11 @@
 {{ searchform.non_field_errors }}
 {% endif %}
 {{ searchform.startnummern.errors }}
-Nach Sektion {{ searchform.sektion }} oder
-Startnummern {{ searchform.startnummern }}
+Sektion {{ searchform.sektion }}
+und/oder Startnummern {{ searchform.startnummern }}
 <input title="Startnummern '1,4-15' zeigt Startnummern 1,4,5,...,15.
-'800-' zeigt Startnummern ab 800" type="submit" value="filtern">
+'800-' zeigt Startnummern ab 800" type="submit" value="auswählen">
 <input type="submit" name="startliste_pdf" value="drucken">
-{% if page_obj.has_next %}
-<br/>oder <a href="?page={{ paginator.num_pages }}{{ getvars }}">Teilnehmer hinzufügen</a>
-{% endif %}
 </form>
 
 {% if not searchform.errors %}
@@ -46,7 +43,7 @@ Startnummern {{ searchform.startnummern }}
     <td>{{ form.startnummer.errors }}{{ form.startnummer }}</td>
     <td>{{ form.steuermann.errors }}{{ form.steuermann }}</td>
     <td>{{ form.vorderfahrer.errors }}{{ form.vorderfahrer }}</td>
-    <td colspan="2">{{ form.sektion }}<input type="submit" value="Teilnehmer hinzufügen"/></td>
+    <td colspan="2">{{ form.sektion }}<input type="submit" value="Schiff hinzufügen"/></td>
   </tr>
   {% endif %}
 </table>
