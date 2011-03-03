@@ -294,8 +294,14 @@ def startliste_einzelfahren(request, jahr, wettkampf, disziplin):
     searchform = SchiffeinzelFilterForm(d, request.GET)
     if searchform.is_valid():
         s = searchform.anzeigeliste()
-        nummer = searchform.naechste_nummer(s)
-        entryform = SchiffeinzelListForm(d, initial={'startnummer': nummer})
+        nummer = request.GET.get('startnummer')
+        if not nummer:
+            nummer = searchform.naechste_nummer(s)
+        initial = {}
+        initial['startnummer'] = nummer
+        initial['steuermann'] = request.GET.get('steuermann')
+        initial['vorderfahrer'] = request.GET.get('vorderfahrer')
+        entryform = SchiffeinzelListForm(d, initial=initial)
     return render_to_response('startliste_einzelfahren.html', {
         'wettkampf': w, 'disziplin': d, 'searchform': searchform,
         'startliste': s, 'form': entryform},
