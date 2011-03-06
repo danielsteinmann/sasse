@@ -13,20 +13,6 @@ from models import Kategorie
 ZEIT = Bewertungsart(einheit='ZEIT')
 PUNKT = Bewertungsart(einheit='PUNKT')
 
-def read_topzeiten(posten, topn=10):
-    """
-    Bis jetzt habe ich nicht rausgefunden, wie ich 'Schiffeinzel' Objekte (eine
-    Subklasse von 'Teilnehmer') zusammen mit den Topzeiten in *einem* SQL
-    Select auszulesen kann. 
-    """
-    result = Bewertung.objects.filter(posten=posten).order_by('zeit')
-    result = result.select_related()[:topn]
-    teilnehmer_ids = [z.teilnehmer_id for z in result]
-    schiffe = Schiffeinzel.objects.select_related().in_bulk(teilnehmer_ids)
-    for z in result:
-        z.schiff = schiffe[z.teilnehmer_id]
-    return result
-
 def new_bew(col, art):
     """
     Hilfsfunktion, damit ein Bewertung Objekt im Template einfach so verwendet
@@ -40,6 +26,24 @@ def new_bew(col, art):
     else:
         result = Bewertung(note=wert, bewertungsart=art)
     return result
+
+def read_topzeiten(posten, topn=15):
+    sql = render_to_string('topzeiten.sql')
+    args = [posten.id]
+    cursor = connection.cursor()
+    cursor.execute(sql, args)
+    for n, row in enumerate(cursor):
+        if n == topn:
+            break
+        dict = {}; i = 0
+        dict['startnummer'] = row[i]; i += 1
+        dict['steuermann'] = row[i]; i += 1
+        dict['vorderfahrer'] = row[i]; i += 1
+        dict['sektion'] = row[i]; i += 1
+        dict['kategorie'] = row[i]; i += 1
+        dict['zeit'] = new_bew(row[i], ZEIT); i += 1
+        dict['punkte'] = new_bew(row[i], PUNKT); i += 1
+        yield dict
 
 def read_notenliste(disziplin, posten, sektion=None):
     sql = render_to_string('notenliste.sql',

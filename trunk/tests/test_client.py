@@ -516,7 +516,7 @@ class RichtzeitPageTest(TestCase):
         self.failUnlessEqual(response.status_code, 200)
         response = self.client.get(e_f)
         self.failUnlessEqual(response.status_code, 200)
-        self.assertContains(response, u'Die besten 10 Zeiten für Posten E-F:')
+        self.assertContains(response, u'Die besten Zeiten für Posten E-F:')
 
 
 class NotenlistePageTest(TestCase):

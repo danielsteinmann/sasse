@@ -44,6 +44,9 @@ from queries import read_startende_kategorien
 
 from reports import create_rangliste_doctemplate
 from reports import create_rangliste_flowables
+from reports import start_bestzeiten_page
+from reports import create_bestzeiten_doctemplate
+from reports import create_bestzeiten_flowables
 from reports import create_notenblatt_doctemplate
 from reports import create_notenblatt_flowables
 from reports import create_startliste_doctemplate
@@ -545,6 +548,22 @@ def richtzeiten(request, jahr, wettkampf, disziplin):
     url = reverse(richtzeit, args=[jahr, wettkampf, disziplin, p.name])
     return HttpResponseRedirect(url)
 
+def richtzeiten_pdf(request, jahr, wettkampf, disziplin):
+    assert request.method == 'GET'
+    w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
+    d = Disziplin.objects.get(wettkampf=w, name=disziplin)
+    response = HttpResponse(mimetype='application/pdf')
+    response['Content-Disposition'] = smart_str(u'filename=richtzeiten-%s' % w.name)
+    doc = create_bestzeiten_doctemplate(w, d)
+    flowables = []
+    zeitposten = d.posten_set.filter(postenart__name='Zeitnote')
+    for p in zeitposten:
+        zeitrangliste = read_topzeiten(p, 10)
+        richtzeit = Richtzeit.objects.get(posten=p)
+        flowables += create_bestzeiten_flowables(richtzeit, zeitrangliste)
+    doc.build(flowables, filename=response)
+    return response
+
 def richtzeit(request, jahr, wettkampf, disziplin, posten, template='richtzeit.html'):
     assert request.method == 'GET'
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
@@ -638,6 +657,15 @@ def rangliste_pdf_all(request, jahr, wettkampf, disziplin):
         rangliste = read_rangliste(d, k)
         rangliste_sorted = sorted(rangliste, key=sort_rangliste)
         flowables += create_rangliste_flowables(rangliste_sorted, k, kranzlimite)
+    # ---
+    # TODO: Richtzeit: Muss auch Disziplin drin haben
+    start_bestzeiten_page(doc, flowables)
+    zeitposten = d.posten_set.filter(postenart__name='Zeitnote')
+    for p in zeitposten:
+        zeitrangliste = read_topzeiten(p, 10)
+        richtzeit = Richtzeit.objects.get(posten=p)
+        flowables += create_bestzeiten_flowables(richtzeit, zeitrangliste)
+    # ---
     doc.build(flowables, filename=response)
     return response
 

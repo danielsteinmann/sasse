@@ -15,8 +15,11 @@ from reportlab.platypus import Spacer
 from reportlab.platypus import TableStyle
 from reportlab.platypus import Table as Platypus_Table
 from reportlab.platypus.doctemplate import PageTemplate
+from reportlab.platypus.doctemplate import NextPageTemplate
 from reportlab.platypus.flowables import DocExec
 from reportlab.platypus.frames import Frame
+
+from templatetags.sasse import zeit2str
 
 PAGE_WIDTH, PAGE_HEIGHT = A4
 
@@ -227,4 +230,69 @@ def create_startliste_flowables(schiffe):
     result = []
     result.append(Platypus_Table(data, repeatRows=1, hAlign="LEFT", colWidths=col_widths, style=TableStyle(table_props)))
     result.append(PageBreak())
+    return result
+
+#
+# Bestzeiten
+#
+
+def create_bestzeiten_doctemplate(wettkampf, disziplin):
+    f = Frame(1*cm, 1*cm, PAGE_WIDTH-2*cm, PAGE_HEIGHT-2.5*cm, id='normal')
+    pt = PageTemplate(id="Bestzeiten", frames=f, onPageEnd=write_bestzeiten_header_footer)
+    doc = BaseDocTemplate(None, pageTemplates=[pt], pagesize=A4)
+    doc.wettkampf = wettkampf
+    doc.disziplin = disziplin
+    return doc
+
+def start_bestzeiten_page(doc, flowables):
+    f = Frame(1*cm, 1*cm, PAGE_WIDTH-2*cm, PAGE_HEIGHT-2.5*cm, id='normal')
+    pt = PageTemplate(id="Bestzeiten", frames=f, onPageEnd=write_bestzeiten_header_footer)
+    doc.addPageTemplates(pt)
+    flowables.pop() # Remove last PageBreak
+    flowables.append(NextPageTemplate('Bestzeiten'))
+    flowables.append(PageBreak())
+
+def write_bestzeiten_header_footer(canvas, doc):
+    canvas.saveState()
+    canvas.setFont('Helvetica', 8)
+    canvas.drawString(2*cm, PAGE_HEIGHT-1*cm, "Bestzeiten %s" % (doc.disziplin.disziplinart))
+    canvas.drawRightString(PAGE_WIDTH-2*cm, PAGE_HEIGHT-1*cm, "%s %d" % (doc.wettkampf.name, doc.wettkampf.jahr()))
+    canvas.drawCentredString(PAGE_WIDTH/2, 1*cm, "Seite %d" % (doc.page,))
+    canvas.restoreState()
+
+def create_bestzeiten_flowables(richtzeit, zeitrangliste):
+    data = []
+    header = ['Posten', 'Richtzeit', 'Stnr', 'Fahrerpaar', 'Sektion', 'Kat', 'Zeit', 'Note']
+    data.append(header)
+    col_widths = (30, 45, 30, 140, 80, 30, 40, 30)
+    ss = _create_style_sheet()
+    for i, row in enumerate(zeitrangliste):
+        record = []
+        if i == 0:
+            record.append(Paragraph(unicode(richtzeit.posten), ss['center']))
+            record.append(Paragraph(zeit2str(richtzeit.zeit), ss['center']))
+        else:
+            record.append(None)
+            record.append(None)
+        record.append(Paragraph(unicode(row['startnummer']), ss['center']))
+        record.append(Paragraph(row['steuermann'] + " / " + row['vorderfahrer'], ss['left']))
+        record.append(Paragraph(row['sektion'], ss['left']))
+        record.append(Paragraph(row['kategorie'], ss['center']))
+        record.append(Paragraph(unicode(row['zeit']), ss['center']))
+        record.append(Paragraph(unicode(row['punkte']), ss['right']))
+        data.append(record)
+    table_props = [
+        ('LINEBELOW', (0,0), (-1,0), 1, colors.black),
+        ('FONT', (0,0), (-1,0), 'Helvetica-Bold', 8),
+        ('FONT', (0,1), (-1,-1), 'Helvetica', 8),
+        ('ALIGN', (0,0), (2,-1), 'CENTER'),
+        ('ALIGN', (-3,0), (-2,-1), 'CENTER'),
+        ('ALIGN', (-1,0), (-1,-1), 'RIGHT'),
+        ('TOPPADDING', (0,0), (-1,-1), 1),
+        ('BOTTOMPADDING', (0,0), (-1,-1), 0),
+        ('ROWBACKGROUNDS', (0,1), (-1,-1), (None, colors.HexColor(0xf0f0f0))),
+        ]
+    result = []
+    result.append(Platypus_Table(data, repeatRows=1, colWidths=col_widths, style=TableStyle(table_props)))
+    result.append(Spacer(1, 10))
     return result
