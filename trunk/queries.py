@@ -43,6 +43,7 @@ def read_topzeiten(posten, topn=15):
         dict['kategorie'] = row[i]; i += 1
         dict['zeit'] = new_bew(row[i], ZEIT); i += 1
         dict['punkte'] = new_bew(row[i], PUNKT); i += 1
+        dict['richtzeit'] = new_bew(row[i], ZEIT); i += 1
         yield dict
 
 def read_notenliste(disziplin, posten, sektion=None):

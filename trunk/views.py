@@ -559,8 +559,7 @@ def richtzeiten_pdf(request, jahr, wettkampf, disziplin):
     zeitposten = d.posten_set.filter(postenart__name='Zeitnote')
     for p in zeitposten:
         zeitrangliste = read_topzeiten(p, 10)
-        richtzeit = Richtzeit.objects.get(posten=p)
-        flowables += create_bestzeiten_flowables(richtzeit, zeitrangliste)
+        flowables += create_bestzeiten_flowables(p.name, zeitrangliste)
     doc.build(flowables, filename=response)
     return response
 
@@ -658,13 +657,11 @@ def rangliste_pdf_all(request, jahr, wettkampf, disziplin):
         rangliste_sorted = sorted(rangliste, key=sort_rangliste)
         flowables += create_rangliste_flowables(rangliste_sorted, k, kranzlimite)
     # ---
-    # TODO: Richtzeit: Muss auch Disziplin drin haben
     start_bestzeiten_page(doc, flowables)
     zeitposten = d.posten_set.filter(postenart__name='Zeitnote')
     for p in zeitposten:
         zeitrangliste = read_topzeiten(p, 10)
-        richtzeit = Richtzeit.objects.get(posten=p)
-        flowables += create_bestzeiten_flowables(richtzeit, zeitrangliste)
+        flowables += create_bestzeiten_flowables(p.name, zeitrangliste)
     # ---
     doc.build(flowables, filename=response)
     return response

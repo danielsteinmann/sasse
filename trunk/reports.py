@@ -19,8 +19,6 @@ from reportlab.platypus.doctemplate import NextPageTemplate
 from reportlab.platypus.flowables import DocExec
 from reportlab.platypus.frames import Frame
 
-from templatetags.sasse import zeit2str
-
 PAGE_WIDTH, PAGE_HEIGHT = A4
 
 def _create_style_sheet(baseFontSize=8):
@@ -260,7 +258,7 @@ def write_bestzeiten_header_footer(canvas, doc):
     canvas.drawCentredString(PAGE_WIDTH/2, 1*cm, "Seite %d" % (doc.page,))
     canvas.restoreState()
 
-def create_bestzeiten_flowables(richtzeit, zeitrangliste):
+def create_bestzeiten_flowables(posten_name, zeitrangliste):
     data = []
     header = ['Posten', 'Richtzeit', 'Stnr', 'Fahrerpaar', 'Sektion', 'Kat', 'Zeit', 'Note']
     data.append(header)
@@ -269,8 +267,8 @@ def create_bestzeiten_flowables(richtzeit, zeitrangliste):
     for i, row in enumerate(zeitrangliste):
         record = []
         if i == 0:
-            record.append(Paragraph(unicode(richtzeit.posten), ss['center']))
-            record.append(Paragraph(zeit2str(richtzeit.zeit), ss['center']))
+            record.append(Paragraph(unicode(posten_name), ss['center']))
+            record.append(Paragraph(unicode((row['richtzeit'])), ss['center']))
         else:
             record.append(None)
             record.append(None)
