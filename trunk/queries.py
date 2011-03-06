@@ -65,11 +65,9 @@ def read_notenliste(disziplin, posten, sektion=None):
         dict['punkt_tot'] = new_bew(row[i], PUNKT); i += 1
         noten = []
         for p in posten:
+            noten.append(new_bew(row[i], PUNKT)); i += 1
             if p.postenart.name == "Zeitnote":
-                noten.append(new_bew(row[i], ZEIT))
-                i += 1
-            noten.append(new_bew(row[i], PUNKT))
-            i += 1
+                noten.append(new_bew(row[i], ZEIT)); i += 1
         dict['noten'] = noten
         yield dict
 

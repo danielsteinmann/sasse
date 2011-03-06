@@ -6,11 +6,9 @@ select tn.startnummer as Startnr
      , sum(b.zeit) as Zeit
      , sum(b.note) as Total
 {% for p in posten %}
-{% ifequal p.postenart.name "Zeitnote" %}
-     , sum(case when b.posten_id = {{ p.id }} then b.zeit end) as '{{ p.name }}'
-     , sum(case when b.posten_id = {{ p.id }} then b.note end) as 'p'
-{% else %}
      , sum(case when b.posten_id = {{ p.id }} then b.note end) as '{{ p.name }}'
+{% ifequal p.postenart.name "Zeitnote" %}
+     , sum(case when b.posten_id = {{ p.id }} then b.zeit end) as '{{ p.name }} [s]'
 {% endifequal %}
 {% endfor %}
   from bewertung_calc b

@@ -21,14 +21,12 @@ oder Notenblätter <input type="submit" name="notenblaetter_pdf" value="drucken"
     <th>Sektion</th>
     <th class="kategorie">Kat</th>
 {% for p in posten %}
-{% ifequal p.postenart.name "Zeitnote" %}
-    <th class="note">{{p.name}}<small>[s]</small></th>
     <th class="note">{{p.name}}</th>
-{% else %}
-    <th class="note">{{p.name}}</th>
-{% endifequal %}
+{% if p.postenart.name == "Zeitnote" %}
+    <th class="note"><font size=-2>{{p.name}}[s]</font></th>
+{% endif %}
 {% endfor %}
-    <th class="zeit">Zeit</th>
+<th class="zeit"><font size=-2>Zeit</font></th>
     <th class="note">Total</th>
   </tr>
 {% for row in notenliste %}
@@ -38,9 +36,13 @@ oder Notenblätter <input type="submit" name="notenblaetter_pdf" value="drucken"
     <td>{{row.sektion}}</td>
     <td class="kategorie">{{row.kategorie}}</td>
 {% for note in row.noten %}
-    <td class="note">{{note}}</td>
+{% if note.bewertungsart.einheit == "ZEIT" %}
+   <td><font size="-2">{{note}}</font></td>
+{% else %}
+   <td class="note">{{note}}</td>
+{% endif %}
 {% endfor %}
-    <td class="zeit">{{row.zeit_tot}}</td>
+<td class="zeit"><font size="-2">{{row.zeit_tot}}</font></td>
     <td class="note"><a title="Notenblatt" href="{% url notenblatt wettkampf.jahr, wettkampf.name, disziplin.name, row.startnummer %}">{{row.punkt_tot}}</a></td>
   </tr>
 {% endfor %}
