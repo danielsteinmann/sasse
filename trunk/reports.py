@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from datetime import datetime
+from django.conf import settings
 
 from reportlab.lib import colors
 from reportlab.lib.enums import TA_LEFT, TA_CENTER, TA_RIGHT
@@ -33,12 +33,23 @@ def _extract_jahrgang(geburtstag):
     return ' <font size=-2>' + geburtstag.strftime('%Y') + "</font>"
 
 def create_rangliste_doctemplate(wettkampf, disziplin):
-    f = Frame(1*cm, 1*cm, PAGE_WIDTH-2*cm, PAGE_HEIGHT-2.5*cm, id='normal')
+    f = Frame(1*cm, 1*cm, PAGE_WIDTH-2*cm, PAGE_HEIGHT-3*cm, id='normal')
     pt = PageTemplate(id="Rangliste", frames=f, onPageEnd=write_rangliste_header_footer)
     doc = BaseDocTemplate(None, pageTemplates=[pt], pagesize=A4)
     doc.wettkampf = wettkampf
     doc.disziplin = disziplin
     return doc
+
+def write_rangliste_header_footer(canvas, doc):
+    canvas.saveState()
+    canvas.setFont('Helvetica', 8)
+    canvas.drawImage(settings.MEDIA_ROOT + '/spsv-logo.jpg', 2*cm, PAGE_HEIGHT-2*cm, width=1.5*cm, height=1.5*cm)
+    canvas.line(4*cm, PAGE_HEIGHT-1.2*cm, PAGE_WIDTH-2*cm, PAGE_HEIGHT-1.2*cm)
+    canvas.drawString(4*cm, PAGE_HEIGHT-1*cm, "Rangliste %s" % (doc.disziplin.disziplinart))
+    canvas.drawCentredString(PAGE_WIDTH/2+1*cm, PAGE_HEIGHT-1*cm, "Kategorie %s" % (doc.docEval("kategorie_name")))
+    canvas.drawRightString(PAGE_WIDTH-2*cm, PAGE_HEIGHT-1*cm, "%s %d" % (doc.wettkampf.name, doc.wettkampf.jahr()))
+    canvas.drawCentredString(PAGE_WIDTH/2, 1*cm, "Seite %d" % (doc.page,))
+    canvas.restoreState()
 
 def create_rangliste_flowables(rangliste, kategorie, kranzlimite):
     data = [['Rang', 'Steuermann', 'Vorderfahrer', 'Sektion', 'Stnr', 'Zeit', 'Punkte']]
@@ -87,27 +98,13 @@ def create_rangliste_flowables(rangliste, kategorie, kranzlimite):
     result.append(PageBreak())
     return result
 
-def write_rangliste_header_footer(canvas, doc):
-    canvas.saveState()
-    canvas.setFont('Helvetica', 8)
-    canvas.drawString(2*cm, PAGE_HEIGHT-1*cm, "Rangliste %s" % (doc.disziplin.disziplinart))
-    canvas.setFont('Helvetica', 14)
-    canvas.drawCentredString(PAGE_WIDTH/2, PAGE_HEIGHT-1*cm, "Kategorie %s" % (doc.docEval("kategorie_name")))
-    canvas.setFont('Helvetica', 8)
-    canvas.drawRightString(PAGE_WIDTH-2*cm, PAGE_HEIGHT-1*cm, "%s %d" % (doc.wettkampf.name, doc.wettkampf.jahr()))
-    canvas.setFont('Helvetica', 8)
-    #current_datetime = datetime.now().strftime("%d.%m.%Y %H:%M:%S")
-    #canvas.drawString(2*cm, 1*cm, "%s" % (current_datetime,))
-    canvas.drawCentredString(PAGE_WIDTH/2, 1*cm, "Seite %d" % (doc.page,))
-    canvas.restoreState()
-
 
 #
 # Notenblatt
 #
 
 def create_notenblatt_doctemplate(wettkampf, disziplin):
-    f = Frame(2.5*cm, 1*cm, PAGE_WIDTH-2*cm, PAGE_HEIGHT-3*cm, id='normal')
+    f = Frame(2*cm, 1*cm, PAGE_WIDTH-2*cm, PAGE_HEIGHT-3.5*cm, id='normal')
     pt = PageTemplate(id="Notenblatt", frames=f, onPageEnd=write_notenblatt_header_footer)
     doc = BaseDocTemplate(None, pageTemplates=[pt], pagesize=A4)
     doc.wettkampf = wettkampf
@@ -116,9 +113,11 @@ def create_notenblatt_doctemplate(wettkampf, disziplin):
 
 def write_notenblatt_header_footer(canvas, doc):
     canvas.saveState()
-    canvas.setFont('Helvetica-Bold', 10)
-    canvas.drawString(2.8*cm, PAGE_HEIGHT-1*cm, "Notenblatt %s" % (doc.disziplin.disziplinart))
-    canvas.drawRightString(PAGE_WIDTH-2*cm, PAGE_HEIGHT-1*cm, "%s %d" % (doc.wettkampf.name, doc.wettkampf.jahr()))
+    canvas.drawImage(settings.MEDIA_ROOT + '/spsv-logo.jpg', 2.2*cm, PAGE_HEIGHT-2*cm, width=1.5*cm, height=1.5*cm)
+    canvas.line(4*cm, PAGE_HEIGHT-1.3*cm, PAGE_WIDTH-2*cm, PAGE_HEIGHT-1.3*cm)
+    canvas.setFont('Helvetica', 8)
+    canvas.drawString(4*cm, PAGE_HEIGHT-1.1*cm, "Notenblatt %s" % (doc.disziplin.disziplinart))
+    canvas.drawRightString(PAGE_WIDTH-2*cm, PAGE_HEIGHT-1.1*cm, "%s %d" % (doc.wettkampf.name, doc.wettkampf.jahr()))
     canvas.restoreState()
 
 def create_notenblatt_flowables(posten_werte, schiffeinzel):
@@ -146,7 +145,7 @@ def create_notenblatt_flowables(posten_werte, schiffeinzel):
     result.append(Spacer(1, 30))
     # --------
     data = [['Posten', 'Übungsteil', 'Abzug', 'Note', 'Zeit', 'Total',]]
-    col_widths = (40, 250, 40, 40, 55, 40)
+    col_widths = (40, 260, 40, 40, 55, 40)
     for row in posten_werte:
         record = []
         if row.get('posten'):
@@ -235,7 +234,7 @@ def create_startliste_flowables(schiffe):
 #
 
 def create_bestzeiten_doctemplate(wettkampf, disziplin):
-    f = Frame(1*cm, 1*cm, PAGE_WIDTH-2*cm, PAGE_HEIGHT-2.5*cm, id='normal')
+    f = Frame(1*cm, 1*cm, PAGE_WIDTH-2*cm, PAGE_HEIGHT-3.3*cm, id='normal')
     pt = PageTemplate(id="Bestzeiten", frames=f, onPageEnd=write_bestzeiten_header_footer)
     doc = BaseDocTemplate(None, pageTemplates=[pt], pagesize=A4)
     doc.wettkampf = wettkampf
@@ -243,7 +242,7 @@ def create_bestzeiten_doctemplate(wettkampf, disziplin):
     return doc
 
 def start_bestzeiten_page(doc, flowables):
-    f = Frame(1*cm, 1*cm, PAGE_WIDTH-2*cm, PAGE_HEIGHT-2.5*cm, id='normal')
+    f = Frame(1*cm, 1*cm, PAGE_WIDTH-2*cm, PAGE_HEIGHT-3.3*cm, id='normal')
     pt = PageTemplate(id="Bestzeiten", frames=f, onPageEnd=write_bestzeiten_header_footer)
     doc.addPageTemplates(pt)
     flowables.pop() # Remove last PageBreak
@@ -253,7 +252,9 @@ def start_bestzeiten_page(doc, flowables):
 def write_bestzeiten_header_footer(canvas, doc):
     canvas.saveState()
     canvas.setFont('Helvetica', 8)
-    canvas.drawString(2*cm, PAGE_HEIGHT-1*cm, "Bestzeiten %s" % (doc.disziplin.disziplinart))
+    canvas.drawImage(settings.MEDIA_ROOT + '/spsv-logo.jpg', 2*cm, PAGE_HEIGHT-2*cm, width=1.5*cm, height=1.5*cm)
+    canvas.line(4*cm, PAGE_HEIGHT-1.2*cm, PAGE_WIDTH-2*cm, PAGE_HEIGHT-1.2*cm)
+    canvas.drawString(4*cm, PAGE_HEIGHT-1*cm, "Bestzeiten %s" % (doc.disziplin.disziplinart))
     canvas.drawRightString(PAGE_WIDTH-2*cm, PAGE_HEIGHT-1*cm, "%s %d" % (doc.wettkampf.name, doc.wettkampf.jahr()))
     canvas.drawCentredString(PAGE_WIDTH/2, 1*cm, "Seite %d" % (doc.page,))
     canvas.restoreState()
