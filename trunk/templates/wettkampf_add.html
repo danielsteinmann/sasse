@@ -1,4 +1,5 @@
 {% extends "base_wettkampf.html" %}
+{% block nav_wettkampf %}selected{% endblock %}
 
 {% block content %}
 <form action="{% url wettkaempfe_add %}" method="POST">

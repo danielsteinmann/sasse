@@ -1,11 +1,24 @@
-{% extends "base.html" %}
+{% extends "base_wettkaempfe.html" %}
 
-{% block title %}
-{% if wettkampf %}
-{{ wettkampf.name }} {{ wettkampf.jahr }}
-{% else %}
-{{ block.super }}
+{% block title %}{{ wettkampf.name }} {{ wettkampf.jahr }}{% endblock %}
+
+{% block nav %}
+<ul class="tabnav">
+  <li class="{% block nav_wettkampf %}{% endblock %}">
+    <a href="{% url wettkampf_get wettkampf.jahr, wettkampf.name %}">Wettkampf</a></li>
+{% if disziplin %}
+  <li class="{% block nav_disziplin %}{% endblock %}">
+    <a href="{% url disziplin_get wettkampf.jahr, wettkampf.name, disziplin.name %}">Disziplin</a></li>
+  <li class="{% block nav_posten %}{% endblock %}">
+    <a href="{% url posten_list wettkampf.jahr, wettkampf.name, disziplin.name %}">Postenliste</a></li>
+  <li class="{% block nav_startliste %}{% endblock %}">
+    <a href="{% url startliste wettkampf.jahr, wettkampf.name, disziplin.name %}">Startliste</a></li>
+  <li class="{% block nav_bewertungen %}{% endblock %}">
+    <a href="{% url bewertungen wettkampf.jahr, wettkampf.name, disziplin.name %}">Bewertungen</a></li>
+  <li class="{% block nav_rangliste %}{% endblock %}">
+    <a href="{% url rangliste wettkampf.jahr, wettkampf.name, disziplin.name %}">Resultate</a></li>
 {% endif %}
+</ul>
 {% endblock %}
 
 {% block breadcrumbs %}
