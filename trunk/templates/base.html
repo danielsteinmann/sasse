@@ -4,12 +4,11 @@
 <link href="/media/style.css" type="text/css" rel="stylesheet" />
 </head>
 <body>
-<table><tr valign="top">
-<td height="70" width="70">
+<table width="100%" cellpadding="0" bgcolor="#E0ECF8"><tr>
+<td valign="middle" align="center" height="70" width="80">
 <a href="{% url wettkaempfe_get %}">
-<img src="/media/spsv-logo.jpg" title="SPSV Wettkämpfe" alt="SPSV Logo" width="60" height="60"></td>
-</>
-<td>
+<img src="/media/spsv-logo.png" title="SPSV Wettkämpfe" alt="SPSV Logo" width="60" height="60"></td>
+<td valign="top">
 {% block nav %}
 <ul class="tabnav">
   <li class="{% block nav_wettkaempfe %}{% endblock %}">
@@ -20,12 +19,11 @@
     <a href="#">Einstellungen</a></li>
 </ul>
 {% endblock %}
-</td>
 </tr>
 </table>
+<div align=right><font size="-2">
+{% block breadcrumbs %}<a href="{% url wettkaempfe_get %}">Wettkämpfe</a>{% endblock %}
+</font></div>
 {% block content %}{% endblock %}
 </body>
 </html>
-<!--
-{% block breadcrumbs %}<a href="{% url wettkaempfe_get %}">SPSV Wettkämpfe</a>{% endblock %}
--->
