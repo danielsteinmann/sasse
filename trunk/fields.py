@@ -3,6 +3,7 @@
 import re
 from decimal import Decimal
 
+from django.db.models import Q
 from django.forms import Field
 from django.forms import CharField
 from django.forms import ModelChoiceField
@@ -122,7 +123,10 @@ class MitgliedSearchField(ModelChoiceField):
                 q = Mitglied.objects.filter(id=primary_key)
         except ValueError:
             if len(items) == 1:
-                q = Mitglied.objects.filter(name__icontains=items[0])
+                q = Mitglied.objects.filter(
+                        Q(name__icontains=items[0])
+                        | Q(vorname__icontains=items[0])
+                        | Q(sektion__name__icontains=items[0]))
             else:
                 q = Mitglied.objects.filter(
                         name__icontains=items[0],
@@ -131,7 +135,7 @@ class MitgliedSearchField(ModelChoiceField):
             text = u"Mitglied '%s' nicht gefunden. Bitte 'Name Vorname' oder 'Mitgliedernummer' eingeben" % (value,)
             raise ValidationError(text)
         elif q.count() > 1:
-            text = u"Mitglied '%s' ist nicht eindeutig, bitte auswählen" % (value,)
+            text = u"'%s' ist nicht eindeutig, bitte auswählen" % (value,)
             self.widget = Select()
             self.queryset = q
             raise ValidationError(text)
