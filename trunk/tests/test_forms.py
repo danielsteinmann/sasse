@@ -9,6 +9,7 @@ from sasse.forms import WettkampfForm
 from sasse.forms import DisziplinForm
 from sasse.forms import BewertungForm
 from sasse.forms import PostenblattFilterForm
+from sasse.forms import SchiffeinzelListForm
 
 from sasse.models import Disziplinart
 from sasse.models import Bewertungsart
@@ -242,3 +243,45 @@ class PostenblattFilterFormTest(TestCase):
         self.sut.is_valid()
         actual = self.sut.selected_startnummern(visible=10)
         self.assertEquals(6, actual.count())
+
+
+class SchiffeinzelListFormTest(TestCase):
+    def setUp(self):
+        bremgarten = Sektion.objects.get(name="Bremgarten")
+        dietikon = Sektion.objects.get(name="Dietikon")
+        self.steinmann = Mitglied.objects.create(
+                name="Steinmann", vorname="Daniel", geschlecht="m",
+                geburtsdatum=datetime.date(1967, 4, 30),
+                sektion=bremgarten, nummer="1234")
+        self.kohler = Mitglied.objects.create(
+                name="Kohler", vorname="Bernhard", geschlecht="m",
+                geburtsdatum=datetime.date(1978, 1, 1),
+                sektion=bremgarten, nummer="4567")
+        self.keller = Mitglied.objects.create(
+                name="Keller", vorname="Roland", geschlecht="m",
+                geburtsdatum=datetime.date(1969, 1, 1),
+                sektion=dietikon, nummer="9234")
+        w = Wettkampf.objects.create(name="Test-Cup", von="2003-04-04")
+        d = Disziplin.objects.create(wettkampf=w, name="Test")
+        for startnr in range(1, 10):
+            Schiffeinzel.objects.create(startnummer=startnr, disziplin=d,
+                    steuermann_id=1, vorderfahrer_id=2, sektion_id=1,
+                    kategorie_id=1)
+        self.sut = SchiffeinzelListForm(d, data={})
+
+    def test_gleicher_fahrer(self):
+        self.sut.data['steuermann'] = self.steinmann.nummer
+        self.sut.data['vorderfahrer'] = self.sut.data['steuermann']
+        self.failIf(self.sut.is_valid(), self.sut.errors)
+        expected = u"Steuermann kann nicht gleichzeitig Vorderfahrer sein"
+        errors = self.sut.non_field_errors()
+        self.failUnless(expected in errors, errors)
+
+    #TODO Fix this
+    def est_sektion_gemischt(self):
+        self.sut.data['steuermann'] = self.steinmann.nummer
+        self.sut.data['vorderfahrer'] = self.keller.nummer
+        self.failIf(self.sut.is_valid(), self.sut.errors)
+        expected = u"Steuermann fährt für 'Bremgarten', Vorderfahrer für 'Dietikon'. Das Schiff wird für 'Bremgarten' fahren"
+        errors = self.sut.non_field_errors()
+        self.failUnless(expected in errors, errors)
