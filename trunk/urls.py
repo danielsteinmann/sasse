@@ -73,6 +73,8 @@ urlpatterns = patterns('',
         views.notenblatt, {}, "notenblatt"),
     (r'^(?P<jahr>\d+)/(?P<wettkampf>[-\w]+)/(?P<disziplin>[-\w]+)/notenblatt/(?P<startnummer>\d+)/pdf/$',
         views.notenblatt_pdf, {}, "notenblatt_pdf"),
+    (r'mitglieder/$',
+        views.mitglieder, {}, "mitglieder"),
 )
 
 #---- Wettkaempfe

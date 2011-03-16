@@ -39,10 +39,14 @@ und/oder Startnummern {{ searchform.startnummern }}
     <td colspan="5">{{ form.non_field_errors }}</td>
   </tr>
   {% endif %}
-  <tr>
+  <tr valign="top">
     <td>{{ form.startnummer.errors }}{{ form.startnummer }}</td>
-    <td>{{ form.steuermann.errors }}{{ form.steuermann }}</td>
-    <td>{{ form.vorderfahrer.errors }}{{ form.vorderfahrer }}</td>
+    <td>{{ form.steuermann.errors }}{{ form.steuermann }}
+        <font size="-2"><a tabindex="-1" href="{% url mitglieder %}?steuermann">Neu</a></font>
+    </td>
+    <td>{{ form.vorderfahrer.errors }}{{ form.vorderfahrer }}
+        <font size="-2"><a tabindex="-1" href="{% url mitglieder %}?vorderfahrer">Neu</a></font>
+    </td>
     <td colspan="2">{{ form.sektion }}<input type="submit" value="Schiff hinzufügen"/></td>
   </tr>
   {% endif %}

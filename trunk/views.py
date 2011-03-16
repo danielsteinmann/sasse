@@ -19,6 +19,7 @@ from models import Schiffeinzel
 from models import Richtzeit
 from models import Sektion
 from models import Kranzlimite
+from models import Mitglied
 
 from forms import DisziplinForm
 from forms import PostenEditForm
@@ -759,6 +760,13 @@ def kranzlimiten_put(request, jahr, wettkampf, disziplin):
         return HttpResponseRedirect(url)
     return render_to_response('kranzlimiten_update.html',
             {'wettkampf': w, 'disziplin': d, 'formset': formset})
+
+def mitglieder(request):
+    assert request.method == 'GET'
+    mitglieder = Mitglied.objects.all()
+    referer = request.META.get('HTTP_REFERER')
+    return render_to_response('mitglieder.html', {'mitglieder': mitglieder,
+        'goback': referer,}, context_instance=RequestContext(request))
 
 #-----------
 #    from django.db import connection
