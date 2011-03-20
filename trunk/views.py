@@ -33,6 +33,7 @@ from forms import WettkampfForm
 from forms import create_postenblatt_formsets
 from forms import RichtzeitForm
 from forms import KranzlimiteForm
+from forms import MitgliedForm
 
 from queries import read_topzeiten
 from queries import read_notenliste
@@ -297,6 +298,8 @@ def startliste_einzelfahren(request, jahr, wettkampf, disziplin):
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
     s = []
     entryform = None
+    steuermann_neu_form = None
+    vorderfahrer_neu_form = None
     searchform = SchiffeinzelFilterForm(d, request.GET)
     if searchform.is_valid():
         s = searchform.anzeigeliste()
@@ -310,9 +313,12 @@ def startliste_einzelfahren(request, jahr, wettkampf, disziplin):
         initial['steuermann'] = request.GET.get('steuermann')
         initial['vorderfahrer'] = request.GET.get('vorderfahrer')
         entryform = SchiffeinzelListForm(d, initial=initial)
-    return render_to_response('startliste_einzelfahren.html', {
-        'wettkampf': w, 'disziplin': d, 'searchform': searchform,
-        'startliste': s, 'form': entryform},
+        steuermann_neu_form = MitgliedForm(prefix="steuermann")
+        vorderfahrer_neu_form =  MitgliedForm(prefix="vorderfahrer")
+    return render_to_response('startliste_einzelfahren.html', { 'wettkampf': w,
+        'disziplin': d, 'searchform': searchform, 'startliste': s, 'form': entryform,
+        'steuermann_neu_form': steuermann_neu_form,
+        'vorderfahrer_neu_form': vorderfahrer_neu_form},
         context_instance=RequestContext(request)
         )
 
@@ -324,11 +330,29 @@ def startliste_einzelfahren_pdf(w, d, schiffe):
     doc.build(flowables, filename=response)
     return response
 
+def _neues_mitglied(position, flag_field, data):
+    if not data.has_key(flag_field):
+        # Falls Benutzer ein neues Mitglied eingeben will, ein leeres Formular
+        # ohne Validierungsfehler anzeigen
+        form = MitgliedForm(prefix=position)
+    else:
+        form = MitgliedForm(prefix=position, data=data)
+        if form.is_valid():
+            mitglied = form.save()
+            # Neues Mitglied im Suchfeld darstellen
+            data[position] = mitglied.get_edit_text()
+            # Felder zur Erfassung des neuen Mitgliedes ausblenden
+            data[flag_field] = False
+    return form
+
 def startliste_einzelfahren_post(request, jahr, wettkampf, disziplin):
     assert request.method == 'POST'
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
-    entryform = SchiffeinzelListForm(d, request.POST.copy())
+    data = request.POST.copy()
+    steuermann_neu_form = _neues_mitglied('steuermann', 'steuermann_neu', data)
+    vorderfahrer_neu_form = _neues_mitglied('vorderfahrer', 'vorderfahrer_neu', data)
+    entryform = SchiffeinzelListForm(d, data=data)
     if entryform.is_valid():
         entryform.save()
         url = reverse(startliste, args=[jahr, wettkampf, disziplin])
@@ -341,7 +365,9 @@ def startliste_einzelfahren_post(request, jahr, wettkampf, disziplin):
         s = searchform.anzeigeliste()
     return render_to_response('startliste_einzelfahren.html', {
         'wettkampf': w, 'disziplin': d, 'searchform': searchform,
-        'startliste': s, 'form': entryform},
+        'startliste': s, 'form': entryform,
+        'steuermann_neu_form': steuermann_neu_form,
+        'vorderfahrer_neu_form': vorderfahrer_neu_form},
         context_instance=RequestContext(request)
         )
 
@@ -764,9 +790,8 @@ def kranzlimiten_put(request, jahr, wettkampf, disziplin):
 def mitglieder(request):
     assert request.method == 'GET'
     mitglieder = Mitglied.objects.all()
-    referer = request.META.get('HTTP_REFERER')
-    return render_to_response('mitglieder.html', {'mitglieder': mitglieder,
-        'goback': referer,}, context_instance=RequestContext(request))
+    return render_to_response('mitglieder.html', {'mitglieder': mitglieder,},
+            context_instance=RequestContext(request))
 
 #-----------
 #    from django.db import connection

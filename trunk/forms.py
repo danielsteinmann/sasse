@@ -5,6 +5,7 @@ import re
 from decimal import Decimal
 
 from django.db.models import Q
+from django.forms import BooleanField
 from django.forms import CharField
 from django.forms import DecimalField
 from django.forms import IntegerField
@@ -246,11 +247,19 @@ class SchiffeinzelEditForm(ModelForm):
 
 
 class SchiffeinzelListForm(SchiffeinzelEditForm):
+    steuermann_neu = BooleanField(required=False, label="Neues Mitglied erfassen")
+    vorderfahrer_neu = BooleanField(required=False, label="Neues Mitglied erfassen")
 
     def __init__(self, disziplin, *args, **kwargs):
         super(SchiffeinzelListForm, self).__init__(disziplin, *args, **kwargs)
         self.fields['startnummer'].widget = TextInput(attrs={'size':'3'})
         self.fields['sektion'].widget = HiddenInput()
+        # Ein-/Ausblende Steuerung
+        self.fields['steuermann_neu'].widget.attrs['rel'] = 'neuer_steuermann'
+        self.fields['vorderfahrer_neu'].widget.attrs['rel'] = 'neuer_vorderfahrer'
+        # Damit für den Normalfall effizient mit Tab navigieren kann
+        self.fields['steuermann_neu'].widget.attrs['tabindex'] = '-1'
+        self.fields['vorderfahrer_neu'].widget.attrs['tabindex'] = '-1'
         # Folgende Felder werden in clean() gesetzt, deshalb nicht required
         self.fields['sektion'].required = False
         self.fields['kategorie'].required = False
@@ -498,3 +507,8 @@ class KranzlimiteForm(Form):
     kat_name = CharField(widget=TextInput(attrs={'size': '2', 'readonly': 'True'}))
     kl_id = IntegerField(required=False, widget=HiddenInput())
     kl_wert = DecimalField(required=False)
+
+
+class MitgliedForm(ModelForm):
+    class Meta:
+        model = Mitglied
