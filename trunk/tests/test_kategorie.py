@@ -94,6 +94,9 @@ class get_startkategorie_Test(unittest.TestCase):
     def testKatDandF(self):
         self._assert_kat(self.kat_C, self.kat_D, self.kat_F)
 
+    def testKatIIIandD(self):
+        self._assert_kat(self.kat_C, self.kat_III, self.kat_D)
+
     def testUnbekannteKombination(self):
         self._assert_kat(None, self.kat_II, self.kat_C)
         self._assert_kat(None, self.kat_I, self.kat_D)
