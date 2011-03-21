@@ -10,7 +10,7 @@ from models import Bewertungsart
 
 class MitgliedAdmin(admin.ModelAdmin):
     list_display = ('name', 'vorname', 'sektion', 'geburtsdatum', 'nummer',)
-    search_fields = ('name', 'vorname', 'sektion__name',)
+    search_fields = ('name', 'vorname', 'sektion__name', 'nummer')
     actions_on_top = False
     actions_on_bottom = True
 
