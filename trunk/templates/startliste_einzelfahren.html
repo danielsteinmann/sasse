@@ -44,12 +44,12 @@ und/oder Startnummern {{ searchform.startnummern }}
     <td>
        {% if not steuermann_neu_form.errors %}{{ form.steuermann.errors }}{% endif %}{{ form.steuermann }}
        <br/><font size="-2">{{ form.steuermann_neu }}{{ form.steuermann_neu.label_tag }}</font>
-       <div rel="neuer_steuermann">{{ steuermann_neu_form.as_p }}</div>
+       <div rel="neuer_steuermann">{{ steuermann_neu_form.as_ul }}</div>
     </td>
     <td>
        {% if not vorderfahrer_neu_form.errors %}{{ form.vorderfahrer.errors }}{% endif %}{{ form.vorderfahrer }}
        <br/><font size="-2">{{ form.vorderfahrer_neu }}{{ form.vorderfahrer_neu.label_tag }}</font>
-       <div rel="neuer_vorderfahrer">{{ vorderfahrer_neu_form.as_p }}</div>
+       <div rel="neuer_vorderfahrer">{{ vorderfahrer_neu_form.as_ul }}</div>
     </td>
     <td colspan="2">{{ form.sektion }}<input type="submit" value="Schiff hinzufügen"/></td>
   </tr>

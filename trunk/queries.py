@@ -191,3 +191,13 @@ def read_startende_kategorien(disziplin):
          order by kat.reihenfolge
          """, [disziplin.id])
     return kategorien
+
+def create_mitglieder_nummer():
+    cursor = connection.cursor()
+    sql = "select max(nummer)+1 from sasse_mitglied where nummer >= '99000'"
+    cursor.execute(sql)
+    row = cursor.fetchone()
+    nummer = row[0]
+    if not nummer:
+        nummer = u"99000"
+    return unicode(nummer)

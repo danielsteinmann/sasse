@@ -313,8 +313,13 @@ def startliste_einzelfahren(request, jahr, wettkampf, disziplin):
         initial['steuermann'] = request.GET.get('steuermann')
         initial['vorderfahrer'] = request.GET.get('vorderfahrer')
         entryform = SchiffeinzelListForm(d, initial=initial)
-        steuermann_neu_form = MitgliedForm(prefix="steuermann")
-        vorderfahrer_neu_form =  MitgliedForm(prefix="vorderfahrer")
+        #
+        initial = {}
+        sektion = searchform.cleaned_data['sektion']
+        if sektion:
+            initial['sektion'] = sektion.id
+        steuermann_neu_form = MitgliedForm(prefix="steuermann", initial=initial)
+        vorderfahrer_neu_form =  MitgliedForm(prefix="vorderfahrer", initial=initial)
     return render_to_response('startliste_einzelfahren.html', { 'wettkampf': w,
         'disziplin': d, 'searchform': searchform, 'startliste': s, 'form': entryform,
         'steuermann_neu_form': steuermann_neu_form,

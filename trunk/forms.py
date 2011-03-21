@@ -38,12 +38,15 @@ from models import Teilnehmer
 from models import Wettkampf
 from models import Richtzeit
 from models import Kranzlimite
+from models import GESCHLECHT_ART
 
 from fields import MitgliedSearchField
 from fields import UnicodeSlugField
 from fields import ZeitInSekundenField
 from fields import PunkteField
 from fields import StartnummernSelectionField
+
+from queries import create_mitglieder_nummer
 
 
 def get_startkategorie(a, b):
@@ -509,6 +512,26 @@ class KranzlimiteForm(Form):
     kl_wert = DecimalField(required=False)
 
 
-class MitgliedForm(ModelForm):
-    class Meta:
-        model = Mitglied
+class MitgliedForm(Form):
+    name = CharField()
+    vorname = CharField()
+    jahrgang = IntegerField()
+    sektion = ModelChoiceField(queryset=Sektion.objects.all())
+    geschlecht = ChoiceField(choices=GESCHLECHT_ART, initial='m')
+
+    def __init__(self, *args, **kwargs):
+        super(MitgliedForm, self).__init__(*args, **kwargs)
+        today = datetime.date.today()
+        self.fields['jahrgang'] = IntegerField(max_value=today.year, min_value=(today.year - 100))
+
+    def save(self):
+        m = Mitglied()
+        m.nummer = create_mitglieder_nummer()
+        m.name = self.cleaned_data['name']
+        m.vorname = self.cleaned_data['vorname']
+        m.geburtsdatum = datetime.date(self.cleaned_data['jahrgang'], 1, 1)
+        m.sektion = self.cleaned_data['sektion']
+        m.geschlecht = self.cleaned_data['geschlecht']
+        m.save()
+        return m
+
