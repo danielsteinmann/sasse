@@ -1,3 +1,7 @@
+/* Do not show border around linked images (problem on IE) */
+a img {
+    border: none;
+}
 /* Form input errors */
 ul.errorlist {
     margin: 0;
