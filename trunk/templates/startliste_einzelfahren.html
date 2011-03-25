@@ -61,8 +61,10 @@ und/oder Startnummern {{ searchform.startnummern }}
 <script type="text/javascript">
   var containerTag = 'DIV';
   var first_field = document.getElementById('id_startnummer');
-  first_field.focus();
-  first_field.select();
+  if (first_field) {
+      first_field.focus();
+      first_field.select();
+  }
 </script>
 </form>
 {% endif %}
