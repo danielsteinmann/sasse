@@ -11,11 +11,11 @@ Sektion {{ searchform.sektion }}
 und/oder Startnummern {{ searchform.startnummern }}
 <input title="Startnummern '1,4-15' zeigt Startnummern 1,4,5,...,15.
 '800-' zeigt Startnummern ab 800" type="submit" value="auswählen">
-<input type="submit" name="startliste_pdf" value="drucken">
 </form>
-<p/>
+<p><p/>
 {% if not searchform.errors %}
 <form id="myform" name="myform" action="" method="POST">
+<a target="_blank" href="{% url startliste_einzelfahren_pdf wettkampf.jahr, wettkampf.name, disziplin.name%}?{{request.META.QUERY_STRING}}">Startliste drucken</a>
 <table class="list">
   <tr>
     <th class="startnummer">Stnr</th>

@@ -303,8 +303,6 @@ def startliste_einzelfahren(request, jahr, wettkampf, disziplin):
     searchform = SchiffeinzelFilterForm(d, request.GET)
     if searchform.is_valid():
         s = searchform.anzeigeliste()
-        if request.GET.has_key('startliste_pdf'):
-            return startliste_einzelfahren_pdf(w, d, s)
         nummer = request.GET.get('startnummer')
         if not nummer:
             nummer = searchform.naechste_nummer(s)
@@ -327,7 +325,13 @@ def startliste_einzelfahren(request, jahr, wettkampf, disziplin):
         context_instance=RequestContext(request)
         )
 
-def startliste_einzelfahren_pdf(w, d, schiffe):
+def startliste_einzelfahren_pdf(request, jahr, wettkampf, disziplin):
+    assert request.method == 'GET'
+    w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
+    d = Disziplin.objects.get(wettkampf=w, name=disziplin)
+    searchform = SchiffeinzelFilterForm(d, request.GET)
+    searchform.is_valid()
+    schiffe = searchform.anzeigeliste()
     doc = create_startliste_doctemplate(w, d)
     flowables = create_startliste_flowables(schiffe)
     response = HttpResponse(mimetype='application/pdf')
@@ -635,8 +639,6 @@ def notenliste(request, jahr, wettkampf, disziplin):
     sektion = None
     filter_form = SchiffeinzelFilterForm(d, request.GET.copy())
     if filter_form.is_valid():
-        if request.GET.has_key('notenblaetter_pdf'):
-            return notenblaetter_pdf(w, d, filter_form.anzeigeliste())
         sektion = filter_form.cleaned_data['sektion']
     notenliste = read_notenliste(d, posten, sektion)
     return render_to_response('notenliste.html', {'wettkampf': w, 'disziplin':
@@ -731,7 +733,13 @@ def notenblatt_pdf(request, jahr, wettkampf, disziplin, startnummer):
     doc.build(flowables, filename=response)
     return response
 
-def notenblaetter_pdf(w, d, schiffe):
+def notenblaetter_pdf(request, jahr, wettkampf, disziplin):
+    assert request.method == 'GET'
+    w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
+    d = Disziplin.objects.get(wettkampf=w, name=disziplin)
+    filter_form = SchiffeinzelFilterForm(d, request.GET.copy())
+    filter_form.is_valid()
+    schiffe = filter_form.anzeigeliste()
     response = HttpResponse(mimetype='application/pdf')
     response['Content-Disposition'] = smart_str(u'filename=notenblaetter')
     doc = create_notenblatt_doctemplate(w, d)
