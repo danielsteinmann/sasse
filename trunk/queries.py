@@ -158,21 +158,44 @@ def read_kranzlimite(disziplin, kategorie):
         result = q[0].wert
     return result
 
+def read_kranzlimite_pro_kategorie(disziplin):
+    limite_pro_kategorie = {}
+    for kl in Kranzlimite.objects.filter(disziplin=disziplin):
+        limite_pro_kategorie[kl.kategorie_id] = kl
+    return limite_pro_kategorie
+
 def read_kranzlimiten(disziplin):
     sql = render_to_string('kranzlimiten.sql', {"disziplin": disziplin})
     args = [disziplin.id]
     cursor = connection.cursor()
     cursor.execute(sql, args)
+    wettkaempfer_sum = 0
+    wettkaempfer_mit_kranz_sum = 0
     for row in cursor:
         dict = {}; i = 0
         dict['kategorie'] = row[i]; i += 1
         dict['limite_in_punkte'] = new_bew(row[i], PUNKT); i += 1
-        dict['limite_in_prozent'] = row[i]; i += 1
         dict['anzahl_raenge'] = row[i]; i += 1
         dict['anzahl_raenge_ueber_limite'] = row[i]; i += 1
         dict['doppelstarter'] = row[i]; i += 1
         dict['doppelstarter_ueber_limite'] = row[i]; i += 1
+        # Kalkulationen
+        dict['wettkaempfer'] = (
+                2*dict['anzahl_raenge']
+                - dict['doppelstarter'] )
+        dict['wettkaempfer_ueber_limite'] = (
+                2*dict['anzahl_raenge_ueber_limite']
+                - dict['doppelstarter_ueber_limite'] )
+        dict['wettkaempfer_mit_kranz_in_prozent'] = (
+                round((dict['wettkaempfer_ueber_limite']*1.0
+                 / dict['wettkaempfer']) * 100, 1))
+        wettkaempfer_sum += dict['wettkaempfer']
+        wettkaempfer_mit_kranz_sum += dict['wettkaempfer_ueber_limite']
         yield dict
+    dict = {}
+    dict['wettkaempfer'] = wettkaempfer_sum
+    dict['wettkaempfer_ueber_limite'] = wettkaempfer_mit_kranz_sum
+    yield dict
 
 def read_startende_kategorien(disziplin):
     """
@@ -191,6 +214,29 @@ def read_startende_kategorien(disziplin):
          order by kat.reihenfolge
          """, [disziplin.id])
     return kategorien
+
+def read_anzahl_wettkaempfer(disziplin, kategorie):
+    cursor = connection.cursor()
+    sql = """
+    select count(id)
+      from (
+         select schiff.steuermann_id as id
+           from sasse_teilnehmer tn on (tn.id = b.teilnehmer_id)
+           join sasse_schiffeinzel schiff on (schiff.teilnehmer_ptr_id = tn.id)
+          where tn.disziplin_id = %s
+            and schiff.kategorie_id = %s
+         union
+         select schiff.vorderfahrer_id as id
+           from sasse_teilnehmer tn on (tn.id = b.teilnehmer_id)
+           join sasse_schiffeinzel schiff on (schiff.teilnehmer_ptr_id = tn.id)
+          where tn.disziplin_id = %s
+            and schiff.kategorie_id = %s
+      )
+    """
+    args = [disziplin.id, kategorie.id, disziplin.id, kategorie.id]
+    cursor.execute(sql, args)
+    row = cursor.fetchone()
+    return row[0]
 
 def create_mitglieder_nummer():
     cursor = connection.cursor()

@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import math
+
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.http import Http404
@@ -9,6 +11,7 @@ from django.forms.formsets import all_valid
 from django.template import RequestContext
 from django.forms.formsets import formset_factory
 from django.utils.encoding import smart_str
+from django.db.models import Count
 
 from models import Wettkampf
 from models import Disziplin
@@ -40,9 +43,11 @@ from queries import read_notenliste
 from queries import read_notenblatt
 from queries import read_kranzlimite
 from queries import read_kranzlimiten
+from queries import read_kranzlimite_pro_kategorie
 from queries import read_rangliste
 from queries import sort_rangliste
 from queries import read_startende_kategorien
+from queries import read_anzahl_wettkaempfer
 
 from reports import create_rangliste_doctemplate
 from reports import create_rangliste_flowables
@@ -761,18 +766,17 @@ def kranzlimiten(request, jahr, wettkampf, disziplin):
 
 def kranzlimiten_update(request, jahr, wettkampf, disziplin):
     if request.method == 'POST':
-        return kranzlimiten_put(request, jahr, wettkampf, disziplin)
+        if request.POST.has_key('set_defaults'):
+            return kranzlimiten_set_defaults(request, jahr, wettkampf, disziplin)
+        else:
+            return kranzlimiten_put(request, jahr, wettkampf, disziplin)
     assert request.method == 'GET'
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
-    limite_pro_kategorie = {}
-    for kl in Kranzlimite.objects.filter(disziplin=d):
-        limite_pro_kategorie[kl.kategorie_id] = kl
+    limite_pro_kategorie = read_kranzlimite_pro_kategorie(d)
     initial = []
     for k in read_startende_kategorien(d):
-        kl = limite_pro_kategorie.get(k.id)
-        if kl is None:
-            kl = Kranzlimite(disziplin=d, kategorie=k)
+        kl = limite_pro_kategorie.get(k.id, Kranzlimite(disziplin=d, kategorie=k))
         dict = {'kl_id': kl.id, 'kl_wert': kl.wert, 'kat_id': k.id, 'kat_name': k.name,}
         initial.append(dict)
     KranzlimiteFormSet = formset_factory(KranzlimiteForm, extra=0)
@@ -799,6 +803,31 @@ def kranzlimiten_put(request, jahr, wettkampf, disziplin):
         return HttpResponseRedirect(url)
     return render_to_response('kranzlimiten_update.html',
             {'wettkampf': w, 'disziplin': d, 'formset': formset})
+
+def kranzlimiten_set_defaults(request, jahr, wettkampf, disziplin):
+    assert request.method == 'POST'
+    w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
+    d = Disziplin.objects.get(wettkampf=w, name=disziplin)
+    limite_pro_kategorie = read_kranzlimite_pro_kategorie(d)
+    for k in read_startende_kategorien(d):
+        kl = limite_pro_kategorie.get(k.id, Kranzlimite(disziplin=d, kategorie=k))
+        anz_wettkaempfer = read_anzahl_wettkaempfer(d, k)
+        # 9//4 muss 3 statt 2 geben, damit *mindestens* 25% den Kranz erhalten
+        top25 = int(math.ceil(anz_wettkaempfer*0.25))
+        kraenze = 0
+        for row in read_rangliste(d, k):
+            if row['kranz']:
+                if row['doppelstarter']:
+                    kraenze += 1
+                else:
+                    kraenze += 2
+            if kraenze >= top25:
+                limite = row['punkt_tot'].note
+                kl.wert = limite
+                kl.save()
+                break
+    url = reverse(kranzlimiten, args=[jahr, wettkampf, d.name])
+    return HttpResponseRedirect(url)
 
 def mitglieder(request):
     assert request.method == 'GET'

@@ -5,7 +5,8 @@ select tn.startnummer as Startnr
            where 1=1
              and kl.disziplin_id = tn.disziplin_id
              and kl.kategorie_id = schiff.kategorie_id
-       ) > sum(b.note) then 0 else 1 end as MitKranz
+       ) >= (sum(b.note) + 0.01) then 0 else 1 end as MitKranz
+       /* 0.01 umgeht Rundungsprobleme in sqlite, wo es nur floats gibt */
      , case when (
           select min(t.startnummer) normale_startnummer
             from sasse_mitglied m

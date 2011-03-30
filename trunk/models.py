@@ -341,3 +341,7 @@ class Kranzlimite(models.Model):
     disziplin = models.ForeignKey('Disziplin')
     kategorie = models.ForeignKey('Kategorie')
     wert = models.DecimalField(max_digits=6, decimal_places=2)
+
+    def __unicode__(self):
+        return u'%s, %s, %d' % (self.disziplin, self.kategorie, self.wert)
+

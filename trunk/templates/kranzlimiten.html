@@ -3,14 +3,17 @@
 {% block content %}
 <table class="list">
   <tr>
-    <th class="kategorie">Kategorie</th>
-    <th style="text-align:center" colspan="2">Kranzlimite</th>
-    <th style="text-align:center" colspan="2">Anz. Rangierungen</th>
-    <th style="text-align:center" colspan="2">Anz. Doppelstarter</th>
+    <th></th>
+    <th></th>
+    <th style="text-align:center" colspan="3">Wettkämpfer</th>
+    <th style="text-align:center" colspan="2">Schiffe</th>
+    <th style="text-align:center" colspan="2">Doppelstarter</th>
   </tr>
   <tr>
-    <th></th>
-    <th class="note">[pkt]</th>
+    <th class="kategorie">Kat</th>
+    <th class="note">Limite</th>
+    <th class="note">Total</th>
+    <th class="note">Mit Kranz</th>
     <th class="note">[%]</th>
     <th class="note">Total</th>
     <th class="note">Mit Kranz</th>
@@ -18,17 +21,32 @@
     <th class="note">Mit Kranz</th>
   </tr>
 {% for row in kranzlimiten %}
+  {% if not forloop.last %}
   <tr class="{% cycle "odd" "even" %}">
     <td class="kategorie"><a href="{% url rangliste wettkampf.jahr, wettkampf.name, disziplin.name, row.kategorie %}">{{row.kategorie}}</a></td>
     <td class="note">{{row.limite_in_punkte}}</td>
-    <td class="note">{{row.limite_in_prozent}}</td>
+    <td class="note">{{row.wettkaempfer}}</td>
+    <td class="note">{{row.wettkaempfer_ueber_limite}}</td>
+    <td class="note">{{row.wettkaempfer_mit_kranz_in_prozent}}</td>
     <td class="note">{{row.anzahl_raenge}}</td>
     <td class="note">{{row.anzahl_raenge_ueber_limite}}</td>
     <td class="note">{{row.doppelstarter}}</td>
     <td class="note">{{row.doppelstarter_ueber_limite}}</td>
   </tr>
+  {% else %}
+  <tr style="font-weight: bold;">
+    <td colspan="2"></td>
+    <td class="note">{{row.wettkaempfer}}</td>
+    <td class="note">{{row.wettkaempfer_ueber_limite}}</td>
+    <td class="note"></td>
+    <td class="note"></td>
+    <td class="note"></td>
+    <td class="note"></td>
+    <td class="note"></td>
+  </tr>
+  {% endif %}
 {% endfor %}
 </table>
-<p>
+<p></p>
 <a href="{% url kranzlimiten_update wettkampf.jahr, wettkampf.name, disziplin.name %}">Ändern</a>
 {% endblock %}
