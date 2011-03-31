@@ -6,19 +6,17 @@
     <th></th>
     <th></th>
     <th style="text-align:center" colspan="3">Wettkämpfer</th>
-    <th style="text-align:center" colspan="2">Schiffe</th>
-    <th style="text-align:center" colspan="2">Doppelstarter</th>
+    <th style="text-align:center" colspan="3">Schiffe</th>
   </tr>
   <tr>
     <th class="kategorie">Kat</th>
     <th class="note">Limite</th>
     <th class="note">Total</th>
-    <th class="note">Mit Kranz</th>
+    <th class="note">Kranz</th>
     <th class="note">[%]</th>
     <th class="note">Total</th>
-    <th class="note">Mit Kranz</th>
-    <th class="note">Total</th>
-    <th class="note">Mit Kranz</th>
+    <th class="note">Kranz</th>
+    <th class="note">[%]</th>
   </tr>
 {% for row in kranzlimiten %}
   {% if not forloop.last %}
@@ -28,20 +26,18 @@
     <td class="note">{{row.wettkaempfer}}</td>
     <td class="note">{{row.wettkaempfer_ueber_limite}}</td>
     <td class="note">{{row.wettkaempfer_mit_kranz_in_prozent}}</td>
-    <td class="note">{{row.anzahl_raenge}}</td>
-    <td class="note">{{row.anzahl_raenge_ueber_limite}}</td>
-    <td class="note">{{row.doppelstarter}}</td>
-    <td class="note">{{row.doppelstarter_ueber_limite}}</td>
+    <td class="note">{{row.schiffe}}</td>
+    <td class="note">{{row.schiffe_ueber_limite}}</td>
+    <td class="note">{{row.schiffe_ueber_limite_in_prozent}}</td>
   </tr>
   {% else %}
   <tr style="font-weight: bold;">
-    <td colspan="2"></td>
+    <td colspan="2">Summen:</td>
     <td class="note">{{row.wettkaempfer}}</td>
     <td class="note">{{row.wettkaempfer_ueber_limite}}</td>
     <td class="note"></td>
-    <td class="note"></td>
-    <td class="note"></td>
-    <td class="note"></td>
+    <td class="note">{{row.schiffe}}</td>
+    <td class="note">{{row.schiffe_ueber_limite}}</td>
     <td class="note"></td>
   </tr>
   {% endif %}

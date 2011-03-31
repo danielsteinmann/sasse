@@ -811,17 +811,15 @@ def kranzlimiten_set_defaults(request, jahr, wettkampf, disziplin):
     limite_pro_kategorie = read_kranzlimite_pro_kategorie(d)
     for k in read_startende_kategorien(d):
         kl = limite_pro_kategorie.get(k.id, Kranzlimite(disziplin=d, kategorie=k))
-        anz_wettkaempfer = read_anzahl_wettkaempfer(d, k)
-        # 9//4 muss 3 statt 2 geben, damit *mindestens* 25% den Kranz erhalten
-        top25 = int(math.ceil(anz_wettkaempfer*0.25))
+        top25 = read_anzahl_wettkaempfer(d, k) * 0.25
         kraenze = 0
         for row in read_rangliste(d, k):
-            if row['kranz']:
-                if row['doppelstarter']:
-                    kraenze += 1
-                else:
-                    kraenze += 2
-            if kraenze >= top25:
+            kraenze += 2
+            if row['steuermann_ist_ds']:
+                kraenze -= 1
+            if row['vorderfahrer_ist_ds']:
+                kraenze -= 1
+            if kraenze > top25:
                 limite = row['punkt_tot'].note
                 kl.wert = limite
                 kl.save()
