@@ -41,6 +41,7 @@ select tn.startnummer as Startnr
   join sasse_sektion sektion on (sektion.id = schiff.sektion_id)
   join sasse_mitglied vorne on (vorne.id = schiff.vorderfahrer_id)
   join sasse_mitglied hinten on (hinten.id = schiff.steuermann_id)
- where p.disziplin_id = %s and kat.id = %s
+ where p.disziplin_id = %s
+       {% if kategorie %}and kat.id = %s{% endif %}
  group by tn.startnummer
  order by Total desc, Zeit asc

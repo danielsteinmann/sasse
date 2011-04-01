@@ -72,7 +72,7 @@ def read_notenliste(disziplin, posten, sektion=None):
         yield dict
 
 def read_rangliste(disziplin, kategorie, doppelstarter_mit_rang=False):
-    sql = render_to_string('rangliste.sql')
+    sql = render_to_string('rangliste.sql', {"disziplin": disziplin, "kategorie": kategorie})
     args = [disziplin.id, kategorie.id]
     cursor = connection.cursor()
     cursor.execute(sql, args)
@@ -165,48 +165,32 @@ def read_kranzlimite_pro_kategorie(disziplin):
     return limite_pro_kategorie
 
 def read_kranzlimiten(disziplin):
-    limite_pro_kategorie = read_kranzlimite_pro_kategorie(disziplin)
+    sql = render_to_string('kranzlimite.sql', {"disziplin": disziplin, "kategorie": None})
+    args = [disziplin.id, disziplin.id]
+    cursor = connection.cursor()
+    cursor.execute(sql, args)
     wettkaempfer_sum = 0
     wettkaempfer_mit_kranz_sum = 0
     schiffe_sum = 0
     schiffe_mit_kranz_sum = 0
-    for k in read_startende_kategorien(disziplin):
-        kl = limite_pro_kategorie.get(k.id, Kranzlimite(disziplin=disziplin, kategorie=k, wert=0))
-        wettkaempfer = 0
-        wettkaempfer_ueber_limite = 0
-        schiffe = 0
-        schiffe_ueber_limite = 0
-        for row in read_rangliste(disziplin, k):
-            schiffe += 1
-            wettkaempfer += 2
-            if row['steuermann_ist_ds']:
-                wettkaempfer -= 1
-            if row['vorderfahrer_ist_ds']:
-                wettkaempfer -= 1
-            if row['kranz']:
-                schiffe_ueber_limite += 1
-                wettkaempfer_ueber_limite += 2
-                if row['steuermann_ist_ds']:
-                    wettkaempfer_ueber_limite -= 1
-                if row['vorderfahrer_ist_ds']:
-                    wettkaempfer_ueber_limite -= 1
-        dict = {}
-        dict['kategorie'] = k.name
-        dict['limite_in_punkte'] = kl.wert
-        dict['schiffe'] = schiffe
-        dict['schiffe_ueber_limite'] = schiffe_ueber_limite
-        dict['schiffe_ueber_limite_in_prozent'] = (
-                round((dict['schiffe_ueber_limite']*1.0
-                 / dict['schiffe']) * 100, 1))
-        schiffe_sum += schiffe
-        schiffe_mit_kranz_sum += schiffe_ueber_limite
-        dict['wettkaempfer'] = wettkaempfer
-        dict['wettkaempfer_ueber_limite'] = wettkaempfer_ueber_limite
+    for row in cursor:
+        dict = {}; i = 0
+        dict['kategorie'] = row[i]; i += 1
+        dict['limite_in_punkte'] = row[i]; i += 1
+        dict['wettkaempfer'] = row[i]; i += 1
+        dict['wettkaempfer_ueber_limite'] = row[i]; i += 1
         dict['wettkaempfer_mit_kranz_in_prozent'] = (
                 round((dict['wettkaempfer_ueber_limite']*1.0
                  / dict['wettkaempfer']) * 100, 1))
-        wettkaempfer_sum += wettkaempfer
-        wettkaempfer_mit_kranz_sum += wettkaempfer_ueber_limite
+        wettkaempfer_sum += dict['wettkaempfer']
+        wettkaempfer_mit_kranz_sum += dict['wettkaempfer_ueber_limite']
+        dict['schiffe'] = row[i]; i += 1
+        dict['schiffe_ueber_limite'] = row[i]; i += 1
+        dict['schiffe_ueber_limite_in_prozent'] = (
+                round((dict['schiffe_ueber_limite']*1.0
+                 / dict['schiffe']) * 100, 1))
+        schiffe_sum += dict['schiffe']
+        schiffe_mit_kranz_sum += dict['schiffe_ueber_limite']
         yield dict
     dict = {}
     dict['wettkaempfer'] = wettkaempfer_sum
