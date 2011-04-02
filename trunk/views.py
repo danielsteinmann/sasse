@@ -1,17 +1,21 @@
 # -*- coding: utf-8 -*-
 
+# Ueberall direct_to_template statt render_to_response verwendet, damit der
+# RequestContext verwendet wird. Das braucht man zum Beispiel, um die Login
+# Information (Variable 'user') darzustellen.
+
 import math
 
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.http import Http404
 from django.http import HttpResponse
-from django.shortcuts import render_to_response
 from django.forms.formsets import all_valid
 from django.template import RequestContext
 from django.forms.formsets import formset_factory
 from django.utils.encoding import smart_str
 from django.db.models import Count
+from django.views.generic.simple import direct_to_template
 
 from models import Wettkampf
 from models import Disziplin
@@ -59,11 +63,10 @@ from reports import create_notenblatt_flowables
 from reports import create_startliste_doctemplate
 from reports import create_startliste_flowables
 
-
 def wettkaempfe_get(request):
     assert request.method == 'GET'
     wettkaempfe = Wettkampf.objects.all()
-    return render_to_response('wettkampf_list.html',
+    return direct_to_template(request, 'wettkampf_list.html',
             {'wettkaempfe': wettkaempfe})
 
 def wettkaempfe_add(request):
@@ -71,7 +74,7 @@ def wettkaempfe_add(request):
         return wettkaempfe_post(request)
     assert request.method == 'GET'
     form = WettkampfForm()
-    return render_to_response('wettkampf_add.html', {'form': form})
+    return direct_to_template(request, 'wettkampf_add.html', {'form': form})
 
 def wettkaempfe_post(request):
     assert request.method == 'POST'
@@ -80,19 +83,19 @@ def wettkaempfe_post(request):
         w = form.save()
         url = reverse(wettkampf_get, args=[w.jahr(), w.name])
         return HttpResponseRedirect(url)
-    return render_to_response('wettkampf_add.html', {'form': form,})
+    return direct_to_template(request, 'wettkampf_add.html', {'form': form,})
 
 def wettkaempfe_by_year(request, jahr):
     assert request.method == 'GET'
     wettkaempfe = Wettkampf.objects.filter(von__year=jahr)
-    return render_to_response('wettkampf_list.html',
+    return direct_to_template(request, 'wettkampf_list.html',
             {'wettkaempfe': wettkaempfe, 'year': jahr})
 
 def wettkampf_get(request, jahr, wettkampf):
     assert request.method == 'GET'
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
     d = w.disziplin_set.all()
-    return render_to_response('wettkampf.html',
+    return direct_to_template(request, 'wettkampf.html',
             {'wettkampf': w, 'disziplinen': d})
 
 def wettkampf_update(request, jahr, wettkampf):
@@ -102,7 +105,7 @@ def wettkampf_update(request, jahr, wettkampf):
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
     d = w.disziplin_set.all()
     form = WettkampfForm(instance=w)
-    return render_to_response('wettkampf_update.html',
+    return direct_to_template(request, 'wettkampf_update.html',
             {'wettkampf': w, 'disziplinen': d, 'form': form})
 
 def wettkampf_put(request, jahr, wettkampf):
@@ -114,7 +117,7 @@ def wettkampf_put(request, jahr, wettkampf):
         url = reverse(wettkampf_get, args=[w.jahr(), w.name])
         return HttpResponseRedirect(url)
     d = w.disziplin_set.all()
-    return render_to_response('wettkampf_update.html',
+    return direct_to_template(request, 'wettkampf_update.html',
             {'wettkampf': w, 'disziplinen': d, 'form': form})
 
 def wettkampf_delete_confirm(request, jahr, wettkampf):
@@ -122,7 +125,7 @@ def wettkampf_delete_confirm(request, jahr, wettkampf):
         return wettkampf_delete(request, jahr, wettkampf)
     assert request.method == 'GET'
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
-    return render_to_response('wettkampf_delete.html', {'wettkampf': w})
+    return direct_to_template(request, 'wettkampf_delete.html', {'wettkampf': w})
 
 def wettkampf_delete(request, jahr, wettkampf):
     assert request.method == 'POST'
@@ -136,7 +139,7 @@ def disziplinen_add(request, jahr, wettkampf):
     assert request.method == 'GET'
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
     form = DisziplinForm(w)
-    return render_to_response('disziplin_add.html',
+    return direct_to_template(request, 'disziplin_add.html',
             {'form': form, 'wettkampf': w})
 
 def disziplinen_post(request, jahr, wettkampf):
@@ -147,7 +150,7 @@ def disziplinen_post(request, jahr, wettkampf):
         form.save()
         url = reverse(wettkampf_get, args=[jahr, wettkampf])
         return HttpResponseRedirect(url)
-    return render_to_response('disziplin_add.html',
+    return direct_to_template(request, 'disziplin_add.html',
             {'form': form, 'wettkampf': w})
 
 def disziplin_get(request, jahr, wettkampf, disziplin):
@@ -161,7 +164,7 @@ def disziplin_get(request, jahr, wettkampf, disziplin):
         template = "einzelfahren.html"
     else:
         raise Http404(u"Disziplin %s noch nicht implementiert" % d.disziplinart)
-    return render_to_response(template, {'wettkampf': w, 'disziplin': d})
+    return direct_to_template(request, template, {'wettkampf': w, 'disziplin': d})
 
 def disziplin_update(request, jahr, wettkampf, disziplin):
     if request.method == 'POST':
@@ -170,7 +173,7 @@ def disziplin_update(request, jahr, wettkampf, disziplin):
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
     form = DisziplinForm(w, instance=d)
-    return render_to_response('disziplin_update.html',
+    return direct_to_template(request, 'disziplin_update.html',
             {'form': form, 'wettkampf': w, 'disziplin': d})
 
 def disziplin_put(request, jahr, wettkampf, disziplin):
@@ -182,7 +185,7 @@ def disziplin_put(request, jahr, wettkampf, disziplin):
         d = form.save()
         url = reverse(disziplin_get, args=[jahr, wettkampf, d.name])
         return HttpResponseRedirect(url)
-    return render_to_response('disziplin_update.html',
+    return direct_to_template(request, 'disziplin_update.html',
             {'form': form, 'wettkampf': w, 'disziplin': d})
 
 def disziplin_delete_confirm(request, jahr, wettkampf, disziplin):
@@ -191,7 +194,7 @@ def disziplin_delete_confirm(request, jahr, wettkampf, disziplin):
     assert request.method == 'GET'
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
-    return render_to_response('disziplin_delete.html',
+    return direct_to_template(request, 'disziplin_delete.html',
             {'wettkampf': w, 'disziplin': d})
 
 def disziplin_delete(request, jahr, wettkampf, disziplin):
@@ -208,7 +211,7 @@ def posten_list(request, jahr, wettkampf, disziplin):
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
     form = PostenListForm(d)
-    return render_to_response('posten.html',
+    return direct_to_template(request, 'posten.html',
         {'wettkampf': w, 'disziplin': d, 'posten': d.posten_set.all(),
             'form': form, })
 
@@ -220,7 +223,7 @@ def posten_post(request, jahr, wettkampf, disziplin):
     if form.is_valid():
         form.save()
         return HttpResponseRedirect(reverse(posten_list, args=[jahr, wettkampf, disziplin]))
-    return render_to_response('posten.html',
+    return direct_to_template(request, 'posten.html',
         {'wettkampf': w, 'disziplin': d, 'posten': d.posten_set.all(),
           'form': form, })
 
@@ -229,7 +232,7 @@ def posten_get(request, jahr, wettkampf, disziplin, posten):
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
     p = Posten.objects.get(disziplin=d, name=posten)
-    return render_to_response('posten_get.html',
+    return direct_to_template(request, 'posten_get.html',
         {'wettkampf': w, 'disziplin': d, 'posten': p, })
 
 def posten_update(request, jahr, wettkampf, disziplin, posten):
@@ -240,7 +243,7 @@ def posten_update(request, jahr, wettkampf, disziplin, posten):
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
     p = Posten.objects.get(disziplin=d, name=posten)
     form = PostenEditForm(d, instance=p)
-    return render_to_response('posten_update.html',
+    return direct_to_template(request, 'posten_update.html',
             {'form': form, 'wettkampf': w, 'disziplin': d, 'posten': p, })
 
 def posten_put(request, jahr, wettkampf, disziplin, posten):
@@ -254,7 +257,7 @@ def posten_put(request, jahr, wettkampf, disziplin, posten):
         posten = form.cleaned_data['name']
         return HttpResponseRedirect(reverse(posten_list,
             args=[jahr, wettkampf, disziplin]))
-    return render_to_response('posten_update.html',
+    return direct_to_template(request, 'posten_update.html',
             {'form': form, 'wettkampf': w, 'disziplin': d, 'posten': p, })
 
 def posten_delete_confirm(request, jahr, wettkampf, disziplin, posten):
@@ -264,7 +267,7 @@ def posten_delete_confirm(request, jahr, wettkampf, disziplin, posten):
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
     p = Posten.objects.get(disziplin=d, name=posten)
-    return render_to_response('posten_delete.html',
+    return direct_to_template(request, 'posten_delete.html',
             {'wettkampf': w, 'disziplin': d, 'posten': p, })
 
 def posten_delete(request, jahr, wettkampf, disziplin, posten):
@@ -323,7 +326,7 @@ def startliste_einzelfahren(request, jahr, wettkampf, disziplin):
             initial['sektion'] = sektion.id
         steuermann_neu_form = MitgliedForm(prefix="steuermann", initial=initial)
         vorderfahrer_neu_form =  MitgliedForm(prefix="vorderfahrer", initial=initial)
-    return render_to_response('startliste_einzelfahren.html', { 'wettkampf': w,
+    return direct_to_template(request, 'startliste_einzelfahren.html', { 'wettkampf': w,
         'disziplin': d, 'searchform': searchform, 'startliste': s, 'form': entryform,
         'steuermann_neu_form': steuermann_neu_form,
         'vorderfahrer_neu_form': vorderfahrer_neu_form},
@@ -377,7 +380,7 @@ def startliste_einzelfahren_post(request, jahr, wettkampf, disziplin):
     searchform = SchiffeinzelFilterForm(d, request.GET)
     if searchform.is_valid():
         s = searchform.anzeigeliste()
-    return render_to_response('startliste_einzelfahren.html', {
+    return direct_to_template(request, 'startliste_einzelfahren.html', {
         'wettkampf': w, 'disziplin': d, 'searchform': searchform,
         'startliste': s, 'form': entryform,
         'steuermann_neu_form': steuermann_neu_form,
@@ -390,7 +393,7 @@ def teilnehmer_get(request, jahr, wettkampf, disziplin, startnummer):
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
     t = Schiffeinzel.objects.get(disziplin=d, startnummer=startnummer)
-    return render_to_response('schiffeinzel.html',
+    return direct_to_template(request, 'schiffeinzel.html',
             {'wettkampf': w, 'disziplin': d, 'teilnehmer': t})
 
 def teilnehmer_update(request, jahr, wettkampf, disziplin, startnummer):
@@ -405,7 +408,7 @@ def teilnehmer_update(request, jahr, wettkampf, disziplin, startnummer):
         'vorderfahrer': t.vorderfahrer.get_edit_text(),
         },
         instance=t)
-    return render_to_response('schiffeinzel_update.html',
+    return direct_to_template(request, 'schiffeinzel_update.html',
             {'wettkampf': w, 'disziplin': d, 'form': form, 'teilnehmer': t})
 
 def teilnehmer_put(request, jahr, wettkampf, disziplin, startnummer):
@@ -420,7 +423,7 @@ def teilnehmer_put(request, jahr, wettkampf, disziplin, startnummer):
         args = [jahr, wettkampf, disziplin, startnummer]
         url = reverse(teilnehmer_get, args=args)
         return HttpResponseRedirect(url)
-    return render_to_response('schiffeinzel_update.html',
+    return direct_to_template(request, 'schiffeinzel_update.html',
             {'wettkampf': w, 'disziplin': d, 'form': form, 'teilnehmer': t})
 
 def teilnehmer_delete_confirm(request, jahr, wettkampf, disziplin, startnummer):
@@ -430,7 +433,7 @@ def teilnehmer_delete_confirm(request, jahr, wettkampf, disziplin, startnummer):
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
     t = Schiffeinzel.objects.get(disziplin=d, startnummer=startnummer)
-    return render_to_response('schiffeinzel_delete.html',
+    return direct_to_template(request, 'schiffeinzel_delete.html',
             {'wettkampf': w, 'disziplin': d, 'teilnehmer': t})
 
 def teilnehmer_delete(request, jahr, wettkampf, disziplin, startnummer):
@@ -471,7 +474,7 @@ def postenblatt(request, jahr, wettkampf, disziplin, posten):
         teilnehmer_ids = [t.id for t in startnummern]
         sets = create_postenblatt_formsets(p, teilnehmer_ids)
         header_row, data_rows = create_postenblatt_table(startnummern, sets, orientation)
-    return render_to_response('postenblatt.html', {'wettkampf': w, 'disziplin':
+    return direct_to_template(request, 'postenblatt.html', {'wettkampf': w, 'disziplin':
         d, 'posten': p, 'filterform': filterform, 'header_row': header_row,
         'data_rows': data_rows, 'query': query,})
 
@@ -504,7 +507,7 @@ def postenblatt_update(request, jahr, wettkampf, disziplin, posten):
         p_next_list = list(d.posten_set.filter(reihenfolge__gt=p.reihenfolge))
         if p_next_list:
             p_next_name = p_next_list[0].name
-    return render_to_response("postenblatt_update.html", {'wettkampf': w,
+    return direct_to_template(request, "postenblatt_update.html", {'wettkampf': w,
         'disziplin': d, 'posten': p, 'teilnehmer_formset': teilnehmer_formset,
         'formset': sets, 'header_row': header_row, 'data_rows': data_rows,
         'posten_next_name': p_next_name})
@@ -545,7 +548,7 @@ def postenblatt_post(request, jahr, wettkampf, disziplin, posten):
     orientation = get_orientation(p, request)
     startnummern = [f.cleaned_data['startnummer'] for f in teilnehmer_formset.forms]
     header_row, data_rows = create_postenblatt_table(startnummern, sets, orientation)
-    return render_to_response('postenblatt_update.html', {'wettkampf': w,
+    return direct_to_template(request, 'postenblatt_update.html', {'wettkampf': w,
         'disziplin': d, 'posten': p, 'teilnehmer_formset': teilnehmer_formset,
         'formset': sets, 'header_row': header_row, 'data_rows': data_rows,
         'posten_next_name': p_next_name})
@@ -612,7 +615,7 @@ def richtzeit(request, jahr, wettkampf, disziplin, posten, template='richtzeit.h
     form = RichtzeitForm(p)
     zeitposten = d.posten_set.filter(postenart__name='Zeitnote')
     rangliste = read_topzeiten(p)
-    return render_to_response(template, {'wettkampf': w, 'disziplin':
+    return direct_to_template(request, template, {'wettkampf': w, 'disziplin':
         d, 'posten': p, 'zeitposten': zeitposten, 'rangliste': rangliste,
         'form': form})
 
@@ -632,7 +635,7 @@ def richtzeit_post(request, jahr, wettkampf, disziplin, posten):
         return HttpResponseRedirect(url)
     zeitposten = d.posten_set.filter(postenart__name='Zeitnote')
     rangliste = read_topzeiten(p)
-    return render_to_response('richtzeit_update.html', {'wettkampf': w,
+    return direct_to_template(request, 'richtzeit_update.html', {'wettkampf': w,
         'disziplin': d, 'posten': p, 'zeitposten': zeitposten, 'rangliste':
         rangliste, 'form': form})
 
@@ -646,7 +649,7 @@ def notenliste(request, jahr, wettkampf, disziplin):
     if filter_form.is_valid():
         sektion = filter_form.cleaned_data['sektion']
     notenliste = read_notenliste(d, posten, sektion)
-    return render_to_response('notenliste.html', {'wettkampf': w, 'disziplin':
+    return direct_to_template(request, 'notenliste.html', {'wettkampf': w, 'disziplin':
         d, 'posten': posten, 'notenliste': list(notenliste), 'searchform': filter_form},
         context_instance=RequestContext(request))
 
@@ -664,7 +667,7 @@ def rangliste(request, jahr, wettkampf, disziplin, kategorie=None):
     kranzlimite = read_kranzlimite(d, k)
     rangliste = read_rangliste(d, k)
     rangliste_sorted = sorted(rangliste, key=sort_rangliste)
-    return render_to_response('rangliste.html', {'wettkampf': w, 'disziplin':
+    return direct_to_template(request, 'rangliste.html', {'wettkampf': w, 'disziplin':
         d, 'kategorie': k, 'kategorien': gestartete_kategorien, 'rangliste':
         rangliste_sorted, 'kranzlimite': kranzlimite},
         context_instance=RequestContext(request))
@@ -720,7 +723,7 @@ def notenblatt(request, jahr, wettkampf, disziplin, startnummer=None):
     except IndexError:
         next = None
     posten_werte = read_notenblatt(d, s)
-    return render_to_response('notenblatt.html', {'wettkampf': w, 'disziplin':
+    return direct_to_template(request, 'notenblatt.html', {'wettkampf': w, 'disziplin':
         d, 'schiff': s, 'posten_werte': posten_werte, 'next': next},
         context_instance=RequestContext(request))
 
@@ -760,7 +763,7 @@ def kranzlimiten(request, jahr, wettkampf, disziplin):
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
     kranzlimiten = read_kranzlimiten(d)
-    return render_to_response('kranzlimiten.html', {'wettkampf': w,
+    return direct_to_template(request, 'kranzlimiten.html', {'wettkampf': w,
         'disziplin': d, 'kranzlimiten': kranzlimiten},
         context_instance=RequestContext(request))
 
@@ -781,7 +784,7 @@ def kranzlimiten_update(request, jahr, wettkampf, disziplin):
         initial.append(dict)
     KranzlimiteFormSet = formset_factory(KranzlimiteForm, extra=0)
     formset = KranzlimiteFormSet(initial=initial)
-    return render_to_response('kranzlimiten_update.html',
+    return direct_to_template(request, 'kranzlimiten_update.html',
             {'wettkampf': w, 'disziplin': d, 'formset': formset})
 
 def kranzlimiten_put(request, jahr, wettkampf, disziplin):
@@ -801,7 +804,7 @@ def kranzlimiten_put(request, jahr, wettkampf, disziplin):
                 kl.delete()
         url = reverse(kranzlimiten, args=[jahr, wettkampf, d.name])
         return HttpResponseRedirect(url)
-    return render_to_response('kranzlimiten_update.html',
+    return direct_to_template(request, 'kranzlimiten_update.html',
             {'wettkampf': w, 'disziplin': d, 'formset': formset})
 
 def kranzlimiten_set_defaults(request, jahr, wettkampf, disziplin):
@@ -830,7 +833,7 @@ def kranzlimiten_set_defaults(request, jahr, wettkampf, disziplin):
 def mitglieder(request):
     assert request.method == 'GET'
     mitglieder = Mitglied.objects.all()
-    return render_to_response('mitglieder.html', {'mitglieder': mitglieder,},
+    return direct_to_template(request, 'mitglieder.html', {'mitglieder': mitglieder,},
             context_instance=RequestContext(request))
 
 #-----------

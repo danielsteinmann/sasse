@@ -99,7 +99,7 @@ class RanglisteTest(TestCase):
                 wettkampf__von__year="2010")
         kat_C = Kategorie.objects.get(name='C')
         cursor = connection.cursor()
-        RANGLISTE = render_to_string('rangliste.sql')
+        RANGLISTE = render_to_string('rangliste.sql', {'kategorie': kat_C})
 
         # Ohne Doppelstarter
         sql = "select * from (" + RANGLISTE + ") where SteuermannIstDS = 0 and VorderfahrerIstDS = 0"
