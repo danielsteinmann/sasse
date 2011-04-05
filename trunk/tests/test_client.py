@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
 import datetime
-import unittest
 from decimal import Decimal
 
 from django.core.urlresolvers import reverse
 from django.test import TestCase
+from django.contrib.auth.models import User, Permission
 
 from sasse.views import wettkaempfe_get
 from sasse.views import wettkaempfe_by_year
@@ -22,10 +22,20 @@ from sasse.models import Wettkampf
 from sasse.models import Mitglied
 from sasse.models import Sektion
 
+def login(test_case, username, password, perm_codes=[], superuser=False):
+    user = User.objects.create_user(username, 'email@pontonier.ch', password)
+    user.is_superuser = superuser
+    for code in perm_codes:
+        perm = Permission.objects.get(codename=code)
+        user.user_permissions.add(perm)
+    user.save()
+    result = test_case.client.login(username=username, password=password)
+    test_case.assertTrue(result, "Failed to login")
 
 class WettkampfPageTest(TestCase):
 
     def setUp(self):
+        login(self, 'admin', 'admin', superuser=True)
         Wettkampf.objects.create(
                 name="Basis-Cup",
                 zusatz="Testingen",
@@ -100,6 +110,7 @@ class WettkampfPageTest(TestCase):
 class DisziplinPageTest(TestCase):
 
     def setUp(self):
+        login(self, 'admin', 'admin', superuser=True)
         art = Disziplinart.objects.get(name="Einzelfahren")
         katI = Kategorie.objects.get(name="I")
         w = Wettkampf.objects.create(
@@ -161,6 +172,7 @@ class DisziplinPageTest(TestCase):
 class PostenPageTest(TestCase):
 
     def setUp(self):
+        login(self, 'admin', 'admin', superuser=True)
         einzel = Disziplinart.objects.get(name="Einzelfahren")
         w = Wettkampf.objects.create(name="Test-Cup", von="2009-04-04")
         d = w.disziplin_set.create(name="klein", disziplinart=einzel)
@@ -211,10 +223,10 @@ class PostenPageTest(TestCase):
         response = self.client.post(deleteURL)
         self.assertRedirects(response, listURL)
 
-
 class EinzelfahrenStartlistePageTest(TestCase):
 
     def setUp(self):
+        login(self, 'noten', 'secret', ['change_schiffeinzel'])
         einzel = Disziplinart.objects.get(name="Einzelfahren")
         w = Wettkampf.objects.create(name="Test-Cup", von="2009-04-04")
         d = w.disziplin_set.create(name="klein", disziplinart=einzel)
@@ -263,6 +275,7 @@ class EinzelfahrenStartlistePageTest(TestCase):
 
 class PostenblattPageTest(TestCase):
     def setUp(self):
+        login(self, 'noten', 'secret', ['change_bewertung'])
         einzel = Disziplinart.objects.get(name="Einzelfahren")
         w = Wettkampf.objects.create(name="Test-Cup", von="2009-04-04")
         d = w.disziplin_set.create(name="klein", disziplinart=einzel)
@@ -443,6 +456,7 @@ class PostenblattPageTest(TestCase):
 
 class RichtzeitPageTest(TestCase):
     def setUp(self):
+        login(self, 'admin', 'admin', superuser=True)
         w = Wettkampf.objects.create(name="Test-Cup", von="2009-04-04")
         d = w.disziplin_set.create(name="einzel")
         durchfahrt = Postenart.objects.get(name="Durchfahrt")
