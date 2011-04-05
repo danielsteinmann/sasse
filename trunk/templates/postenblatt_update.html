@@ -32,6 +32,9 @@
 <input type="submit" name="save_and_finish" value="Speichern, weiter zu Postenblattwahl">
 {% endif %}
 <input type="submit" name="save" value="Speichern">
+<font size="-1">
+<a href="{% url postenblatt wettkampf.jahr, wettkampf.name, disziplin.name, posten.name %}?{{ request.META.QUERY_STRING }}">Abbrechen</a>
+</font>
 </form>
 <script type="text/javascript">
   (function() {
