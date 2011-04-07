@@ -6,6 +6,7 @@
 <link href="/media/style.css" type="text/css" rel="stylesheet" />
 </head>
 <body>
+<script src="/media/jquery.js"></script>
 <div align=right><font size="-2">
 {% if user.is_authenticated %}
 {{user.first_name}} {{user.last_name}} | <a href="{% url django.contrib.auth.views.logout %}?next={{ request.get_full_path }}">Logout</a>

@@ -42,8 +42,6 @@
 <a href="{% url postenblatt_update wettkampf.jahr, wettkampf.name, disziplin.name, posten.name %}?{{ query }}">Ändern</a>
 </form>
 <script type="text/javascript">
-  var first_field = document.getElementById('id_startnummern');
-  first_field.focus();
-  first_field.select();
+$('input:visible:first').focus();
 </script>
 {% endblock %}

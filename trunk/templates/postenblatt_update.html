@@ -37,19 +37,22 @@
 </font>
 </form>
 <script type="text/javascript">
-  (function() {
-     var forms = document.forms || [];
-     for (var i=0; i<forms.length; i++) {
-       if (forms[i].name != 'postenblattform') continue;
-       for (var j=0; j<forms[i].length; j++) {
-          if (forms[i][j].type != "hidden" && forms[i][j].disabled != true
-              && forms[i][j].style.display != 'none') {
-           forms[i][j].focus();
-           forms[i][j].select();
-           return;
-         }
-       }
-     }
-   })();
+$('form:not(.filter) :input:visible:first').focus();
+$(document).ready(function(){
+    textboxes = $("input[type=text]");
+    $(textboxes).keydown(checkForEnter);
+});
+function checkForEnter(event) {
+    if (event.keyCode == 13) {
+        currentBoxNumber = textboxes.index(this);
+        nextBox = textboxes[currentBoxNumber + 1]
+        if (nextBox != null) {
+            nextBox.focus();
+            nextBox.select();
+            event.preventDefault();
+            return false;
+        }
+    }
+} 
 </script>
 {% endblock %}
