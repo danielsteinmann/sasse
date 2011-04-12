@@ -582,7 +582,6 @@ def create_postenblatt_table(startnummern, sets, orientation='HORIZONTAL'):
         for i, set in enumerate(sets):
             first_cell = bewertungsarten[i]
             next_cells = [form for form in set.forms]
-            next_cells.append(set.checksum_form)
             data_rows.append((first_cell, next_cells))
     else:
         # Startnummern vertikal, Bewertungsart horizontal

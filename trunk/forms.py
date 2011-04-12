@@ -343,16 +343,19 @@ class BewertungForm(Form):
         self.posten = kwargs.pop("posten")
         self.bewertungsart = kwargs.pop("bewertungsart")
         self.teilnehmer_id = kwargs.pop("teilnehmer_id")
+        self.is_checksum = kwargs.get('initial', {}).get("is_checksum", False)
         super(BewertungForm, self).__init__(*args, **kwargs)
         # Dynamisches Bewertungsfeld einfügen
-        if self.bewertungsart.einheit == 'ZEIT':
+        if self.is_checksum:
+            wert_field = DecimalField(required=False)
+        elif self.bewertungsart.einheit == 'ZEIT':
             wert_field = ZeitInSekundenField()
         else:
             wert_field = PunkteField(self.bewertungsart)
         self.fields['wert'] = wert_field
 
     def save(self):
-        if self.has_changed():
+        if not self.is_checksum and self.has_changed():
             wert = self.cleaned_data['wert']
             b = Bewertung()
             b.id = self.cleaned_data['id']
@@ -365,16 +368,6 @@ class BewertungForm(Form):
             b.teilnehmer_id = self.teilnehmer_id
             b.save()
             return b
-
-
-class ChecksumForm(Form):
-    id = IntegerField(required=False, widget=HiddenInput())
-    wert = DecimalField(required=False)
-
-    def __init__(self, bewertungsart, *args, **kwargs):
-        # Darstellung benoetigt die Bewertungsart
-        self.bewertungsart = bewertungsart
-        super(ChecksumForm, self).__init__(*args, **kwargs)
 
 
 def create_bewertung_initials(posten, bewertungsart, teilnehmer_ids):
@@ -400,57 +393,44 @@ def create_bewertung_initials(posten, bewertungsart, teilnehmer_ids):
                 values['wert'] = instance.note
         initials.append(values)
         checksum += values['wert']
-    return initials, checksum
+    # Und nun noch den Initialwert für die Checksumme
+    initials.append({'wert': checksum, 'is_checksum': True})
+    return initials
 
 
 class BewertungBaseFormSet(BaseFormSet):
-    """
-    Formset für eine Liste von Startnummern.  Das Postenblatt besteht aus 1-n
-    solchen Formsets.  Gibt man 'einzelfahren/postenblatt/' ein, also keine
-    konkreten Parameter, dann wird der erste Posten mit den ersten 15
-    Startnummern gezeigt.
-    """
-
     def __init__(self, *args, **kwargs):
         self.posten = kwargs.pop("posten")
         self.bewertungsart = kwargs.pop("bewertungsart")
         self.teilnehmer_ids = kwargs.pop("teilnehmer_ids")
-        initial_checksum = kwargs.pop("initial_checksum")
         super(BewertungBaseFormSet, self).__init__(*args, **kwargs)
-        kwargs['initial'] = {
-                # Gruene Hintergrundfarbe vermeiden
-                'id': 999,
-                'wert': initial_checksum,
-                }
-        self.checksum_form = ChecksumForm(self.bewertungsart, *args, **kwargs)
 
     def _construct_form(self, i, **kwargs):
         kwargs["posten"] = self.posten
         kwargs["bewertungsart"] = self.bewertungsart
-        kwargs["teilnehmer_id"] = self.teilnehmer_ids[i]
+        if self.initial and self.initial[i].has_key('is_checksum'):
+            kwargs["teilnehmer_id"] = -1
+        else:
+            kwargs["teilnehmer_id"] = self.teilnehmer_ids[i]
         return super(BewertungBaseFormSet, self)._construct_form(i, **kwargs)
-
-    def calc_checksum_data(self):
-        checksum = 0
-        for form in self.forms:
-            checksum += form.cleaned_data['wert']
-        return checksum
-
-    def is_valid(self):
-        return self.checksum_form.is_valid() and super(BewertungBaseFormSet, self).is_valid()
 
     def clean(self):
         if any(self.errors):
-            # Falls schon Fehler existieren, Checksumme nicht prüfen
             return
-        checksum = self.calc_checksum_data()
-        checksum_eingabe = self.checksum_form.cleaned_data['wert']
-        if checksum_eingabe and checksum_eingabe != checksum:
-            msg = u"Die Zahl %s erwartet" % (checksum,)
+        # Das letzte Form ist für die Checksumme
+        checksum_eingabe = self.forms[-1].cleaned_data['wert']
+        if checksum_eingabe is None:
+            # Falls Checksumme nicht eingegeben wurde, kann man sich die
+            # Checksummenvalidierung sparen
+            return
+        # Berechne Checksumme (ohne das letzte Form)
+        checksum_calc = 0
+        for form in self.forms[:-1]:
+            checksum_calc += form.cleaned_data['wert']
+        if checksum_eingabe != checksum_calc:
+            msg = u"Die Zahl %s erwartet" % (checksum_calc,)
             # Hänge Fehlermeldung an das Checksummenfeld
-            self.checksum_form._errors['wert'] = self.error_class([msg])
-            # Muss ValidationError schmeissen, damit Fehlermeldung erscheint
-            raise ValidationError(msg)
+            self.forms[-1]._errors['wert'] = self.error_class([msg])
 
     def save(self):
         for form in self.forms:
@@ -528,12 +508,9 @@ def create_postenblatt_formsets(posten, teilnehmer_ids, data=None):
     FormSet = formset_factory(form=BewertungForm, formset=BewertungBaseFormSet, extra=0)
     for art in Bewertungsart.objects.filter(postenart=posten.postenart,
             editierbar=True):
-        initials = None
-        checksum = 0
-        initials, checksum = create_bewertung_initials(posten, art, teilnehmer_ids)
+        initials = create_bewertung_initials(posten, art, teilnehmer_ids)
         formset = FormSet(posten=posten, bewertungsart=art, prefix=art.name,
-                teilnehmer_ids=teilnehmer_ids, initial=initials,
-                initial_checksum=checksum, data=data)
+                teilnehmer_ids=teilnehmer_ids, initial=initials, data=data)
         result.append(formset)
     return result
 
