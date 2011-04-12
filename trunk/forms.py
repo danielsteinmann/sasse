@@ -336,6 +336,11 @@ class PostenblattFilterForm(Form):
         return result
 
 
+class TeilnehmerForm(Form):
+    id = IntegerField(widget=HiddenInput())
+    startnummer = IntegerField(widget=HiddenInput())
+
+
 class BewertungForm(Form):
     id = IntegerField(required=False, widget=HiddenInput())
 
@@ -435,65 +440,6 @@ class BewertungBaseFormSet(BaseFormSet):
     def save(self):
         for form in self.forms:
             form.save()
-
-
-class TeilnehmerForm(Form):
-    """
-    Hilfsform für TeilnehmerContainerForm.
-    """
-    id = IntegerField(widget=HiddenInput())
-    startnummer = IntegerField(widget=HiddenInput())
-
-
-class TeilnehmerContainerForm(Form):
-    """
-    Hiermit kann man die Liste der Startnummern auf dem Postenblatt darstellen
-    (GET) respektive auszulesen (POST).
-    
-    Ich habe kein ModelFormSet von Django verwendet, weil es dies nicht
-    erlaubt, das queryset aus dem POST Request zu rekonstruieren.
-    """
-    PREFIX = 'stnr-%d'
-    total = IntegerField(widget=HiddenInput())
-
-    def __init__(self, teilnehmer_ids=None, *args, **kwargs):
-        self.teilnehmer_ids = teilnehmer_ids
-        super(TeilnehmerContainerForm, self).__init__(*args, **kwargs)
-        if self.teilnehmer_ids and self.data:
-            msg = u"Entweder teilnehmer_ids oder data, aber nicht beide"
-            raise AssertionError(msg)
-        if self.teilnehmer_ids:
-            self.initial['total'] = len(self.teilnehmer_ids)
-        else:
-            if not self.is_valid():
-                msg = u"Das hidden Feld 'total' nicht im Template vorhanden"
-                raise ValidationError(msg)
-
-    def teilnehmer_forms(self):
-        """
-        Wandelt die beim Konstruktor angegebene Startliste in eine Liste von
-        TeilnehmerForm um.
-        """
-        result = []
-        for i, teilnehmer_id in enumerate(self.teilnehmer_ids):
-            form = TeilnehmerForm(prefix=self.PREFIX % i)
-            form.initial['teilnehmer'] = teilnehmer_id
-            result.append(form)
-        return result
-
-    def exctract_teilnehmer_ids(self):
-        """
-        Wandelt die beim Konstruktor angegebenen POST Parameter in eine Liste
-        von Teilnehmer IDs um.
-        """
-        result = []
-        count = self.cleaned_data['total']
-        for i in range(0, count):
-            form = TeilnehmerForm(self.data, prefix=self.PREFIX % i)
-            form.is_valid()
-            id = form.cleaned_data['teilnehmer']
-            result.append(id)
-        return result
 
 
 def create_postenblatt_formsets(posten, teilnehmer_ids, data=None):
