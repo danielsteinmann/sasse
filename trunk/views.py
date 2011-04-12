@@ -8,9 +8,8 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.http import Http404
 from django.http import HttpResponse
-from django.forms.formsets import all_valid
 from django.template import RequestContext
-from django.forms.formsets import formset_factory
+from django.forms.formsets import formset_factory, all_valid
 from django.utils.encoding import smart_str
 from django.views.generic.simple import direct_to_template
 from django.contrib.auth.decorators import permission_required
@@ -582,7 +581,8 @@ def create_postenblatt_table(startnummern, sets, orientation='HORIZONTAL'):
         header_row = startnummern
         for i, set in enumerate(sets):
             first_cell = bewertungsarten[i]
-            next_cells = [set.forms[k] for k in range(len(startnummern))]
+            next_cells = [form for form in set.forms]
+            next_cells.append(set.checksum_form)
             data_rows.append((first_cell, next_cells))
     else:
         # Startnummern vertikal, Bewertungsart horizontal

@@ -48,7 +48,6 @@ from fields import StartnummernSelectionField
 
 from queries import create_mitglieder_nummer
 
-
 def get_startkategorie(a, b):
     if a == b:
         return a
@@ -351,9 +350,6 @@ class BewertungForm(Form):
         else:
             wert_field = PunkteField(self.bewertungsart)
         self.fields['wert'] = wert_field
-        # Definiere Initial Value von Bewertungsfeld
-        if self.initial.get('id') is None:
-            self.initial['wert'] = self.bewertungsart.defaultwert
 
     def save(self):
         if self.has_changed():
@@ -371,6 +367,42 @@ class BewertungForm(Form):
             return b
 
 
+class ChecksumForm(Form):
+    id = IntegerField(required=False, widget=HiddenInput())
+    wert = DecimalField(required=False)
+
+    def __init__(self, bewertungsart, *args, **kwargs):
+        # Darstellung benoetigt die Bewertungsart
+        self.bewertungsart = bewertungsart
+        super(ChecksumForm, self).__init__(*args, **kwargs)
+
+
+def create_bewertung_initials(posten, bewertungsart, teilnehmer_ids):
+    # Mit Hilfe eines einzigen Select (Performance) sich merken, zu
+    # welchem Teilnehmer bereits eine Bewertung existiert
+    bewertung_by_tid = {}
+    for b in Bewertung.objects.filter(posten=posten,
+            bewertungsart=bewertungsart, teilnehmer__id__in=teilnehmer_ids):
+        bewertung_by_tid[b.teilnehmer_id] = b
+    # Nun pro Teilnehmer die Initials für die BewertungForm definieren
+    initials = []
+    checksum = 0
+    for tid in teilnehmer_ids:
+        values = {}
+        instance = bewertung_by_tid.get(tid)
+        if instance is None:
+            values['wert'] = bewertungsart.defaultwert
+        else:
+            values['id'] = instance.id
+            if instance.bewertungsart.einheit == 'ZEIT':
+                values['wert'] = instance.zeit
+            else:
+                values['wert'] = instance.note
+        initials.append(values)
+        checksum += values['wert']
+    return initials, checksum
+
+
 class BewertungBaseFormSet(BaseFormSet):
     """
     Formset für eine Liste von Startnummern.  Das Postenblatt besteht aus 1-n
@@ -378,35 +410,47 @@ class BewertungBaseFormSet(BaseFormSet):
     konkreten Parameter, dann wird der erste Posten mit den ersten 15
     Startnummern gezeigt.
     """
+
     def __init__(self, *args, **kwargs):
         self.posten = kwargs.pop("posten")
         self.bewertungsart = kwargs.pop("bewertungsart")
         self.teilnehmer_ids = kwargs.pop("teilnehmer_ids")
-        self.extra = len(self.teilnehmer_ids)
-        # Mit Hilfe eines einzigen Select (Performance) sich merken, zu
-        # welchem Teilnehmer bereits eine Bewertung existiert
-        self.bewertung = {}
-        ids = self.teilnehmer_ids
-        for b in Bewertung.objects.filter(posten=self.posten,
-                bewertungsart=self.bewertungsart, teilnehmer__id__in=ids):
-            self.bewertung[b.teilnehmer_id] = b
+        initial_checksum = kwargs.pop("initial_checksum")
         super(BewertungBaseFormSet, self).__init__(*args, **kwargs)
+        kwargs['initial'] = {
+                # Gruene Hintergrundfarbe vermeiden
+                'id': 999,
+                'wert': initial_checksum,
+                }
+        self.checksum_form = ChecksumForm(self.bewertungsart, *args, **kwargs)
 
     def _construct_form(self, i, **kwargs):
-        initial = {}
-        teilnehmer_id = self.teilnehmer_ids[i]
-        instance = self.bewertung.get(teilnehmer_id)
-        if instance is not None:
-            initial['id'] = instance.id
-            if instance.bewertungsart.einheit == 'ZEIT':
-                initial['wert'] = instance.zeit
-            else:
-                initial['wert'] = instance.note
-        kwargs["initial"] = initial
         kwargs["posten"] = self.posten
         kwargs["bewertungsart"] = self.bewertungsart
-        kwargs["teilnehmer_id"] = teilnehmer_id
+        kwargs["teilnehmer_id"] = self.teilnehmer_ids[i]
         return super(BewertungBaseFormSet, self)._construct_form(i, **kwargs)
+
+    def calc_checksum_data(self):
+        checksum = 0
+        for form in self.forms:
+            checksum += form.cleaned_data['wert']
+        return checksum
+
+    def is_valid(self):
+        return self.checksum_form.is_valid() and super(BewertungBaseFormSet, self).is_valid()
+
+    def clean(self):
+        if any(self.errors):
+            # Falls schon Fehler existieren, Checksumme nicht prüfen
+            return
+        checksum = self.calc_checksum_data()
+        checksum_eingabe = self.checksum_form.cleaned_data['wert']
+        if checksum_eingabe and checksum_eingabe != checksum:
+            msg = u"Die Zahl %s erwartet" % (checksum,)
+            # Hänge Fehlermeldung an das Checksummenfeld
+            self.checksum_form._errors['wert'] = self.error_class([msg])
+            # Muss ValidationError schmeissen, damit Fehlermeldung erscheint
+            raise ValidationError(msg)
 
     def save(self):
         for form in self.forms:
@@ -481,11 +525,15 @@ def create_postenblatt_formsets(posten, teilnehmer_ids, data=None):
     erlaubt, das queryset aus dem POST Request zu rekonstruieren.
     """
     result = []
-    FormSet = formset_factory(form=BewertungForm, formset=BewertungBaseFormSet)
+    FormSet = formset_factory(form=BewertungForm, formset=BewertungBaseFormSet, extra=0)
     for art in Bewertungsart.objects.filter(postenart=posten.postenart,
             editierbar=True):
+        initials = None
+        checksum = 0
+        initials, checksum = create_bewertung_initials(posten, art, teilnehmer_ids)
         formset = FormSet(posten=posten, bewertungsart=art, prefix=art.name,
-                teilnehmer_ids=teilnehmer_ids, data=data)
+                teilnehmer_ids=teilnehmer_ids, initial=initials,
+                initial_checksum=checksum, data=data)
         result.append(formset)
     return result
 

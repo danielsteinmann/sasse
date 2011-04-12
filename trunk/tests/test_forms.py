@@ -189,13 +189,6 @@ class BewertungFormTest(TestCase):
                 teilnehmer_id=self.startnr_1.id, data={'wert': '1.9',})
         self.failUnless(form.errors.has_key('wert'))
 
-    def test_default_wert(self):
-        form = BewertungForm(posten=self.posten_a,
-                bewertungsart=self.antreten_abzug,
-                teilnehmer_id=self.startnr_1.id)
-        expected = self.antreten_abzug.defaultwert
-        self.assertEquals(expected, form.initial.get('wert'))
-
     def test_signum(self):
         create_form = BewertungForm(posten=self.posten_a,
                 bewertungsart=self.antreten_abzug,
