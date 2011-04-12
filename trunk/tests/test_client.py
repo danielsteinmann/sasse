@@ -280,9 +280,10 @@ class PostenblattPageTest(TestCase):
         w = Wettkampf.objects.create(name="Test-Cup", von="2009-04-04")
         d = w.disziplin_set.create(name="klein", disziplinart=einzel)
         durchfahrt = Postenart.objects.get(name="Durchfahrt")
+        landung = Postenart.objects.get(name="Landung auf bestimmtes Ziel")
         posten_D = d.posten_set.create(name="D", postenart=durchfahrt,
                 reihenfolge=1)
-        posten_F = d.posten_set.create(name="F", postenart=durchfahrt,
+        posten_F = d.posten_set.create(name="F", postenart=landung,
                 reihenfolge=2)
         for startnr in range(1,50):
             Schiffeinzel.objects.create(startnummer=startnr, disziplin=d,
@@ -329,14 +330,16 @@ class PostenblattPageTest(TestCase):
             'stnr-1-id': 2,
             'stnr-0-startnummer': 1,
             'stnr-1-startnummer': 2,
-            'Abzug-TOTAL_FORMS': 2,
-            'Abzug-INITIAL_FORMS': 2,
+            'Abzug-TOTAL_FORMS': 3,
+            'Abzug-INITIAL_FORMS': 3,
             'Abzug-0-wert': 0,
             'Abzug-1-wert': 0,
-            'Zielnote-TOTAL_FORMS': 2,
-            'Zielnote-INITIAL_FORMS': 2,
+            'Abzug-2-wert': 0,
+            'Zielnote-TOTAL_FORMS': 3,
+            'Zielnote-INITIAL_FORMS': 3,
             'Zielnote-0-wert': 10,
             'Zielnote-1-wert': 10,
+            'Zielnote-2-wert': 20,
             })
         self.assertRedirects(response, postenblatt_D)
         response = self.client.get(postenblatt_D_update)
@@ -351,17 +354,68 @@ class PostenblattPageTest(TestCase):
             'stnr-1-id': 2,
             'stnr-0-startnummer': 1,
             'stnr-1-startnummer': 2,
-            'Abzug-TOTAL_FORMS': 2,
-            'Abzug-INITIAL_FORMS': 2,
+            'Abzug-TOTAL_FORMS': 3,
+            'Abzug-INITIAL_FORMS': 3,
             'Abzug-0-wert': '7.3',
             'Abzug-1-wert': 'xx',
-            'Zielnote-TOTAL_FORMS': 2,
-            'Zielnote-INITIAL_FORMS': 2,
-            'Zielnote-0-wert': 10,
-            'Zielnote-1-wert': 10,
+            'Abzug-2-wert': 20,
+            'Zielnote-TOTAL_FORMS': 3,
+            'Zielnote-INITIAL_FORMS': 3,
+            'Zielnote-0-wert': 8,
+            'Zielnote-1-wert': 8,
+            'Zielnote-1-wert': 16,
             })
         self.failUnlessEqual(response.status_code, 200)
         self.assertContains(response, 'Nur folgende Zahlen sind erlaubt:')
+
+    def test_speichern_mit_falscher_checksumme(self):
+        postenblatt_D_update = '/2009/Test-Cup/klein/postenblatt/D/update/?startnummern=1,2'
+        response = self.client.post(postenblatt_D_update, {
+            'stnr-TOTAL_FORMS': 2,
+            'stnr-INITIAL_FORMS': 2,
+            'stnr-0-id': 1,
+            'stnr-1-id': 2,
+            'stnr-0-startnummer': 1,
+            'stnr-1-startnummer': 2,
+            'Abzug-TOTAL_FORMS': 3,
+            'Abzug-INITIAL_FORMS': 3,
+            'Abzug-0-wert': 1,
+            'Abzug-1-wert': 0,
+            'Abzug-2-wert': '4a',
+            'Zielnote-TOTAL_FORMS': 3,
+            'Zielnote-INITIAL_FORMS': 3,
+            'Zielnote-0-wert': 8,
+            'Zielnote-1-wert': 6,
+            'Zielnote-2-wert': 16,
+            })
+        self.failUnlessEqual(response.status_code, 200)
+        self.assertContains(response, 'Enter a number.')
+        self.assertContains(response, 'Die Zahl 14 erwartet')
+
+    def test_speichern_mit_leerer_checksumme(self):
+        postenblatt_D = '/2009/Test-Cup/klein/postenblatt/D/?startnummern=1,2'
+        postenblatt_D_update = '/2009/Test-Cup/klein/postenblatt/D/update/?startnummern=1,2'
+        response = self.client.post(postenblatt_D_update, {
+            'stnr-TOTAL_FORMS': 2,
+            'stnr-INITIAL_FORMS': 2,
+            'stnr-0-id': 1,
+            'stnr-1-id': 2,
+            'stnr-0-startnummer': 1,
+            'stnr-1-startnummer': 2,
+            'Abzug-TOTAL_FORMS': 3,
+            'Abzug-INITIAL_FORMS': 3,
+            'Abzug-0-wert': 1,
+            'Abzug-1-wert': 0,
+            'Abzug-2-wert': '',
+            'Zielnote-TOTAL_FORMS': 3,
+            'Zielnote-INITIAL_FORMS': 3,
+            'Zielnote-0-wert': 8,
+            'Zielnote-1-wert': 6,
+            'Zielnote-2-wert': '',
+            })
+        self.assertRedirects(response, postenblatt_D)
+        response = self.client.get(postenblatt_D)
+        self.assertContains(response, '14.0')
 
     def test_speichern_und_weiter(self):
         postenblatt_D_update = '/2009/Test-Cup/klein/postenblatt/D/update/'
@@ -373,14 +427,16 @@ class PostenblattPageTest(TestCase):
             'stnr-1-id': 2,
             'stnr-0-startnummer': 1,
             'stnr-1-startnummer': 2,
-            'Abzug-TOTAL_FORMS': 2,
-            'Abzug-INITIAL_FORMS': 2,
+            'Abzug-TOTAL_FORMS': 3,
+            'Abzug-INITIAL_FORMS': 3,
             'Abzug-0-wert': 0,
             'Abzug-1-wert': 0,
-            'Zielnote-TOTAL_FORMS': 2,
-            'Zielnote-INITIAL_FORMS': 2,
-            'Zielnote-0-wert': 10,
-            'Zielnote-1-wert': 10,
+            'Abzug-2-wert': 0,
+            'Zielnote-TOTAL_FORMS': 3,
+            'Zielnote-INITIAL_FORMS': 3,
+            'Zielnote-0-wert': 6,
+            'Zielnote-1-wert': 8,
+            'Zielnote-2-wert': 14,
             'save_and_next': 'Blabla',
             'posten_next_name': 'F',
             })
@@ -398,14 +454,16 @@ class PostenblattPageTest(TestCase):
             'stnr-1-id': 2,
             'stnr-0-startnummer': 1,
             'stnr-1-startnummer': 2,
-            'Abzug-TOTAL_FORMS': 2,
-            'Abzug-INITIAL_FORMS': 2,
+            'Abzug-TOTAL_FORMS': 3,
+            'Abzug-INITIAL_FORMS': 3,
             'Abzug-0-wert': 0,
             'Abzug-1-wert': 0,
-            'Zielnote-TOTAL_FORMS': 2,
-            'Zielnote-INITIAL_FORMS': 2,
-            'Zielnote-0-wert': 10,
-            'Zielnote-1-wert': 10,
+            'Abzug-3-wert': 0,
+            'Zielnote-TOTAL_FORMS': 3,
+            'Zielnote-INITIAL_FORMS': 3,
+            'Zielnote-0-wert': 8,
+            'Zielnote-1-wert': 6,
+            'Zielnote-2-wert': 14,
             'save_and_finish': 'Blabla',
             })
         self.assertRedirects(response, postenblatt_D)
@@ -420,14 +478,16 @@ class PostenblattPageTest(TestCase):
             'stnr-1-id': 2,
             'stnr-0-startnummer': 1,
             'stnr-1-startnummer': 2,
-            'Abzug-TOTAL_FORMS': 2,
-            'Abzug-INITIAL_FORMS': 2,
+            'Abzug-TOTAL_FORMS': 3,
+            'Abzug-INITIAL_FORMS': 3,
             'Abzug-0-wert': 0,
             'Abzug-1-wert': 0,
-            'Zielnote-TOTAL_FORMS': 2,
-            'Zielnote-INITIAL_FORMS': 2,
-            'Zielnote-0-wert': 10,
-            'Zielnote-1-wert': 10,
+            'Abzug-2-wert': 0,
+            'Zielnote-TOTAL_FORMS': 3,
+            'Zielnote-INITIAL_FORMS': 3,
+            'Zielnote-0-wert': 8,
+            'Zielnote-1-wert': 6,
+            'Zielnote-2-wert': 14,
             })
         self.assertRedirects(response, postenblatt_D)
         response = self.client.post(postenblatt_D_update, {
@@ -438,18 +498,19 @@ class PostenblattPageTest(TestCase):
             'stnr-1-id': 2,
             'stnr-0-startnummer': 1,
             'stnr-1-startnummer': 2,
-            'Abzug-TOTAL_FORMS': 2,
-            'Abzug-INITIAL_FORMS': 2,
+            'Abzug-TOTAL_FORMS': 3,
+            'Abzug-INITIAL_FORMS': 3,
             'Abzug-0-wert': 0,
             'Abzug-0-id': 1,
             'Abzug-1-wert': 0,
             'Abzug-1-id': 2,
-            'Zielnote-TOTAL_FORMS': 2,
-            'Zielnote-INITIAL_FORMS': 2,
+            'Zielnote-TOTAL_FORMS': 3,
+            'Zielnote-INITIAL_FORMS': 3,
             'Zielnote-0-wert': 10,
             'Zielnote-0-id': 3,
-            'Zielnote-1-wert': 10,
+            'Zielnote-1-wert': 8,
             'Zielnote-1-id': 4,
+            'Zielnote-2-wert': 18,
             })
         self.assertRedirects(response, postenblatt_D)
 
