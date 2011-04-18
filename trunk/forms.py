@@ -207,6 +207,19 @@ class SchiffeinzelFilterForm(Form):
         return result
 
 
+def set_display_value(form, mitglied, field_name):
+    if mitglied:
+        # TODO get_edit_text sollte nicht auf dem Model sein, sondern nur
+        # innerhalb des MitgliedSearchField verwendet werden
+        text = mitglied.get_edit_text()
+        form.data[field_name] = text
+        form.fields[field_name].widget.attrs['size'] = len(text) + 2
+    else:
+        field = form.fields[field_name]
+        if isinstance(field.widget, Select):
+            form.data[field_name] = field.queryset[0].id
+
+
 class SchiffeinzelEditForm(ModelForm):
     steuermann = MitgliedSearchField(queryset=Mitglied.objects.all())
     vorderfahrer = MitgliedSearchField(queryset=Mitglied.objects.all())
@@ -217,57 +230,36 @@ class SchiffeinzelEditForm(ModelForm):
     def __init__(self, disziplin, *args, **kwargs):
         super(SchiffeinzelEditForm, self).__init__(*args, **kwargs)
         self.data['disziplin'] = disziplin.id
-        self.fields['schiffsart'].required = False
-
-    def set_display_value(self, mitglied, field_name):
-        if mitglied:
-            self.data[field_name] = mitglied.get_edit_text()
-        else:
-            field = self.fields[field_name]
-            if isinstance(field.widget, Select):
-                self.data[field_name] = field.queryset[0].id
 
     def clean(self):
-        super(ModelForm, self).clean()
-        cleaned_data = self.cleaned_data
-        steuermann = cleaned_data.get('steuermann')
-        vorderfahrer = cleaned_data.get('vorderfahrer')
-        self.set_display_value(steuermann, 'steuermann')
-        self.set_display_value(vorderfahrer, 'vorderfahrer')
-        startnummer = cleaned_data.get('startnummer')
-        if startnummer:
-            q = Schiffeinzel.objects.filter(startnummer=startnummer,
-                    disziplin=self.data['disziplin'])
-            # Wenn ein persistenter Teilnemer editiert wird, muss dieser hier
-            # rausgefiltert werden, damit die Validierungsmeldung stimmt.
-            q = q.exclude(id=self.instance.id)
-            if q.count() > 0:
-                raise ValidationError(u"Die Startnummer '%d' ist bereits "
-                        "vergeben" % (startnummer))
-
-        return cleaned_data
+        super(SchiffeinzelEditForm, self).clean()
+        steuermann = self.cleaned_data.get('steuermann')
+        vorderfahrer = self.cleaned_data.get('vorderfahrer')
+        set_display_value(self, steuermann, 'steuermann')
+        set_display_value(self, vorderfahrer, 'vorderfahrer')
+        return self.cleaned_data
 
 
-class SchiffeinzelListForm(SchiffeinzelEditForm):
+class SchiffeinzelListForm(Form):
+    startnummer = IntegerField()
+    steuermann = MitgliedSearchField(queryset=Mitglied.objects.all())
     steuermann_neu = BooleanField(required=False, label="Neues Mitglied erfassen")
+    vorderfahrer = MitgliedSearchField(queryset=Mitglied.objects.all())
     vorderfahrer_neu = BooleanField(required=False, label="Neues Mitglied erfassen")
+    # Folgende Felder werden in clean() gesetzt, deshalb nicht required
+    sektion = ModelChoiceField(queryset=Sektion.objects.all(), widget=HiddenInput(), required=False)
+    kategorie = ModelChoiceField(queryset=Kategorie.objects.all(), widget=HiddenInput(), required=False)
 
     def __init__(self, disziplin, *args, **kwargs):
-        super(SchiffeinzelListForm, self).__init__(disziplin, *args, **kwargs)
+        self.disziplin = disziplin
+        super(SchiffeinzelListForm, self).__init__(*args, **kwargs)
         self.fields['startnummer'].widget = TextInput(attrs={'size':'3'})
-        self.fields['sektion'].widget = HiddenInput()
         # Ein-/Ausblende Steuerung
         self.fields['steuermann_neu'].widget.attrs['rel'] = 'neuer_steuermann'
         self.fields['vorderfahrer_neu'].widget.attrs['rel'] = 'neuer_vorderfahrer'
         # Damit für den Normalfall effizient mit Tab navigieren kann
         self.fields['steuermann_neu'].widget.attrs['tabindex'] = '-1'
         self.fields['vorderfahrer_neu'].widget.attrs['tabindex'] = '-1'
-        # Folgende Felder werden in clean() gesetzt, deshalb nicht required
-        self.fields['sektion'].required = False
-        self.fields['kategorie'].required = False
-        # TODO Gruusig, dass ich dummy Werte wegen der Model-Validierung setzen muss
-        self.data['sektion'] = 1
-        self.data['kategorie'] = 1
 
     #
     # TODO Doppelstarter Info darstellen, falls gleicher Fahrer mit frühere
@@ -286,30 +278,49 @@ class SchiffeinzelListForm(SchiffeinzelEditForm):
     # vorkommt (z.B. Schenker Michael). Dropdown Liste mit Jahrgang ergänzen
     #
     def clean(self):
-        super(SchiffeinzelListForm, self).clean()
-        cleaned_data = self.cleaned_data
-        disziplin = cleaned_data.get('disziplin')
-        steuermann = cleaned_data.get('steuermann')
-        vorderfahrer = cleaned_data.get('vorderfahrer')
-        sektion = cleaned_data.get('sektion')
-        if steuermann and vorderfahrer:
-            if steuermann == vorderfahrer:
-                text = u"Steuermann kann nicht gleichzeitig Vorderfahrer sein"
-                raise ValidationError(text)
-            if steuermann.sektion != vorderfahrer.sektion and not sektion:
-                text = u"Steuermann fährt für '%s', Vorderfahrer für '%s'. Das Schiff wird für '%s' fahren" % (steuermann.sektion, vorderfahrer.sektion, steuermann.sektion)
+        steuermann = self.cleaned_data.get('steuermann')
+        vorderfahrer = self.cleaned_data.get('vorderfahrer')
+        set_display_value(self, steuermann, 'steuermann')
+        set_display_value(self, vorderfahrer, 'vorderfahrer')
+        if not (steuermann and vorderfahrer):
+            return self.cleaned_data
+        if steuermann == vorderfahrer:
+            text = u"Steuermann kann nicht gleichzeitig Vorderfahrer sein"
+            raise ValidationError(text)
+        # Sektion
+        sektion = self.cleaned_data.get('sektion')
+        if sektion is None:
+            sektion = steuermann.sektion
+            if steuermann.sektion != vorderfahrer.sektion:
+                text = u"Steuermann fährt für '%s', Vorderfahrer für '%s'. Bitte Vorschlag bestätigen oder andere Sektion wählen." % (steuermann.sektion, vorderfahrer.sektion)
                 self.data['sektion'] = steuermann.sektion.id
+                self.fields['sektion'] = ModelChoiceField(queryset=Sektion.objects.all())
                 raise ValidationError(text)
-            cleaned_data['sektion'] = steuermann.sektion
-            jahr = disziplin.wettkampf.jahr()
+        # Kategorie
+        kategorie = self.cleaned_data.get('kategorie')
+        if kategorie is None:
+            jahr = self.disziplin.wettkampf.jahr()
             steuermann_kat = get_kategorie(jahr, steuermann)
             vorderfahrer_kat = get_kategorie(jahr, vorderfahrer)
-            startkategorie = get_startkategorie(steuermann_kat, vorderfahrer_kat)
-            if startkategorie is None:
-                text = u"Steuermann hat Kategorie '%s', Vorderfahrer Kategorie '%s'. Das ist eine unerlaubte Kombination." % (steuermann_kat, vorderfahrer_kat)
+            kategorie = get_startkategorie(steuermann_kat, vorderfahrer_kat)
+            if kategorie is None:
+                text = u"Steuermann hat Kategorie '%s', Vorderfahrer Kategorie '%s'. Das ist eine unbekannte Kombination; bitte auswählen." % (steuermann_kat, vorderfahrer_kat)
+                self.fields['kategorie'] = ModelChoiceField(queryset=Kategorie.objects.all())
                 raise ValidationError(text)
-            cleaned_data['kategorie'] = startkategorie
-        return cleaned_data
+        # Unique Startnummer
+        self.instance = Schiffeinzel(
+                disziplin=self.disziplin,
+                startnummer=self.cleaned_data.get('startnummer'),
+                steuermann=steuermann,
+                vorderfahrer=vorderfahrer,
+                sektion=sektion,
+                kategorie=kategorie,
+                )
+        self.instance.validate_unique()
+        return self.cleaned_data
+
+    def save(self):
+        return self.instance.save()
 
 
 class PostenblattFilterForm(Form):

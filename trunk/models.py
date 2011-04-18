@@ -322,7 +322,7 @@ class Schiffeinzel(Teilnehmer):
     vorderfahrer = models.ForeignKey('Mitglied', related_name='vorderfahrer')
     sektion = models.ForeignKey('Sektion')
     kategorie = models.ForeignKey('Kategorie')
-    schiffsart = models.CharField(max_length=1, choices=SCHIFFS_ART)
+    # Schiffsart lässt sich aus der Kategorie ableiten, darum nicht erfasst
 
 
 # Hilfstabellen für Ranglisten

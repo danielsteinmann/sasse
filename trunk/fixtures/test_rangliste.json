@@ -9388,7 +9388,6 @@
     "model": "sasse.schiffeinzel", 
     "fields": {
       "steuermann": 312, 
-      "schiffsart": "", 
       "kategorie": 4, 
       "sektion": 10, 
       "vorderfahrer": 300
@@ -9399,7 +9398,6 @@
     "model": "sasse.schiffeinzel", 
     "fields": {
       "steuermann": 312, 
-      "schiffsart": "", 
       "kategorie": 4, 
       "sektion": 10, 
       "vorderfahrer": 300
@@ -9410,7 +9408,6 @@
     "model": "sasse.schiffeinzel", 
     "fields": {
       "steuermann": 312, 
-      "schiffsart": "", 
       "kategorie": 4, 
       "sektion": 10, 
       "vorderfahrer": 300
@@ -9421,7 +9418,6 @@
     "model": "sasse.schiffeinzel", 
     "fields": {
       "steuermann": 295, 
-      "schiffsart": "", 
       "kategorie": 4, 
       "sektion": 10, 
       "vorderfahrer": 317
@@ -9432,7 +9428,6 @@
     "model": "sasse.schiffeinzel", 
     "fields": {
       "steuermann": 513, 
-      "schiffsart": "", 
       "kategorie": 4, 
       "sektion": 14, 
       "vorderfahrer": 503
@@ -9443,7 +9438,6 @@
     "model": "sasse.schiffeinzel", 
     "fields": {
       "steuermann": 317, 
-      "schiffsart": "", 
       "kategorie": 4, 
       "sektion": 10, 
       "vorderfahrer": 288
@@ -9454,7 +9448,6 @@
     "model": "sasse.schiffeinzel", 
     "fields": {
       "steuermann": 304, 
-      "schiffsart": "", 
       "kategorie": 4, 
       "sektion": 10, 
       "vorderfahrer": 312
@@ -9465,7 +9458,6 @@
     "model": "sasse.schiffeinzel", 
     "fields": {
       "steuermann": 295, 
-      "schiffsart": "", 
       "kategorie": 4, 
       "sektion": 10, 
       "vorderfahrer": 293
@@ -9476,7 +9468,6 @@
     "model": "sasse.schiffeinzel", 
     "fields": {
       "steuermann": 304, 
-      "schiffsart": "", 
       "kategorie": 6, 
       "sektion": 10, 
       "vorderfahrer": 294
@@ -9487,7 +9478,6 @@
     "model": "sasse.schiffeinzel", 
     "fields": {
       "steuermann": 312, 
-      "schiffsart": "", 
       "kategorie": 5, 
       "sektion": 10, 
       "vorderfahrer": 317
@@ -9498,7 +9488,6 @@
     "model": "sasse.schiffeinzel", 
     "fields": {
       "steuermann": 329, 
-      "schiffsart": "", 
       "kategorie": 5, 
       "sektion": 10, 
       "vorderfahrer": 305
@@ -9509,7 +9498,6 @@
     "model": "sasse.schiffeinzel", 
     "fields": {
       "steuermann": 304, 
-      "schiffsart": "", 
       "kategorie": 6, 
       "sektion": 10, 
       "vorderfahrer": 294
@@ -9520,7 +9508,6 @@
     "model": "sasse.schiffeinzel", 
     "fields": {
       "steuermann": 1091, 
-      "schiffsart": "", 
       "kategorie": 4, 
       "sektion": 31, 
       "vorderfahrer": 1092
@@ -9531,7 +9518,6 @@
     "model": "sasse.schiffeinzel", 
     "fields": {
       "steuermann": 317, 
-      "schiffsart": "", 
       "kategorie": 5, 
       "sektion": 10, 
       "vorderfahrer": 329
@@ -9542,7 +9528,6 @@
     "model": "sasse.schiffeinzel", 
     "fields": {
       "steuermann": 304, 
-      "schiffsart": "", 
       "kategorie": 6, 
       "sektion": 10, 
       "vorderfahrer": 294
@@ -9553,7 +9538,6 @@
     "model": "sasse.schiffeinzel", 
     "fields": {
       "steuermann": 1015, 
-      "schiffsart": "", 
       "kategorie": 5, 
       "sektion": 29, 
       "vorderfahrer": 1016
@@ -9564,7 +9548,6 @@
     "model": "sasse.schiffeinzel", 
     "fields": {
       "steuermann": 312, 
-      "schiffsart": "", 
       "kategorie": 4, 
       "sektion": 10, 
       "vorderfahrer": 304
@@ -9575,7 +9558,6 @@
     "model": "sasse.schiffeinzel", 
     "fields": {
       "steuermann": 1024, 
-      "schiffsart": "", 
       "kategorie": 4, 
       "sektion": 29, 
       "vorderfahrer": 1025
@@ -9586,7 +9568,6 @@
     "model": "sasse.schiffeinzel", 
     "fields": {
       "steuermann": 312, 
-      "schiffsart": "", 
       "kategorie": 4, 
       "sektion": 10, 
       "vorderfahrer": 300
@@ -9597,7 +9578,6 @@
     "model": "sasse.schiffeinzel", 
     "fields": {
       "steuermann": 1026, 
-      "schiffsart": "", 
       "kategorie": 4, 
       "sektion": 29, 
       "vorderfahrer": 1023
@@ -9608,7 +9588,6 @@
     "model": "sasse.schiffeinzel", 
     "fields": {
       "steuermann": 304, 
-      "schiffsart": "", 
       "kategorie": 4, 
       "sektion": 10, 
       "vorderfahrer": 294
@@ -9619,7 +9598,6 @@
     "model": "sasse.schiffeinzel", 
     "fields": {
       "steuermann": 503, 
-      "schiffsart": "", 
       "kategorie": 4, 
       "sektion": 14, 
       "vorderfahrer": 1573
@@ -9630,7 +9608,6 @@
     "model": "sasse.schiffeinzel", 
     "fields": {
       "steuermann": 312, 
-      "schiffsart": "", 
       "kategorie": 5, 
       "sektion": 10, 
       "vorderfahrer": 317
@@ -9641,7 +9618,6 @@
     "model": "sasse.schiffeinzel", 
     "fields": {
       "steuermann": 501, 
-      "schiffsart": "", 
       "kategorie": 4, 
       "sektion": 14, 
       "vorderfahrer": 496
@@ -9652,7 +9628,6 @@
     "model": "sasse.schiffeinzel", 
     "fields": {
       "steuermann": 492, 
-      "schiffsart": "", 
       "kategorie": 4, 
       "sektion": 14, 
       "vorderfahrer": 493
@@ -9663,7 +9638,6 @@
     "model": "sasse.schiffeinzel", 
     "fields": {
       "steuermann": 491, 
-      "schiffsart": "", 
       "kategorie": 4, 
       "sektion": 14, 
       "vorderfahrer": 490
@@ -9674,7 +9648,6 @@
     "model": "sasse.schiffeinzel", 
     "fields": {
       "steuermann": 312, 
-      "schiffsart": "", 
       "kategorie": 5, 
       "sektion": 10, 
       "vorderfahrer": 317
@@ -9685,7 +9658,6 @@
     "model": "sasse.schiffeinzel", 
     "fields": {
       "steuermann": 295, 
-      "schiffsart": "", 
       "kategorie": 4, 
       "sektion": 10, 
       "vorderfahrer": 300
@@ -9696,7 +9668,6 @@
     "model": "sasse.schiffeinzel", 
     "fields": {
       "steuermann": 312, 
-      "schiffsart": "", 
       "kategorie": 5, 
       "sektion": 10, 
       "vorderfahrer": 317
@@ -9707,7 +9678,6 @@
     "model": "sasse.schiffeinzel", 
     "fields": {
       "steuermann": 300, 
-      "schiffsart": "", 
       "kategorie": 4, 
       "sektion": 10, 
       "vorderfahrer": 1564
@@ -9718,7 +9688,6 @@
     "model": "sasse.schiffeinzel", 
     "fields": {
       "steuermann": 295, 
-      "schiffsart": "", 
       "kategorie": 4, 
       "sektion": 10, 
       "vorderfahrer": 288
@@ -9729,7 +9698,6 @@
     "model": "sasse.schiffeinzel", 
     "fields": {
       "steuermann": 295, 
-      "schiffsart": "", 
       "kategorie": 4, 
       "sektion": 10, 
       "vorderfahrer": 288
@@ -9740,7 +9708,6 @@
     "model": "sasse.schiffeinzel", 
     "fields": {
       "steuermann": 312, 
-      "schiffsart": "", 
       "kategorie": 4, 
       "sektion": 10, 
       "vorderfahrer": 300
@@ -9751,7 +9718,6 @@
     "model": "sasse.schiffeinzel", 
     "fields": {
       "steuermann": 312, 
-      "schiffsart": "", 
       "kategorie": 4, 
       "sektion": 10, 
       "vorderfahrer": 300
@@ -9762,7 +9728,6 @@
     "model": "sasse.schiffeinzel", 
     "fields": {
       "steuermann": 312, 
-      "schiffsart": "", 
       "kategorie": 5, 
       "sektion": 10, 
       "vorderfahrer": 317
@@ -9773,7 +9738,6 @@
     "model": "sasse.schiffeinzel", 
     "fields": {
       "steuermann": 312, 
-      "schiffsart": "", 
       "kategorie": 5, 
       "sektion": 10, 
       "vorderfahrer": 317
@@ -9784,7 +9748,6 @@
     "model": "sasse.schiffeinzel", 
     "fields": {
       "steuermann": 312, 
-      "schiffsart": "", 
       "kategorie": 4, 
       "sektion": 10, 
       "vorderfahrer": 300
@@ -9795,7 +9758,6 @@
     "model": "sasse.schiffeinzel", 
     "fields": {
       "steuermann": 312, 
-      "schiffsart": "", 
       "kategorie": 4, 
       "sektion": 10, 
       "vorderfahrer": 304
@@ -9806,7 +9768,6 @@
     "model": "sasse.schiffeinzel", 
     "fields": {
       "steuermann": 1094, 
-      "schiffsart": "", 
       "kategorie": 4, 
       "sektion": 31, 
       "vorderfahrer": 1092
@@ -9817,7 +9778,6 @@
     "model": "sasse.schiffeinzel", 
     "fields": {
       "steuermann": 488, 
-      "schiffsart": "", 
       "kategorie": 4, 
       "sektion": 14, 
       "vorderfahrer": 492
@@ -9828,7 +9788,6 @@
     "model": "sasse.schiffeinzel", 
     "fields": {
       "steuermann": 300, 
-      "schiffsart": "", 
       "kategorie": 4, 
       "sektion": 10, 
       "vorderfahrer": 312
@@ -9839,7 +9798,6 @@
     "model": "sasse.schiffeinzel", 
     "fields": {
       "steuermann": 300, 
-      "schiffsart": "", 
       "kategorie": 5, 
       "sektion": 10, 
       "vorderfahrer": 312
@@ -9850,7 +9808,6 @@
     "model": "sasse.schiffeinzel", 
     "fields": {
       "steuermann": 503, 
-      "schiffsart": "", 
       "kategorie": 4, 
       "sektion": 14, 
       "vorderfahrer": 312
@@ -9861,7 +9818,6 @@
     "model": "sasse.schiffeinzel", 
     "fields": {
       "steuermann": 503, 
-      "schiffsart": "", 
       "kategorie": 4, 
       "sektion": 14, 
       "vorderfahrer": 312
@@ -9872,7 +9828,6 @@
     "model": "sasse.schiffeinzel", 
     "fields": {
       "steuermann": 503, 
-      "schiffsart": "", 
       "kategorie": 4, 
       "sektion": 14, 
       "vorderfahrer": 312
@@ -9883,7 +9838,6 @@
     "model": "sasse.schiffeinzel", 
     "fields": {
       "steuermann": 312, 
-      "schiffsart": "", 
       "kategorie": 4, 
       "sektion": 10, 
       "vorderfahrer": 300
@@ -9894,7 +9848,6 @@
     "model": "sasse.schiffeinzel", 
     "fields": {
       "steuermann": 312, 
-      "schiffsart": "", 
       "kategorie": 4, 
       "sektion": 10, 
       "vorderfahrer": 300
