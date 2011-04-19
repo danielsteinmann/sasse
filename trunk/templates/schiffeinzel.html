@@ -9,12 +9,12 @@
   <tr>
     <th>Steuermann:</th>
     <td><a href="/admin/sasse/mitglied/{{ teilnehmer.steuermann.id }}">{{ teilnehmer.steuermann.name }}&nbsp;{{ teilnehmer.steuermann.vorname }}</a><br>
-        <font size="-1">Sektion {{ teilnehmer.steuermann.sektion }}, Jahrgang {{ teilnehmer.steuermann.geburtsdatum.year }}, Mitglied {{teilnehmer.steuermann.nummer }}, {{teilnehmer.steuermann.get_geschlecht_display}}</font></td>
+        <font size="-1">Nummer {{teilnehmer.steuermann.nummer }}, Sektion {{ teilnehmer.steuermann.sektion }}, Jahrgang {{ teilnehmer.steuermann.geburtsdatum.year }}, Kategorie {{ steuermann_kat }}, {{teilnehmer.steuermann.get_geschlecht_display}}</font></td>
   </tr>
   <tr>
     <th>Vorderfahrer:</th>
     <td><a href="/admin/sasse/mitglied/{{ teilnehmer.vorderfahrer.id }}">{{ teilnehmer.vorderfahrer.name }}&nbsp;{{ teilnehmer.vorderfahrer.vorname }}</a><br>
-        <font size="-1">Sektion {{ teilnehmer.vorderfahrer.sektion }}, Jahrgang {{ teilnehmer.vorderfahrer.geburtsdatum.year }}, Mitglied {{teilnehmer.vorderfahrer.nummer }}, {{teilnehmer.vorderfahrer.get_geschlecht_display}}</font></td>
+        <font size="-1">Nummer {{teilnehmer.vorderfahrer.nummer }}, Sektion {{ teilnehmer.vorderfahrer.sektion }}, Jahrgang {{ teilnehmer.vorderfahrer.geburtsdatum.year }}, Kategorie {{ vorderfahrer_kat }}, {{teilnehmer.vorderfahrer.get_geschlecht_display}}</font></td>
   </tr>
   <tr>
     <th>Sektion:</th>

@@ -38,6 +38,7 @@ from forms import create_postenblatt_formsets
 from forms import RichtzeitForm
 from forms import KranzlimiteForm
 from forms import MitgliedForm
+from forms import get_kategorie
 
 from queries import read_topzeiten
 from queries import read_notenliste
@@ -401,8 +402,12 @@ def teilnehmer_get(request, jahr, wettkampf, disziplin, startnummer):
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
     t = Schiffeinzel.objects.get(disziplin=d, startnummer=startnummer)
-    return direct_to_template(request, 'schiffeinzel.html',
-            {'wettkampf': w, 'disziplin': d, 'teilnehmer': t})
+    jahr = d.wettkampf.jahr()
+    steuermann_kat = get_kategorie(jahr, t.steuermann).name
+    vorderfahrer_kat = get_kategorie(jahr, t.vorderfahrer).name
+    return direct_to_template(request, 'schiffeinzel.html', {'wettkampf': w,
+        'disziplin': d, 'teilnehmer': t, 'steuermann_kat': steuermann_kat,
+        'vorderfahrer_kat': vorderfahrer_kat})
 
 def teilnehmer_update(request, jahr, wettkampf, disziplin, startnummer):
     if request.method == 'POST':
