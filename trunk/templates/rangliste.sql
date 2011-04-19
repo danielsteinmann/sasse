@@ -1,4 +1,6 @@
 select tn.startnummer as Startnr
+     , tn.ausgeschieden as Ausgeschieden
+     , tn.disqualifiziert as Disqualifiziert
      , case when (
           select kl.wert
             from sasse_kranzlimite kl
@@ -32,7 +34,7 @@ select tn.startnummer as Startnr
      , max(sektion.name) as Sektion
      , max(kat.name) as Kategorie
      , sum(b.zeit) as Zeit
-     , sum(b.note) as Total
+     , sum(case when tn.ausgeschieden or tn.disqualifiziert then 0 else b.note end) as Total
   from bewertung_calc b
   join sasse_teilnehmer tn on (tn.id = b.teilnehmer_id)
   join sasse_posten p on (p.id = b.posten_id)

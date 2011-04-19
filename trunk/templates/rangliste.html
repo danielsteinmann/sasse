@@ -27,7 +27,7 @@
   <tr><td colspan="7"><a href="{% url kranzlimiten wettkampf.jahr, wettkampf.name, disziplin.name %}">Kranzlimite:</a> {{kranzlimite}} Punkte</td></tr>
   {% endif %}{% endifchanged %}
   <tr class="{% cycle "odd" "even" %}">
-    <td class="rang">{% if row.doppelstarter %}DS{% else %}{{row.rang}}{% endif %}</td>
+    <td class="rang">{{row.rang}}</td>
     <td>{{row.steuermann}}<font size="-2">{% if row.steuermann_ist_ds %} (DS){% endif %} {{row.steuermann_jg|date:"Y"}}</font></td>
     <td>{{row.vorderfahrer}}<font size="-2">{% if row.vorderfahrer_ist_ds %} (DS){% endif %} {{row.vorderfahrer_jg|date:"Y"}}</font></td>
     <td>{{row.sektion}}</td>

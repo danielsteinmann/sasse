@@ -84,6 +84,8 @@ def read_rangliste(disziplin, kategorie, doppelstarter_mit_rang=False):
         dict['rang'] = None
         dict['doppelstarter'] = False
         dict['startnummer'] = row[i]; i+=1
+        dict['ausgeschieden'] = row[i]; i+=1
+        dict['disqualifiziert'] = row[i]; i+=1
         dict['kranz'] = row[i]; i+=1
         dict['steuermann_ist_ds'] = row[i]; i+=1
         dict['vorderfahrer_ist_ds'] = row[i]; i+=1
@@ -99,15 +101,21 @@ def read_rangliste(disziplin, kategorie, doppelstarter_mit_rang=False):
         dict['punkt_tot'] = new_bew(row[i], PUNKT); i += 1
         if dict['steuermann_ist_ds'] or dict['vorderfahrer_ist_ds']:
             dict['doppelstarter'] = True
-        if (not dict['doppelstarter']) or doppelstarter_mit_rang:
+        if dict['ausgeschieden'] or dict['disqualifiziert']:
+            dict['rang'] = '-'
+        elif dict['doppelstarter'] and not doppelstarter_mit_rang:
+            dict['rang'] = 'DS'
+        else:
             dict['rang'] = rang
             if (punkt_tot_prev, zeit_tot_prev) != (dict['punkt_tot'].note, dict['zeit_tot'].zeit):
                 rang += 1
-        punkt_tot_prev = dict['punkt_tot'].note
-        zeit_tot_prev = dict['zeit_tot'].zeit
+            punkt_tot_prev = dict['punkt_tot'].note
+            zeit_tot_prev = dict['zeit_tot'].zeit
         yield dict
 
 def sort_rangliste(dict):
+    if dict['ausgeschieden'] or dict['disqualifiziert']:
+        return 99
     if dict['kranz'] and not dict['doppelstarter']:
         return 1
     if dict['kranz'] and dict['doppelstarter']:
@@ -115,8 +123,8 @@ def sort_rangliste(dict):
     if not dict['kranz'] and not dict['doppelstarter']:
         return 3
     if not dict['kranz'] and dict['doppelstarter']:
-        return 4
-    return 5
+        return 5
+    return 6
 
 def read_notenblatt(disziplin, teilnehmer=None, sektion=None):
     sql = render_to_string('notenblatt.sql',

@@ -23,6 +23,8 @@
     <td>{{schiff.kategorie.name}}</td>
   </tr>
 </table>
+{% if schiff.ausgeschieden %}<p>Ausgeschieden</p>{% endif %}
+{% if schiff.disqualifiziert %}<p>Disqualifiziert!</p>{% endif %}
 <p></p>
 <table class="list">
   <tr>

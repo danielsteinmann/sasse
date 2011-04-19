@@ -88,7 +88,7 @@ class RanglisteTest(TestCase):
     5  Der/Vierte
     6  Noch/Einer
     DS Hans/Doppel
-    -  Foo/Bar      disqualizifiert
+    -  Foo/Bar      disqualifiziert
     """
     fixtures = ['test_rangliste.json']
 
@@ -122,18 +122,18 @@ class RanglisteTest(TestCase):
                 doppelstarter=row['doppelstarter'], startnummer=row['startnummer']))
         expected = [
                 {'rang':    1, 'kranz': True,  'doppelstarter': False, 'startnummer':  14},
-                {'rang': None, 'kranz': True,  'doppelstarter':  True, 'startnummer': 102},
+                {'rang': 'DS', 'kranz': True,  'doppelstarter':  True, 'startnummer': 102},
                 {'rang':    2, 'kranz': True,  'doppelstarter': False, 'startnummer':   2},
                 {'rang':    3, 'kranz': True,  'doppelstarter': False, 'startnummer':  10},
-                {'rang':    4, 'kranz': False, 'doppelstarter': False, 'startnummer':   9},
-                {'rang': None, 'kranz': False, 'doppelstarter':  True, 'startnummer': 101},
-                {'rang':    5, 'kranz': False, 'doppelstarter': False, 'startnummer':  12},
-                {'rang':    6, 'kranz': False, 'doppelstarter': False, 'startnummer':   3},
-                {'rang':    7, 'kranz': False, 'doppelstarter': False, 'startnummer':  11},
-                {'rang':    8, 'kranz': False, 'doppelstarter': False, 'startnummer':   1},
-                {'rang': None, 'kranz': False, 'doppelstarter':  True, 'startnummer': 103},
-                {'rang':    9, 'kranz': False, 'doppelstarter': False, 'startnummer':  13},
-                {'rang':   10, 'kranz': False, 'doppelstarter': False, 'startnummer':   6},
+                {'rang': 'DS', 'kranz': False, 'doppelstarter':  True, 'startnummer': 101},
+                {'rang':    4, 'kranz': False, 'doppelstarter': False, 'startnummer':  12},
+                {'rang':    5, 'kranz': False, 'doppelstarter': False, 'startnummer':   3},
+                {'rang':    6, 'kranz': False, 'doppelstarter': False, 'startnummer':  11},
+                {'rang':    7, 'kranz': False, 'doppelstarter': False, 'startnummer':   1},
+                {'rang': 'DS', 'kranz': False, 'doppelstarter':  True, 'startnummer': 103},
+                {'rang':    8, 'kranz': False, 'doppelstarter': False, 'startnummer':  13},
+                {'rang':    9, 'kranz': False, 'doppelstarter': False, 'startnummer':   6},
+                {'rang':  '-', 'kranz': False, 'doppelstarter': False, 'startnummer':   9},
                 ]
         self.assertEquals(expected, actual)
 
@@ -147,16 +147,16 @@ class RanglisteTest(TestCase):
                 {'rang':    1, 'kranz': True,  'doppelstarter': False, 'startnummer':  14},
                 {'rang':    2, 'kranz': True,  'doppelstarter': False, 'startnummer':   2},
                 {'rang':    3, 'kranz': True,  'doppelstarter': False, 'startnummer':  10},
-                {'rang': None, 'kranz': True,  'doppelstarter':  True, 'startnummer': 102},
-                {'rang':    4, 'kranz': False, 'doppelstarter': False, 'startnummer':   9},
-                {'rang':    5, 'kranz': False, 'doppelstarter': False, 'startnummer':  12},
-                {'rang':    6, 'kranz': False, 'doppelstarter': False, 'startnummer':   3},
-                {'rang':    7, 'kranz': False, 'doppelstarter': False, 'startnummer':  11},
-                {'rang':    8, 'kranz': False, 'doppelstarter': False, 'startnummer':   1},
-                {'rang':    9, 'kranz': False, 'doppelstarter': False, 'startnummer':  13},
-                {'rang':   10, 'kranz': False, 'doppelstarter': False, 'startnummer':   6},
-                {'rang': None, 'kranz': False, 'doppelstarter':  True, 'startnummer': 101},
-                {'rang': None, 'kranz': False, 'doppelstarter':  True, 'startnummer': 103},
+                {'rang': 'DS', 'kranz': True,  'doppelstarter':  True, 'startnummer': 102},
+                {'rang':    4, 'kranz': False, 'doppelstarter': False, 'startnummer':  12},
+                {'rang':    5, 'kranz': False, 'doppelstarter': False, 'startnummer':   3},
+                {'rang':    6, 'kranz': False, 'doppelstarter': False, 'startnummer':  11},
+                {'rang':    7, 'kranz': False, 'doppelstarter': False, 'startnummer':   1},
+                {'rang':    8, 'kranz': False, 'doppelstarter': False, 'startnummer':  13},
+                {'rang':    9, 'kranz': False, 'doppelstarter': False, 'startnummer':   6},
+                {'rang': 'DS', 'kranz': False, 'doppelstarter':  True, 'startnummer': 101},
+                {'rang': 'DS', 'kranz': False, 'doppelstarter':  True, 'startnummer': 103},
+                {'rang':  '-', 'kranz': False, 'doppelstarter': False, 'startnummer':   9},
                 ]
         self.assertEquals(expected, actual)
 
@@ -170,14 +170,14 @@ class RanglisteTest(TestCase):
                 {'rang':    2, 'kranz': True,  'doppelstarter':  True, 'startnummer': 102},
                 {'rang':    3, 'kranz': True,  'doppelstarter': False, 'startnummer':   2},
                 {'rang':    4, 'kranz': True,  'doppelstarter': False, 'startnummer':  10},
-                {'rang':    5, 'kranz': False, 'doppelstarter': False, 'startnummer':   9},
-                {'rang':    6, 'kranz': False, 'doppelstarter':  True, 'startnummer': 101},
-                {'rang':    7, 'kranz': False, 'doppelstarter': False, 'startnummer':  12},
-                {'rang':    8, 'kranz': False, 'doppelstarter': False, 'startnummer':   3},
-                {'rang':    9, 'kranz': False, 'doppelstarter': False, 'startnummer':  11},
-                {'rang':   10, 'kranz': False, 'doppelstarter': False, 'startnummer':   1},
-                {'rang':   11, 'kranz': False, 'doppelstarter':  True, 'startnummer': 103},
-                {'rang':   12, 'kranz': False, 'doppelstarter': False, 'startnummer':  13},
-                {'rang':   13, 'kranz': False, 'doppelstarter': False, 'startnummer':   6},
+                {'rang':    5, 'kranz': False, 'doppelstarter':  True, 'startnummer': 101},
+                {'rang':    6, 'kranz': False, 'doppelstarter': False, 'startnummer':  12},
+                {'rang':    7, 'kranz': False, 'doppelstarter': False, 'startnummer':   3},
+                {'rang':    8, 'kranz': False, 'doppelstarter': False, 'startnummer':  11},
+                {'rang':    9, 'kranz': False, 'doppelstarter': False, 'startnummer':   1},
+                {'rang':   10, 'kranz': False, 'doppelstarter':  True, 'startnummer': 103},
+                {'rang':   11, 'kranz': False, 'doppelstarter': False, 'startnummer':  13},
+                {'rang':   12, 'kranz': False, 'doppelstarter': False, 'startnummer':   6},
+                {'rang':  '-', 'kranz': False, 'doppelstarter': False, 'startnummer':   9},
                 ]
         self.assertEquals(expected, actual)

@@ -59,7 +59,6 @@ def create_rangliste_flowables(rangliste, kategorie, kranzlimite):
     ss = _create_style_sheet()
     for row in rangliste:
         if not row['kranz']: anzahl_ohne_kranz += 1
-        if row['doppelstarter']: row['rang'] = 'DS'
         if row['steuermann_ist_ds']: row['steuermann'] += ds_marker
         if row['vorderfahrer_ist_ds']: row['vorderfahrer'] += ds_marker
         row['steuermann'] += _extract_jahrgang(row['steuermann_jg'])
@@ -142,6 +141,14 @@ def create_notenblatt_flowables(posten_werte, schiffeinzel):
         ]
     result.append(DocExec("startnummer = '%d'" % schiffeinzel.startnummer))
     result.append(Platypus_Table(data, hAlign="LEFT", colWidths=col_widths, style=TableStyle(table_props)))
+    # --------
+    special_text = None
+    if schiffeinzel.ausgeschieden:
+        special_text = "Ausgeschieden"
+    elif schiffeinzel.disqualifiziert:
+        special_text = "Disqualifiziert!"
+    if special_text:
+        result.append(Paragraph(special_text, ss['center']))
     result.append(Spacer(1, 30))
     # --------
     data = [['Posten', 'Übungsteil', 'Abzug', 'Note', 'Zeit', 'Total',]]
