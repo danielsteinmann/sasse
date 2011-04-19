@@ -11,7 +11,12 @@
   {% for p in posten %}
   <tr class="{% cycle 'odd' 'even' as rowcolors %}">
     <td class="posten"><a href="{% url posten_get wettkampf.jahr, wettkampf.name, disziplin.name, p.name %}">{{ p.name}}</a>
-    <td>{{ p.postenart }}</td>
+    <td>
+      {{ p.postenart }}
+      {% if p.postenart.name == 'Zeitnote' %}
+      <a href="{% url richtzeit wettkampf.jahr, wettkampf.name, disziplin.name, p.name %}">(Richtzeit)</a>
+      {% endif %}
+    </td>
     <td>{{ p.reihenfolge }}</td>
   </tr>
   {% endfor %}
