@@ -4,7 +4,7 @@ select tn.startnummer as Startnr
      , sektion.name as Sektion
      , kat.name as Kategorie
      , b.zeit as Zeit
-     , b.note as Punkte
+     , b.note as Note
      , b.richtzeit as Richtzeit
   from bewertung_calc b
        join sasse_teilnehmer tn on (tn.id = b.teilnehmer_id)

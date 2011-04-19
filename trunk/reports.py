@@ -151,7 +151,7 @@ def create_notenblatt_flowables(posten_werte, schiffeinzel):
         result.append(Paragraph(special_text, ss['center']))
     result.append(Spacer(1, 30))
     # --------
-    data = [['Posten', 'Übungsteil', 'Abzug', 'Note', 'Zeit', 'Total',]]
+    data = [['Posten', 'Übungsteil', 'Abzug', 'Note', 'Zeit', 'Punkte',]]
     col_widths = (40, 260, 40, 40, 55, 40)
     for row in posten_werte:
         record = []
@@ -161,11 +161,11 @@ def create_notenblatt_flowables(posten_werte, schiffeinzel):
             record.append(unicode(row['abzug']))
             record.append(unicode(row['note']))
             record.append(unicode(row['zeit']))
-            record.append(unicode(row['total']))
+            record.append(unicode(row['punkte']))
         else:
             for i in range(0,4): record.append("")
             record.append(unicode(row['zeit']))
-            record.append(unicode(row['total']))
+            record.append(unicode(row['punkte']))
         data.append(record)
     table_props = [
         ('FONT', (0,0), (-1,-1), 'Helvetica', 10),
@@ -285,7 +285,7 @@ def create_bestzeiten_flowables(posten_name, zeitrangliste):
         record.append(Paragraph(row['sektion'], ss['left']))
         record.append(Paragraph(row['kategorie'], ss['center']))
         record.append(Paragraph(unicode(row['zeit']), ss['center']))
-        record.append(Paragraph(unicode(row['punkte']), ss['right']))
+        record.append(Paragraph(unicode(row['note']), ss['right']))
         data.append(record)
     table_props = [
         ('LINEBELOW', (0,0), (-1,0), 1, colors.black),

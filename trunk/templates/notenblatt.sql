@@ -3,7 +3,7 @@ select p.name as Posten
      , sum(case when ba.gruppe = 'STIL' and b.note < 0 then abs(b.note) end) as Abzug
      , sum(case when ba.gruppe = "ZIEL" then b.note end) as Note
      , sum(b.zeit) as Zeit
-     , sum(b.note) as Total
+     , sum(b.note) as Punkte
   from bewertung_calc b
   join sasse_bewertungsart ba on (ba.id = b.bewertungsart_id)
   join sasse_posten p on (p.id = b.posten_id)

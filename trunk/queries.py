@@ -42,7 +42,7 @@ def read_topzeiten(posten, topn=15):
         dict['sektion'] = row[i]; i += 1
         dict['kategorie'] = row[i]; i += 1
         dict['zeit'] = new_bew(row[i], ZEIT); i += 1
-        dict['punkte'] = new_bew(row[i], PUNKT); i += 1
+        dict['note'] = new_bew(row[i], PUNKT); i += 1
         dict['richtzeit'] = new_bew(row[i], ZEIT); i += 1
         yield dict
 
@@ -137,7 +137,7 @@ def read_notenblatt(disziplin, teilnehmer=None, sektion=None):
     cursor = connection.cursor()
     cursor.execute(sql, args)
     zeit_sum = 0
-    total_sum = 0
+    punkte_sum = 0
     for row in cursor:
         dict = {}; i = 0
         dict['posten'] = row[i]; i += 1
@@ -145,9 +145,9 @@ def read_notenblatt(disziplin, teilnehmer=None, sektion=None):
         dict['abzug'] = new_bew(row[i], PUNKT); i += 1
         dict['note'] = new_bew(row[i], PUNKT); i += 1
         dict['zeit'] = new_bew(row[i], ZEIT); i += 1
-        dict['total'] = new_bew(row[i], PUNKT); i += 1
+        dict['punkte'] = new_bew(row[i], PUNKT); i += 1
         zeit_sum += dict['zeit'].zeit
-        total_sum += dict['total'].note
+        punkte_sum += dict['punkte'].note
         if dict['posten_art'] == 'Zeitnote':
             dict['abzug'] = ""
             dict['note'] = ""
@@ -156,7 +156,7 @@ def read_notenblatt(disziplin, teilnehmer=None, sektion=None):
         yield dict
     dict = {}
     dict['zeit'] = new_bew(zeit_sum, ZEIT)
-    dict['total'] = new_bew(total_sum, PUNKT)
+    dict['punkte'] = new_bew(punkte_sum, PUNKT)
     yield dict
 
 def read_kranzlimite(disziplin, kategorie):

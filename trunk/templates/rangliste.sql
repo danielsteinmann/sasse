@@ -34,7 +34,7 @@ select tn.startnummer as Startnr
      , max(sektion.name) as Sektion
      , max(kat.name) as Kategorie
      , sum(b.zeit) as Zeit
-     , sum(case when tn.ausgeschieden or tn.disqualifiziert then 0 else b.note end) as Total
+     , sum(case when tn.ausgeschieden or tn.disqualifiziert then 0 else b.note end) as Punkte
   from bewertung_calc b
   join sasse_teilnehmer tn on (tn.id = b.teilnehmer_id)
   join sasse_posten p on (p.id = b.posten_id)
@@ -46,4 +46,4 @@ select tn.startnummer as Startnr
  where p.disziplin_id = %s
        {% if kategorie %}and kat.id = %s{% endif %}
  group by tn.startnummer
- order by Total desc, Zeit asc
+ order by Punkte desc, Zeit asc

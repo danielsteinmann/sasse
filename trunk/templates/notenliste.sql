@@ -4,7 +4,7 @@ select tn.startnummer as Startnr
      , max(sektion.name) as Sektion
      , max(kat.name) as Kategorie
      , sum(b.zeit) as Zeit
-     , sum(b.note) as Total
+     , sum(b.note) as Punkte
 {% for p in posten %}
      , sum(case when b.posten_id = {{ p.id }} then b.note end) as '{{ p.name }}'
 {% ifequal p.postenart.name "Zeitnote" %}
@@ -22,4 +22,4 @@ select tn.startnummer as Startnr
  where p.disziplin_id = %s
        {% if sektion %}and schiff.sektion_id = %s{% endif %}
  group by tn.startnummer
- order by Total desc, Zeit asc
+ order by Punkte desc, Zeit asc
