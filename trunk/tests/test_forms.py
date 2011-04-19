@@ -254,13 +254,29 @@ class SchiffeinzelListFormTest(TestCase):
                 name="Keller", vorname="Roland", geschlecht="m",
                 geburtsdatum=datetime.date(1969, 1, 1),
                 sektion=dietikon, nummer="9234")
-        w = Wettkampf.objects.create(name="Test-Cup", von="2003-04-04")
+        self.degen = Mitglied.objects.create(
+                name="Winzig", vorname="Klein", geschlecht="m",
+                geburtsdatum=datetime.date(2000, 4, 30),
+                sektion=bremgarten, nummer="6232")
+        w = Wettkampf.objects.create(name="Test-Cup", von=datetime.date(2009, 5, 15))
         d = Disziplin.objects.create(wettkampf=w, name="Test")
         for startnr in range(1, 10):
             Schiffeinzel.objects.create(startnummer=startnr, disziplin=d,
                     steuermann_id=1, vorderfahrer_id=2, sektion_id=1,
                     kategorie_id=1)
         self.sut = SchiffeinzelListForm(d, data={})
+
+    def test_alles_in_ordung(self):
+        self.sut.data['startnummer'] = "19"
+        self.sut.data['steuermann'] = self.steinmann.nummer
+        self.sut.data['vorderfahrer'] = self.kohler.nummer
+        self.assertTrue(self.sut.is_valid(), self.sut.errors)
+        s = self.sut.save()
+        self.assertEquals(19, s.startnummer)
+        self.assertEquals("Steinmann", s.steuermann.name)
+        self.assertEquals("Kohler", s.vorderfahrer.name)
+        self.assertEquals("C", s.kategorie.name)
+        self.assertEquals("Bremgarten", s.sektion.name)
 
     def test_gleicher_fahrer(self):
         self.sut.data['steuermann'] = self.steinmann.nummer
@@ -270,11 +286,18 @@ class SchiffeinzelListFormTest(TestCase):
         errors = self.sut.non_field_errors()
         self.failUnless(expected in errors, errors)
 
-    #TODO Fix this
-    def est_sektion_gemischt(self):
+    def test_sektion_gemischt(self):
         self.sut.data['steuermann'] = self.steinmann.nummer
         self.sut.data['vorderfahrer'] = self.keller.nummer
         self.failIf(self.sut.is_valid(), self.sut.errors)
-        expected = u"Steuermann fährt für 'Bremgarten', Vorderfahrer für 'Dietikon'. Das Schiff wird für 'Bremgarten' fahren"
+        expected = u"Steuermann fährt für 'Bremgarten', Vorderfahrer für 'Dietikon'. Bitte Vorschlag bestätigen oder andere Sektion wählen."
+        errors = self.sut.non_field_errors()
+        self.failUnless(expected in errors, errors)
+
+    def test_unbekannte_kategorien(self):
+        self.sut.data['steuermann'] = self.steinmann.nummer
+        self.sut.data['vorderfahrer'] = self.degen.nummer
+        self.failIf(self.sut.is_valid(), self.sut.errors)
+        expected = u"Steuermann hat Kategorie 'C', Vorderfahrer Kategorie 'I'. Das ist eine unbekannte Kombination; bitte auswählen."
         errors = self.sut.non_field_errors()
         self.failUnless(expected in errors, errors)

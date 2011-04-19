@@ -320,7 +320,8 @@ class SchiffeinzelListForm(Form):
         return self.cleaned_data
 
     def save(self):
-        return self.instance.save()
+        self.instance.save()
+        return self.instance
 
 
 class PostenblattFilterForm(Form):
