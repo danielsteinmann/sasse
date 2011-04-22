@@ -207,19 +207,6 @@ class SchiffeinzelFilterForm(Form):
         return result
 
 
-def set_display_value(form, mitglied, field_name):
-    if mitglied:
-        # TODO get_edit_text sollte nicht auf dem Model sein, sondern nur
-        # innerhalb des MitgliedSearchField verwendet werden
-        text = mitglied.get_edit_text()
-        form.data[field_name] = text
-        form.fields[field_name].widget.attrs['size'] = len(text) + 2
-    else:
-        field = form.fields[field_name]
-        if isinstance(field.widget, Select):
-            form.data[field_name] = field.queryset[0].id
-
-
 class SchiffeinzelEditForm(ModelForm):
     steuermann = MitgliedSearchField(queryset=Mitglied.objects.all())
     vorderfahrer = MitgliedSearchField(queryset=Mitglied.objects.all())
@@ -230,13 +217,17 @@ class SchiffeinzelEditForm(ModelForm):
     def __init__(self, disziplin, *args, **kwargs):
         super(SchiffeinzelEditForm, self).__init__(*args, **kwargs)
         self.data['disziplin'] = disziplin.id
+        self.fields['startnummer'].widget.attrs['size'] = 3
+        self.fields['sektion'].empty_label = None
+        self.fields['kategorie'].empty_label = None
+        self.initial['steuermann'] = self.fields['steuermann'].value_for_form(self.instance.steuermann)
+        self.initial['vorderfahrer'] = self.fields['vorderfahrer'].value_for_form(self.instance.vorderfahrer)
 
     def clean(self):
         super(SchiffeinzelEditForm, self).clean()
-        steuermann = self.cleaned_data.get('steuermann')
-        vorderfahrer = self.cleaned_data.get('vorderfahrer')
-        set_display_value(self, steuermann, 'steuermann')
-        set_display_value(self, vorderfahrer, 'vorderfahrer')
+        for name in ('steuermann', 'vorderfahrer'):
+            mitglied = self.cleaned_data.get(name)
+            self.data[name] = self.fields[name].value_for_form(mitglied)
         return self.cleaned_data
 
 
@@ -253,13 +244,35 @@ class SchiffeinzelListForm(Form):
     def __init__(self, disziplin, *args, **kwargs):
         self.disziplin = disziplin
         super(SchiffeinzelListForm, self).__init__(*args, **kwargs)
-        self.fields['startnummer'].widget = TextInput(attrs={'size':'3'})
+        self.fields['startnummer'].widget.attrs['size'] = 3
         # Ein-/Ausblende Steuerung
         self.fields['steuermann_neu'].widget.attrs['rel'] = 'neuer_steuermann'
         self.fields['vorderfahrer_neu'].widget.attrs['rel'] = 'neuer_vorderfahrer'
         # Damit für den Normalfall effizient mit Tab navigieren kann
         self.fields['steuermann_neu'].widget.attrs['tabindex'] = '-1'
         self.fields['vorderfahrer_neu'].widget.attrs['tabindex'] = '-1'
+
+    def steuermann_neu_form(self, sektion):
+        return self._mitglied_neu_form('steuermann', 'steuermann_neu', sektion)
+
+    def vorderfahrer_neu_form(self, sektion):
+        return self._mitglied_neu_form('vorderfahrer', 'vorderfahrer_neu', sektion)
+
+    def _mitglied_neu_form(self, position, flag_field, sektion):
+        if not self.data.has_key(flag_field):
+            # Falls Benutzer ein neues Mitglied eingeben will, ein leeres
+            # Formular ohne Validierungsfehler anzeigen. Falls Sektion im
+            # Suchfilter gesetzt wurde, die Sektion schon vorselektieren.
+            form = MitgliedForm(prefix=position, initial={ 'sektion': sektion})
+        else:
+            form = MitgliedForm(prefix=position, data=self.data)
+            if form.is_valid():
+                mitglied = form.save()
+                # Neues Mitglied im Suchfeld darstellen
+                self.data[position] = self.fields[position].value_for_form(mitglied)
+                # Felder zur Erfassung des neuen Mitgliedes ausblenden
+                self.data[flag_field] = False
+        return form
 
     #
     # TODO Doppelstarter Info darstellen, falls gleicher Fahrer mit frühere
@@ -278,10 +291,11 @@ class SchiffeinzelListForm(Form):
     # vorkommt (z.B. Schenker Michael). Dropdown Liste mit Jahrgang ergänzen
     #
     def clean(self):
+        for name in ('steuermann', 'vorderfahrer'):
+            mitglied = self.cleaned_data.get(name)
+            self.data[name] = self.fields[name].value_for_form(mitglied)
         steuermann = self.cleaned_data.get('steuermann')
         vorderfahrer = self.cleaned_data.get('vorderfahrer')
-        set_display_value(self, steuermann, 'steuermann')
-        set_display_value(self, vorderfahrer, 'vorderfahrer')
         if not (steuermann and vorderfahrer):
             return self.cleaned_data
         if steuermann == vorderfahrer:
@@ -294,7 +308,7 @@ class SchiffeinzelListForm(Form):
             if steuermann.sektion != vorderfahrer.sektion:
                 text = u"Steuermann fährt für '%s', Vorderfahrer für '%s'. Bitte Vorschlag bestätigen oder andere Sektion wählen." % (steuermann.sektion, vorderfahrer.sektion)
                 self.data['sektion'] = steuermann.sektion.id
-                self.fields['sektion'] = ModelChoiceField(queryset=Sektion.objects.all())
+                self.fields['sektion'] = ModelChoiceField(queryset=Sektion.objects.all(), empty_label=None)
                 raise ValidationError(text)
         # Kategorie
         kategorie = self.cleaned_data.get('kategorie')
@@ -305,7 +319,7 @@ class SchiffeinzelListForm(Form):
             kategorie = get_startkategorie(steuermann_kat, vorderfahrer_kat)
             if kategorie is None:
                 text = u"Steuermann hat Kategorie '%s', Vorderfahrer Kategorie '%s'. Das ist eine unbekannte Kombination; bitte auswählen." % (steuermann_kat, vorderfahrer_kat)
-                self.fields['kategorie'] = ModelChoiceField(queryset=Kategorie.objects.all())
+                self.fields['kategorie'] = ModelChoiceField(queryset=Kategorie.objects.all(), empty_label=None)
                 raise ValidationError(text)
         # Unique Startnummer
         self.instance = Schiffeinzel(
@@ -505,7 +519,9 @@ class MitgliedForm(Form):
     def __init__(self, *args, **kwargs):
         super(MitgliedForm, self).__init__(*args, **kwargs)
         today = datetime.date.today()
-        self.fields['jahrgang'] = IntegerField(max_value=today.year, min_value=(today.year - 100))
+        max_jahrgang = today.year - 1
+        min_jahrgang = today.year - 100
+        self.fields['jahrgang'] = IntegerField(max_value=max_jahrgang, min_value=min_jahrgang)
 
     def save(self):
         m = Mitglied()

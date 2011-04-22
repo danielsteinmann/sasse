@@ -142,6 +142,21 @@ class MitgliedSearchField(ModelChoiceField):
         else:
             return q[0]
 
+    def value_for_form(self, mitglied):
+        result = None
+        if mitglied:
+            # Falls während clean() ein einzelnes Mitglied gefunden wurde, soll
+            # die Text Repräsentation davon (und nicht nur die Nummer oder
+            # andere eingegbene Suchkriterien) dargestellt werden. Somit ist
+            # dem Benutzer klar, welches Mitglied gefunden wurde.
+            result = u" ".join([mitglied.nummer, mitglied.name, mitglied.vorname])
+            self.widget.attrs['size'] = len(result) + 2
+        else:
+            # clean() hat nichts oder nichts oder nichts eindeutiges gefunden
+            if isinstance(self.widget, Select):
+                result = self.queryset[0].id
+        return result
+
 
 startnummern_re = re.compile(r'^[- ,\d]+$', re.UNICODE)
 

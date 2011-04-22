@@ -327,13 +327,9 @@ def startliste_einzelfahren(request, jahr, wettkampf, disziplin):
         initial['steuermann'] = request.GET.get('steuermann')
         initial['vorderfahrer'] = request.GET.get('vorderfahrer')
         entryform = SchiffeinzelListForm(d, initial=initial)
-        #
-        initial = {}
-        sektion = searchform.cleaned_data['sektion']
-        if sektion:
-            initial['sektion'] = sektion.id
-        steuermann_neu_form = MitgliedForm(prefix="steuermann", initial=initial)
-        vorderfahrer_neu_form =  MitgliedForm(prefix="vorderfahrer", initial=initial)
+        sektion = request.GET.get('sektion')
+        steuermann_neu_form = entryform.steuermann_neu_form(sektion)
+        vorderfahrer_neu_form = entryform.vorderfahrer_neu_form(sektion)
     return direct_to_template(request, 'startliste_einzelfahren.html', { 'wettkampf': w,
         'disziplin': d, 'searchform': searchform, 'startliste': s, 'form': entryform,
         'steuermann_neu_form': steuermann_neu_form,
@@ -355,30 +351,16 @@ def startliste_einzelfahren_pdf(request, jahr, wettkampf, disziplin):
     doc.build(flowables, filename=response)
     return response
 
-def _neues_mitglied(position, flag_field, data):
-    if not data.has_key(flag_field):
-        # Falls Benutzer ein neues Mitglied eingeben will, ein leeres Formular
-        # ohne Validierungsfehler anzeigen
-        form = MitgliedForm(prefix=position)
-    else:
-        form = MitgliedForm(prefix=position, data=data)
-        if form.is_valid():
-            mitglied = form.save()
-            # Neues Mitglied im Suchfeld darstellen
-            data[position] = mitglied.get_edit_text()
-            # Felder zur Erfassung des neuen Mitgliedes ausblenden
-            data[flag_field] = False
-    return form
-
 @permission_required('sasse.change_schiffeinzel')
 def startliste_einzelfahren_post(request, jahr, wettkampf, disziplin):
     assert request.method == 'POST'
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
     data = request.POST.copy()
-    steuermann_neu_form = _neues_mitglied('steuermann', 'steuermann_neu', data)
-    vorderfahrer_neu_form = _neues_mitglied('vorderfahrer', 'vorderfahrer_neu', data)
     entryform = SchiffeinzelListForm(d, data=data)
+    sektion = request.GET.get('sektion')
+    steuermann_neu_form = entryform.steuermann_neu_form(sektion)
+    vorderfahrer_neu_form = entryform.vorderfahrer_neu_form(sektion)
     if entryform.is_valid():
         entryform.save()
         url = reverse(startliste, args=[jahr, wettkampf, disziplin])
@@ -416,11 +398,7 @@ def teilnehmer_update(request, jahr, wettkampf, disziplin, startnummer):
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
     t = Schiffeinzel.objects.get(disziplin=d, startnummer=startnummer)
-    form = SchiffeinzelEditForm(d, initial={
-        'steuermann': t.steuermann.get_edit_text(),
-        'vorderfahrer': t.vorderfahrer.get_edit_text(),
-        },
-        instance=t)
+    form = SchiffeinzelEditForm(d, instance=t)
     return direct_to_template(request, 'schiffeinzel_update.html',
             {'wettkampf': w, 'disziplin': d, 'form': form, 'teilnehmer': t})
 

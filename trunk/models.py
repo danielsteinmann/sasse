@@ -53,9 +53,6 @@ class Mitglied(models.Model):
     def __unicode__(self):
         return u'%s %s, %d, %s' % (self.name, self.vorname, self.geburtsdatum.year, self.sektion)
 
-    def get_edit_text(self):
-        return u" ".join([self.nummer, self.name, self.vorname])
-
 
 # Stammdaten/Konfigurationsdaten
 
