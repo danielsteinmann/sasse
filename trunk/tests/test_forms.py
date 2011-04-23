@@ -301,3 +301,12 @@ class SchiffeinzelListFormTest(TestCase):
         expected = u"Steuermann hat Kategorie 'C', Vorderfahrer Kategorie 'I'. Das ist eine unbekannte Kombination; bitte auswählen."
         errors = self.sut.non_field_errors()
         self.failUnless(expected in errors, errors)
+
+    def test_doppelte_startnummer(self):
+        self.sut.data['startnummer'] = "5"
+        self.sut.data['steuermann'] = self.steinmann.nummer
+        self.sut.data['vorderfahrer'] = self.kohler.nummer
+        self.failIf(self.sut.is_valid(), self.sut.errors)
+        expected = u"Teilnehmer with this Disziplin and Startnummer already exists."
+        errors = self.sut.non_field_errors()
+        self.failUnless(expected in errors, errors)

@@ -231,15 +231,15 @@ class EinzelfahrenStartlistePageTest(TestCase):
         w = Wettkampf.objects.create(name="Test-Cup", von="2009-04-04")
         d = w.disziplin_set.create(name="klein", disziplinart=einzel)
         d.kategorien.add(Kategorie.objects.get(name="I"))
-        bremgarten = Sektion.objects.create(name="Bremgarten")
+        self.bremgarten = Sektion.objects.create(name="Bremgarten")
         Mitglied.objects.create(
                 name="Steinmann", vorname="Daniel", geschlecht="m",
                 geburtsdatum=datetime.date(1967, 4, 30),
-                sektion=bremgarten)
+                sektion=self.bremgarten)
         Mitglied.objects.create(
                 name="Kohler", vorname="Bernhard", geschlecht="m",
                 geburtsdatum=datetime.date(1978, 1, 1),
-                sektion=bremgarten)
+                sektion=self.bremgarten)
 
     def test_list(self):
         response = self.client.get('/2009/Test-Cup/klein/startliste/')
@@ -271,6 +271,62 @@ class EinzelfahrenStartlistePageTest(TestCase):
         updateURL = '/2009/Test-Cup/klein/teilnehmer/1/'
         response = self.client.get(updateURL)
         self.assertContains(response, 'Steinmann')
+
+    def test_neuer_steuermann(self):
+        addURL = '/2009/Test-Cup/klein/startliste/'
+        response = self.client.post(addURL, {
+            'startnummer': u'2',
+            'steuermann_neu': u'True',
+            'steuermann-name': u'Muster',
+            'steuermann-vorname': u'Felix',
+            'steuermann-jahrgang': u'',
+            'steuermann-sektion': self.bremgarten.id,
+            'steuermann-geschlecht': "m",
+            'vorderfahrer': u'kohler b',
+            })
+        self.failUnlessEqual(response.status_code, 200)
+        self.assertContains(response, 'required')
+        response = self.client.post(addURL, {
+            'startnummer': u'2',
+            'steuermann_neu': u'True',
+            'steuermann-name': u'Muster',
+            'steuermann-vorname': u'Felix',
+            'steuermann-jahrgang': u'1973',
+            'steuermann-sektion': self.bremgarten.id,
+            'steuermann-geschlecht': "m",
+            'vorderfahrer': u'kohler b',
+            })
+        self.assertRedirects(response, addURL)
+        response = self.client.get(addURL)
+        self.assertContains(response, 'Muster')
+
+    def test_neuer_vorderfahrer(self):
+        addURL = '/2009/Test-Cup/klein/startliste/'
+        response = self.client.post(addURL, {
+            'startnummer': u'2',
+            'vorderfahrer_neu': u'True',
+            'vorderfahrer-name': u'Muster',
+            'vorderfahrer-vorname': u'Felix',
+            'vorderfahrer-jahrgang': u'',
+            'vorderfahrer-sektion': self.bremgarten.id,
+            'vorderfahrer-geschlecht': "m",
+            'steuermann': u'kohler b',
+            })
+        self.failUnlessEqual(response.status_code, 200)
+        self.assertContains(response, 'required')
+        response = self.client.post(addURL, {
+            'startnummer': u'2',
+            'vorderfahrer_neu': u'True',
+            'vorderfahrer-name': u'Muster',
+            'vorderfahrer-vorname': u'Felix',
+            'vorderfahrer-jahrgang': u'1973',
+            'vorderfahrer-sektion': self.bremgarten.id,
+            'vorderfahrer-geschlecht': "m",
+            'steuermann': u'kohler b',
+            })
+        self.assertRedirects(response, addURL)
+        response = self.client.get(addURL)
+        self.assertContains(response, 'Muster')
 
 
 class PostenblattPageTest(TestCase):
