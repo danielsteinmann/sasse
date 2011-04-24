@@ -1,7 +1,7 @@
 select tn.startnummer as Startnr
      , tn.ausgeschieden as Ausgeschieden
      , tn.disqualifiziert as Disqualifiziert
-     , case when (
+     , case when not tn.ausgeschieden and not tn.disqualifiziert and (
           select kl.wert
             from sasse_kranzlimite kl
            where 1=1

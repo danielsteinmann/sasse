@@ -101,8 +101,10 @@ def read_rangliste(disziplin, kategorie, doppelstarter_mit_rang=False):
         dict['punkt_tot'] = new_bew(row[i], PUNKT); i += 1
         if dict['steuermann_ist_ds'] or dict['vorderfahrer_ist_ds']:
             dict['doppelstarter'] = True
-        if dict['ausgeschieden'] or dict['disqualifiziert']:
-            dict['rang'] = '-'
+        if dict['ausgeschieden']:
+            dict['rang'] = 'AUSG'
+        elif dict['disqualifiziert']:
+            dict['rang'] = 'DISQ'
         elif dict['doppelstarter'] and not doppelstarter_mit_rang:
             dict['rang'] = 'DS'
         else:
