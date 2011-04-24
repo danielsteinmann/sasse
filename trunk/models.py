@@ -30,6 +30,7 @@ GESCHLECHT_ART = [
 # Stammdaten (importiert)
 
 class Sektion(models.Model):
+    nummer = models.CharField(max_length=2, unique=True)
     name = models.CharField(max_length=50)
 
     class Meta:
