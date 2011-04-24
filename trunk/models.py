@@ -41,7 +41,7 @@ class Sektion(models.Model):
 
 
 class Mitglied(models.Model):
-    nummer = models.CharField(max_length=5)
+    nummer = models.CharField(max_length=5, unique=True)
     name = models.CharField(max_length=50)
     vorname = models.CharField(max_length=50)
     geburtsdatum = models.DateField()
