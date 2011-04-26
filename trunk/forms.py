@@ -183,16 +183,17 @@ class SchiffeinzelFilterForm(Form):
         self.fields['startnummern'] = StartnummernSelectionField(disziplin)
         self.disziplin = disziplin
 
-    def anzeigeliste(self):
-        sektion = self.cleaned_data.get('sektion')
-        startnummern = self.cleaned_data.get('startnummern')
-        result = Schiffeinzel.objects.filter(disziplin=self.disziplin)
-        if startnummern:
-            list = self.fields['startnummern'].startnummern_list
-            result = result.filter(startnummer__in=list)
-        if sektion:
-            result = result.filter(sektion=sektion)
-        return result
+    def clean(self):
+        schiffe = self.cleaned_data.get('startnummern')
+        if schiffe:
+            sektion = self.cleaned_data.get('sektion')
+            if sektion:
+                schiffe = schiffe.filter(sektion=sektion)
+                if not schiffe:
+                    text = u"Keine Schiffe mit diesen Suchkritierien gefunden."
+                    raise ValidationError(text)
+        self.schiffe = schiffe
+        return self.cleaned_data
 
     def naechste_nummer(self, startliste):
         """
@@ -205,6 +206,11 @@ class SchiffeinzelFilterForm(Form):
             letzter_sichtbar = startliste[anzahl_sichtbar - 1]
             result = letzter_sichtbar.startnummer + 1
         return result
+
+    def selected_startnummern(self, visible=15):
+        schiffe = self.cleaned_data.get('startnummern')
+        schiffe = schiffe.filter()[:visible]
+        return schiffe
 
 
 class SchiffeinzelEditForm(ModelForm):
@@ -336,30 +342,6 @@ class SchiffeinzelListForm(Form):
     def save(self):
         self.instance.save()
         return self.instance
-
-
-class PostenblattFilterForm(Form):
-    def __init__(self, disziplin, *args, **kwargs):
-        self.disziplin = disziplin
-        super(PostenblattFilterForm, self).__init__(*args, **kwargs)
-        self.fields['startnummern'] = StartnummernSelectionField(disziplin)
-
-    def clean(self):
-        cleaned_data = self.cleaned_data
-        startnummern_value = cleaned_data.get('startnummern')
-        if startnummern_value and not self.selected_startnummern().count():
-            msg = u"Für diesen Filter gibt es keine Startnummern."
-            raise ValidationError(msg)
-        return cleaned_data
-
-    def selected_startnummern(self, visible=15):
-        startnummern = self.cleaned_data.get('startnummern')
-        result = Schiffeinzel.objects.filter(disziplin=self.disziplin)
-        if startnummern:
-            list = self.fields['startnummern'].startnummern_list
-            result = result.filter(startnummer__in=list)
-        result = result.filter()[:visible]
-        return result
 
 
 class TeilnehmerForm(Form):

@@ -21,5 +21,6 @@ select tn.startnummer as Startnr
        join sasse_mitglied hinten on (hinten.id = schiff.steuermann_id)
  where p.disziplin_id = %s
        {% if sektion %}and schiff.sektion_id = %s{% endif %}
+       {% if startnummern %}and tn.startnummer in ({startnummern}){% endif %}
  group by tn.startnummer
  order by Punkte desc, Zeit asc

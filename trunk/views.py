@@ -31,7 +31,6 @@ from forms import PostenListForm
 from forms import SchiffeinzelEditForm
 from forms import SchiffeinzelListForm
 from forms import SchiffeinzelFilterForm
-from forms import PostenblattFilterForm
 from forms import TeilnehmerForm
 from forms import WettkampfForm
 from forms import create_postenblatt_formsets
@@ -318,7 +317,7 @@ def startliste_einzelfahren(request, jahr, wettkampf, disziplin):
     vorderfahrer_neu_form = None
     searchform = SchiffeinzelFilterForm(d, request.GET)
     if searchform.is_valid():
-        s = searchform.anzeigeliste()
+        s = searchform.schiffe
         nummer = request.GET.get('startnummer')
         if not nummer:
             nummer = searchform.naechste_nummer(s)
@@ -343,7 +342,7 @@ def startliste_einzelfahren_pdf(request, jahr, wettkampf, disziplin):
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
     searchform = SchiffeinzelFilterForm(d, request.GET)
     searchform.is_valid()
-    schiffe = searchform.anzeigeliste()
+    schiffe = searchform.schiffe
     doc = create_startliste_doctemplate(w, d)
     flowables = create_startliste_flowables(schiffe)
     response = HttpResponse(mimetype='application/pdf')
@@ -370,7 +369,7 @@ def startliste_einzelfahren_post(request, jahr, wettkampf, disziplin):
         return HttpResponseRedirect(url)
     searchform = SchiffeinzelFilterForm(d, request.GET)
     if searchform.is_valid():
-        s = searchform.anzeigeliste()
+        s = searchform.schiffe
     return direct_to_template(request, 'startliste_einzelfahren.html', {
         'wettkampf': w, 'disziplin': d, 'searchform': searchform,
         'startliste': s, 'form': entryform,
@@ -461,7 +460,7 @@ def postenblatt(request, jahr, wettkampf, disziplin, posten):
     orientation = get_orientation(p, request)
     header_row = []
     data_rows = []
-    filterform = PostenblattFilterForm(d, request.GET)
+    filterform = SchiffeinzelFilterForm(d, request.GET)
     if filterform.is_valid():
         startnummern = filterform.selected_startnummern(visible=15)
         teilnehmer_ids = [t.id for t in startnummern]
@@ -487,7 +486,7 @@ def postenblatt_update(request, jahr, wettkampf, disziplin, posten):
     teilnehmer_formset = []
     sets = []
     p_next_name = None
-    filterform = PostenblattFilterForm(d, request.GET)
+    filterform = SchiffeinzelFilterForm(d, request.GET)
     if filterform.is_valid():
         startnummern = filterform.selected_startnummern(visible=15)
         TeilnehmerFormSet = formset_factory(TeilnehmerForm, extra=0)
@@ -640,10 +639,12 @@ def notenliste(request, jahr, wettkampf, disziplin):
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
     posten = d.posten_set.all().select_related()
     sektion = None
+    notenliste = []
     filter_form = SchiffeinzelFilterForm(d, request.GET.copy())
     if filter_form.is_valid():
         sektion = filter_form.cleaned_data['sektion']
-    notenliste = read_notenliste(d, posten, sektion)
+        startnummern = [schiff.startnummer for schiff in filter_form.schiffe]
+        notenliste = read_notenliste(d, posten, sektion, startnummern)
     return direct_to_template(request, 'notenliste.html', {'wettkampf': w, 'disziplin':
         d, 'posten': posten, 'notenliste': list(notenliste), 'searchform': filter_form},
         context_instance=RequestContext(request))
@@ -742,7 +743,7 @@ def notenblaetter_pdf(request, jahr, wettkampf, disziplin):
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
     filter_form = SchiffeinzelFilterForm(d, request.GET.copy())
     filter_form.is_valid()
-    schiffe = filter_form.anzeigeliste()
+    schiffe = filter_form.schiffe
     response = HttpResponse(mimetype='application/pdf')
     response['Content-Disposition'] = smart_str(u'filename=notenblaetter')
     doc = create_notenblatt_doctemplate(w, d)

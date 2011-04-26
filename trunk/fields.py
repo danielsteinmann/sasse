@@ -14,7 +14,7 @@ from django.forms import TextInput
 from django.forms import ValidationError
 
 from models import Mitglied
-from models import Teilnehmer
+from models import Schiffeinzel
 from widgets import ZeitInSekundenWidget
 
 unicode_slug_re = re.compile(r'^[-\w]+$', re.UNICODE)
@@ -168,15 +168,13 @@ class StartnummernSelectionField(RegexField):
     default_error_messages = {
         'invalid': u"Bitte nur ganze Zahlen, Bindestrich oder Komma eingeben",
     }
-    startnummern_list = []
-
     def __init__(self, disziplin, *args, **kwargs):
         super(StartnummernSelectionField, self).__init__(startnummern_re, *args, **kwargs)
         self.disziplin = disziplin
         self.widget.attrs['size'] = 7
         self.required = False
 
-    # TODO Nur den Startnummern String parsen, kein Database Lookup:
+    # Vorschlag für andere Implementation:
     #
     #   input = '1,3,5,1-20,30-50,-100,500-'
     #   [
@@ -198,22 +196,17 @@ class StartnummernSelectionField(RegexField):
     # Ein Bereich kann mehrfach vorkommen
     #  (Beispiel: '5-10,13-15' => [('range', [5,10]), ('range', [13,15])])
     #
-    # Reihenfolge beibehalten. 
+    # TODO: Reihenfolge beibehalten. 
     #  (Beispiel: '1,3,2,5' => [('range', [1,3,2,5]))
     #  Wichtig ist hier, dass die Datenbank die Startnummern in zufälliger
     #  Reihenfolge sendet, aber der Benutzer die Nummern in spezifischer
     #  Reihenfolge haben möchte.
     #
-    # Example of dynamic or query with Q object:
-    #   q = Q( tag__name=first_tag )
-    #   for tag in other_tags:
-    #       q = q | Q( tag__name=tag )
-    #   Model.objects.filter( q )
-    #
     def clean(self, value):
         super(StartnummernSelectionField, self).clean(value)
+        result = Schiffeinzel.objects.filter(disziplin=self.disziplin)
         if value and value.strip():
-            result = []
+            queries = []
             commas = value.split(',')
             for c in commas:
                 if c == '':
@@ -221,7 +214,7 @@ class StartnummernSelectionField(RegexField):
                     raise ValidationError(text)
                 dashes = c.split('-')
                 if len(dashes) == 1:
-                    result.append(int(c))
+                    queries.append(Q(startnummer=int(c)))
                 elif len(dashes) > 2:
                     text = u"'%s' enthält mehr als einen Gedankenstrich." % (c,)
                     raise ValidationError(text)
@@ -232,22 +225,17 @@ class StartnummernSelectionField(RegexField):
                         text = u"Ein Gedankenstrich ohne Zahl links oder rechts ist nicht gültig."
                         raise ValidationError(text)
                     elif until_nr == '':
-                        q = Teilnehmer.objects.filter(
-                                disziplin=self.disziplin,
-                                startnummer__gte=from_nr
-                                )
+                        queries.append(Q(startnummer__gte=from_nr))
                     elif from_nr == '':
-                        q = Teilnehmer.objects.filter(
-                                disziplin=self.disziplin,
-                                startnummer__lte=until_nr
-                                )
+                        queries.append(Q(startnummer__lte=until_nr))
                     else:
-                        q = Teilnehmer.objects.filter(
-                                disziplin=self.disziplin,
-                                startnummer__range=dashes
-                                )
-                    for t in q:
-                        result.append(t.startnummer)
-            self.startnummern_list = result
+                        queries.append(Q(startnummer__range=dashes))
+            query = queries.pop()
+            for item in queries:
+                query |= item
+            result = result.filter(query)
+            if not result:
+                text = u"Keine Schiffe mit dieser Eingabe von Startnummern gefunden."
+                raise ValidationError(text)
 
-        return value
+        return result

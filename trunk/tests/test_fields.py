@@ -3,6 +3,7 @@
 import datetime
 import unittest
 from decimal import Decimal
+from operator import attrgetter
 
 from django.test import TestCase
 from django.forms import ValidationError
@@ -90,17 +91,22 @@ class StartnummernSelectionFieldTest(TestCase):
     def setUp(self):
         # Rauschen einfügen, um die vollständige where clause zu prüfen
         d = Disziplin.objects.create(wettkampf_id=1, name="Eine-Disziplin")
-        for startnr in range(1,50):
+        for startnr in range(1,51):
             Schiffeinzel.objects.create(startnummer=startnr, disziplin=d,
                     steuermann_id=1, vorderfahrer_id=2, sektion_id=1,
                     kategorie_id=1)
         # Eine Grundmenge Teilnehmer einfügen
         d = Disziplin.objects.create(wettkampf_id=1, name="Test")
-        for startnr in range(1,50):
+        for startnr in range(1,51):
             Schiffeinzel.objects.create(startnummer=startnr, disziplin=d,
                     steuermann_id=1, vorderfahrer_id=2, sektion_id=1,
                     kategorie_id=1)
         self.sut = StartnummernSelectionField(d)
+
+    def _assertResult(self, user_input, expected_startnummern):
+        qs = self.sut.clean(user_input)
+        transform = attrgetter("startnummer")
+        self.assertQuerysetEqual(qs, expected_startnummern, transform)
 
     def test_invalid_input(self):
         self.assertRaises(ValidationError, self.sut.clean, '1-x')
@@ -110,38 +116,30 @@ class StartnummernSelectionFieldTest(TestCase):
         self.assertRaises(ValidationError, self.sut.clean, ',')
 
     def test_no_input(self):
-        self.sut.clean('')
-        self.assertEquals([], self.sut.startnummern_list)
-        self.sut.clean(' ')
-        self.assertEquals([], self.sut.startnummern_list)
+        self.assertEquals(50, self.sut.clean('').count())
+        self.assertEquals(50, self.sut.clean(' ').count())
 
     def test_single_numbers(self):
-        self.sut.clean('1,2,5')
-        self.assertEquals([1, 2, 5], self.sut.startnummern_list)
+        self._assertResult('1,2,5', [1, 2, 5])
 
     def test_input_with_spaces(self):
-        self.sut.clean(' 1, 2 ,5 ')
-        self.assertEquals([1, 2, 5], self.sut.startnummern_list)
+        self._assertResult(' 1, 2 ,5 ', [1, 2, 5])
 
-    def test_unordered_single_numbers(self):
-        self.sut.clean('1,3,2')
-        self.assertEquals([1, 3, 2], self.sut.startnummern_list)
+    # TODO: Reihenfolge beibehalten. 
+    def todo_test_unordered_single_numbers(self):
+        self._assertResult('1,3,2', [1, 3, 2])
 
     def test_single_and_range(self):
-        self.sut.clean('1,2,5-7,9')
-        self.assertEquals([1, 2, 5, 6, 7, 9], self.sut.startnummern_list)
+        self._assertResult('1,2,5-7,9', [1, 2, 5, 6, 7, 9])
 
     def test_full_range(self):
-        self.sut.clean('3-6')
-        self.assertEquals([3, 4, 5, 6], self.sut.startnummern_list)
+        self._assertResult('3-6', [3, 4, 5, 6])
 
     def test_open_ending_range(self):
-        self.sut.clean('47-')
-        self.assertEquals([47, 48, 49], self.sut.startnummern_list)
+        self._assertResult('47-', [47, 48, 49, 50])
 
     def test_open_starting_range(self):
-        self.sut.clean('-6')
-        self.assertEquals([1, 2, 3, 4, 5, 6], self.sut.startnummern_list)
+        self._assertResult('-6', [1, 2, 3, 4, 5, 6])
 
 
 class PunkteFieldTest(TestCase):

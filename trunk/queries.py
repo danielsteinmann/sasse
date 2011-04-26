@@ -46,12 +46,17 @@ def read_topzeiten(posten, topn=15):
         dict['richtzeit'] = new_bew(row[i], ZEIT); i += 1
         yield dict
 
-def read_notenliste(disziplin, posten, sektion=None):
+def read_notenliste(disziplin, posten, sektion=None, startnummern=[]):
     sql = render_to_string('notenliste.sql',
-            {"posten": posten, "sektion": sektion})
+            {"posten": posten, "sektion": sektion, "startnummern": startnummern})
     args = [disziplin.id]
     if sektion:
         args.append(sektion.id)
+    if startnummern:
+        args += startnummern
+        placeholder = '%s'
+        placeholders = ', '.join(placeholder for unused in startnummern)
+        sql = sql.format(startnummern=placeholders)
     cursor = connection.cursor()
     cursor.execute(sql, args)
     for row in cursor:
