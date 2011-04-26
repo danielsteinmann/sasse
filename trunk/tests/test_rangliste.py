@@ -133,7 +133,7 @@ class RanglisteTest(TestCase):
                 {'rang': 'DS', 'kranz': False, 'doppelstarter':  True, 'startnummer': 103},
                 {'rang':    8, 'kranz': False, 'doppelstarter': False, 'startnummer':  13},
                 {'rang':    9, 'kranz': False, 'doppelstarter': False, 'startnummer':   6},
-                {'rang':  '-', 'kranz': False, 'doppelstarter': False, 'startnummer':   9},
+                {'rang':'DISQ', 'kranz': False, 'doppelstarter': False, 'startnummer':   9},
                 ]
         self.assertEquals(expected, actual)
 
@@ -156,7 +156,7 @@ class RanglisteTest(TestCase):
                 {'rang':    9, 'kranz': False, 'doppelstarter': False, 'startnummer':   6},
                 {'rang': 'DS', 'kranz': False, 'doppelstarter':  True, 'startnummer': 101},
                 {'rang': 'DS', 'kranz': False, 'doppelstarter':  True, 'startnummer': 103},
-                {'rang':  '-', 'kranz': False, 'doppelstarter': False, 'startnummer':   9},
+                {'rang':'DISQ', 'kranz': False, 'doppelstarter': False, 'startnummer':   9},
                 ]
         self.assertEquals(expected, actual)
 
@@ -178,6 +178,6 @@ class RanglisteTest(TestCase):
                 {'rang':   10, 'kranz': False, 'doppelstarter':  True, 'startnummer': 103},
                 {'rang':   11, 'kranz': False, 'doppelstarter': False, 'startnummer':  13},
                 {'rang':   12, 'kranz': False, 'doppelstarter': False, 'startnummer':   6},
-                {'rang':  '-', 'kranz': False, 'doppelstarter': False, 'startnummer':   9},
+                {'rang':'DISQ', 'kranz': False, 'doppelstarter': False, 'startnummer':   9},
                 ]
         self.assertEquals(expected, actual)

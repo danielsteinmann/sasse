@@ -8,7 +8,7 @@ from django.test import TestCase
 from sasse.forms import WettkampfForm
 from sasse.forms import DisziplinForm
 from sasse.forms import BewertungForm
-from sasse.forms import PostenblattFilterForm
+from sasse.forms import SchiffeinzelFilterForm
 from sasse.forms import SchiffeinzelListForm
 
 from sasse.models import Disziplinart
@@ -148,11 +148,11 @@ class BewertungFormTest(TestCase):
         steinmann = Mitglied.objects.create(
                 name="Steinmann", vorname="Daniel", geschlecht="m",
                 geburtsdatum=datetime.date(1967, 4, 30),
-                sektion=bremgarten)
+                sektion=bremgarten, nummer=1)
         kohler = Mitglied.objects.create(
                 name="Kohler", vorname="Bernhard", geschlecht="m",
                 geburtsdatum=datetime.date(1978, 1, 1),
-                sektion=bremgarten)
+                sektion=bremgarten, nummer=2)
         kat_C = Kategorie.objects.get(name="C")
         einzelfahren = Disziplinart.objects.get(name="Einzelfahren")
         antreten = Postenart.objects.get(
@@ -203,14 +203,14 @@ class BewertungFormTest(TestCase):
         self.assertEquals(+1, edit_form.initial['wert'])
 
 
-class PostenblattFilterFormTest(TestCase):
+class SchiffeinzelFilterFormTest(TestCase):
     def setUp(self):
         d = Disziplin.objects.create(wettkampf_id=1, name="Test")
         for startnr in range(1, 10):
             Schiffeinzel.objects.create(startnummer=startnr, disziplin=d,
                     steuermann_id=1, vorderfahrer_id=2, sektion_id=1,
                     kategorie_id=1)
-        self.sut = PostenblattFilterForm(d, data={'startnummern': '1,2,3'})
+        self.sut = SchiffeinzelFilterForm(d, data={'startnummern': '1,2,3'})
 
     def test_valid_input(self):
         self.failUnless(self.sut.is_valid(), self.sut.errors)
