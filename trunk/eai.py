@@ -1,3 +1,4 @@
+import sys
 from datetime import date
 import xlrd
 from sasse.models import Mitglied
@@ -24,6 +25,9 @@ def parse_row(sh, i):
 
 def update(mitglied, from_input):
     changed = False
+    if from_input.nummer != mitglied.nummer:
+        mitglied.nummer = from_input.nummer
+        changed = True
     if from_input.sektion_id != mitglied.sektion_id:
         mitglied.sektion_id = from_input.sektion_id
         changed = True
@@ -44,7 +48,9 @@ def update(mitglied, from_input):
 def handle_file_upload(file_content):
     wb = xlrd.open_workbook(file_contents=file_content)
     sh = wb.sheet_by_index(0)
+    unchanged = 0
     changed = 0
+    nummer_changed = 0
     inserted = 0
     for i in range(sh.nrows):
         if i == 0:
@@ -53,18 +59,39 @@ def handle_file_upload(file_content):
         try:
             m = Mitglied.objects.get(nummer=from_input.nummer)
         except Mitglied.DoesNotExist:
-            m = Mitglied(nummer=from_input.nummer)
-        if update(m, from_input):
-            if m.id:
-                changed += 1
-                print "Mitglied change: %s" % m.nummer
-            else:
-                inserted += 1
-                print "Mitglied neu   : %s" % m.nummer
+            try:
+                m = Mitglied.objects.get(
+                        sektion__id=from_input.sektion_id,
+                        name=from_input.name,
+                        vorname=from_input.vorname,
+                        geburtsdatum__year=from_input.geburtsdatum.year,
+                        geschlecht=from_input.geschlecht
+                        )
+                print "Mitglied nummer change from %s to %s" % (m.nummer, from_input.nummer)
+                nummer_changed += 1
+            except Mitglied.DoesNotExist:
+                m = Mitglied(nummer=from_input.nummer)
+        updated = update(m, from_input)
+        if not updated:
+            unchanged += 1
+        elif m.id:
             m.save()
-    print "Changed: %d, Inserted: %d" % (changed, inserted)
+            changed += 1
+        else:
+            m.save()
+            inserted += 1
+    print "Done. Changed: %d/%d, Inserted: %d, Unchanged: %d" % (
+           changed, nummer_changed, inserted, unchanged)
 
 
-f = open("20091013-Mitgliederdaten.xls", 'r')
-handle_file_upload(f.read())
-f.close()
+def main(argv=None):
+    if argv is None:
+        argv = sys.argv
+    f = open(argv[1], 'r')
+    handle_file_upload(f.read())
+    f.close()
+    return 0
+
+if __name__ == "__main__":
+    sys.exit(main())
+
