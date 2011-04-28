@@ -828,12 +828,6 @@ def kranzlimiten_set_defaults(request, jahr, wettkampf, disziplin):
     url = reverse(kranzlimiten, args=[jahr, wettkampf, d.name])
     return HttpResponseRedirect(url)
 
-def mitglieder(request):
-    assert request.method == 'GET'
-    mitglieder = Mitglied.objects.all()
-    return direct_to_template(request, 'mitglieder.html', {'mitglieder': mitglieder,},
-            context_instance=RequestContext(request))
-
 #-----------
 #    from django.db import connection
 #    for q in connection.queries:

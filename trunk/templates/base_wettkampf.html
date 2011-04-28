@@ -4,6 +4,8 @@
 
 {% block nav %}
 <ul class="tabnav">
+  <li class="{% block nav_wettkaempfe %}{% endblock %}">
+    <a href="{% url wettkaempfe_get %}">Wettkämpfe</a></li>
   <li class="{% block nav_wettkampf %}{% endblock %}">
     <a href="{% url wettkampf_get wettkampf.jahr, wettkampf.name %}">Wettkampf</a></li>
 {% if disziplin %}

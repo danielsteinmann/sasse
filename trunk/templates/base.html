@@ -9,24 +9,24 @@
 <script src="/media/jquery.js"></script>
 <div align=right><font size="-2">
 {% if user.is_authenticated %}
-{{user.first_name}} {{user.last_name}} | <a href="{% url django.contrib.auth.views.logout %}?next={{ request.get_full_path }}">Logout</a>
+{{user.username}}
+{% if user.is_superuser %}
+| <a href="/admin/">Einstellungen</a>
+{% endif %}
+| <a href="{% url django.contrib.auth.views.logout %}?next={{ request.get_full_path }}">Logout</a>
 {% else %}
-<a href="{% url django.contrib.auth.views.login %}?next={{ request.get_full_path }}">Login</a>
+Nicht eingeloggt | <a href="{% url django.contrib.auth.views.login %}?next={{ request.get_full_path }}">Login</a>
 {% endif %}
 </font></div>
 <table width="100%" cellpadding="0" bgcolor="#E0ECF8"><tr>
 <td valign="middle" align="center" height="70" width="80">
 <a href="{% url wettkaempfe_get %}">
-<img src="/media/spsv-logo.png" title="SPSV Wettkämpfe" alt="SPSV Logo" width="60" height="60"></td>
+<img src="/media/spsv-logo.png" title="SPSV Wettkämpfe" alt="SPSV Logo" width="60" height="60"></a></td>
 <td valign="top">
 {% block nav %}
 <ul class="tabnav">
   <li class="{% block nav_wettkaempfe %}{% endblock %}">
     <a href="{% url wettkaempfe_get %}">Wettkämpfe</a></li>
-  <li class="{% block nav_mitglieder %}{% endblock %}">
-    <a href="{% url mitglieder %}">Mitglieder</a></li>
-  <li class="{% block nav_einstellungen %}{% endblock %}">
-    <a href="#">Einstellungen</a></li>
 </ul>
 {% endblock %}
 </td>

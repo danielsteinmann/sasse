@@ -77,32 +77,4 @@ urlpatterns = patterns('',
         views.notenblatt, {}, "notenblatt"),
     (r'^(?P<jahr>\d+)/(?P<wettkampf>[-\w]+)/(?P<disziplin>[-\w]+)/notenblatt/(?P<startnummer>\d+)/pdf/$',
         views.notenblatt_pdf, {}, "notenblatt_pdf"),
-    (r'mitglieder/$',
-        views.mitglieder, {}, "mitglieder"),
 )
-
-#---- Wettkaempfe
-#
-# wettkaempfe/ 
-#     GET: wettkaempfe_get: List of wettkaempfe
-#
-# wettkaempfe/create/
-#     GET: wettkaempfe_create: Form with 'create' button
-#     POST: wettkaempfe_post: Add new wettkampf
-#
-# wettkaempfe/2008/
-#     GET: wettkaempfe_by_year: Liste filtered by year
-#
-# wettkaempfe/2008/faellbaumcup/
-#     GET: wettkampf_get: Show attributes and list of disziplines
-#     PUT: wettkampf_put
-#     DELETE: wettkampf_delete
-#
-# wettkaempfe/2008/faellbaumcup/update/
-#     GET: wettkampf_update: Form with 'update' button
-#     POST: wettkampf_put: Execupte update
-#
-# wettkaempfe/2008/faellbaumcup/delete/
-#     GET: wettkampf_confirm_delete: Confirm message, return delete form
-#     POST: wettkampf_delete: Execute delete
-#
