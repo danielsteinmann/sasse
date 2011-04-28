@@ -3,14 +3,7 @@
 {% load pagination_tags %}
 {% autopaginate startliste 15 %}
 <form id="searchform" name="searchform" action="" method="GET">
-{% if searchform.non_field_errors %}
-{{ searchform.non_field_errors }}
-{% endif %}
-{{ searchform.startnummern.errors }}
-Sektion {{ searchform.sektion }}
-und/oder Startnummern {{ searchform.startnummern }}
-<input title="Startnummern '1,4-15' zeigt Startnummern 1,4,5,...,15.
-'800-' zeigt Startnummern ab 800" type="submit" value="auswählen">
+{% include "schiffeinzel_filter_form.html" with form=searchform %}
 </form>
 <p><p/>
 {% if not searchform.errors %}
