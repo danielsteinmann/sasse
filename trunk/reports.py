@@ -4,7 +4,7 @@ from django.conf import settings
 
 from reportlab.lib import colors
 from reportlab.lib.enums import TA_LEFT, TA_CENTER, TA_RIGHT
-from reportlab.lib.pagesizes import A4
+from reportlab.lib.pagesizes import A4, landscape
 from reportlab.lib.styles import ParagraphStyle
 from reportlab.lib.styles import StyleSheet1
 from reportlab.lib.units import cm
@@ -294,6 +294,72 @@ def create_bestzeiten_flowables(posten_name, zeitrangliste):
         ('ALIGN', (0,0), (2,-1), 'CENTER'),
         ('ALIGN', (-3,0), (-2,-1), 'CENTER'),
         ('ALIGN', (-1,0), (-1,-1), 'RIGHT'),
+        ('TOPPADDING', (0,0), (-1,-1), 1),
+        ('BOTTOMPADDING', (0,0), (-1,-1), 0),
+        ('ROWBACKGROUNDS', (0,1), (-1,-1), (None, colors.HexColor(0xf0f0f0))),
+        ]
+    result = []
+    result.append(Platypus_Table(data, repeatRows=1, colWidths=col_widths, style=TableStyle(table_props)))
+    result.append(Spacer(1, 10))
+    return result
+
+#
+# Notenliste
+#
+
+def create_notenliste_doctemplate(wettkampf, disziplin):
+    f = Frame(1*cm, 1*cm, PAGE_HEIGHT-2*cm, PAGE_WIDTH-3.3*cm, id='normal')
+    pt = PageTemplate(id="Bestzeiten", frames=f, onPageEnd=write_notenliste_header_footer)
+    doc = BaseDocTemplate(None, pageTemplates=[pt], pagesize=landscape(A4))
+    doc.wettkampf = wettkampf
+    doc.disziplin = disziplin
+    return doc
+
+def write_notenliste_header_footer(canvas, doc):
+    canvas.saveState()
+    canvas.setFont('Helvetica', 8)
+    canvas.drawImage(settings.MEDIA_ROOT + '/spsv-logo.jpg', 2*cm, PAGE_WIDTH-2*cm, width=1.5*cm, height=1.5*cm)
+    canvas.line(4*cm, PAGE_WIDTH-1.2*cm, PAGE_HEIGHT-2*cm, PAGE_WIDTH-1.2*cm)
+    canvas.drawString(4*cm, PAGE_WIDTH-1*cm, "Notenliste %s" % (doc.disziplin.disziplinart))
+    canvas.drawRightString(PAGE_HEIGHT-2*cm, PAGE_WIDTH-1*cm, "%s %d" % (doc.wettkampf.name, doc.wettkampf.jahr()))
+    canvas.drawCentredString(PAGE_HEIGHT/2, 1*cm, "Seite %d" % (doc.page,))
+    canvas.restoreState()
+
+def create_notenliste_flowables(posten, notenliste):
+    data = []
+    posten_header = []
+    posten_header_width = []
+    for p in posten:
+        posten_header.append(p.name)
+        posten_header_width.append(28)
+        if p.postenart.name == "Zeitnote":
+            posten_header.append(p.name + "[s]")
+            posten_header_width.append(35)
+    header = ['Stnr', 'Fahrerpaar', 'Kat'] + posten_header + ['Zeit', 'Punkte']
+    data.append(header)
+    col_widths = [30, 160, 30] + posten_header_width + [40, 30]
+    ss = _create_style_sheet()
+    for i, row in enumerate(notenliste):
+        record = []
+        record.append(Paragraph(unicode(row['startnummer']), ss['center']))
+        record.append(Paragraph(row['steuermann'] + " / " + row['vorderfahrer'] + " - " + row['sektion'], ss['left']))
+        record.append(Paragraph(row['kategorie'], ss['center']))
+        for note in row['noten']:
+            if note.bewertungsart.einheit == "ZEIT":
+                record.append(Paragraph('<font size="-2">' + unicode(note) + '</font>', ss['right']))
+            else:
+                record.append(Paragraph(unicode(note), ss['right']))
+        record.append(Paragraph(unicode(row['zeit_tot']), ss['center']))
+        record.append(Paragraph(unicode(row['punkt_tot']), ss['right']))
+        data.append(record)
+    table_props = [
+        ('LINEBELOW', (0,0), (-1,0), 1, colors.black),
+        ('FONT', (0,0), (-1,0), 'Helvetica-Bold', 8),
+        ('FONT', (0,1), (-1,-1), 'Helvetica', 8),
+        ('ALIGN', (0,0), (1,-1), 'CENTER'),
+        ('ALIGN', (1,0), (1,-1), 'LEFT'),
+        ('ALIGN', (2,0), (2,-1), 'CENTER'),
+        ('ALIGN', (3,0), (-1,-1), 'RIGHT'),
         ('TOPPADDING', (0,0), (-1,-1), 1),
         ('BOTTOMPADDING', (0,0), (-1,-1), 0),
         ('ROWBACKGROUNDS', (0,1), (-1,-1), (None, colors.HexColor(0xf0f0f0))),
