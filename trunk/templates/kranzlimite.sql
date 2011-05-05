@@ -4,22 +4,22 @@ select kategorie
           from sasse_kranzlimite kl
           join sasse_kategorie k on (kl.kategorie_id = k.id)
          where kl.disziplin_id = %s
-           and k.name = kategorie
+           and k.name = r.kategorie
        ) limite
      , sum(case
-            when vorderfahreristds and steuermannistds then 0
-            when vorderfahreristds or  steuermannistds then 1
+            when r.vorderfahreristds and r.steuermannistds then 0
+            when r.vorderfahreristds or  r.steuermannistds then 1
             else 2
            end) wettkaempfer_tot
      , sum(case
-            when mitkranz and vorderfahreristds and steuermannistds then 0
-            when mitkranz and (vorderfahreristds or steuermannistds) then 1
-            when mitkranz and not (vorderfahreristds or steuermannistds) then 2
+            when r.mitkranz and r.vorderfahreristds and r.steuermannistds then 0
+            when r.mitkranz and (r.vorderfahreristds or r.steuermannistds) then 1
+            when r.mitkranz and not (r.vorderfahreristds or r.steuermannistds) then 2
             else 0
            end) wettkaempfer_mit_kranz
-     , count(startnr) schiffe_tot
-     , sum(case when mitkranz then 1 else 0 end) schiffe_mit_kranz
+     , count(r.startnr) schiffe_tot
+     , sum(case when r.mitkranz then 1 else 0 end) schiffe_mit_kranz
   from (
 {% include "rangliste.sql" %}
-       )
- group by kategorie
+       ) as r
+ group by r.kategorie

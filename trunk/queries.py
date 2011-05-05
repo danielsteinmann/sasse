@@ -56,7 +56,7 @@ def read_notenliste(disziplin, posten, sektion=None, startnummern=[]):
         args += startnummern
         placeholder = '%s'
         placeholders = ', '.join(placeholder for unused in startnummern)
-        sql = sql.format(startnummern=placeholders)
+        sql = sql.replace("__startnummern__", placeholders)
     cursor = connection.cursor()
     cursor.execute(sql, args)
     for row in cursor:
@@ -195,15 +195,15 @@ def read_kranzlimiten(disziplin):
         dict['wettkaempfer'] = row[i]; i += 1
         dict['wettkaempfer_ueber_limite'] = row[i]; i += 1
         dict['wettkaempfer_mit_kranz_in_prozent'] = (
-                round((dict['wettkaempfer_ueber_limite']*1.0
-                 / dict['wettkaempfer']) * 100, 1))
+                round((dict['wettkaempfer_ueber_limite']*Decimal("1.0")
+                 / dict['wettkaempfer']) * Decimal("100"), 1))
         wettkaempfer_sum += dict['wettkaempfer']
         wettkaempfer_mit_kranz_sum += dict['wettkaempfer_ueber_limite']
         dict['schiffe'] = row[i]; i += 1
         dict['schiffe_ueber_limite'] = row[i]; i += 1
         dict['schiffe_ueber_limite_in_prozent'] = (
-                round((dict['schiffe_ueber_limite']*1.0
-                 / dict['schiffe']) * 100, 1))
+                round((dict['schiffe_ueber_limite']*Decimal("1.0")
+                 / dict['schiffe']) * Decimal("100"), 1))
         schiffe_sum += dict['schiffe']
         schiffe_mit_kranz_sum += dict['schiffe_ueber_limite']
         yield dict

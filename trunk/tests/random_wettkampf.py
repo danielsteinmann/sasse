@@ -58,7 +58,7 @@ def create_parcour(disziplin):
                 disziplin=disziplin,
                 postenart=zeitnote,
                 reihenfolge=anzahl_normale_posten+1+i)
-        random_zeit = Decimal(random.uniform(40.0, 150.0))
+        random_zeit = Decimal(str(random.uniform(40.0, 150.0)))
         richtzeit = Richtzeit.objects.create(posten=p, zeit=random_zeit)
 
 def create_startliste(disziplin):
@@ -101,7 +101,7 @@ def create_noten(disziplin):
             for s in schiffe:
                 b = Bewertung(teilnehmer=s, posten=p, bewertungsart=bart)
                 if richtzeit:
-                    b.zeit = Decimal(random.uniform(zeit_from, zeit_until))
+                    b.zeit = Decimal(str(random.uniform(zeit_from, zeit_until)))
                     b.save()
                 else:
                     random_note = Decimal(random.choice(gueltige_werte))
