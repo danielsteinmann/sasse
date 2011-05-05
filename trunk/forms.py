@@ -251,9 +251,6 @@ class SchiffeinzelListForm(Form):
         self.disziplin = disziplin
         super(SchiffeinzelListForm, self).__init__(*args, **kwargs)
         self.fields['startnummer'].widget.attrs['size'] = 3
-        # Ein-/Ausblende Steuerung
-        self.fields['steuermann_neu'].widget.attrs['rel'] = 'neuer_steuermann'
-        self.fields['vorderfahrer_neu'].widget.attrs['rel'] = 'neuer_vorderfahrer'
         # Damit für den Normalfall effizient mit Tab navigieren kann
         self.fields['steuermann_neu'].widget.attrs['tabindex'] = '-1'
         self.fields['vorderfahrer_neu'].widget.attrs['tabindex'] = '-1'
