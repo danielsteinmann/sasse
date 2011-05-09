@@ -235,20 +235,20 @@ def read_startende_kategorien(disziplin):
 def read_anzahl_wettkaempfer(disziplin, kategorie):
     cursor = connection.cursor()
     sql = """
-    select count(id)
+    select count(t.id)
       from (
          select schiff.steuermann_id as id
-           from sasse_teilnehmer tn on (tn.id = b.teilnehmer_id)
+           from sasse_teilnehmer tn
            join sasse_schiffeinzel schiff on (schiff.teilnehmer_ptr_id = tn.id)
           where tn.disziplin_id = %s
             and schiff.kategorie_id = %s
          union
          select schiff.vorderfahrer_id as id
-           from sasse_teilnehmer tn on (tn.id = b.teilnehmer_id)
+           from sasse_teilnehmer tn
            join sasse_schiffeinzel schiff on (schiff.teilnehmer_ptr_id = tn.id)
           where tn.disziplin_id = %s
             and schiff.kategorie_id = %s
-      )
+      ) as t
     """
     args = [disziplin.id, kategorie.id, disziplin.id, kategorie.id]
     cursor.execute(sql, args)
