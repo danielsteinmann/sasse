@@ -9,8 +9,8 @@
 {% endifequal %}{% if not forloop.last %}|{% endif %}
 {% endfor %}
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<a href="{% url rangliste_pdf wettkampf.jahr, wettkampf.name, disziplin.name, kategorie.name %}">PDF</a>
-| <a href="{% url rangliste_pdf_all wettkampf.jahr, wettkampf.name, disziplin.name %}">Alle Kategorien als PDF</a>
+<a target="_blank" href="{% url rangliste_pdf wettkampf.jahr, wettkampf.name, disziplin.name, kategorie.name %}">PDF</a>
+| <a target="_blank" href="{% url rangliste_pdf_all wettkampf.jahr, wettkampf.name, disziplin.name %}">Alle Kategorien als PDF</a>
 <p>
 <table class="list">
   <tr>

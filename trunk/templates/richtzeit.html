@@ -9,7 +9,7 @@
 {% endifequal %}{% if not forloop.last %}|{% endif %}
 {% endfor %}
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<a href="{% url richtzeiten_pdf wettkampf.jahr, wettkampf.name, disziplin.name %}">Alle Posten als PDF</a>
+<a target="_blank" href="{% url richtzeiten_pdf wettkampf.jahr, wettkampf.name, disziplin.name %}">Alle Posten als PDF</a>
 <p>
 {% if form.instance.zeit %}
 <b>Richtzeit: {{form.instance.zeit|bewertung:'ZEIT'}}</b>

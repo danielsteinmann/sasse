@@ -55,7 +55,7 @@
   {% endfor %}
 </table>
 <p>
-<a href="{% url notenblatt_pdf wettkampf.jahr, wettkampf.name, disziplin.name, schiff.startnummer %}">PDF</a>
+<a target="_blank" href="{% url notenblatt_pdf wettkampf.jahr, wettkampf.name, disziplin.name, schiff.startnummer %}">PDF</a>
 {% if next %}
 | <a href="{% url notenblatt wettkampf.jahr, wettkampf.name, disziplin.name, next %}">Weiter</a>
 {% endif %}
