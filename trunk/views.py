@@ -68,6 +68,7 @@ def wettkaempfe_get(request):
     return direct_to_template(request, 'wettkampf_list.html',
             {'wettkaempfe': wettkaempfe})
 
+@permission_required('sasse.add_wettkampf')
 def wettkaempfe_add(request):
     if request.method == 'POST':
         return wettkaempfe_post(request)
@@ -75,7 +76,7 @@ def wettkaempfe_add(request):
     form = WettkampfForm()
     return direct_to_template(request, 'wettkampf_add.html', {'form': form})
 
-@permission_required('sasse.change_wettkampf')
+@permission_required('sasse.add_wettkampf')
 def wettkaempfe_post(request):
     assert request.method == 'POST'
     form = WettkampfForm(request.POST)
@@ -98,6 +99,7 @@ def wettkampf_get(request, jahr, wettkampf):
     return direct_to_template(request, 'wettkampf.html',
             {'wettkampf': w, 'disziplinen': d})
 
+@permission_required('sasse.change_wettkampf')
 def wettkampf_update(request, jahr, wettkampf):
     if request.method == 'POST':
         return wettkampf_put(request, jahr, wettkampf)
@@ -121,6 +123,7 @@ def wettkampf_put(request, jahr, wettkampf):
     return direct_to_template(request, 'wettkampf_update.html',
             {'wettkampf': w, 'disziplinen': d, 'form': form})
 
+@permission_required('sasse.delete_wettkampf')
 def wettkampf_delete_confirm(request, jahr, wettkampf):
     if request.method == 'POST':
         return wettkampf_delete(request, jahr, wettkampf)
@@ -128,13 +131,14 @@ def wettkampf_delete_confirm(request, jahr, wettkampf):
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
     return direct_to_template(request, 'wettkampf_delete.html', {'wettkampf': w})
 
-@permission_required('sasse.change_wettkampf')
+@permission_required('sasse.delete_wettkampf')
 def wettkampf_delete(request, jahr, wettkampf):
     assert request.method == 'POST'
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
     w.delete()
     return HttpResponseRedirect(reverse(wettkaempfe_get))
 
+@permission_required('sasse.add_disziplin')
 def disziplinen_add(request, jahr, wettkampf):
     if request.method == 'POST':
         return disziplinen_post(request, jahr, wettkampf)
@@ -144,7 +148,7 @@ def disziplinen_add(request, jahr, wettkampf):
     return direct_to_template(request, 'disziplin_add.html',
             {'form': form, 'wettkampf': w})
 
-@permission_required('sasse.change_disziplin')
+@permission_required('sasse.add_disziplin')
 def disziplinen_post(request, jahr, wettkampf):
     assert request.method == 'POST'
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
@@ -169,6 +173,7 @@ def disziplin_get(request, jahr, wettkampf, disziplin):
         raise Http404(u"Disziplin %s noch nicht implementiert" % d.disziplinart)
     return direct_to_template(request, template, {'wettkampf': w, 'disziplin': d})
 
+@permission_required('sasse.change_disziplin')
 def disziplin_update(request, jahr, wettkampf, disziplin):
     if request.method == 'POST':
         return disziplin_put(request, jahr, wettkampf, disziplin)
@@ -192,6 +197,7 @@ def disziplin_put(request, jahr, wettkampf, disziplin):
     return direct_to_template(request, 'disziplin_update.html',
             {'form': form, 'wettkampf': w, 'disziplin': d})
 
+@permission_required('sasse.delete_disziplin')
 def disziplin_delete_confirm(request, jahr, wettkampf, disziplin):
     if request.method == 'POST':
         return disziplin_delete(request, jahr, wettkampf, disziplin)
@@ -201,7 +207,7 @@ def disziplin_delete_confirm(request, jahr, wettkampf, disziplin):
     return direct_to_template(request, 'disziplin_delete.html',
             {'wettkampf': w, 'disziplin': d})
 
-@permission_required('sasse.change_disziplin')
+@permission_required('sasse.delete_disziplin')
 def disziplin_delete(request, jahr, wettkampf, disziplin):
     assert request.method == 'POST'
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
@@ -220,7 +226,7 @@ def posten_list(request, jahr, wettkampf, disziplin):
         {'wettkampf': w, 'disziplin': d, 'posten': d.posten_set.all(),
             'form': form, })
 
-@permission_required('sasse.change_posten')
+@permission_required('sasse.add_posten')
 def posten_post(request, jahr, wettkampf, disziplin):
     assert request.method == 'POST'
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
@@ -241,6 +247,7 @@ def posten_get(request, jahr, wettkampf, disziplin, posten):
     return direct_to_template(request, 'posten_get.html',
         {'wettkampf': w, 'disziplin': d, 'posten': p, })
 
+@permission_required('sasse.change_posten')
 def posten_update(request, jahr, wettkampf, disziplin, posten):
     if request.method == 'POST':
         return posten_put(request, jahr, wettkampf, disziplin, posten)
@@ -267,6 +274,7 @@ def posten_put(request, jahr, wettkampf, disziplin, posten):
     return direct_to_template(request, 'posten_update.html',
             {'form': form, 'wettkampf': w, 'disziplin': d, 'posten': p, })
 
+@permission_required('sasse.delete_posten')
 def posten_delete_confirm(request, jahr, wettkampf, disziplin, posten):
     if request.method == 'POST':
         return posten_delete(request, jahr, wettkampf, disziplin, posten)
@@ -298,7 +306,6 @@ def startliste(request, jahr, wettkampf, disziplin):
         raise Http404(u"Startliste für %s noch nicht implementiert"
                 % d.disziplinart)
 
-@permission_required('sasse.change_schiffeinzel')
 def startliste_post(request, jahr, wettkampf, disziplin):
     assert request.method == 'POST'
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
@@ -352,7 +359,7 @@ def startliste_einzelfahren_pdf(request, jahr, wettkampf, disziplin):
     doc.build(flowables, filename=response)
     return response
 
-@permission_required('sasse.change_schiffeinzel')
+@permission_required('sasse.add_schiffeinzel')
 def startliste_einzelfahren_post(request, jahr, wettkampf, disziplin):
     assert request.method == 'POST'
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
@@ -392,6 +399,7 @@ def teilnehmer_get(request, jahr, wettkampf, disziplin, startnummer):
         'disziplin': d, 'teilnehmer': t, 'steuermann_kat': steuermann_kat,
         'vorderfahrer_kat': vorderfahrer_kat})
 
+@permission_required('sasse.change_schiffeinzel')
 def teilnehmer_update(request, jahr, wettkampf, disziplin, startnummer):
     if request.method == 'POST':
         return teilnehmer_put(request, jahr, wettkampf, disziplin, startnummer)
@@ -419,6 +427,7 @@ def teilnehmer_put(request, jahr, wettkampf, disziplin, startnummer):
     return direct_to_template(request, 'schiffeinzel_update.html',
             {'wettkampf': w, 'disziplin': d, 'form': form, 'teilnehmer': t})
 
+@permission_required('sasse.delete_schiffeinzel')
 def teilnehmer_delete_confirm(request, jahr, wettkampf, disziplin, startnummer):
     if request.method == 'POST':
         return teilnehmer_delete(request, jahr, wettkampf, disziplin, startnummer)
@@ -429,7 +438,7 @@ def teilnehmer_delete_confirm(request, jahr, wettkampf, disziplin, startnummer):
     return direct_to_template(request, 'schiffeinzel_delete.html',
             {'wettkampf': w, 'disziplin': d, 'teilnehmer': t})
 
-@permission_required('sasse.change_schiffeinzel')
+@permission_required('sasse.delete_schiffeinzel')
 def teilnehmer_delete(request, jahr, wettkampf, disziplin, startnummer):
     assert request.method == 'POST'
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
@@ -472,6 +481,7 @@ def postenblatt(request, jahr, wettkampf, disziplin, posten):
         d, 'posten': p, 'filterform': filterform, 'header_row': header_row,
         'data_rows': data_rows, 'query': query,})
 
+@permission_required('sasse.change_bewertung')
 def postenblatt_update(request, jahr, wettkampf, disziplin, posten):
     if request.method == 'POST':
         return postenblatt_post(request, jahr, wettkampf, disziplin, posten)
@@ -614,6 +624,7 @@ def richtzeit(request, jahr, wettkampf, disziplin, posten, template='richtzeit.h
         d, 'posten': p, 'zeitposten': zeitposten, 'rangliste': rangliste,
         'form': form})
 
+@permission_required('sasse.change_richtzeit')
 def richtzeit_update(request, jahr, wettkampf, disziplin, posten):
     if request.method == 'POST':
         return richtzeit_post(request, jahr, wettkampf, disziplin, posten)
@@ -783,6 +794,7 @@ def kranzlimiten(request, jahr, wettkampf, disziplin):
         'disziplin': d, 'kranzlimiten': kranzlimiten},
         context_instance=RequestContext(request))
 
+@permission_required("sasse.change_kranzlimite")
 def kranzlimiten_update(request, jahr, wettkampf, disziplin):
     if request.method == 'POST':
         if request.POST.has_key('set_defaults'):

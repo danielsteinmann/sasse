@@ -226,7 +226,7 @@ class PostenPageTest(TestCase):
 class EinzelfahrenStartlistePageTest(TestCase):
 
     def setUp(self):
-        login(self, 'noten', 'secret', ['change_schiffeinzel'])
+        login(self, 'noten', 'secret', ['add_schiffeinzel', 'change_schiffeinzel', 'delete_schiffeinzel'])
         einzel = Disziplinart.objects.get(name="Einzelfahren")
         w = Wettkampf.objects.create(name="Test-Cup", von="2009-04-04")
         d = w.disziplin_set.create(name="klein", disziplinart=einzel)
