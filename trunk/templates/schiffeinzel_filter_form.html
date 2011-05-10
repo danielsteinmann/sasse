@@ -2,8 +2,13 @@
 {{ form.non_field_errors }}
 {% endif %}
 {{ form.startnummern.errors }}
-Sektion {{ form.sektion }}
-und/oder Startnummern {{ form.startnummern }}
-<input title="Startnummern '1,4-15' zeigt Startnummern 1,4,5,...,15.
-'800-' zeigt Startnummern ab 800" type="submit" value="auswählen">
-
+Startnummern {{ form.startnummern }}
+und/oder Sektion {{ form.sektion }}
+<input type="submit" value="auswählen">
+<font size="-1">
+<a onclick='$("#startnummern_help_text").toggle(); return false;' href="#">Hilfe</a>
+<div style="display:none" id="startnummern_help_text">
+Eingabe von '1,4-15' zeigt Startnummern 1,4,5,...,15.
+<br>Eingabe von '800-' zeigt Startnummern ab 800.
+</font>
+</div>

@@ -195,21 +195,20 @@ class SchiffeinzelFilterForm(Form):
         self.schiffe = schiffe
         return self.cleaned_data
 
-    def naechste_nummer(self, startliste):
+    def naechste_nummer(self):
         """
         Nächste Startnummer ist die zuletzt dargestellte Nummer plus 1
         """
-        anzahl_sichtbar = startliste.count()
+        anzahl_sichtbar = self.schiffe.count()
         if anzahl_sichtbar == 0:
             result = 1
         else:
-            letzter_sichtbar = startliste[anzahl_sichtbar - 1]
+            letzter_sichtbar = self.schiffe[anzahl_sichtbar - 1]
             result = letzter_sichtbar.startnummer + 1
         return result
 
     def selected_startnummern(self, visible=15):
-        schiffe = self.cleaned_data.get('startnummern')
-        schiffe = schiffe.filter()[:visible]
+        schiffe = self.schiffe.filter()[:visible]
         return schiffe
 
 

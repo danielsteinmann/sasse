@@ -62,7 +62,7 @@ $(document).ready(function(){
         $('#id_vorderfahrer_neu').click(function () {
             showHideNeuesMitglied(this, "vorderfahrer");
             });    
-        textboxes = $(":input:visible:[type=text]");
+        textboxes = $("form:not(.filter) :input:visible:[type=text]");
         $(textboxes).keydown(checkForEnter);
 });
 function showHideNeuesMitglied(checkbox, position) {
@@ -88,5 +88,9 @@ function checkForEnter(event) {
 } 
 </script>
 </form>
+{% else %}
+<script type="text/javascript">
+$('input:visible:first').focus();
+</script>
 {% endif %}
 {% endblock %}

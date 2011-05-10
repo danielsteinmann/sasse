@@ -322,7 +322,7 @@ def startliste_einzelfahren(request, jahr, wettkampf, disziplin):
         s = searchform.schiffe
         nummer = request.GET.get('startnummer')
         if not nummer:
-            nummer = searchform.naechste_nummer(s)
+            nummer = searchform.naechste_nummer()
         initial = {}
         initial['startnummer'] = nummer
         initial['steuermann'] = request.GET.get('steuermann')
