@@ -36,5 +36,8 @@ Nicht eingeloggt | <a href="{% url django.contrib.auth.views.login %}?next={{ re
 {% block breadcrumbs %}<a href="{% url wettkaempfe_get %}">Wettkämpfe</a>{% endblock %}
 </font></div>
 {% block content %}{% endblock %}
+<script type="text/javascript">
+$('form:first :input:visible:first').focus();
+</script>
 </body>
 </html>
