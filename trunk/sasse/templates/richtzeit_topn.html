@@ -1,3 +1,5 @@
+{% load pagination_tags %}
+{% autopaginate rangliste 15 %}
 <p></p>
 Die besten Zeiten für Posten {{ posten.name }}:
 <table class="list">
@@ -20,3 +22,5 @@ Die besten Zeiten für Posten {{ posten.name }}:
   </tr>
 {% endfor %}
 </table>
+<p></p>
+{% paginate %}

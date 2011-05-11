@@ -618,7 +618,7 @@ def richtzeit(request, jahr, wettkampf, disziplin, posten, template='richtzeit.h
     p = Posten.objects.get(disziplin=d, name=posten)
     form = RichtzeitForm(p)
     zeitposten = d.posten_set.filter(postenart__name='Zeitnote')
-    rangliste = read_topzeiten(p)
+    rangliste = list(read_topzeiten(p, topn=None))
     return direct_to_template(request, template, {'wettkampf': w, 'disziplin':
         d, 'posten': p, 'zeitposten': zeitposten, 'rangliste': rangliste,
         'form': form})
@@ -640,7 +640,7 @@ def richtzeit_post(request, jahr, wettkampf, disziplin, posten):
         url = reverse(richtzeit, args=[jahr, wettkampf, disziplin, posten])
         return HttpResponseRedirect(url)
     zeitposten = d.posten_set.filter(postenart__name='Zeitnote')
-    rangliste = read_topzeiten(p)
+    rangliste = list(read_topzeiten(p, topn=None))
     return direct_to_template(request, 'richtzeit_update.html', {'wettkampf': w,
         'disziplin': d, 'posten': p, 'zeitposten': zeitposten, 'rangliste':
         rangliste, 'form': form})
