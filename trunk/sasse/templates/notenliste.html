@@ -8,6 +8,7 @@
 {% include "schiffeinzel_filter_form.html" with form=searchform %}
 </form>
 <p></p>
+{% if not searchform.errors %}
 <a target="_blank" href="{% url notenblaetter_pdf wettkampf.jahr, wettkampf.name, disziplin.name%}?{{request.META.QUERY_STRING}}">Notenblätter drucken</a>
 | <a target="_blank" href="{% url notenliste_pdf wettkampf.jahr, wettkampf.name, disziplin.name%}?{{request.META.QUERY_STRING}}">Notenliste drucken</a>
 <table class="list">
@@ -45,4 +46,5 @@
 </table>
 <p>
 {% paginate %}
+{% endif %}
 {% endblock %}
