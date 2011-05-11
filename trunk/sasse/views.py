@@ -650,12 +650,16 @@ def notenliste(request, jahr, wettkampf, disziplin):
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
     posten = d.posten_set.all().select_related()
-    sektion = None
     notenliste = []
     searchform = SchiffeinzelFilterForm(d, request.GET.copy())
     if searchform.is_valid():
         sektion = searchform.cleaned_data['sektion']
         startnummern = [schiff.startnummer for schiff in searchform.schiffe]
+        max_startnummern = 50
+        if sektion is None and len(startnummern) > max_startnummern:
+            # TODO Nötig wegen Performance Problemen. Sollte Fehlermeldung
+            # zeigen, dass Liste abgeschnitten wird
+            startnummern = startnummern[:max_startnummern]
         notenliste = read_notenliste(d, posten, sektion, startnummern)
     return direct_to_template(request, 'notenliste.html', {'wettkampf': w, 'disziplin':
         d, 'posten': posten, 'notenliste': list(notenliste), 'searchform': searchform},

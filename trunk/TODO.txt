@@ -39,6 +39,9 @@ Startliste: export/import
 Teilnehmer: Als 'abstract' markieren, damit keine eigene Tabelle entsteht. Das
 macht einige SQL Statements einfacher.
 --
+Rangliste: Kranzlimite Zeile wird in HTML nicht gezeigt, falls sie auf die
+erste Zeile einer Seite fällt.
+--
 Freeze Wettkampf, damit man nicht fälschlicherweise etwas eingeben
 --
 Richtzeit pro Kategorie:
