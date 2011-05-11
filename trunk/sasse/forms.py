@@ -179,6 +179,11 @@ class SchiffeinzelFilterForm(Form):
             )
 
     def __init__(self, disziplin, *args, **kwargs):
+        # Dieses Flag ermöglicht es, auf der Startlisten Seite nach einer
+        # Sektion zu filtern, für die noch keine Schiffe existieren, um dann
+        # dann mit der Eingabe zu beginnen. Ohne dieses Flag würde eine
+        # Fehlermeldung erscheinen, womit eine Eingabe nicht möglich wäre.
+        self.sektion_check = kwargs.pop('sektion_check', True)
         super(SchiffeinzelFilterForm, self).__init__(*args, **kwargs)
         self.fields['startnummern'] = StartnummernSelectionField(disziplin)
         self.disziplin = disziplin
@@ -189,7 +194,7 @@ class SchiffeinzelFilterForm(Form):
             sektion = self.cleaned_data.get('sektion')
             if sektion:
                 schiffe = schiffe.filter(sektion=sektion)
-                if not schiffe:
+                if self.sektion_check and not schiffe:
                     text = u"Keine Schiffe mit diesen Suchkritierien gefunden."
                     raise ValidationError(text)
         self.schiffe = schiffe
@@ -248,24 +253,28 @@ class SchiffeinzelListForm(Form):
 
     def __init__(self, disziplin, *args, **kwargs):
         self.disziplin = disziplin
+        self.filter_sektion = kwargs.pop('filter_sektion', None)
         super(SchiffeinzelListForm, self).__init__(*args, **kwargs)
         self.fields['startnummer'].widget.attrs['size'] = 3
         # Damit für den Normalfall effizient mit Tab navigieren kann
         self.fields['steuermann_neu'].widget.attrs['tabindex'] = '-1'
         self.fields['vorderfahrer_neu'].widget.attrs['tabindex'] = '-1'
 
-    def steuermann_neu_form(self, sektion):
-        return self._mitglied_neu_form('steuermann', 'steuermann_neu', sektion)
+    def steuermann_neu_form(self):
+        return self._mitglied_neu_form('steuermann', 'steuermann_neu')
 
-    def vorderfahrer_neu_form(self, sektion):
-        return self._mitglied_neu_form('vorderfahrer', 'vorderfahrer_neu', sektion)
+    def vorderfahrer_neu_form(self):
+        return self._mitglied_neu_form('vorderfahrer', 'vorderfahrer_neu')
 
-    def _mitglied_neu_form(self, position, flag_field, sektion):
+    def _mitglied_neu_form(self, position, flag_field):
         if not self.data.has_key(flag_field):
             # Falls Benutzer ein neues Mitglied eingeben will, ein leeres
             # Formular ohne Validierungsfehler anzeigen. Falls Sektion im
             # Suchfilter gesetzt wurde, die Sektion schon vorselektieren.
-            form = MitgliedForm(prefix=position, initial={ 'sektion': sektion})
+            initial = {}
+            if self.filter_sektion:
+                initial['sektion'] = self.filter_sektion.id
+            form = MitgliedForm(prefix=position, initial=initial)
         else:
             form = MitgliedForm(prefix=position, data=self.data)
             if form.is_valid():
@@ -312,6 +321,11 @@ class SchiffeinzelListForm(Form):
                 self.data['sektion'] = steuermann.sektion.id
                 self.fields['sektion'] = ModelChoiceField(queryset=Sektion.objects.all(), empty_label=None)
                 raise ValidationError(text)
+        if self.filter_sektion and self.filter_sektion != sektion:
+            text = u"Schiff soll für '%s' fahren, aber oben ist '%s' vorselektiert. Bitte vorgeschlagene Sektion bestätigen oder einen anderen Steuermann auswählen." % (sektion, self.filter_sektion)
+            self.data['sektion'] = self.filter_sektion.id
+            self.fields['sektion'] = ModelChoiceField(queryset=Sektion.objects.all(), empty_label=None)
+            raise ValidationError(text)
         # Kategorie
         kategorie = self.cleaned_data.get('kategorie')
         if kategorie is None:

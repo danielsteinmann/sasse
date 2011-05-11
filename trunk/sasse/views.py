@@ -324,7 +324,7 @@ def startliste_einzelfahren(request, jahr, wettkampf, disziplin):
     entryform = None
     steuermann_neu_form = None
     vorderfahrer_neu_form = None
-    searchform = SchiffeinzelFilterForm(d, request.GET)
+    searchform = SchiffeinzelFilterForm(d, request.GET, sektion_check=False)
     if searchform.is_valid():
         s = searchform.schiffe
         nummer = request.GET.get('startnummer')
@@ -334,10 +334,10 @@ def startliste_einzelfahren(request, jahr, wettkampf, disziplin):
         initial['startnummer'] = nummer
         initial['steuermann'] = request.GET.get('steuermann')
         initial['vorderfahrer'] = request.GET.get('vorderfahrer')
-        entryform = SchiffeinzelListForm(d, initial=initial)
-        sektion = request.GET.get('sektion')
-        steuermann_neu_form = entryform.steuermann_neu_form(sektion)
-        vorderfahrer_neu_form = entryform.vorderfahrer_neu_form(sektion)
+        sektion = searchform.cleaned_data['sektion']
+        entryform = SchiffeinzelListForm(d, initial=initial, filter_sektion=sektion)
+        steuermann_neu_form = entryform.steuermann_neu_form()
+        vorderfahrer_neu_form = entryform.vorderfahrer_neu_form()
     return direct_to_template(request, 'startliste_einzelfahren.html', { 'wettkampf': w,
         'disziplin': d, 'searchform': searchform, 'startliste': s, 'form': entryform,
         'steuermann_neu_form': steuermann_neu_form,
@@ -364,11 +364,13 @@ def startliste_einzelfahren_post(request, jahr, wettkampf, disziplin):
     assert request.method == 'POST'
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
+    searchform = SchiffeinzelFilterForm(d, request.GET, sektion_check=False)
+    searchform.is_valid()
+    sektion = searchform.cleaned_data['sektion']
     data = request.POST.copy()
-    entryform = SchiffeinzelListForm(d, data=data)
-    sektion = request.GET.get('sektion')
-    steuermann_neu_form = entryform.steuermann_neu_form(sektion)
-    vorderfahrer_neu_form = entryform.vorderfahrer_neu_form(sektion)
+    entryform = SchiffeinzelListForm(d, data=data, filter_sektion=sektion)
+    steuermann_neu_form = entryform.steuermann_neu_form()
+    vorderfahrer_neu_form = entryform.vorderfahrer_neu_form()
     if entryform.is_valid():
         entryform.save()
         url = reverse(startliste, args=[jahr, wettkampf, disziplin])
@@ -376,12 +378,9 @@ def startliste_einzelfahren_post(request, jahr, wettkampf, disziplin):
         if query:
             url = "%s?%s" % (url, query)
         return HttpResponseRedirect(url)
-    searchform = SchiffeinzelFilterForm(d, request.GET)
-    if searchform.is_valid():
-        s = searchform.schiffe
     return direct_to_template(request, 'startliste_einzelfahren.html', {
         'wettkampf': w, 'disziplin': d, 'searchform': searchform,
-        'startliste': s, 'form': entryform,
+        'startliste': searchform.schiffe, 'form': entryform,
         'steuermann_neu_form': steuermann_neu_form,
         'vorderfahrer_neu_form': vorderfahrer_neu_form},
         context_instance=RequestContext(request)
