@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+# From 'distribute' package
 from setuptools import setup, find_packages
 
 setup(

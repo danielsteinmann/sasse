@@ -16,7 +16,7 @@ MANAGERS = ADMINS
 DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': 'db.sqlite',
+            'NAME': 'sasse_db.sqlite',
             }
         }
 
@@ -30,9 +30,10 @@ SECRET_KEY = '_1!)2uy&sz2cx+m#t3r02h_r+q4fal=yu9w8nlal3^zbvcc-z2'
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
     'pagination.middleware.PaginationMiddleware',
-    'django.middleware.doc.XViewMiddleware',
 )
 
 ROOT_URLCONF = 'urls'
@@ -46,11 +47,12 @@ TEMPLATE_CONTEXT_PROCESSORS = (
         )
 
 INSTALLED_APPS = (
-    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
+    'django.contrib.sites',
     'django.contrib.messages',
+    'django.contrib.admin',
     'south',
     'sasse',
     'pagination',
