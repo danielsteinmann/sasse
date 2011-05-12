@@ -1,0 +1,48 @@
+{% extends "base_bewertungen.html" %}
+{% block nav_kranzlimiten %}selected{% endblock %}
+{% block content %}
+<table class="list">
+  <tr>
+    <th></th>
+    <th></th>
+    <th style="text-align:center" colspan="3">Wettkämpfer</th>
+    <th style="text-align:center" colspan="3">Schiffe</th>
+  </tr>
+  <tr>
+    <th class="kategorie">Kat</th>
+    <th class="note">Limite</th>
+    <th class="note">Total</th>
+    <th class="note">Kranz</th>
+    <th class="note">[%]</th>
+    <th class="note">Total</th>
+    <th class="note">Kranz</th>
+    <th class="note">[%]</th>
+  </tr>
+{% for row in kranzlimiten %}
+  {% if not forloop.last %}
+  <tr class="{% cycle "odd" "even" %}">
+    <td class="kategorie"><a href="{% url rangliste wettkampf.jahr, wettkampf.name, disziplin.name, row.kategorie %}">{{row.kategorie}}</a></td>
+    <td class="note">{{row.limite_in_punkte}}</td>
+    <td class="note">{{row.wettkaempfer}}</td>
+    <td class="note">{{row.wettkaempfer_ueber_limite}}</td>
+    <td class="note">{{row.wettkaempfer_mit_kranz_in_prozent}}</td>
+    <td class="note">{{row.schiffe}}</td>
+    <td class="note">{{row.schiffe_ueber_limite}}</td>
+    <td class="note">{{row.schiffe_ueber_limite_in_prozent}}</td>
+  </tr>
+  {% else %}
+  <tr style="font-weight: bold;">
+    <td colspan="2">Summen:</td>
+    <td class="note">{{row.wettkaempfer}}</td>
+    <td class="note">{{row.wettkaempfer_ueber_limite}}</td>
+    <td class="note"></td>
+    <td class="note">{{row.schiffe}}</td>
+    <td class="note">{{row.schiffe_ueber_limite}}</td>
+    <td class="note"></td>
+  </tr>
+  {% endif %}
+{% endfor %}
+</table>
+<p></p>
+<a href="{% url kranzlimiten_update wettkampf.jahr, wettkampf.name, disziplin.name %}">Ändern</a>
+{% endblock %}

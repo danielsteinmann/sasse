@@ -1,0 +1,44 @@
+{% extends "base_wettkampf.html" %}
+{% block nav_wettkampf %}selected{% endblock %}
+
+{% block content %}
+<table class="display">
+  <tr>
+    <th>Name:</th>
+    <td>{{ wettkampf.name }}</td>
+  </tr>
+  <tr>
+    <th>Zusatz:</th>
+    <td>{{ wettkampf.zusatz }}</td>
+  </tr>
+  <tr>
+    <th>Von:</th>
+    <td>{{ wettkampf.von }}</td>
+  </tr>
+  <tr>
+    <th>Bis:</th>
+    <td>{{ wettkampf.bis|default_if_none:"-" }}</td>
+  </tr>
+  <tr>
+    <th>Disziplinen:</th>
+    <td>
+      {% if disziplinen %}
+      {% for disziplin in disziplinen %}
+      <a href="{% url disziplin_get wettkampf.jahr, wettkampf.name, disziplin.name %}">{{ disziplin.name }}</a><br/>
+      {% endfor %}
+      {% else %}
+      Noch keine Disziplin erfasst.
+      {% endif %}
+    </td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>
+      <br />
+      <a href="{% url wettkampf_update wettkampf.jahr, wettkampf.name %}">Ändern</a>
+      | <a href="{% url wettkampf_delete_confirm wettkampf.jahr, wettkampf.name %}">Löschen</a>
+      | <a href="{% url disziplinen_add wettkampf.jahr, wettkampf.name %}">Disziplin hinzufügen</a>
+    </td>
+  </tr>
+</table>
+{% endblock %}

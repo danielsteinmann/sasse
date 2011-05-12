@@ -1,0 +1,998 @@
+[
+  {
+    "pk": 1, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "nummer": "1",
+      "name": "Aarau"
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "nummer": "2",
+      "name": "Aarburg"
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "nummer": "3",
+      "name": "Aarwangen"
+    }
+  }, 
+  {
+    "pk": 4, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "nummer": "4",
+      "name": "Baden"
+    }
+  }, 
+  {
+    "pk": 5, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "nummer": "5",
+      "name": "Basler Pontoniere"
+    }
+  }, 
+  {
+    "pk": 7, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "nummer": "7",
+      "name": "Bern"
+    }
+  }, 
+  {
+    "pk": 8, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "nummer": "8",
+      "name": "Bex"
+    }
+  }, 
+  {
+    "pk": 9, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "nummer": "9",
+      "name": "Biel"
+    }
+  }, 
+  {
+    "pk": 10, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "nummer": "10",
+      "name": "Bremgarten"
+    }
+  }, 
+  {
+    "pk": 11, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "nummer": "11",
+      "name": "Brugg"
+    }
+  }, 
+  {
+    "pk": 12, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "nummer": "12",
+      "name": "Buchs SG"
+    }
+  }, 
+  {
+    "pk": 13, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "nummer": "13",
+      "name": "Diessenhofen"
+    }
+  }, 
+  {
+    "pk": 14, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "nummer": "14",
+      "name": "Dietikon"
+    }
+  }, 
+  {
+    "pk": 15, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "nummer": "15",
+      "name": "Eglisau"
+    }
+  }, 
+  {
+    "pk": 16, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "nummer": "16",
+      "name": "Ellikon"
+    }
+  }, 
+  {
+    "pk": 17, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "nummer": "17",
+      "name": "Genf"
+    }
+  }, 
+  {
+    "pk": 18, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "nummer": "18",
+      "name": "Klingnau"
+    }
+  }, 
+  {
+    "pk": 19, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "nummer": "19",
+      "name": "Laufenburg"
+    }
+  }, 
+  {
+    "pk": 20, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "nummer": "20",
+      "name": "Ligerz"
+    }
+  }, 
+  {
+    "pk": 21, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "nummer": "21",
+      "name": "Luzern"
+    }
+  }, 
+  {
+    "pk": 22, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "nummer": "22",
+      "name": "Mellingen"
+    }
+  }, 
+  {
+    "pk": 23, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "nummer": "23",
+      "name": "Mumpf"
+    }
+  }, 
+  {
+    "pk": 24, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "nummer": "24",
+      "name": "Murgenthal"
+    }
+  }, 
+  {
+    "pk": 25, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "nummer": "25",
+      "name": "Oberriet"
+    }
+  }, 
+  {
+    "pk": 26, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "nummer": "26",
+      "name": "Olten"
+    }
+  }, 
+  {
+    "pk": 27, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "nummer": "27",
+      "name": "Ottenbach"
+    }
+  }, 
+  {
+    "pk": 28, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "nummer": "28",
+      "name": "Rheinfelden"
+    }
+  }, 
+  {
+    "pk": 29, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "nummer": "29",
+      "name": "Schaffhausen"
+    }
+  }, 
+  {
+    "pk": 30, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "nummer": "30",
+      "name": "Schmerikon"
+    }
+  }, 
+  {
+    "pk": 32, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "nummer": "32",
+      "name": "Schwaderloch"
+    }
+  }, 
+  {
+    "pk": 31, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "nummer": "31",
+      "name": "Sch\u00f6nenwerd"
+    }
+  }, 
+  {
+    "pk": 33, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "nummer": "33",
+      "name": "Sisseln"
+    }
+  }, 
+  {
+    "pk": 34, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "nummer": "34",
+      "name": "Solothurn"
+    }
+  }, 
+  {
+    "pk": 35, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "nummer": "35",
+      "name": "Stein am Rhein"
+    }
+  }, 
+  {
+    "pk": 36, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "nummer": "36",
+      "name": "Thun"
+    }
+  }, 
+  {
+    "pk": 0, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "nummer": "0",
+      "name": "Verband"
+    }
+  }, 
+  {
+    "pk": 37, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "nummer": "37",
+      "name": "Wallbach"
+    }
+  }, 
+  {
+    "pk": 38, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "nummer": "38",
+      "name": "Wangen a A"
+    }
+  }, 
+  {
+    "pk": 39, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "nummer": "39",
+      "name": "Worblaufen"
+    }
+  }, 
+  {
+    "pk": 40, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "nummer": "40",
+      "name": "Wynau"
+    }
+  }, 
+  {
+    "pk": 42, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "nummer": "42",
+      "name": "Zurzach"
+    }
+  }, 
+  {
+    "pk": 41, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "nummer": "41",
+      "name": "Z\u00fcrich"
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "sasse.disziplinart", 
+    "fields": {
+      "name": "Einzelfahren"
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "sasse.disziplinart", 
+    "fields": {
+      "name": "Sektionsfahren"
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "sasse.disziplinart", 
+    "fields": {
+      "name": "Bootsf\u00e4hrenbau"
+    }
+  }, 
+  {
+    "pk": 4, 
+    "model": "sasse.disziplinart", 
+    "fields": {
+      "name": "Einzelschn\u00fcren"
+    }
+  }, 
+  {
+    "pk": 5, 
+    "model": "sasse.disziplinart", 
+    "fields": {
+      "name": "Gruppenschn\u00fcren"
+    }
+  }, 
+  {
+    "pk": 6, 
+    "model": "sasse.disziplinart", 
+    "fields": {
+      "name": "Schwimmen"
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [
+        1, 
+        2
+      ], 
+      "name": "Abfahrt bei einer Stange"
+    }
+  }, 
+  {
+    "pk": 18, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [
+        2
+      ], 
+      "name": "Abfahrt und Ueberfahrt in Linie"
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [
+        1, 
+        2
+      ], 
+      "name": "Abfahrt unterhalb eines markierten Felsens"
+    }
+  }, 
+  {
+    "pk": 20, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [
+        2
+      ], 
+      "name": "Abmeldung"
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [
+        1
+      ], 
+      "name": "Allgemeines und Antreten"
+    }
+  }, 
+  {
+    "pk": 10, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [
+        2
+      ], 
+      "name": "Anmeldung (Sektionsfahren)"
+    }
+  }, 
+  {
+    "pk": 50, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [
+        3
+      ], 
+      "name": "Bootsf\u00e4hrenbau"
+    }
+  }, 
+  {
+    "pk": 8, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [
+        1, 
+        2
+      ], 
+      "name": "Durchfahrt"
+    }
+  }, 
+  {
+    "pk": 7, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [
+        1, 
+        2
+      ], 
+      "name": "Einfahren in die Br\u00fcckenlinie"
+    }
+  }, 
+  {
+    "pk": 52, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [
+        4
+      ], 
+      "name": "Einzelschn\u00fcren"
+    }
+  }, 
+  {
+    "pk": 11, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [
+        2
+      ], 
+      "name": "Gemeinsame Stachelfahrt"
+    }
+  }, 
+  {
+    "pk": 53, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [
+        5
+      ], 
+      "name": "Gruppenschn\u00fcren"
+    }
+  }, 
+  {
+    "pk": 5, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [
+        1, 
+        2
+      ], 
+      "name": "Landung auf bestimmtes Ziel"
+    }
+  }, 
+  {
+    "pk": 6, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [
+        1
+      ], 
+      "name": "Landung auf h\u00f6chstes Ziel"
+    }
+  }, 
+  {
+    "pk": 13, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [
+        2
+      ], 
+      "name": "Landung auf h\u00f6chstes Ziel (Sektionsfahren)"
+    }
+  }, 
+  {
+    "pk": 19, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [
+        2
+      ], 
+      "name": "Landung in Linie"
+    }
+  }, 
+  {
+    "pk": 51, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [
+        6
+      ], 
+      "name": "Schwimmen"
+    }
+  }, 
+  {
+    "pk": 4, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [
+        1, 
+        2
+      ], 
+      "name": "Umfahren eines markierten Felsens"
+    }
+  }, 
+  {
+    "pk": 9, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [
+        1, 
+        2, 
+        3, 
+        4, 
+        5, 
+        6
+      ], 
+      "name": "Zeitnote"
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "sasse.kategorie", 
+    "fields": {
+      "geschlecht": "e", 
+      "alter_von": 0, 
+      "disziplinart": 1, 
+      "alter_bis": 14, 
+      "name": "I",
+      "reihenfolge": "1"
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "sasse.kategorie", 
+    "fields": {
+      "geschlecht": "m", 
+      "alter_von": 15, 
+      "disziplinart": 1, 
+      "alter_bis": 17, 
+      "name": "II",
+      "reihenfolge": "2"
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "sasse.kategorie", 
+    "fields": {
+      "geschlecht": "m", 
+      "alter_von": 18, 
+      "disziplinart": 1, 
+      "alter_bis": 20, 
+      "name": "III",
+      "reihenfolge": "3"
+    }
+  }, 
+  {
+    "pk": 4, 
+    "model": "sasse.kategorie", 
+    "fields": {
+      "geschlecht": "m", 
+      "alter_von": 21, 
+      "disziplinart": 1, 
+      "alter_bis": 42, 
+      "name": "C",
+      "reihenfolge": "4"
+    }
+  }, 
+  {
+    "pk": 5, 
+    "model": "sasse.kategorie", 
+    "fields": {
+      "geschlecht": "m", 
+      "alter_von": 43, 
+      "disziplinart": 1, 
+      "alter_bis": 99, 
+      "name": "D",
+      "reihenfolge": "5"
+    }
+  }, 
+  {
+    "pk": 6, 
+    "model": "sasse.kategorie", 
+    "fields": {
+      "geschlecht": "f", 
+      "alter_von": 15, 
+      "disziplinart": 1, 
+      "alter_bis": 99, 
+      "name": "F",
+      "reihenfolge": "6"
+    }
+  }, 
+  {
+    "pk": 17, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "gruppe": "STIL", 
+      "name": "Max", 
+      "defaultwert": "10", 
+      "editierbar": false, 
+      "reihenfolge": 0, 
+      "postenart": 2, 
+      "signum": 1, 
+      "wertebereich": "10", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "gruppe": "STIL", 
+      "name": "Abzug", 
+      "defaultwert": "0", 
+      "editierbar": true, 
+      "reihenfolge": 1, 
+      "postenart": 2, 
+      "signum": -1, 
+      "wertebereich": "0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "gruppe": "ZIEL", 
+      "name": "Distanznote", 
+      "defaultwert": "10", 
+      "editierbar": true, 
+      "reihenfolge": 2, 
+      "postenart": 2, 
+      "signum": 1, 
+      "wertebereich": "3, 5, 6, 7, 7.5, 8, 8.5, 9, 9.5, 10", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 18, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "gruppe": "STIL", 
+      "name": "Max", 
+      "defaultwert": "10", 
+      "editierbar": false, 
+      "reihenfolge": 0, 
+      "postenart": 3, 
+      "signum": 1, 
+      "wertebereich": "10", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 4, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "gruppe": "STIL", 
+      "name": "Abzug", 
+      "defaultwert": "0", 
+      "editierbar": true, 
+      "reihenfolge": 1, 
+      "postenart": 3, 
+      "signum": -1, 
+      "wertebereich": "0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 5, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "gruppe": "ZIEL", 
+      "name": "Distanznote", 
+      "defaultwert": "10", 
+      "editierbar": true, 
+      "reihenfolge": 2, 
+      "postenart": 3, 
+      "signum": 1, 
+      "wertebereich": "3, 5, 6, 7, 7.5, 8, 8.5, 9, 9.5, 10", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "gruppe": "STIL", 
+      "name": "Sanktion", 
+      "defaultwert": "0", 
+      "editierbar": true, 
+      "reihenfolge": 1, 
+      "postenart": 1, 
+      "signum": -1, 
+      "wertebereich": "0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 23, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "gruppe": "STIL", 
+      "name": "Max", 
+      "defaultwert": "10", 
+      "editierbar": false, 
+      "reihenfolge": 0, 
+      "postenart": 8, 
+      "signum": 1, 
+      "wertebereich": "10", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 14, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "gruppe": "STIL", 
+      "name": "Abzug", 
+      "defaultwert": "0", 
+      "editierbar": true, 
+      "reihenfolge": 1, 
+      "postenart": 8, 
+      "signum": -1, 
+      "wertebereich": "0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 15, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "gruppe": "ZIEL", 
+      "name": "Zielnote", 
+      "defaultwert": "10", 
+      "editierbar": true, 
+      "reihenfolge": 2, 
+      "postenart": 8, 
+      "signum": 1, 
+      "wertebereich": "10, 8, 6, 0", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 22, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "gruppe": "STIL", 
+      "name": "Max", 
+      "defaultwert": "10", 
+      "editierbar": false, 
+      "reihenfolge": 0, 
+      "postenart": 7, 
+      "signum": 1, 
+      "wertebereich": "10", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 12, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "gruppe": "STIL", 
+      "name": "Abzug", 
+      "defaultwert": "0", 
+      "editierbar": true, 
+      "reihenfolge": 1, 
+      "postenart": 7, 
+      "signum": -1, 
+      "wertebereich": "0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 13, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "gruppe": "ZIEL", 
+      "name": "Zielnote", 
+      "defaultwert": "10", 
+      "editierbar": true, 
+      "reihenfolge": 2, 
+      "postenart": 7, 
+      "signum": 1, 
+      "wertebereich": "10, 8, 6, 0", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 20, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "gruppe": "STIL", 
+      "name": "Max", 
+      "defaultwert": "10", 
+      "editierbar": false, 
+      "reihenfolge": 0, 
+      "postenart": 5, 
+      "signum": 1, 
+      "wertebereich": "10", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 8, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "gruppe": "STIL", 
+      "name": "Abzug", 
+      "defaultwert": "0", 
+      "editierbar": true, 
+      "reihenfolge": 1, 
+      "postenart": 5, 
+      "signum": -1, 
+      "wertebereich": "0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 9, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "gruppe": "ZIEL", 
+      "name": "Zielnote", 
+      "defaultwert": "10", 
+      "editierbar": true, 
+      "reihenfolge": 2, 
+      "postenart": 5, 
+      "signum": 1, 
+      "wertebereich": "3, 5, 6, 7, 7.5, 8, 8.5, 9, 9.5, 10", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 21, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "gruppe": "STIL", 
+      "name": "Max", 
+      "defaultwert": "10", 
+      "editierbar": false, 
+      "reihenfolge": 0, 
+      "postenart": 6, 
+      "signum": 1, 
+      "wertebereich": "10", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 10, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "gruppe": "STIL", 
+      "name": "Abzug", 
+      "defaultwert": "0", 
+      "editierbar": true, 
+      "reihenfolge": 1, 
+      "postenart": 6, 
+      "signum": -1, 
+      "wertebereich": "0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 11, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "gruppe": "ZIEL", 
+      "name": "Zielnote", 
+      "defaultwert": "15", 
+      "editierbar": true, 
+      "reihenfolge": 2, 
+      "postenart": 6, 
+      "signum": 1, 
+      "wertebereich": "3, 5, 6, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12, 12.5, 13, 13.5, 14, 14.5, 15", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 19, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "gruppe": "STIL", 
+      "name": "Max", 
+      "defaultwert": "10", 
+      "editierbar": false, 
+      "reihenfolge": 0, 
+      "postenart": 4, 
+      "signum": 1, 
+      "wertebereich": "10", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 6, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "gruppe": "STIL", 
+      "name": "Abzug", 
+      "defaultwert": "0", 
+      "editierbar": true, 
+      "reihenfolge": 1, 
+      "postenart": 4, 
+      "signum": -1, 
+      "wertebereich": "0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 7, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "gruppe": "ZIEL", 
+      "name": "Distanznote", 
+      "defaultwert": "10", 
+      "editierbar": true, 
+      "reihenfolge": 2, 
+      "postenart": 4, 
+      "signum": 1, 
+      "wertebereich": "3, 5, 6, 7, 7.5, 8, 8.5, 9, 9.5, 10", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 16, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "gruppe": "ZIEL", 
+      "name": "Zeit", 
+      "defaultwert": "0", 
+      "editierbar": true, 
+      "reihenfolge": 1, 
+      "postenart": 9, 
+      "signum": 1, 
+      "wertebereich": "0", 
+      "einheit": "ZEIT"
+    }
+  }
+]
