@@ -1,26 +1,3 @@
-Installation beschreiben:
-1. Python 2.7
-2. Sasse (mit 'pip install sasse', dann werden Dependencies wie Django, Paging,
-Reportlab, usw auch installiert)
-3. settings.py
-
-- pyinstaller.org
-- py2exe.org
-- http://misunderstandings.wordpress.com/2008/06/26/django-desktop-app/
-
-Directories:
-- C:/PYTHON27/.../site-packages/
-  reportlab/
-  django/
-  pagination/
-  south/
-  sasse/
-- C:/SASSE-WEBSERVER/
-  settings.py  (from sasse.settings_base.py import *)
-  manage.py
-  urls.py
-  db.sqlite
---
 Startliste: Falls ein Tippfehler beim Erfassen des Mitgliedes passiert ist,
 muss man mit einem Link auf eine Mitglieder Update Seite kommen.
 ===> Geht nicht so einfach. Wie wäre es, das Mitglied als Link darzustellen?
@@ -41,6 +18,11 @@ macht einige SQL Statements einfacher.
 --
 Rangliste: Kranzlimite Zeile wird in HTML nicht gezeigt, falls sie auf die
 erste Zeile einer Seite fällt.
+--
+Installation als ein EXE File:
+- pyinstaller.org
+- py2exe.org
+- http://misunderstandings.wordpress.com/2008/06/26/django-desktop-app/
 --
 Freeze Wettkampf, damit man nicht fälschlicherweise etwas eingeben
 --
