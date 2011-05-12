@@ -1,0 +1,50 @@
+{% extends "base_ranglisten.html" %}
+{% block nav_notenliste %}selected{% endblock %}
+
+{% block content %}
+{% load pagination_tags %}
+{% autopaginate notenliste 20 %}
+<form id="searchform" name="searchform" action="" method="GET">
+{% include "schiffeinzel_filter_form.html" with form=searchform %}
+</form>
+<p></p>
+{% if not searchform.errors %}
+<a target="_blank" href="{% url notenblaetter_pdf wettkampf.jahr, wettkampf.name, disziplin.name%}?{{request.META.QUERY_STRING}}">Notenblätter drucken</a>
+| <a target="_blank" href="{% url notenliste_pdf wettkampf.jahr, wettkampf.name, disziplin.name%}?{{request.META.QUERY_STRING}}">Notenliste drucken</a>
+<table class="list">
+  <tr>
+    <th class="startnummer">Stnr</th>
+    <th>Fahrerpaar</th>
+    <th>Sektion</th>
+    <th class="kategorie">Kat</th>
+{% for p in posten %}
+    <th class="note">{{p.name}}</th>
+{% if p.postenart.name == "Zeitnote" %}
+    <th class="note"><font size=-2>{{p.name}}[s]</font></th>
+{% endif %}
+{% endfor %}
+    <th class="zeit"><font size=-2>Zeit</font></th>
+    <th class="note">Punkte</th>
+  </tr>
+{% for row in notenliste %}
+  <tr class="{% cycle "odd" "even" %}">
+    <td class="startnummer"><a href="{% url teilnehmer_get wettkampf.jahr, wettkampf.name, disziplin.name, row.startnummer %}">{{row.startnummer}}</a></td>
+    <td>{{row.steuermann}} / {{row.vorderfahrer}}</td>
+    <td>{{row.sektion}}</td>
+    <td class="kategorie">{{row.kategorie}}</td>
+{% for note in row.noten %}
+{% if note.bewertungsart.einheit == "ZEIT" %}
+   <td><font size="-2">{{note}}</font></td>
+{% else %}
+   <td class="note">{{note}}</td>
+{% endif %}
+{% endfor %}
+<td class="zeit"><font size="-2">{{row.zeit_tot}}</font></td>
+    <td class="note"><a title="Notenblatt" href="{% url notenblatt wettkampf.jahr, wettkampf.name, disziplin.name, row.startnummer %}">{{row.punkt_tot}}</a></td>
+  </tr>
+{% endfor %}
+</table>
+<p>
+{% paginate %}
+{% endif %}
+{% endblock %}

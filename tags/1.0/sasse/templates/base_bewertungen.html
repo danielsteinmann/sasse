@@ -1,0 +1,17 @@
+{% extends "base_disziplin.html" %}
+
+{% block nav_bewertungen %}selected{% endblock %}
+
+{% block nav %}
+{{ block.super }}
+{% block subnav %}
+<ul class="subnav">
+  <li class="{% block nav_postenblatt %}{% endblock %}">
+    <a href="{% url bewertungen wettkampf.jahr, wettkampf.name, disziplin.name %}">Postenblätter</a></li>
+  <li class="{% block nav_richtzeiten %}{% endblock %}">
+  | <a href="{% url richtzeiten wettkampf.jahr, wettkampf.name, disziplin.name %}">Richtzeiten</a></li>
+  <li class="{% block nav_kranzlimiten %}{% endblock %}">
+  | <a href="{% url kranzlimiten wettkampf.jahr, wettkampf.name, disziplin.name %}">Kranzlimiten</a></li>
+</ul>
+{% endblock %}
+{% endblock %}
