@@ -1,0 +1,17 @@
+{% extends "base_bewertungen.html" %}
+{% block nav_richtzeiten %}selected{% endblock %}
+
+{% block content %}
+{% for p in zeitposten %}
+{% ifequal p.id posten.id %}<b>{{ p.name }}</b>
+{% else %}<a href="{% url richtzeit wettkampf.jahr, wettkampf.name, disziplin.name, p.name %}?{{ query }}">{{ p.name }}</a>
+{% endifequal %}{% if not forloop.last %}|{% endif %}
+{% endfor %}
+<p>
+<form id="richtzeitform" name="richtzeitform" action="" method="POST">
+{{ form.posten }}
+{{ form.zeit.errors }}
+<b>Richtzeit:</b> {{ form.zeit }} <input type="submit" name="save" value="Speichern">
+</form>
+{% include "richtzeit_topn.html" %}
+{% endblock %}
