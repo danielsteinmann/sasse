@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from distutils.core import setup
+from setuptools import setup, find_packages
 
 setup(
     name = "sasse",
@@ -9,21 +9,14 @@ setup(
     author_email = "dsteinmann@acm.org",
     description = "Unterstützt das Rechnungsbüro der Pontoniere bei der Durchführung eines Wettkampfes.",
     url = "http://code.google.com/p/sasse/",
-    packages = [
-        "sasse",
-        "sasse.migrations",
-        "sasse.templatetags",
-        "sasse.tests",
-    ],
-    package_data = {
-        'sasse': [
-            'templates/*.html',
-            'templates/*.sql',
-            'templates/registration/*.html',
-            'fixtures/*.json',
-            'media/*',
-
-        ],
-    },
+    packages = find_packages(exclude=['example_project']),
+    include_package_data = True,
+    install_requires = """
+        django >= 1.3
+        reportlab >= 2.5
+        xlrd >= 0.7.1
+        South >= 0.7.3
+        django-pagination >= 1.0.7
+        """,
 )
 

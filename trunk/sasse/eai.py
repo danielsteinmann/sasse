@@ -45,13 +45,14 @@ def update(mitglied, from_input):
         changed = True
     return changed
 
-def handle_file_upload(file_content):
-    wb = xlrd.open_workbook(file_contents=file_content)
+def handle_file_upload(file):
+    wb = xlrd.open_workbook(file_contents=file.read())
     sh = wb.sheet_by_index(0)
     unchanged = 0
     changed = 0
     nummer_changed = 0
     inserted = 0
+    sys.stdout.write("Importiere Mitgliederdaten")
     for i in range(sh.nrows):
         if i == 0:
             continue
@@ -67,7 +68,7 @@ def handle_file_upload(file_content):
                         geburtsdatum__year=from_input.geburtsdatum.year,
                         geschlecht=from_input.geschlecht
                         )
-                print "Mitglied nummer change from %s to %s" % (m.nummer, from_input.nummer)
+                # Mitglied nummer change from %s to %s" % (m.nummer, from_input.nummer)
                 nummer_changed += 1
             except Mitglied.DoesNotExist:
                 m = Mitglied(nummer=from_input.nummer)
@@ -80,18 +81,10 @@ def handle_file_upload(file_content):
         else:
             m.save()
             inserted += 1
-    print "Done. Changed: %d/%d, Inserted: %d, Unchanged: %d" % (
-           changed, nummer_changed, inserted, unchanged)
-
-
-def main(argv=None):
-    if argv is None:
-        argv = sys.argv
-    f = open(argv[1], 'r')
-    handle_file_upload(f.read())
-    f.close()
-    return 0
-
-if __name__ == "__main__":
-    sys.exit(main())
-
+        # Show prgress
+        if i % 100 == 0:
+            sys.stdout.write(".")
+            sys.stdout.flush()
+    sys.stdout.write("fertig.\n")
+    sys.stdout.write("Changed: %d/%d, Inserted: %d, Unchanged: %d\n" % (
+           changed, nummer_changed, inserted, unchanged))
