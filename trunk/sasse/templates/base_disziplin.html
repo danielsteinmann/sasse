@@ -1,8 +1,0 @@
-{% extends "base_wettkampf.html" %}
-
-{% block title %}{{ block.super }} - {{ disziplin.name }}{% endblock %}
-
-{% block breadcrumbs %}
-{{ block.super }}
-/ <a href="{% url disziplin_get wettkampf.jahr, wettkampf.name, disziplin.name %}">{{ disziplin.name }}</a>
-{% endblock %}
