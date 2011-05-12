@@ -151,6 +151,7 @@ def read_notenblatt(disziplin, teilnehmer=None, sektion=None):
         dict['posten_art'] = row[i]; i += 1
         dict['abzug'] = new_bew(row[i], PUNKT); i += 1
         dict['note'] = new_bew(row[i], PUNKT); i += 1
+        dict['richtzeit'] = new_bew(row[i], ZEIT); i += 1
         dict['zeit'] = new_bew(row[i], ZEIT); i += 1
         dict['punkte'] = new_bew(row[i], PUNKT); i += 1
         zeit_sum += dict['zeit'].zeit

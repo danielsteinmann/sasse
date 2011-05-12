@@ -157,6 +157,8 @@ def create_notenblatt_flowables(posten_werte, schiffeinzel):
         record = []
         if row.get('posten'):
             record.append(Paragraph(row['posten'], ss['center']))
+            if row['posten_art'] == "Zeitnote":
+                row['posten_art'] += " <font size=-2>(Richtzeit " + unicode(row['richtzeit']) + ")</font>"
             record.append(Paragraph(row['posten_art'], ss['left']))
             record.append(unicode(row['abzug']))
             record.append(unicode(row['note']))
