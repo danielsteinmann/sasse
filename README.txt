@@ -3,7 +3,8 @@ Frische Installation
 - PyPI
   Da nicht von einer Internet Verbindung ausgangen werden kann, wird eine Kopie
   der relevanten Packages des Python Packaging Repostories (PyPI) mitgeliefert. 
-  Diese nach 'c:\pypi' kopieren.
+  Der Rest dieser Anleitung geht davon aus, dass diese Packages unter 'y:\pypi'
+  erreichbar sind.
 
 - Installation von python-2.7.1.msi
   Python wird in das Verzeichnis c:/python27 installiert.
@@ -15,7 +16,7 @@ Frische Installation
 - Python Environment
   Mit 'virtualenv.py' ein Python Environment erzeugen. Dazu eine Windows Shell
   öffnen und folgendes eintippen:
-    c:\Python27\python.exe c:\pypi\virtualenv.py --distribute --extra-search-dir=c:\pypi C:\pythonenv\sasse
+    c:\Python27\python.exe y:\pypi\virtualenv.py --distribute --extra-search-dir=y:\pypi C:\pythonenv\sasse
 
   HINWEIS: Da die ReportLab Packages werden in die Python-2.7 'site-packages'
   installiert werden, darf der Parameter 'no-site-packages' von 'virtualenv'
@@ -26,7 +27,7 @@ Frische Installation
   die davon abhängigen Softwarekomponenten in das Python Environment
   installiert werden:
     c:/pythonenv/sasse/Scripts/activate.bat
-    pip install -f file:c:\pypi sasse
+    pip install -f file:y:\pypi sasse
 
 - Django Website konfigurieren
   Ein Verzeichnis 'c:\django' anlegen und dorthinein das Verzeichnis
@@ -49,14 +50,11 @@ Frische Installation
 Upgrade
 -------
 - Software/Datenbank aktualisieren
-  Die neuen Packages nach 'c:\pypi' kopieren. Dann folgendende Kommandos
-  ausführen:
     c:/pythonenv/sasse/Scripts/activate.bat
-    pip install -f file:c:\pypi sasse
+    pip install -f file:y:\pypi sasse
     cd c:\django\wettkampf
     python manage.py syncdb
     python manage.py migrate
 
 - Webserver starten
-  Nun kann man den Webserver wieder starten:
     python manage.py runserver 0.0.0.0:8000
