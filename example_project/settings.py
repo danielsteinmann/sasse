@@ -30,7 +30,6 @@ SECRET_KEY = '_1!)2uy&sz2cx+m#t3r02h_r+q4fal=yu9w8nlal3^zbvcc-z2'
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'pagination.middleware.PaginationMiddleware',
