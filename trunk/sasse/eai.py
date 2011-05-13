@@ -45,8 +45,8 @@ def update(mitglied, from_input):
         changed = True
     return changed
 
-def handle_file_upload(file):
-    wb = xlrd.open_workbook(file_contents=file.read())
+def handle_file_upload(filename):
+    wb = xlrd.open_workbook(filename)
     sh = wb.sheet_by_index(0)
     unchanged = 0
     changed = 0

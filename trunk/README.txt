@@ -1,37 +1,62 @@
-# Müssen Absolut sein!
-PKGS_DIR=$HOME/sasse/pkgs
-ENV_DIR=$HOME/sasse-env
+Frische Installation
+--------------------
+- PyPI
+  Da nicht von einer Internet Verbindung ausgangen werden kann, wird eine Kopie
+  der relevanten Packages des Python Packaging Repostories (PyPI) mitgeliefert. 
+  Diese nach 'c:\pypi' kopieren.
 
-# Python Installieren
-$PKGS_DIR/python-2.7.1.msi
+- Installation von python-2.7.1.msi
+  Python wird in das Verzeichnis c:/python27 installiert.
 
-# Sasse installieren
-python $PKGS_DIR/virtualenv.py --distribute --no-site-packages --extra-search-dir=$PKGS_DIR $ENV_DIR
-source $ENV_DIR/bin/activate
-pip install -f file:$PKGS_DIR sasse
+- Installation von reportlab-2.5.win32-py2.7.exe
+  Muss die Binary Distribution nehmen, weil es DLLs enthält, die ohne Compiler
+  nicht erzeugt werden können.
 
-# Database install/upgrade
-python manage.py syncdb    # (Bei leerer DB neuen Admin User eingeben)
-python manage.py migrate
+- Python Environment
+  Mit 'virtualenv.py' ein Python Environment erzeugen. Dazu eine Windows Shell
+  öffnen und folgendes eintippen:
+    c:\Python27\python.exe c:\pypi\virtualenv.py --distribute --extra-search-dir=c:\pypi C:\pythonenv\sasse
 
-# Mitgliederdaten importieren/aktualisieren
-python manage.py import_mitglieder_spsv EXCEL-FILE
+  HINWEIS: Da die ReportLab Packages werden in die Python-2.7 'site-packages'
+  installiert werden, darf der Parameter 'no-site-packages' von 'virtualenv'
+  nicht verwendet werden.
 
-# Webserver starten
-python manage.py runserver 0.0.0.0:80 
+- Sasse Software
+  Mit 'pip', das durch vorherigen Schritt installiert wurde, kann Sasse und all
+  die davon abhängigen Softwarekomponenten in das Python Environment
+  installiert werden:
+    c:/pythonenv/sasse/Scripts/activate.bat
+    pip install -f file:c:\pypi sasse
+
+- Django Website konfigurieren
+  Ein Verzeichnis 'c:\django' anlegen und dorthinein das Verzeichnis
+  'wettkampf' kopieren. Dies sind Scripte, welche eine Website basierend auf
+  dem Django Framework definieren.
+
+- Datenbank aufsetzen
+  Nun muss die Datenbank erzeugt werden und die Mitgliederdaten importiert
+  werden:
+    cd c:\django\wettkampf
+    python manage.py syncdb    #Bei leerer DB neuen Admin User eingeben
+    python manage.py migrate
+    python manage.py import_mitglieder_spsv EXCEL-FILE
+
+- Webserver starten
+  Zu guter letzt den Webserver starten:
+    python manage.py runserver 0.0.0.0:8000
 
 
-Directories:
-- C:/PYTHON27
-- C:/SASSE_SOFTWARE/.../site-packages/
-  reportlab/
-  django/
-  pagination/
-  south/
-  sasse/
-- C:/SASSE_SERVER/
-  __init__.py
-  settings.py
-  manage.py
-  urls.py
-  sasse_db.sqlite
+Upgrade
+-------
+- Software/Datenbank aktualisieren
+  Die neuen Packages nach 'c:\pypi' kopieren. Dann folgendende Kommandos
+  ausführen:
+    c:/pythonenv/sasse/Scripts/activate.bat
+    pip install -f file:c:\pypi sasse
+    cd c:\django\wettkampf
+    python manage.py syncdb
+    python manage.py migrate
+
+- Webserver starten
+  Nun kann man den Webserver wieder starten:
+    python manage.py runserver 0.0.0.0:8000

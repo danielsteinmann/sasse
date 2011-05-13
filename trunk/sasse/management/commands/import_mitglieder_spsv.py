@@ -14,7 +14,5 @@ class Command(BaseCommand):
         path = args[0]
         if not os.path.isfile(path):
             raise CommandError('%s: Ist kein File.' % path)
-        f = open(path, 'r')
-        handle_file_upload(f)
-        f.close()
+        handle_file_upload(path)
         return 0
