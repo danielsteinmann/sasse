@@ -1,0 +1,99 @@
+Startliste: Falls ein Tippfehler beim Erfassen des Mitgliedes passiert ist,
+muss man mit einem Link auf eine Mitglieder Update Seite kommen.
+===> Geht nicht so einfach. Wie wäre es, das Mitglied als Link darzustellen?
+--
+Startliste: Neuer Teilnehmer am Ende der Seite => Es wechselt nicht auf neue Seite
+--
+Backup eines gesamten Wettkampf:
+- Dump einer Datenbank oder kopieren des sqlite Files
+--
+Mitglieder via File Upload importieren
+--
+Startliste: export/import
+- Basierend auf Zeitstempfel. Alles was seit letztem Export geändert hat, wird exportiert.
+- Import überschreibt Aenderungen im Rechnungsbüro
+--
+Teilnehmer: Als 'abstract' markieren, damit keine eigene Tabelle entsteht. Das
+macht einige SQL Statements einfacher.
+--
+Rangliste: Kranzlimite Zeile wird in HTML nicht gezeigt, falls sie auf die
+erste Zeile einer Seite fällt.
+--
+Installation als ein EXE File:
+- pyinstaller.org
+- py2exe.org
+- http://misunderstandings.wordpress.com/2008/06/26/django-desktop-app/
+--
+Freeze Wettkampf, damit man nicht fälschlicherweise etwas eingeben
+--
+Richtzeit pro Kategorie:
+- Default: Richtzeit für alle Kategorien gleicht (speichern schreibt den
+  gleichen Wert für alle Kategorien)
+- Falls man eine Kategorie wählt, Richtzeit nur für diese ändern.
+--
+Notenblatt ohne Zeitnote:
+- Ohne Zeitnote und Total darstellen. Konfigurierbar in settings.py, damit auf
+  Internet die Note immer gerechnet wird.
+--
+views.py anpassen: single select (siehe 'def postenblatt')
+--
+Autorisierung:
+- Change Links ausblenden, falls man nicht autorisiert ist.
+--
+Notenliste: als CSV
+--
+Tests für Notenblatt
+Tests für Kranzlimite
+Tests für alle PDFs
+--
+Reihenfolge Rangliste: I,II,III,F,D,C
+--
+ZeitInSekunden Custom Model Field schreiben. Somit sollte das
+Templatetag 'bewertung' nicht mehr nötig sein. Zudem kann man
+den Code von zeit2str in die Methode value_to_string() des
+Custom Model Field verpacken.
+--
+Adminform 'Disziplinart':
+- Einzelfahren
+- Sektionsfahren
+- Einzelschnüren
+Adminform 'Disziplinart-Edit':
+- Name: Einzelfahren
+- Posten:
+   - Anmeldung
+   - Abfahrt an einer Stange
+   - Durchfahrt
+   - Zeit
+Adminform 'Postenart-Edit':
+- Name: Abfahrt an einer Stange
+- Bewertungsarten:
+   - Distanznote, Ziel, 9.5
+   - Maximum, Stil, 10.0, nicht editierbar
+   - Abzug, Stil, 10.0, -1
+
+---
+from itertools import *
+from django.db import connection
+
+def query_to_dicts(query_string, *query_args):
+    """Run a simple query and produce a generator
+    that returns the results as a bunch of dictionaries
+    with keys for the column values selected.
+    """
+    cursor = connection.cursor()
+    cursor.execute(query_string, query_args)
+    col_names = [desc[0] for desc in cursor.description]
+    while True:
+        row = cursor.fetchone()
+        if row is None:
+            break
+        row_dict = dict(izip(col_names, row))
+        yield row_dict
+    return
+--
+Mögliche Apps:
+- basis: Stammdaten
+- event: Wettkampf, Disziplin, Posten, Bewertung, Teilnehmer, Richtzeit, Kranzlimite
+- einzelfahren: Startliste
+- sektionsfahren: Startliste
+- spezialwettkaempfe: Schnüren, Schwimmen, Bootfährenbau

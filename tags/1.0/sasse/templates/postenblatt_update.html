@@ -1,0 +1,57 @@
+{% extends "base_bewertungen.html" %}
+{% block nav_postenblatt %}selected{% endblock %}
+
+{% block content %}
+<b>Posten {{ posten.name }}: {{ posten.postenart.name }}</b>
+<form id="postenblattform" name="postenblattform" action="" method="POST">
+  {{ teilnehmer_formset }}
+  {% for set in formset %}{{ set.management_form }}{% endfor %}
+  <table class="list">
+    <tr>
+      <td></td>
+      {% for cell in header_row %}
+      <th class="note" width="30">{{ cell }}</th>
+      {% endfor %}
+    </tr>
+    {% for first_cell, next_cells in data_rows %}
+    <tr>
+      <th class="note">{{ first_cell }}</th>
+      {% for cell in next_cells %}
+      <td class="note" {% if not cell.initial.id %}bgcolor="LightGreen"{% endif %}>
+        {{ cell.wert.errors }}{{ cell.wert }}{{ cell.id }}
+      </td>
+      {% endfor %}
+    </tr>
+    {% endfor %}
+  </table>
+<p>
+{% if posten_next_name %}
+<input type="submit" name="save_and_next" value="Speichern, weiter zu Posten {{ posten_next_name }}">
+<input type="hidden" name="posten_next_name" value="{{ posten_next_name }}">
+{% else %}
+<input type="submit" name="save_and_finish" value="Speichern, weiter zu Postenblattwahl">
+{% endif %}
+<input type="submit" name="save" value="Speichern">
+<font size="-1">
+<a href="{% url postenblatt wettkampf.jahr, wettkampf.name, disziplin.name, posten.name %}?{{ request.META.QUERY_STRING }}">Abbrechen</a>
+</font>
+</form>
+<script type="text/javascript">
+$(document).ready(function(){
+    textboxes = $("input[type=text]");
+    $(textboxes).keydown(checkForEnter);
+});
+function checkForEnter(event) {
+    if (event.keyCode == 13) {
+        currentBoxNumber = textboxes.index(this);
+        nextBox = textboxes[currentBoxNumber + 1]
+        if (nextBox != null) {
+            nextBox.focus();
+            nextBox.select();
+            event.preventDefault();
+            return false;
+        }
+    }
+} 
+</script>
+{% endblock %}

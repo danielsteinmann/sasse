@@ -1,0 +1,39 @@
+{% extends "base_disziplin.html" %}
+{% block nav_disziplin %}selected{% endblock %}
+
+{% block content %}
+<table class="display">
+  <tr>
+    <th>Name:</th>
+    <td>{{ disziplin.name }}</td>
+  </tr>
+  <tr>
+    <th>Disziplinart:</th>
+    <td>{{ disziplin.disziplinart }}</td>
+  </tr>
+  <tr>
+    <th>Kategorien:</th>
+    <td>
+      {% for kategorie in disziplin.kategorien.all %}
+      {{ kategorie }}{% if not forloop.last %},{% endif %}
+      {% endfor %}
+    </td>
+  </tr>
+  <tr>
+    <th>Posten:</th>
+    <td>
+      {% for posten in disziplin.posten_set.all %}
+      <a href="{% url posten_get wettkampf.jahr, wettkampf.name, disziplin.name, posten.name %}">{{ posten.name }}</a>{% if not forloop.last %},{% endif %}
+      {% endfor %}
+    </td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>
+      <br />
+      <a href="{% url disziplin_update wettkampf.jahr, wettkampf.name, disziplin.name %}">Ändern</a>
+      | <a href="{% url disziplin_delete_confirm wettkampf.jahr, wettkampf.name, disziplin.name %}">Löschen</a>
+    </td>
+  </tr>
+</table>
+{% endblock %}
