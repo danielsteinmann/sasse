@@ -7,18 +7,18 @@ select kategorie
            and k.name = r.kategorie
        ) limite
      , sum(case
-            when r.vorderfahreristds and r.steuermannistds then 0
-            when r.vorderfahreristds or  r.steuermannistds then 1
+            when r.vorderfahreristds::bool and r.steuermannistds::bool then 0
+            when r.vorderfahreristds::bool or  r.steuermannistds::bool then 1
             else 2
            end) wettkaempfer_tot
      , sum(case
-            when r.mitkranz and r.vorderfahreristds and r.steuermannistds then 0
-            when r.mitkranz and (r.vorderfahreristds or r.steuermannistds) then 1
-            when r.mitkranz and not (r.vorderfahreristds or r.steuermannistds) then 2
+            when r.mitkranz::bool and r.vorderfahreristds::bool and r.steuermannistds::bool then 0
+            when r.mitkranz::bool and (r.vorderfahreristds::bool or r.steuermannistds::bool) then 1
+            when r.mitkranz::bool and not (r.vorderfahreristds::bool or r.steuermannistds::bool) then 2
             else 0
            end) wettkaempfer_mit_kranz
      , count(r.startnr) schiffe_tot
-     , sum(case when r.mitkranz then 1 else 0 end) schiffe_mit_kranz
+     , sum(case when r.mitkranz::bool then 1 else 0 end) schiffe_mit_kranz
   from (
 {% include "rangliste.sql" %}
        ) as r
