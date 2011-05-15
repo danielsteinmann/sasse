@@ -102,12 +102,12 @@ class RanglisteTest(TestCase):
         RANGLISTE = render_to_string('rangliste.sql', {'kategorie': kat_C})
 
         # Ohne Doppelstarter
-        sql = "select * from (" + RANGLISTE + ") where SteuermannIstDS = 0 and VorderfahrerIstDS = 0"
+        sql = "select * from (" + RANGLISTE + ") as r where r.SteuermannIstDS = 0 and r.VorderfahrerIstDS = 0"
         cursor.execute(sql, [disziplin.id, kat_C.id])
         self.assertEquals(10, len(cursor.fetchall()))
 
         # Nur Doppelstarter
-        sql = "select * from (" + RANGLISTE + ") where SteuermannIstDS = 1 or VorderfahrerIstDS = 1"
+        sql = "select * from (" + RANGLISTE + ") as r where r.SteuermannIstDS = 1 or r.VorderfahrerIstDS = 1"
         cursor.execute(sql, [disziplin.id, kat_C.id])
         self.assertEquals(3, len(cursor.fetchall()))
 
@@ -125,8 +125,8 @@ class RanglisteTest(TestCase):
                 {'rang': 'DS', 'kranz': True,  'doppelstarter':  True, 'startnummer': 102},
                 {'rang':    2, 'kranz': True,  'doppelstarter': False, 'startnummer':   2},
                 {'rang':    3, 'kranz': True,  'doppelstarter': False, 'startnummer':  10},
-                {'rang': 'DS', 'kranz': False, 'doppelstarter':  True, 'startnummer': 101},
                 {'rang':    4, 'kranz': False, 'doppelstarter': False, 'startnummer':  12},
+                {'rang': 'DS', 'kranz': False, 'doppelstarter':  True, 'startnummer': 101},
                 {'rang':    5, 'kranz': False, 'doppelstarter': False, 'startnummer':   3},
                 {'rang':    6, 'kranz': False, 'doppelstarter': False, 'startnummer':  11},
                 {'rang':    7, 'kranz': False, 'doppelstarter': False, 'startnummer':   1},
@@ -170,8 +170,8 @@ class RanglisteTest(TestCase):
                 {'rang':    2, 'kranz': True,  'doppelstarter':  True, 'startnummer': 102},
                 {'rang':    3, 'kranz': True,  'doppelstarter': False, 'startnummer':   2},
                 {'rang':    4, 'kranz': True,  'doppelstarter': False, 'startnummer':  10},
-                {'rang':    5, 'kranz': False, 'doppelstarter':  True, 'startnummer': 101},
-                {'rang':    6, 'kranz': False, 'doppelstarter': False, 'startnummer':  12},
+                {'rang':    5, 'kranz': False, 'doppelstarter': False, 'startnummer':  12},
+                {'rang':    6, 'kranz': False, 'doppelstarter':  True, 'startnummer': 101},
                 {'rang':    7, 'kranz': False, 'doppelstarter': False, 'startnummer':   3},
                 {'rang':    8, 'kranz': False, 'doppelstarter': False, 'startnummer':  11},
                 {'rang':    9, 'kranz': False, 'doppelstarter': False, 'startnummer':   1},
