@@ -5,7 +5,7 @@ from setuptools import setup, find_packages
 
 setup(
     name = "sasse",
-    version = "1.0",
+    version = "1.1-dev",
     author = "Daniel Steinmann",
     author_email = "dsteinmann@acm.org",
     description = "Unterstützt das Rechnungsbüro der Pontoniere bei der Durchführung eines Wettkampfes.",

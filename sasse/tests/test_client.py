@@ -379,11 +379,12 @@ class PostenblattPageTest(TestCase):
     def test_speichern_defaults(self):
         postenblatt_D = '/2009/Test-Cup/klein/postenblatt/D/'
         postenblatt_D_update = '/2009/Test-Cup/klein/postenblatt/D/update/'
+        response = self.client.get(postenblatt_D_update)
         response = self.client.post(postenblatt_D_update, {
             'stnr-TOTAL_FORMS': 2,
             'stnr-INITIAL_FORMS': 2,
-            'stnr-0-id': 1,
-            'stnr-1-id': 2,
+            'stnr-0-id': response.context['teilnehmer_formset'][0].initial['id'],
+            'stnr-1-id': response.context['teilnehmer_formset'][1].initial['id'],
             'stnr-0-startnummer': 1,
             'stnr-1-startnummer': 2,
             'Abzug-TOTAL_FORMS': 3,
@@ -403,11 +404,12 @@ class PostenblattPageTest(TestCase):
 
     def test_speichern_mit_ungueltigem_wert(self):
         postenblatt_D_update = '/2009/Test-Cup/klein/postenblatt/D/update/?startnummern=1,2'
+        response = self.client.get(postenblatt_D_update)
         response = self.client.post(postenblatt_D_update, {
             'stnr-TOTAL_FORMS': 2,
             'stnr-INITIAL_FORMS': 2,
-            'stnr-0-id': 1,
-            'stnr-1-id': 2,
+            'stnr-0-id': response.context['teilnehmer_formset'][0].initial['id'],
+            'stnr-1-id': response.context['teilnehmer_formset'][1].initial['id'],
             'stnr-0-startnummer': 1,
             'stnr-1-startnummer': 2,
             'Abzug-TOTAL_FORMS': 3,
@@ -426,11 +428,12 @@ class PostenblattPageTest(TestCase):
 
     def test_speichern_mit_falscher_checksumme(self):
         postenblatt_D_update = '/2009/Test-Cup/klein/postenblatt/D/update/?startnummern=1,2'
+        response = self.client.get(postenblatt_D_update)
         response = self.client.post(postenblatt_D_update, {
             'stnr-TOTAL_FORMS': 2,
             'stnr-INITIAL_FORMS': 2,
-            'stnr-0-id': 1,
-            'stnr-1-id': 2,
+            'stnr-0-id': response.context['teilnehmer_formset'][0].initial['id'],
+            'stnr-1-id': response.context['teilnehmer_formset'][1].initial['id'],
             'stnr-0-startnummer': 1,
             'stnr-1-startnummer': 2,
             'Abzug-TOTAL_FORMS': 3,
@@ -451,11 +454,12 @@ class PostenblattPageTest(TestCase):
     def test_speichern_mit_leerer_checksumme(self):
         postenblatt_D = '/2009/Test-Cup/klein/postenblatt/D/?startnummern=1,2'
         postenblatt_D_update = '/2009/Test-Cup/klein/postenblatt/D/update/?startnummern=1,2'
+        response = self.client.get(postenblatt_D_update)
         response = self.client.post(postenblatt_D_update, {
             'stnr-TOTAL_FORMS': 2,
             'stnr-INITIAL_FORMS': 2,
-            'stnr-0-id': 1,
-            'stnr-1-id': 2,
+            'stnr-0-id': response.context['teilnehmer_formset'][0].initial['id'],
+            'stnr-1-id': response.context['teilnehmer_formset'][1].initial['id'],
             'stnr-0-startnummer': 1,
             'stnr-1-startnummer': 2,
             'Abzug-TOTAL_FORMS': 3,
@@ -476,11 +480,12 @@ class PostenblattPageTest(TestCase):
     def test_speichern_und_weiter(self):
         postenblatt_D_update = '/2009/Test-Cup/klein/postenblatt/D/update/'
         postenblatt_F_update = '/2009/Test-Cup/klein/postenblatt/F/update/'
+        response = self.client.get(postenblatt_D_update)
         response = self.client.post(postenblatt_D_update, {
             'stnr-TOTAL_FORMS': 2,
             'stnr-INITIAL_FORMS': 2,
-            'stnr-0-id': 1,
-            'stnr-1-id': 2,
+            'stnr-0-id': response.context['teilnehmer_formset'][0].initial['id'],
+            'stnr-1-id': response.context['teilnehmer_formset'][1].initial['id'],
             'stnr-0-startnummer': 1,
             'stnr-1-startnummer': 2,
             'Abzug-TOTAL_FORMS': 3,
@@ -503,11 +508,12 @@ class PostenblattPageTest(TestCase):
     def test_speichern_und_weiter_am_ende(self):
         postenblatt_D = '/2009/Test-Cup/klein/postenblatt/D/'
         postenblatt_F_update = '/2009/Test-Cup/klein/postenblatt/F/update/'
+        response = self.client.get(postenblatt_F_update)
         response = self.client.post(postenblatt_F_update, {
             'stnr-TOTAL_FORMS': 2,
             'stnr-INITIAL_FORMS': 2,
-            'stnr-0-id': 1,
-            'stnr-1-id': 2,
+            'stnr-0-id': response.context['teilnehmer_formset'][0].initial['id'],
+            'stnr-1-id': response.context['teilnehmer_formset'][1].initial['id'],
             'stnr-0-startnummer': 1,
             'stnr-1-startnummer': 2,
             'Abzug-TOTAL_FORMS': 3,
@@ -527,11 +533,14 @@ class PostenblattPageTest(TestCase):
     def test_aendern_existierender_daten(self):
         postenblatt_D = '/2009/Test-Cup/klein/postenblatt/D/'
         postenblatt_D_update = '/2009/Test-Cup/klein/postenblatt/D/update/'
+        response = self.client.get(postenblatt_D_update)
+        stnr_0_id = response.context['teilnehmer_formset'][0].initial['id']
+        stnr_1_id = response.context['teilnehmer_formset'][1].initial['id']
         response = self.client.post(postenblatt_D_update, {
             'stnr-TOTAL_FORMS': 2,
             'stnr-INITIAL_FORMS': 2,
-            'stnr-0-id': 1,
-            'stnr-1-id': 2,
+            'stnr-0-id': stnr_0_id,
+            'stnr-1-id': stnr_1_id,
             'stnr-0-startnummer': 1,
             'stnr-1-startnummer': 2,
             'Abzug-TOTAL_FORMS': 3,
@@ -546,26 +555,32 @@ class PostenblattPageTest(TestCase):
             'Zielnote-2-wert': 14,
             })
         self.assertRedirects(response, postenblatt_D)
+        response = self.client.get(postenblatt_D_update)
+        abzug_0_id = response.context['formset'][0][0].initial['id']
+        abzug_1_id = response.context['formset'][0][1].initial['id']
+        ziel_0_id = response.context['formset'][1][0].initial['id']
+        ziel_1_id = response.context['formset'][1][1].initial['id']
         response = self.client.post(postenblatt_D_update, {
             'total': 2,
             'stnr-TOTAL_FORMS': 2,
             'stnr-INITIAL_FORMS': 2,
-            'stnr-0-id': 1,
-            'stnr-1-id': 2,
+            'stnr-0-id': stnr_0_id,
+            'stnr-1-id': stnr_1_id,
             'stnr-0-startnummer': 1,
             'stnr-1-startnummer': 2,
             'Abzug-TOTAL_FORMS': 3,
             'Abzug-INITIAL_FORMS': 3,
+            'Abzug-0-id': abzug_0_id,
+            'Abzug-1-id': abzug_1_id,
             'Abzug-0-wert': 0,
-            'Abzug-0-id': 1,
             'Abzug-1-wert': 0,
-            'Abzug-1-id': 2,
+            'Abzug-2-wert': 0,
             'Zielnote-TOTAL_FORMS': 3,
             'Zielnote-INITIAL_FORMS': 3,
+            'Zielnote-0-id': ziel_0_id,
+            'Zielnote-1-id': ziel_1_id,
             'Zielnote-0-wert': 10,
-            'Zielnote-0-id': 3,
             'Zielnote-1-wert': 8,
-            'Zielnote-1-id': 4,
             'Zielnote-2-wert': 18,
             })
         self.assertRedirects(response, postenblatt_D)

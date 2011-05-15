@@ -42,6 +42,8 @@ Frische Installation
     python manage.py migrate
     python manage.py import_mitglieder_spsv EXCEL-FILE
 
+  (Excel File mit 'qryExportWetkämpferfürDaniSteinmannNachAlt' erzeugen)
+
 - Webserver starten
   Zu guter letzt den Webserver starten:
     python manage.py runserver 0.0.0.0:8000

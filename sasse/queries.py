@@ -258,10 +258,12 @@ def read_anzahl_wettkaempfer(disziplin, kategorie):
 
 def create_mitglieder_nummer():
     cursor = connection.cursor()
-    sql = "select max(nummer)+1 from sasse_mitglied where nummer >= '99000'"
+    sql = "select max(nummer) from sasse_mitglied where nummer >= '99000'"
     cursor.execute(sql)
     row = cursor.fetchone()
     nummer = row[0]
     if not nummer:
         nummer = u"99000"
+    else:
+        nummer = u"%d" % (int(nummer)+1,)
     return unicode(nummer)
