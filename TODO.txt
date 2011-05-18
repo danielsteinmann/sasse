@@ -1,7 +1,8 @@
 Reihenfolge Rangliste ändern: I,II,III,F,D,C
 --
 Allgemein: Wenn man einen Teilnehmern ändern muss, sollte es einen Link 'Zurück
-zur Startliste' geben, damit man den Kontext nicht verliert.
+zur Startliste' geben, damit man den Kontext nicht verliert. Siehe
+contrib.auth.view.login, wie man das richtig macht.
 --
 Notenliste: Rufer Urs erscheint nicht, wenn keine Sektion ausgewählt ist. Das
 hat damit zu tun, dass ich Schiffe aus Performance Gründen rausfiltere.
@@ -19,6 +20,31 @@ kleinem Parcours fährt er als Doppelstarter. Das erkennt mein Programm nicht.
 => Man muss den Wert 'doppelstarter_vorne' und 'doppelstarter_hinten' in
 Startliste bei der Eingabe abspeichern. Vielleicht noch eine Validierung
 einführen.
+
+SELECT  min(m.name) as name
+      , min(m.vorname) as vorname
+      , min(s.name)
+      , m.id
+      /*
+      , min(tn.startnummer) AS min_startnummer
+      , max(tn.startnummer) as max_startnummer
+      , array_to_string(array_agg(tn.startnummer), ',') as alle_startnummern
+      */
+      , array_agg(tn.startnummer) as alle_startnummern
+      , count(tn.id) AS anzahl_starts
+   FROM sasse_mitglied m
+   join sasse_sektion s on s.id = m.sektion_id
+   JOIN sasse_schiffeinzel schiff ON schiff.vorderfahrer_id = m.id OR schiff.steuermann_id = m.id
+   JOIN sasse_teilnehmer tn ON tn.id = schiff.teilnehmer_ptr_id
+   join sasse_disziplin dz on dz.id = tn.disziplin_id
+   join sasse_wettkampf wk on wk.id = dz.wettkampf_id
+  where wk.id = 1
+  GROUP by m.id
+ HAVING count(tn.id) > 1
+ order by anzahl_starts desc, name, vorname
+
+--
+Startliste: Focus nicht auf Startnummer, sondern gleich auf Steuermann.
 --
 Focus auf erstes Feld: Nicht nur focus(), sondern auch noch select()
 
