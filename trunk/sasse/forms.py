@@ -49,6 +49,18 @@ from fields import StartnummernSelectionField
 from queries import create_mitglieder_nummer
 
 def get_startkategorie(a, b):
+    """
+    Frauen werden kategoriemässig als Mann behandelt, wenn sie mit einem Mann
+    zusammen starten. Beispiele:
+    - Frau-15 mit Mann-15 => Kat II
+    - Frau-19 mit Mann-18 => Kat III
+    - Frau-23 mit Mann-45 => Kat C
+
+    Zudem gibt es an den JP Schweizermeisterschafen keine Kategorie F:
+    - Frau-15 mit Frau-16 => Kat II
+    - Frau-19 mit Frau-18 => Kat III
+    - Frau-23 => Darf nicht starten
+    """
     if a == b:
         return a
     kat_I = Kategorie.objects.get(name='I')
@@ -297,6 +309,9 @@ class SchiffeinzelListForm(Form):
     # passiert. Beispiel:
     #      Steinmann     Kohler   C
     #      Steinmann*    Dux      D
+    # 
+    # TODO Doppelstarter gelten Parcours-übergreifend: Wenn einer in Kat II
+    # startet, darf er in der Kat I nur noch als Doppelstarter starten.
     # 
     # TODO Es gibt der Fall, wo Name/Vorname innerhalb der Sektion zweimal
     # vorkommt (z.B. Schenker Michael). Dropdown Liste mit Jahrgang ergänzen
