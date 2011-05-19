@@ -20,6 +20,10 @@
     <td>{{ wettkampf.bis|default_if_none:"-" }}</td>
   </tr>
   <tr>
+    <th>JPSM:</th>
+    <td>{{ wettkampf.JPSM|yesno:"ja,nein" }}</td>
+  </tr>
+  <tr>
     <th>Disziplinen:</th>
     <td>
       {% if disziplinen %}

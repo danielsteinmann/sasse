@@ -246,7 +246,6 @@
     "pk": 1, 
     "model": "sasse.kategorie", 
     "fields": {
-      "geschlecht": "m", 
       "alter_von": 0, 
       "disziplinart": 1, 
       "alter_bis": 14, 
@@ -257,7 +256,6 @@
     "pk": 2, 
     "model": "sasse.kategorie", 
     "fields": {
-      "geschlecht": "m", 
       "alter_von": 15, 
       "disziplinart": 1, 
       "alter_bis": 17, 
@@ -268,7 +266,6 @@
     "pk": 3, 
     "model": "sasse.kategorie", 
     "fields": {
-      "geschlecht": "m", 
       "alter_von": 18, 
       "disziplinart": 1, 
       "alter_bis": 20, 
@@ -279,7 +276,6 @@
     "pk": 4, 
     "model": "sasse.kategorie", 
     "fields": {
-      "geschlecht": "m", 
       "alter_von": 21, 
       "disziplinart": 1, 
       "alter_bis": 42, 
@@ -290,7 +286,6 @@
     "pk": 5, 
     "model": "sasse.kategorie", 
     "fields": {
-      "geschlecht": "m", 
       "alter_von": 43, 
       "disziplinart": 1, 
       "alter_bis": 99, 
@@ -301,7 +296,6 @@
     "pk": 6, 
     "model": "sasse.kategorie", 
     "fields": {
-      "geschlecht": "f", 
       "alter_von": 15, 
       "disziplinart": 1, 
       "alter_bis": 99, 

@@ -1,10 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import datetime
-import re
-from decimal import Decimal
 
-from django.db.models import Q
 from django.forms import BooleanField
 from django.forms import CharField
 from django.forms import DecimalField
@@ -23,7 +20,6 @@ from django.forms import ValidationError
 
 from django.forms.formsets import BaseFormSet
 from django.forms.formsets import formset_factory
-from django.forms.models import BaseModelFormSet
 
 from models import Bewertung
 from models import Bewertungsart
@@ -47,44 +43,6 @@ from fields import PunkteField
 from fields import StartnummernSelectionField
 
 from queries import create_mitglieder_nummer
-
-def get_startkategorie(a, b):
-    """
-    Frauen werden kategoriemässig als Mann behandelt, wenn sie mit einem Mann
-    zusammen starten. Beispiele:
-    - Frau-15 mit Mann-15 => Kat II
-    - Frau-19 mit Mann-18 => Kat III
-    - Frau-23 mit Mann-45 => Kat C
-
-    Zudem gibt es an den JP Schweizermeisterschafen keine Kategorie F:
-    - Frau-15 mit Frau-16 => Kat II
-    - Frau-19 mit Frau-18 => Kat III
-    - Frau-23 => Darf nicht starten
-    """
-    if a == b:
-        return a
-    kat_I = Kategorie.objects.get(name='I')
-    kat_II = Kategorie.objects.get(name='II')
-    kat_III = Kategorie.objects.get(name='III')
-    kat_C = Kategorie.objects.get(name='C')
-    kat_D = Kategorie.objects.get(name='D')
-    kat_F = Kategorie.objects.get(name='F')
-    if a in (kat_I, kat_II) and b in (kat_I, kat_II):
-        return kat_II
-    if a in (kat_I, kat_II, kat_III) and b in (kat_I, kat_II, kat_III):
-        return kat_III
-    if a in (kat_III, kat_C, kat_D, kat_F) and b in (kat_III, kat_C, kat_D, kat_F):
-        return kat_C
-    return None
-
-def get_kategorie(aktuelles_jahr, mitglied):
-    alter = aktuelles_jahr - mitglied.geburtsdatum.year
-    return Kategorie.objects.get(
-            Q(geschlecht='e') | Q(geschlecht=mitglied.geschlecht),
-            Q(alter_von__lte=alter),
-            Q(alter_bis__gte=alter)
-            )
-
 
 class WettkampfForm(ModelForm):
     name = UnicodeSlugField(
@@ -341,26 +299,23 @@ class SchiffeinzelListForm(Form):
             self.data['sektion'] = self.filter_sektion.id
             self.fields['sektion'] = ModelChoiceField(queryset=Sektion.objects.all(), empty_label=None)
             raise ValidationError(text)
-        # Kategorie
-        kategorie = self.cleaned_data.get('kategorie')
-        if kategorie is None:
-            jahr = self.disziplin.wettkampf.jahr()
-            steuermann_kat = get_kategorie(jahr, steuermann)
-            vorderfahrer_kat = get_kategorie(jahr, vorderfahrer)
-            kategorie = get_startkategorie(steuermann_kat, vorderfahrer_kat)
-            if kategorie is None:
-                text = u"Steuermann hat Kategorie '%s', Vorderfahrer Kategorie '%s'. Das ist eine unbekannte Kombination; bitte auswählen." % (steuermann_kat, vorderfahrer_kat)
-                self.fields['kategorie'] = ModelChoiceField(queryset=Kategorie.objects.all(), empty_label=None)
-                raise ValidationError(text)
-        # Unique Startnummer
+        # Instanz erzeugen
         self.instance = Schiffeinzel(
                 disziplin=self.disziplin,
                 startnummer=self.cleaned_data.get('startnummer'),
                 steuermann=steuermann,
                 vorderfahrer=vorderfahrer,
-                sektion=sektion,
-                kategorie=kategorie,
-                )
+                sektion=sektion)
+        # Kategorie
+        kategorie = self.cleaned_data.get('kategorie')
+        if kategorie is None:
+            kategorie = self.instance.calc_startkategorie()
+            if kategorie is None:
+                text = u"Steuermann hat Kategorie '%s', Vorderfahrer Kategorie '%s'. Das ist eine unbekannte Kombination; bitte auswählen." % (self.instance.steuermann_kat(), self.instance.vorderfahrer_kat())
+                self.fields['kategorie'] = ModelChoiceField(queryset=Kategorie.objects.all(), empty_label=None)
+                raise ValidationError(text)
+        self.instance.kategorie = kategorie
+        # Unique Startnummer
         self.instance.validate_unique()
         return self.cleaned_data
 

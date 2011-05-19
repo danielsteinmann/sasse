@@ -1,19 +1,10 @@
-Reihenfolge Rangliste ändern: I,II,III,F,D,C
---
 Allgemein: Wenn man einen Teilnehmern ändern muss, sollte es einen Link 'Zurück
 zur Startliste' geben, damit man den Kontext nicht verliert. Siehe
 contrib.auth.view.login, wie man das richtig macht.
 --
-Notenliste: Rufer Urs erscheint nicht, wenn keine Sektion ausgewählt ist. Das
-hat damit zu tun, dass ich Schiffe aus Performance Gründen rausfiltere.
---
 WICHTIG: Postenblatt: Wenn nur ein einzige Startnummer eingeben wird, wechselt
 es mit 'Speichern&Weiter' nicht auf den nächsten Posten. Ist ein Problem mit IE7
---
-WICHTIG: Kategorie 'Frauen' können auch in Kat 'II' und 'III' starten. An der
-SM gibt es gar keine Kategorie 'Frauen'!!
-Beispiel Dietikon: 'Fischer Adrian', 'Fischer Sabrina' ==> Muss Kategorie III
-geben, nicht C.
+=> Auf neuesten Firefox oder IE wechseln.
 --
 WICHTIG: Andreas Greber fährt regulär auf grossem Parcours (Kat II). Auf
 kleinem Parcours fährt er als Doppelstarter. Das erkennt mein Programm nicht.
@@ -39,6 +30,7 @@ SELECT  min(m.name) as name
    join sasse_disziplin dz on dz.id = tn.disziplin_id
    join sasse_wettkampf wk on wk.id = dz.wettkampf_id
   where wk.id = 1
+  -- TODO: Disziplinart = "Einzelfahren"
   GROUP by m.id
  HAVING count(tn.id) > 1
  order by anzahl_starts desc, name, vorname
@@ -130,6 +122,8 @@ def query_to_dicts(query_string, *query_args):
     """Run a simple query and produce a generator
     that returns the results as a bunch of dictionaries
     with keys for the column values selected.
+
+    http://blog.doughellmann.com/2007/12/using-raw-sql-in-django.html
     """
     cursor = connection.cursor()
     cursor.execute(query_string, query_args)
