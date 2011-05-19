@@ -297,9 +297,11 @@ def posten_delete(request, jahr, wettkampf, disziplin, posten):
 def startliste(request, jahr, wettkampf, disziplin):
     if request.method == 'POST':
         return startliste_post(request, jahr, wettkampf, disziplin)
-    w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
-    d = Disziplin.objects.get(wettkampf=w, name=disziplin)
-    if d.disziplinart == Disziplinart.objects.get(name="Einzelfahren"):
+    d = Disziplin.objects.select_related().get(
+            name=disziplin,
+            wettkampf__name=wettkampf,
+            wettkampf__von__year=jahr)
+    if d.disziplinart.name == "Einzelfahren":
         return startliste_einzelfahren(request, jahr, wettkampf, disziplin)
     else:
         raise Http404(u"Startliste für %s noch nicht implementiert"
@@ -317,15 +319,18 @@ def startliste_post(request, jahr, wettkampf, disziplin):
 
 def startliste_einzelfahren(request, jahr, wettkampf, disziplin):
     assert request.method == 'GET'
-    w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
-    d = Disziplin.objects.get(wettkampf=w, name=disziplin)
+    d = Disziplin.objects.select_related().get(
+            name=disziplin,
+            wettkampf__name=wettkampf,
+            wettkampf__von__year=jahr)
+    w = d.wettkampf
     s = []
     entryform = None
     steuermann_neu_form = None
     vorderfahrer_neu_form = None
     searchform = SchiffeinzelFilterForm(d, request.GET, sektion_check=False)
     if searchform.is_valid():
-        s = searchform.schiffe
+        s = searchform.schiffe.select_related()
         nummer = request.GET.get('startnummer')
         if not nummer:
             nummer = searchform.naechste_nummer()
@@ -350,7 +355,7 @@ def startliste_einzelfahren_pdf(request, jahr, wettkampf, disziplin):
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
     searchform = SchiffeinzelFilterForm(d, request.GET)
     searchform.is_valid()
-    schiffe = searchform.schiffe
+    schiffe = searchform.schiffe.select_related()
     doc = create_startliste_doctemplate(w, d)
     flowables = create_startliste_flowables(schiffe)
     response = HttpResponse(mimetype='application/pdf')

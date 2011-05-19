@@ -35,6 +35,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'pagination.middleware.PaginationMiddleware',
+#    'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 
 ROOT_URLCONF = 'urls'
@@ -57,7 +58,9 @@ INSTALLED_APPS = (
     'south',
     'sasse',
     'pagination',
+#    'debug_toolbar',
 )
+INTERNAL_IPS = ('127.0.0.1',)
 
 # Have local changes?
 try:
