@@ -2,6 +2,10 @@ Allgemein: Wenn man einen Teilnehmern ändern muss, sollte es einen Link 'Zurüc
 zur Startliste' geben, damit man den Kontext nicht verliert. Siehe
 contrib.auth.view.login, wie man das richtig macht.
 --
+views um Notenliste: Performance Hack Code Duplizierung entfernen
+--
+Kranzlimite: Muss nach Kategorie sortieren
+--
 WICHTIG: Postenblatt: Wenn nur ein einzige Startnummer eingeben wird, wechselt
 es mit 'Speichern&Weiter' nicht auf den nächsten Posten. Ist ein Problem mit IE7
 => Auf neuesten Firefox oder IE wechseln.
