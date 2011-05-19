@@ -16,12 +16,11 @@ from sasse.models import Bewertung
 from sasse.models import Bewertungsart
 from sasse.models import Teilnehmer
 from sasse.models import Richtzeit
-from sasse.forms import get_startkategorie, get_kategorie
 
 def delete_wettkampf(wettkampf_name):
     for w in Wettkampf.objects.filter(name=wettkampf_name):
         w.delete()
-    print "Alte Daten für %s gelöscht" % wettkampf_name
+    print "Alte Daten für Wettkampf %s gelöscht" % wettkampf_name
 
 def create_einzelfahren(wettkampf_name):
     wettkampf = Wettkampf.objects.create(
@@ -62,8 +61,11 @@ def create_parcour(disziplin):
         richtzeit = Richtzeit.objects.create(posten=p, zeit=random_zeit)
 
 def create_startliste(disziplin):
+    sys.stdout.write("Erzeuge Startlisten für ")
     startnummer = 1
     for s in Sektion.objects.all():
+        sys.stdout.write("%s " % s)
+        sys.stdout.flush()
         mitglieder = list(Mitglied.objects.filter(sektion=s).order_by('geburtsdatum'))
         for i in range(0, len(mitglieder), 2):
             hinten = mitglieder[i]
@@ -72,24 +74,25 @@ def create_startliste(disziplin):
             else:
                 # Doppelstarter
                 vorne = mitglieder[i-1]
-            jahr = disziplin.wettkampf.jahr()
-            steuermann_kat = get_kategorie(jahr, hinten)
-            vorderfahrer_kat = get_kategorie(jahr, vorne)
-            kategorie = get_startkategorie(steuermann_kat, vorderfahrer_kat)
+            schiff = Schiffeinzel(
+                    disziplin=disziplin,
+                    startnummer=startnummer,
+                    steuermann=hinten,
+                    vorderfahrer=vorne,
+                    sektion=s)
+            kategorie = schiff.calc_startkategorie()
             if kategorie:
-                schiff = Schiffeinzel.objects.create(
-                        disziplin=disziplin,
-                        startnummer=startnummer,
-                        steuermann=hinten,
-                        vorderfahrer=vorne,
-                        sektion=s,
-                        kategorie=kategorie)
+                schiff.kategorie = kategorie
+                schiff.save()
                 startnummer += 1
-        print u"Startliste für %s erzeugt" % s
+    sys.stdout.write("\n")
 
 def create_noten(disziplin):
+    sys.stdout.write("Erzeuge Noten für Posten ")
     schiffe = list(Teilnehmer.objects.filter(disziplin=disziplin))
     for p in disziplin.posten_set.all():
+        sys.stdout.write("%s " % p)
+        sys.stdout.flush()
         richtzeit = None
         if p.postenart.name == 'Zeitnote':
             richtzeit = float(Richtzeit.objects.get(posten=p).zeit)
@@ -108,7 +111,7 @@ def create_noten(disziplin):
                     if random_note != bart.defaultwert:
                         b.note = Decimal(random_note)
                         b.save()
-        print u"Noten für Posten %s erzeugt" % p
+    sys.stdout.write("\n")
 
 def main(argv=None):
     if argv is None:

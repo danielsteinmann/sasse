@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
+from django.db.models import Q
 from django.conf import settings
 from templatetags.sasse import zeit2str
 
@@ -158,7 +159,6 @@ class Kategorie(models.Model):
     name = models.CharField(max_length=10)
     alter_von = models.PositiveSmallIntegerField()
     alter_bis = models.PositiveSmallIntegerField()
-    geschlecht = models.CharField(max_length=1, choices=GESCHLECHT_ART + [('e', 'egal')])
     reihenfolge = models.SmallIntegerField(default=1) # Was kommt auf GUI zuerst
 
     class Meta:
@@ -176,6 +176,7 @@ class Wettkampf(models.Model):
     zusatz = models.CharField(max_length=100)
     von = models.DateField(help_text="Format: JJJJ-MM-DD")
     bis = models.DateField(null=True, blank=True, help_text="(optional)")
+    JPSM = models.BooleanField(default=False, help_text="Ist es eine JP SM? Hat Einfluss auf die Kategoriewahl bei der Startliste")
 
     class Meta:
         ordering = ['-von']
@@ -321,6 +322,70 @@ class Schiffeinzel(Teilnehmer):
     sektion = models.ForeignKey('Sektion')
     kategorie = models.ForeignKey('Kategorie')
     # Schiffsart lässt sich aus der Kategorie ableiten, darum nicht erfasst
+
+    def steuermann_kat(self):
+      jahr = self.disziplin.wettkampf.jahr()
+      return self.calc_kategorie(jahr, self.steuermann)
+
+    def vorderfahrer_kat(self):
+      jahr = self.disziplin.wettkampf.jahr()
+      return self.calc_kategorie(jahr, self.vorderfahrer)
+
+    def calc_kategorie(self, aktuelles_jahr, mitglied):
+        alter = aktuelles_jahr - mitglied.geburtsdatum.year
+        return Kategorie.objects.exclude(name="F").filter(
+                Q(alter_von__lte=alter),
+                Q(alter_bis__gte=alter)
+                )[0]
+
+    def calc_startkategorie(self):
+        """
+        Frauen werden kategoriemässig als Mann behandelt, wenn sie mit einem Mann
+        zusammen starten. Beispiele:
+        - Frau-15 mit Mann-15 => Kat II
+        - Frau-19 mit Mann-18 => Kat III
+        - Frau-23 mit Mann-45 => Kat C
+
+        Zudem gibt es an den JP Schweizermeisterschafen keine Kategorie F:
+        - Frau-15 mit Frau-16 => Kat II
+        - Frau-19 mit Frau-18 => Kat III
+        - Frau-23 => Darf nicht starten
+        """
+        jpsm = self.disziplin.wettkampf.JPSM
+        hinten_kat = self.steuermann_kat()
+        vorne_kat = self.vorderfahrer_kat()
+        kat = {}
+        for k in Kategorie.objects.all():
+            kat[k.name] = k
+        kat_I = kat["I"]
+        kat_II = kat["II"]
+        kat_III = kat["III"]
+        kat_C = kat["C"]
+        kat_D = kat["D"]
+        kat_F = kat["F"]
+        if jpsm:
+            # An der JP SM duerfen nur Kat I, II und III starten
+            for k in [hinten_kat, vorne_kat]:
+                if k not in [kat_I, kat_II, kat_III]:
+                    return None
+        if self.steuermann.geschlecht == "f" and self.vorderfahrer.geschlecht == "f":
+            # Reines Frauenpaar
+            if hinten_kat == kat_I and vorne_kat == kat_I:
+                return kat_I
+            elif jpsm:
+                # An einer JP SM gibt es keine Kat F
+                pass
+            else:
+                return kat_F
+        if hinten_kat == vorne_kat:
+            return hinten_kat
+        if hinten_kat in (kat_I, kat_II) and vorne_kat in (kat_I, kat_II):
+            return kat_II
+        if hinten_kat in (kat_I, kat_II, kat_III) and vorne_kat in (kat_I, kat_II, kat_III):
+            return kat_III
+        if hinten_kat in (kat_II, kat_III, kat_C, kat_D) and vorne_kat in (kat_II, kat_III, kat_C, kat_D):
+            return kat_C
+        return None
 
 
 # Hilfstabellen für Ranglisten
