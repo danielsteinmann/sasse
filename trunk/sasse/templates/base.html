@@ -37,7 +37,7 @@ Nicht eingeloggt | <a href="{% url django.contrib.auth.views.login %}?next={{ re
 </font></div>
 {% block content %}{% endblock %}
 <script type="text/javascript">
-$('form:first :input:visible:first').focus();
+$('form:first :input:visible:first').focus().select();
 </script>
 </body>
 </html>
