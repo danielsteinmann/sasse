@@ -148,6 +148,17 @@ class SchiffeinzelFilterForm(Form):
             queryset=Sektion.objects.all(),
             )
 
+    @classmethod
+    def create_with_sektion(cls, disziplin, data):
+        # Aus Performance Gründen immer eine Sektion auswählen. Falls nichts
+        # gefiltert wird, dauern Queries wie z.B. read_notenliste() zu lange.
+        GET = data.copy()
+        if not GET.get('sektion') and not GET.get('startnummern'):
+            sektion_id = Schiffeinzel.objects.values("sektion_id") \
+                    .filter(disziplin=disziplin)[0]['sektion_id']
+            GET['sektion'] = sektion_id
+        return SchiffeinzelFilterForm(disziplin, GET)
+
     def __init__(self, disziplin, *args, **kwargs):
         # Dieses Flag ermöglicht es, auf der Startlisten Seite nach einer
         # Sektion zu filtern, für die noch keine Schiffe existieren, um dann
