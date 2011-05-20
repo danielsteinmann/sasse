@@ -4,6 +4,9 @@ contrib.auth.view.login, wie man das richtig macht.
 --
 Kranzlimite: Muss nach Kategorie sortieren
 --
+Fahrchefblatt Link einfügen, dass für alle Sektionen das Fahrchefblatt
+ausdruckt. Vielleicht auch gleich an die Notenblätter anschliessen.
+--
 WICHTIG: Postenblatt: Wenn nur ein einzige Startnummer eingeben wird, wechselt
 es mit 'Speichern&Weiter' nicht auf den nächsten Posten. Ist ein Problem mit IE7
 => Auf neuesten Firefox oder IE wechseln.
