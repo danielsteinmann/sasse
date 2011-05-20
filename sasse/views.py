@@ -651,14 +651,7 @@ def notenliste(request, jahr, wettkampf, disziplin):
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
     posten = d.posten_set.all().select_related()
     notenliste = []
-    # Aus Performance Gründen immer eine Sektion auswählen. Falls nichts
-    # gefiltert ist, dauert die Query read_notenliste() zu lange.
-    GET = request.GET.copy()
-    if not GET.get('sektion') and not GET.get('startnummern'):
-        sektion_id = Schiffeinzel.objects.values("sektion_id") \
-                .filter(disziplin=d)[0]['sektion_id']
-        GET['sektion'] = sektion_id
-    searchform = SchiffeinzelFilterForm(d, GET)
+    searchform = SchiffeinzelFilterForm.create_with_sektion(d, request.GET)
     if searchform.is_valid():
         sektion = searchform.cleaned_data['sektion']
         startnummern = [schiff.startnummer for schiff in searchform.schiffe]
@@ -672,14 +665,7 @@ def notenliste_pdf(request, jahr, wettkampf, disziplin):
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
     posten = d.posten_set.all().select_related()
-    # Aus Performance Gründen immer eine Sektion auswählen. Falls nichts
-    # gefiltert ist, dauert die Query read_notenliste() zu lange.
-    GET = request.GET.copy()
-    if not GET.get('sektion') and not GET.get('startnummern'):
-        sektion_id = Schiffeinzel.objects.values("sektion_id") \
-                .filter(disziplin=d)[0]['sektion_id']
-        GET['sektion'] = sektion_id
-    searchform = SchiffeinzelFilterForm(d, GET)
+    searchform = SchiffeinzelFilterForm.create_with_sektion(d, request.GET)
     searchform.is_valid()
     sektion = searchform.cleaned_data['sektion']
     startnummern = [schiff.startnummer for schiff in searchform.schiffe]
@@ -784,14 +770,7 @@ def notenblaetter_pdf(request, jahr, wettkampf, disziplin):
     assert request.method == 'GET'
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
-    # Aus Performance Gründen immer eine Sektion auswählen. Falls nichts
-    # gefiltert ist, dauert die Query read_notenliste() zu lange.
-    GET = request.GET.copy()
-    if not GET.get('sektion') and not GET.get('startnummern'):
-        sektion_id = Schiffeinzel.objects.values("sektion_id") \
-                .filter(disziplin=d)[0]['sektion_id']
-        GET['sektion'] = sektion_id
-    searchform = SchiffeinzelFilterForm(d, GET)
+    searchform = SchiffeinzelFilterForm.create_with_sektion(d, request.GET)
     searchform.is_valid()
     schiffe = searchform.schiffe
     response = HttpResponse(mimetype='application/pdf')
