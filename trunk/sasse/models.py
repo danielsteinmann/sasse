@@ -142,7 +142,7 @@ class Bewertungsart(models.Model):
     name = models.CharField(max_length=50)
     signum = models.SmallIntegerField(default=1)
     einheit = models.CharField(max_length=6, choices=EINHEIT_TYP)
-    defaultwert = models.DecimalField(max_digits=6, decimal_places=2)
+    defaultwert = models.DecimalField(max_digits=6, decimal_places=1)
     wertebereich = models.CharField(max_length=200)
     reihenfolge = models.SmallIntegerField(default=1) # Was kommt auf GUI zuerst
     editierbar = models.BooleanField(default=True) # Erscheint es auf dem GUI
@@ -417,7 +417,7 @@ class Kranzlimite(models.Model):
     """
     disziplin = models.ForeignKey('Disziplin')
     kategorie = models.ForeignKey('Kategorie')
-    wert = models.DecimalField(max_digits=6, decimal_places=2)
+    wert = models.DecimalField(max_digits=6, decimal_places=1)
 
     def __unicode__(self):
         return u'%s, %s, %d' % (self.disziplin, self.kategorie, self.wert)
