@@ -38,8 +38,6 @@ SELECT  min(m.name) as name
  order by anzahl_starts desc, name, vorname
 
 --
-Startliste: Focus nicht auf Startnummer, sondern gleich auf Steuermann.
---
 Focus auf erstes Feld: Nicht nur focus(), sondern auch noch select()
 
 ===========

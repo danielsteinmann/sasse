@@ -53,7 +53,7 @@
 {% paginate %}
 <script type="text/javascript">
 $(document).ready(function(){
-        $('form:not(.filter) :input:visible:first').focus();
+        $('form:not(.filter) :input:visible:eq(1)').focus().select();
         $('#neuer_vorderfahrer').toggle( $('#id_vorderfahrer_neu').is(':checked') );
         $('#neuer_steuermann').toggle( $('#id_steuermann_neu').is(':checked') );
         $('#id_steuermann_neu').click(function () {
