@@ -102,12 +102,12 @@ class RanglisteTest(TestCase):
         RANGLISTE = render_to_string('rangliste.sql', {'kategorie': kat_C})
 
         # Ohne Doppelstarter
-        sql = "select * from (" + RANGLISTE + ") as r where r.SteuermannIstDS = 0 and r.VorderfahrerIstDS = 0"
+        sql = "select * from (" + RANGLISTE + ") as r where not r.SteuermannIstDS and not r.VorderfahrerIstDS"
         cursor.execute(sql, [disziplin.id, kat_C.id])
         self.assertEquals(10, len(cursor.fetchall()))
 
         # Nur Doppelstarter
-        sql = "select * from (" + RANGLISTE + ") as r where r.SteuermannIstDS = 1 or r.VorderfahrerIstDS = 1"
+        sql = "select * from (" + RANGLISTE + ") as r where r.SteuermannIstDS or r.VorderfahrerIstDS"
         cursor.execute(sql, [disziplin.id, kat_C.id])
         self.assertEquals(3, len(cursor.fetchall()))
 

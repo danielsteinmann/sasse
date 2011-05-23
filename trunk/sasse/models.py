@@ -319,6 +319,8 @@ class Schiffeinzel(Teilnehmer):
     """
     steuermann = models.ForeignKey('Mitglied', related_name='steuermann')
     vorderfahrer = models.ForeignKey('Mitglied', related_name='vorderfahrer')
+    steuermann_ist_ds = models.BooleanField(default=False)
+    vorderfahrer_ist_ds = models.BooleanField(default=False)
     sektion = models.ForeignKey('Sektion')
     kategorie = models.ForeignKey('Kategorie')
     # Schiffsart lässt sich aus der Kategorie ableiten, darum nicht erfasst

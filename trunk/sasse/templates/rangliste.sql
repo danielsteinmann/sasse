@@ -8,22 +8,8 @@ select tn.startnummer as Startnr
              and kl.disziplin_id = max(tn.disziplin_id)
              and kl.kategorie_id = max(schiff.kategorie_id)
        ) <= sum(b.note) then 1 else 0 end as MitKranz
-     , case when (
-          select min(t.startnummer) normale_startnummer
-            from sasse_mitglied m
-                 join sasse_schiffeinzel schiff on (
-                  schiff.vorderfahrer_id = m.id or schiff.steuermann_id = m.id)
-                 join sasse_teilnehmer t on (t.id = schiff.teilnehmer_ptr_id)
-           where m.id = max(hinten.id) and t.disziplin_id = max(tn.disziplin_id)
-       ) = tn.startnummer then 0 else 1 end as SteuermannIstDS
-     , case when (
-          select min(t.startnummer) normale_startnummer
-            from sasse_mitglied m
-                 join sasse_schiffeinzel schiff on (
-                  schiff.vorderfahrer_id = m.id or schiff.steuermann_id = m.id)
-                 join sasse_teilnehmer t on (t.id = schiff.teilnehmer_ptr_id)
-           where m.id = max(vorne.id) and t.disziplin_id = max(tn.disziplin_id)
-       ) = tn.startnummer then 0 else 1 end as VorderfahrerIstDS
+     , schiff.steuermann_ist_ds as SteuermannIstDS
+     , schiff.vorderfahrer_ist_ds as VorderfahrerIstDS
      , max(hinten.name) as Steuermann
      , max(hinten.vorname) as SteuermannVorname
      , max(hinten.geburtsdatum) as SteuermannGeburi
@@ -44,4 +30,5 @@ select tn.startnummer as Startnr
  where tn.disziplin_id = %s
        {% if kategorie %}and kat.id = %s{% endif %}
  group by tn.startnummer, tn.ausgeschieden, tn.disqualifiziert
+        , schiff.steuermann_ist_ds, schiff.vorderfahrer_ist_ds
  order by Punkte desc, Zeit asc

@@ -43,6 +43,7 @@ from fields import PunkteField
 from fields import StartnummernSelectionField
 
 from queries import create_mitglieder_nummer
+from queries import sind_doppelstarter
 
 class WettkampfForm(ModelForm):
     name = UnicodeSlugField(
@@ -221,7 +222,6 @@ class SchiffeinzelEditForm(ModelForm):
             self.data[name] = self.fields[name].value_for_form(mitglied)
         return self.cleaned_data
 
-
 class SchiffeinzelListForm(Form):
     startnummer = IntegerField()
     steuermann = MitgliedSearchField(queryset=Mitglied.objects.all())
@@ -310,12 +310,20 @@ class SchiffeinzelListForm(Form):
             self.data['sektion'] = self.filter_sektion.id
             self.fields['sektion'] = ModelChoiceField(queryset=Sektion.objects.all(), empty_label=None)
             raise ValidationError(text)
+        # Doppelstarter
+        hinten_ds, vorne_ds = sind_doppelstarter(self.disziplin.wettkampf,
+                self.disziplin.disziplinart, steuermann, vorderfahrer)
+        if hinten_ds and vorne_ds:
+            text = u"Ein Schiff darf nicht aus zwei Doppelstartern bestehen."
+            raise ValidationError(text)
         # Instanz erzeugen
         self.instance = Schiffeinzel(
                 disziplin=self.disziplin,
                 startnummer=self.cleaned_data.get('startnummer'),
                 steuermann=steuermann,
                 vorderfahrer=vorderfahrer,
+                steuermann_ist_ds=hinten_ds,
+                vorderfahrer_ist_ds=vorne_ds,
                 sektion=sektion)
         # Kategorie
         kategorie = self.cleaned_data.get('kategorie')
