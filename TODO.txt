@@ -40,6 +40,9 @@ SELECT  min(m.name) as name
  HAVING count(tn.id) > 1
  order by anzahl_starts desc, name, vorname
 
+--
+"Falsche Doppelstarter" suchen:
+(Gesuchte Doppelstarter) minus (Erfasste Doppelstarter) => Leere Menge
 ===========
 
 --

@@ -267,3 +267,35 @@ def create_mitglieder_nummer():
     else:
         nummer = u"%d" % (int(nummer)+1,)
     return unicode(nummer)
+
+
+def sind_doppelstarter(wettkampf, disziplinart, steuermann, vorderfahrer):
+    """
+    Aus Performance Gründen in *einem* SQL Select für beide den Test machen
+    """
+    cursor = connection.cursor()
+    sql = """
+ select m.id, count(tn.id) as anzahl_starts
+   from sasse_mitglied m
+   join sasse_schiffeinzel schiff on schiff.vorderfahrer_id = m.id or schiff.steuermann_id = m.id
+   join sasse_teilnehmer tn on tn.id = schiff.teilnehmer_ptr_id
+   join sasse_disziplin dz on dz.id = tn.disziplin_id
+  where dz.wettkampf_id = %s
+    and dz.disziplinart_id = %s
+    and m.id in (%s, %s)
+  group by m.id
+ having count(tn.id) > 0
+     """
+    args = [wettkampf.id, disziplinart.id, steuermann.id, vorderfahrer.id]
+    cursor.execute(sql, args)
+    hinten_ds = False
+    vorne_ds = False
+    for row in cursor:
+        mitglied_id = row[0]
+        anzahl_starts = row[1]
+        if mitglied_id == steuermann.id:
+            hinten_ds = True
+        else:
+            vorne_ds = True
+    return (hinten_ds, vorne_ds)
+

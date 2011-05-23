@@ -20,8 +20,8 @@
   {% for teilnehmer in startliste %}
   <tr class="{% cycle 'odd' 'even' %}">
     <td class="startnummer"><a href="{% url teilnehmer_get wettkampf.jahr, wettkampf.name, disziplin.name, teilnehmer.startnummer %}">{{ teilnehmer.startnummer }}</a></td>
-    <td>{{ teilnehmer.steuermann.name }}&nbsp;{{ teilnehmer.steuermann.vorname }}<font size="-2"> {{ teilnehmer.steuermann.geburtsdatum.year }}</font></td>
-    <td>{{ teilnehmer.vorderfahrer.name }}&nbsp;{{ teilnehmer.vorderfahrer.vorname }}<font size="-2"> {{ teilnehmer.vorderfahrer.geburtsdatum.year }}</font></td>
+    <td>{{ teilnehmer.steuermann.name }}&nbsp;{{ teilnehmer.steuermann.vorname }}<font size="-2"> {{teilnehmer.steuermann_ist_ds|yesno:"(DS) ,,"}}{{ teilnehmer.steuermann.geburtsdatum.year }}</font></td>
+    <td>{{ teilnehmer.vorderfahrer.name }}&nbsp;{{ teilnehmer.vorderfahrer.vorname }}<font size="-2"> {{teilnehmer.vorderfahrer_ist_ds|yesno:"(DS) ,,"}}{{ teilnehmer.vorderfahrer.geburtsdatum.year }}</font></td>
     <td class="kategorie">{{ teilnehmer.kategorie }}</td>
     <td>{{ teilnehmer.sektion }}</td>
   </tr>

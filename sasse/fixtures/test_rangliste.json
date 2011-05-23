@@ -1,652 +1,340 @@
 [
   {
     "pk": 1, 
-    "model": "sasse.disziplinart", 
+    "model": "sasse.sektion", 
     "fields": {
-      "name": "Einzelfahren"
+      "nummer": "1", 
+      "name": "Aarau"
     }
   }, 
   {
     "pk": 2, 
-    "model": "sasse.disziplinart", 
+    "model": "sasse.sektion", 
     "fields": {
-      "name": "Sektionsfahren"
+      "nummer": "2", 
+      "name": "Aarburg"
     }
   }, 
   {
     "pk": 3, 
-    "model": "sasse.disziplinart", 
+    "model": "sasse.sektion", 
     "fields": {
-      "name": "Bootsf\u00e4hrenbau"
+      "nummer": "3", 
+      "name": "Aarwangen"
     }
   }, 
   {
     "pk": 4, 
-    "model": "sasse.disziplinart", 
+    "model": "sasse.sektion", 
     "fields": {
-      "name": "Einzelschn\u00fcren"
+      "nummer": "4", 
+      "name": "Baden"
     }
   }, 
   {
     "pk": 5, 
-    "model": "sasse.disziplinart", 
+    "model": "sasse.sektion", 
     "fields": {
-      "name": "Gruppenschn\u00fcren"
-    }
-  }, 
-  {
-    "pk": 6, 
-    "model": "sasse.disziplinart", 
-    "fields": {
-      "name": "Schwimmen"
-    }
-  }, 
-  {
-    "pk": 2, 
-    "model": "sasse.postenart", 
-    "fields": {
-      "disziplinarten": [
-        1, 
-        2
-      ], 
-      "name": "Abfahrt bei einer Stange"
-    }
-  }, 
-  {
-    "pk": 18, 
-    "model": "sasse.postenart", 
-    "fields": {
-      "disziplinarten": [
-        2
-      ], 
-      "name": "Abfahrt und Ueberfahrt in Linie"
-    }
-  }, 
-  {
-    "pk": 3, 
-    "model": "sasse.postenart", 
-    "fields": {
-      "disziplinarten": [
-        1, 
-        2
-      ], 
-      "name": "Abfahrt unterhalb eines markierten Felsens"
-    }
-  }, 
-  {
-    "pk": 20, 
-    "model": "sasse.postenart", 
-    "fields": {
-      "disziplinarten": [
-        2
-      ], 
-      "name": "Abmeldung"
-    }
-  }, 
-  {
-    "pk": 1, 
-    "model": "sasse.postenart", 
-    "fields": {
-      "disziplinarten": [
-        1
-      ], 
-      "name": "Allgemeines und Antreten"
-    }
-  }, 
-  {
-    "pk": 10, 
-    "model": "sasse.postenart", 
-    "fields": {
-      "disziplinarten": [
-        2
-      ], 
-      "name": "Anmeldung (Sektionsfahren)"
-    }
-  }, 
-  {
-    "pk": 50, 
-    "model": "sasse.postenart", 
-    "fields": {
-      "disziplinarten": [
-        3
-      ], 
-      "name": "Bootsf\u00e4hrenbau"
-    }
-  }, 
-  {
-    "pk": 8, 
-    "model": "sasse.postenart", 
-    "fields": {
-      "disziplinarten": [
-        1, 
-        2
-      ], 
-      "name": "Durchfahrt"
+      "nummer": "5", 
+      "name": "Basler Pontoniere"
     }
   }, 
   {
     "pk": 7, 
-    "model": "sasse.postenart", 
+    "model": "sasse.sektion", 
     "fields": {
-      "disziplinarten": [
-        1, 
-        2
-      ], 
-      "name": "Einfahren in die Br\u00fcckenlinie"
+      "nummer": "7", 
+      "name": "Bern"
     }
   }, 
   {
-    "pk": 52, 
-    "model": "sasse.postenart", 
+    "pk": 8, 
+    "model": "sasse.sektion", 
     "fields": {
-      "disziplinarten": [
-        4
-      ], 
-      "name": "Einzelschn\u00fcren"
-    }
-  }, 
-  {
-    "pk": 11, 
-    "model": "sasse.postenart", 
-    "fields": {
-      "disziplinarten": [
-        2
-      ], 
-      "name": "Gemeinsame Stachelfahrt"
-    }
-  }, 
-  {
-    "pk": 53, 
-    "model": "sasse.postenart", 
-    "fields": {
-      "disziplinarten": [
-        5
-      ], 
-      "name": "Gruppenschn\u00fcren"
-    }
-  }, 
-  {
-    "pk": 5, 
-    "model": "sasse.postenart", 
-    "fields": {
-      "disziplinarten": [
-        1, 
-        2
-      ], 
-      "name": "Landung auf bestimmtes Ziel"
-    }
-  }, 
-  {
-    "pk": 6, 
-    "model": "sasse.postenart", 
-    "fields": {
-      "disziplinarten": [
-        1
-      ], 
-      "name": "Landung auf h\u00f6chstes Ziel"
-    }
-  }, 
-  {
-    "pk": 13, 
-    "model": "sasse.postenart", 
-    "fields": {
-      "disziplinarten": [
-        2
-      ], 
-      "name": "Landung auf h\u00f6chstes Ziel (Sektionsfahren)"
-    }
-  }, 
-  {
-    "pk": 19, 
-    "model": "sasse.postenart", 
-    "fields": {
-      "disziplinarten": [
-        2
-      ], 
-      "name": "Landung in Linie"
-    }
-  }, 
-  {
-    "pk": 51, 
-    "model": "sasse.postenart", 
-    "fields": {
-      "disziplinarten": [
-        6
-      ], 
-      "name": "Schwimmen"
-    }
-  }, 
-  {
-    "pk": 4, 
-    "model": "sasse.postenart", 
-    "fields": {
-      "disziplinarten": [
-        1, 
-        2
-      ], 
-      "name": "Umfahren eines markierten Felsens"
+      "nummer": "8", 
+      "name": "Bex"
     }
   }, 
   {
     "pk": 9, 
-    "model": "sasse.postenart", 
+    "model": "sasse.sektion", 
     "fields": {
-      "disziplinarten": [
-        1, 
-        2, 
-        3, 
-        4, 
-        5, 
-        6
-      ], 
-      "name": "Zeitnote"
+      "nummer": "9", 
+      "name": "Biel"
     }
   }, 
   {
-    "pk": 1, 
-    "model": "sasse.kategorie", 
+    "pk": 10, 
+    "model": "sasse.sektion", 
     "fields": {
-      "alter_von": 0, 
-      "disziplinart": 1, 
-      "alter_bis": 14, 
-      "name": "I"
+      "nummer": "10", 
+      "name": "Bremgarten"
     }
   }, 
   {
-    "pk": 2, 
-    "model": "sasse.kategorie", 
+    "pk": 11, 
+    "model": "sasse.sektion", 
     "fields": {
-      "alter_von": 15, 
-      "disziplinart": 1, 
-      "alter_bis": 17, 
-      "name": "II"
-    }
-  }, 
-  {
-    "pk": 3, 
-    "model": "sasse.kategorie", 
-    "fields": {
-      "alter_von": 18, 
-      "disziplinart": 1, 
-      "alter_bis": 20, 
-      "name": "III"
-    }
-  }, 
-  {
-    "pk": 4, 
-    "model": "sasse.kategorie", 
-    "fields": {
-      "alter_von": 21, 
-      "disziplinart": 1, 
-      "alter_bis": 42, 
-      "name": "C"
-    }
-  }, 
-  {
-    "pk": 5, 
-    "model": "sasse.kategorie", 
-    "fields": {
-      "alter_von": 43, 
-      "disziplinart": 1, 
-      "alter_bis": 99, 
-      "name": "D"
-    }
-  }, 
-  {
-    "pk": 6, 
-    "model": "sasse.kategorie", 
-    "fields": {
-      "alter_von": 15, 
-      "disziplinart": 1, 
-      "alter_bis": 99, 
-      "name": "F"
-    }
-  }, 
-  {
-    "pk": 17, 
-    "model": "sasse.bewertungsart", 
-    "fields": {
-      "gruppe": "STIL", 
-      "name": "Max", 
-      "defaultwert": "10", 
-      "editierbar": false, 
-      "reihenfolge": 0, 
-      "postenart": 2, 
-      "signum": 1, 
-      "wertebereich": "10", 
-      "einheit": "PUNKT"
-    }
-  }, 
-  {
-    "pk": 2, 
-    "model": "sasse.bewertungsart", 
-    "fields": {
-      "gruppe": "STIL", 
-      "name": "Abzug", 
-      "defaultwert": "0", 
-      "editierbar": true, 
-      "reihenfolge": 1, 
-      "postenart": 2, 
-      "signum": -1, 
-      "wertebereich": "0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10", 
-      "einheit": "PUNKT"
-    }
-  }, 
-  {
-    "pk": 3, 
-    "model": "sasse.bewertungsart", 
-    "fields": {
-      "gruppe": "ZIEL", 
-      "name": "Distanznote", 
-      "defaultwert": "10", 
-      "editierbar": true, 
-      "reihenfolge": 2, 
-      "postenart": 2, 
-      "signum": 1, 
-      "wertebereich": "3, 5, 6, 7, 7.5, 8, 8.5, 9, 9.5, 10", 
-      "einheit": "PUNKT"
-    }
-  }, 
-  {
-    "pk": 18, 
-    "model": "sasse.bewertungsart", 
-    "fields": {
-      "gruppe": "STIL", 
-      "name": "Max", 
-      "defaultwert": "10", 
-      "editierbar": false, 
-      "reihenfolge": 0, 
-      "postenart": 3, 
-      "signum": 1, 
-      "wertebereich": "10", 
-      "einheit": "PUNKT"
-    }
-  }, 
-  {
-    "pk": 4, 
-    "model": "sasse.bewertungsart", 
-    "fields": {
-      "gruppe": "STIL", 
-      "name": "Abzug", 
-      "defaultwert": "0", 
-      "editierbar": true, 
-      "reihenfolge": 1, 
-      "postenart": 3, 
-      "signum": -1, 
-      "wertebereich": "0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10", 
-      "einheit": "PUNKT"
-    }
-  }, 
-  {
-    "pk": 5, 
-    "model": "sasse.bewertungsart", 
-    "fields": {
-      "gruppe": "ZIEL", 
-      "name": "Distanznote", 
-      "defaultwert": "10", 
-      "editierbar": true, 
-      "reihenfolge": 2, 
-      "postenart": 3, 
-      "signum": 1, 
-      "wertebereich": "3, 5, 6, 7, 7.5, 8, 8.5, 9, 9.5, 10", 
-      "einheit": "PUNKT"
-    }
-  }, 
-  {
-    "pk": 1, 
-    "model": "sasse.bewertungsart", 
-    "fields": {
-      "gruppe": "STIL", 
-      "name": "Sanktion", 
-      "defaultwert": "0", 
-      "editierbar": true, 
-      "reihenfolge": 1, 
-      "postenart": 1, 
-      "signum": -1, 
-      "wertebereich": "0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10", 
-      "einheit": "PUNKT"
-    }
-  }, 
-  {
-    "pk": 23, 
-    "model": "sasse.bewertungsart", 
-    "fields": {
-      "gruppe": "STIL", 
-      "name": "Max", 
-      "defaultwert": "10", 
-      "editierbar": false, 
-      "reihenfolge": 0, 
-      "postenart": 8, 
-      "signum": 1, 
-      "wertebereich": "10", 
-      "einheit": "PUNKT"
-    }
-  }, 
-  {
-    "pk": 14, 
-    "model": "sasse.bewertungsart", 
-    "fields": {
-      "gruppe": "STIL", 
-      "name": "Abzug", 
-      "defaultwert": "0", 
-      "editierbar": true, 
-      "reihenfolge": 1, 
-      "postenart": 8, 
-      "signum": -1, 
-      "wertebereich": "0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10", 
-      "einheit": "PUNKT"
-    }
-  }, 
-  {
-    "pk": 15, 
-    "model": "sasse.bewertungsart", 
-    "fields": {
-      "gruppe": "ZIEL", 
-      "name": "Zielnote", 
-      "defaultwert": "10", 
-      "editierbar": true, 
-      "reihenfolge": 2, 
-      "postenart": 8, 
-      "signum": 1, 
-      "wertebereich": "10, 8, 6, 0", 
-      "einheit": "PUNKT"
-    }
-  }, 
-  {
-    "pk": 22, 
-    "model": "sasse.bewertungsart", 
-    "fields": {
-      "gruppe": "STIL", 
-      "name": "Max", 
-      "defaultwert": "10", 
-      "editierbar": false, 
-      "reihenfolge": 0, 
-      "postenart": 7, 
-      "signum": 1, 
-      "wertebereich": "10", 
-      "einheit": "PUNKT"
+      "nummer": "11", 
+      "name": "Brugg"
     }
   }, 
   {
     "pk": 12, 
-    "model": "sasse.bewertungsart", 
+    "model": "sasse.sektion", 
     "fields": {
-      "gruppe": "STIL", 
-      "name": "Abzug", 
-      "defaultwert": "0", 
-      "editierbar": true, 
-      "reihenfolge": 1, 
-      "postenart": 7, 
-      "signum": -1, 
-      "wertebereich": "0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10", 
-      "einheit": "PUNKT"
+      "nummer": "12", 
+      "name": "Buchs SG"
     }
   }, 
   {
     "pk": 13, 
-    "model": "sasse.bewertungsart", 
+    "model": "sasse.sektion", 
     "fields": {
-      "gruppe": "ZIEL", 
-      "name": "Zielnote", 
-      "defaultwert": "10", 
-      "editierbar": true, 
-      "reihenfolge": 2, 
-      "postenart": 7, 
-      "signum": 1, 
-      "wertebereich": "10, 8, 6, 0", 
-      "einheit": "PUNKT"
+      "nummer": "13", 
+      "name": "Diessenhofen"
     }
   }, 
   {
-    "pk": 20, 
-    "model": "sasse.bewertungsart", 
+    "pk": 14, 
+    "model": "sasse.sektion", 
     "fields": {
-      "gruppe": "STIL", 
-      "name": "Max", 
-      "defaultwert": "10", 
-      "editierbar": false, 
-      "reihenfolge": 0, 
-      "postenart": 5, 
-      "signum": 1, 
-      "wertebereich": "10", 
-      "einheit": "PUNKT"
+      "nummer": "14", 
+      "name": "Dietikon"
     }
   }, 
   {
-    "pk": 8, 
-    "model": "sasse.bewertungsart", 
+    "pk": 15, 
+    "model": "sasse.sektion", 
     "fields": {
-      "gruppe": "STIL", 
-      "name": "Abzug", 
-      "defaultwert": "0", 
-      "editierbar": true, 
-      "reihenfolge": 1, 
-      "postenart": 5, 
-      "signum": -1, 
-      "wertebereich": "0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10", 
-      "einheit": "PUNKT"
-    }
-  }, 
-  {
-    "pk": 9, 
-    "model": "sasse.bewertungsart", 
-    "fields": {
-      "gruppe": "ZIEL", 
-      "name": "Zielnote", 
-      "defaultwert": "10", 
-      "editierbar": true, 
-      "reihenfolge": 2, 
-      "postenart": 5, 
-      "signum": 1, 
-      "wertebereich": "3, 5, 6, 7, 7.5, 8, 8.5, 9, 9.5, 10", 
-      "einheit": "PUNKT"
-    }
-  }, 
-  {
-    "pk": 21, 
-    "model": "sasse.bewertungsart", 
-    "fields": {
-      "gruppe": "STIL", 
-      "name": "Max", 
-      "defaultwert": "10", 
-      "editierbar": false, 
-      "reihenfolge": 0, 
-      "postenart": 6, 
-      "signum": 1, 
-      "wertebereich": "10", 
-      "einheit": "PUNKT"
-    }
-  }, 
-  {
-    "pk": 10, 
-    "model": "sasse.bewertungsart", 
-    "fields": {
-      "gruppe": "STIL", 
-      "name": "Abzug", 
-      "defaultwert": "0", 
-      "editierbar": true, 
-      "reihenfolge": 1, 
-      "postenart": 6, 
-      "signum": -1, 
-      "wertebereich": "0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10", 
-      "einheit": "PUNKT"
-    }
-  }, 
-  {
-    "pk": 11, 
-    "model": "sasse.bewertungsart", 
-    "fields": {
-      "gruppe": "ZIEL", 
-      "name": "Zielnote", 
-      "defaultwert": "15", 
-      "editierbar": true, 
-      "reihenfolge": 2, 
-      "postenart": 6, 
-      "signum": 1, 
-      "wertebereich": "3, 5, 6, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12, 12.5, 13, 13.5, 14, 14.5, 15", 
-      "einheit": "PUNKT"
-    }
-  }, 
-  {
-    "pk": 19, 
-    "model": "sasse.bewertungsart", 
-    "fields": {
-      "gruppe": "STIL", 
-      "name": "Max", 
-      "defaultwert": "10", 
-      "editierbar": false, 
-      "reihenfolge": 0, 
-      "postenart": 4, 
-      "signum": 1, 
-      "wertebereich": "10", 
-      "einheit": "PUNKT"
-    }
-  }, 
-  {
-    "pk": 6, 
-    "model": "sasse.bewertungsart", 
-    "fields": {
-      "gruppe": "STIL", 
-      "name": "Abzug", 
-      "defaultwert": "0", 
-      "editierbar": true, 
-      "reihenfolge": 1, 
-      "postenart": 4, 
-      "signum": -1, 
-      "wertebereich": "0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10", 
-      "einheit": "PUNKT"
-    }
-  }, 
-  {
-    "pk": 7, 
-    "model": "sasse.bewertungsart", 
-    "fields": {
-      "gruppe": "ZIEL", 
-      "name": "Distanznote", 
-      "defaultwert": "10", 
-      "editierbar": true, 
-      "reihenfolge": 2, 
-      "postenart": 4, 
-      "signum": 1, 
-      "wertebereich": "3, 5, 6, 7, 7.5, 8, 8.5, 9, 9.5, 10", 
-      "einheit": "PUNKT"
+      "nummer": "15", 
+      "name": "Eglisau"
     }
   }, 
   {
     "pk": 16, 
-    "model": "sasse.bewertungsart", 
+    "model": "sasse.sektion", 
     "fields": {
-      "gruppe": "ZIEL", 
-      "name": "Zeit", 
-      "defaultwert": "0", 
-      "editierbar": true, 
-      "reihenfolge": 1, 
-      "postenart": 9, 
-      "signum": 1, 
-      "wertebereich": "0", 
-      "einheit": "ZEIT"
+      "nummer": "16", 
+      "name": "Ellikon"
     }
-  },
+  }, 
+  {
+    "pk": 17, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "nummer": "17", 
+      "name": "Genf"
+    }
+  }, 
+  {
+    "pk": 18, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "nummer": "18", 
+      "name": "Klingnau"
+    }
+  }, 
+  {
+    "pk": 19, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "nummer": "19", 
+      "name": "Laufenburg"
+    }
+  }, 
+  {
+    "pk": 20, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "nummer": "20", 
+      "name": "Ligerz"
+    }
+  }, 
+  {
+    "pk": 21, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "nummer": "21", 
+      "name": "Luzern"
+    }
+  }, 
+  {
+    "pk": 22, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "nummer": "22", 
+      "name": "Mellingen"
+    }
+  }, 
+  {
+    "pk": 23, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "nummer": "23", 
+      "name": "Mumpf"
+    }
+  }, 
+  {
+    "pk": 24, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "nummer": "24", 
+      "name": "Murgenthal"
+    }
+  }, 
+  {
+    "pk": 25, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "nummer": "25", 
+      "name": "Oberriet"
+    }
+  }, 
+  {
+    "pk": 26, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "nummer": "26", 
+      "name": "Olten"
+    }
+  }, 
+  {
+    "pk": 27, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "nummer": "27", 
+      "name": "Ottenbach"
+    }
+  }, 
+  {
+    "pk": 28, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "nummer": "28", 
+      "name": "Rheinfelden"
+    }
+  }, 
+  {
+    "pk": 29, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "nummer": "29", 
+      "name": "Schaffhausen"
+    }
+  }, 
+  {
+    "pk": 30, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "nummer": "30", 
+      "name": "Schmerikon"
+    }
+  }, 
+  {
+    "pk": 32, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "nummer": "32", 
+      "name": "Schwaderloch"
+    }
+  }, 
+  {
+    "pk": 31, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "nummer": "31", 
+      "name": "Sch\u00f6nenwerd"
+    }
+  }, 
+  {
+    "pk": 33, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "nummer": "33", 
+      "name": "Sisseln"
+    }
+  }, 
+  {
+    "pk": 34, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "nummer": "34", 
+      "name": "Solothurn"
+    }
+  }, 
+  {
+    "pk": 35, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "nummer": "35", 
+      "name": "Stein am Rhein"
+    }
+  }, 
+  {
+    "pk": 36, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "nummer": "36", 
+      "name": "Thun"
+    }
+  }, 
+  {
+    "pk": 0, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "nummer": "0", 
+      "name": "Verband"
+    }
+  }, 
+  {
+    "pk": 37, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "nummer": "37", 
+      "name": "Wallbach"
+    }
+  }, 
+  {
+    "pk": 38, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "nummer": "38", 
+      "name": "Wangen a A"
+    }
+  }, 
+  {
+    "pk": 39, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "nummer": "39", 
+      "name": "Worblaufen"
+    }
+  }, 
+  {
+    "pk": 40, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "nummer": "40", 
+      "name": "Wynau"
+    }
+  }, 
+  {
+    "pk": 42, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "nummer": "42", 
+      "name": "Zurzach"
+    }
+  }, 
+  {
+    "pk": 41, 
+    "model": "sasse.sektion", 
+    "fields": {
+      "nummer": "41", 
+      "name": "Z\u00fcrich"
+    }
+  }, 
   {
     "pk": 2036, 
     "model": "sasse.mitglied", 
@@ -3720,10 +3408,665 @@
     }
   }, 
   {
+    "pk": 1, 
+    "model": "sasse.disziplinart", 
+    "fields": {
+      "name": "Einzelfahren"
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "sasse.disziplinart", 
+    "fields": {
+      "name": "Sektionsfahren"
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "sasse.disziplinart", 
+    "fields": {
+      "name": "Bootsf\u00e4hrenbau"
+    }
+  }, 
+  {
+    "pk": 4, 
+    "model": "sasse.disziplinart", 
+    "fields": {
+      "name": "Einzelschn\u00fcren"
+    }
+  }, 
+  {
+    "pk": 5, 
+    "model": "sasse.disziplinart", 
+    "fields": {
+      "name": "Gruppenschn\u00fcren"
+    }
+  }, 
+  {
+    "pk": 6, 
+    "model": "sasse.disziplinart", 
+    "fields": {
+      "name": "Schwimmen"
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [
+        1, 
+        2
+      ], 
+      "name": "Abfahrt bei einer Stange"
+    }
+  }, 
+  {
+    "pk": 18, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [
+        2
+      ], 
+      "name": "Abfahrt und Ueberfahrt in Linie"
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [
+        1, 
+        2
+      ], 
+      "name": "Abfahrt unterhalb eines markierten Felsens"
+    }
+  }, 
+  {
+    "pk": 20, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [
+        2
+      ], 
+      "name": "Abmeldung"
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [
+        1
+      ], 
+      "name": "Allgemeines und Antreten"
+    }
+  }, 
+  {
+    "pk": 10, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [
+        2
+      ], 
+      "name": "Anmeldung (Sektionsfahren)"
+    }
+  }, 
+  {
+    "pk": 50, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [
+        3
+      ], 
+      "name": "Bootsf\u00e4hrenbau"
+    }
+  }, 
+  {
+    "pk": 8, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [
+        1, 
+        2
+      ], 
+      "name": "Durchfahrt"
+    }
+  }, 
+  {
+    "pk": 7, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [
+        1, 
+        2
+      ], 
+      "name": "Einfahren in die Br\u00fcckenlinie"
+    }
+  }, 
+  {
+    "pk": 52, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [
+        4
+      ], 
+      "name": "Einzelschn\u00fcren"
+    }
+  }, 
+  {
+    "pk": 11, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [
+        2
+      ], 
+      "name": "Gemeinsame Stachelfahrt"
+    }
+  }, 
+  {
+    "pk": 53, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [
+        5
+      ], 
+      "name": "Gruppenschn\u00fcren"
+    }
+  }, 
+  {
+    "pk": 5, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [
+        1, 
+        2
+      ], 
+      "name": "Landung auf bestimmtes Ziel"
+    }
+  }, 
+  {
+    "pk": 6, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [
+        1
+      ], 
+      "name": "Landung auf h\u00f6chstes Ziel"
+    }
+  }, 
+  {
+    "pk": 13, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [
+        2
+      ], 
+      "name": "Landung auf h\u00f6chstes Ziel (Sektionsfahren)"
+    }
+  }, 
+  {
+    "pk": 19, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [
+        2
+      ], 
+      "name": "Landung in Linie"
+    }
+  }, 
+  {
+    "pk": 51, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [
+        6
+      ], 
+      "name": "Schwimmen"
+    }
+  }, 
+  {
+    "pk": 4, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [
+        1, 
+        2
+      ], 
+      "name": "Umfahren eines markierten Felsens"
+    }
+  }, 
+  {
+    "pk": 9, 
+    "model": "sasse.postenart", 
+    "fields": {
+      "disziplinarten": [
+        1, 
+        2, 
+        3, 
+        4, 
+        5, 
+        6
+      ], 
+      "name": "Zeitnote"
+    }
+  }, 
+  {
+    "pk": 17, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "gruppe": "STIL", 
+      "name": "Max", 
+      "defaultwert": "10.0", 
+      "editierbar": false, 
+      "reihenfolge": 0, 
+      "postenart": 2, 
+      "signum": 1, 
+      "wertebereich": "10", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "gruppe": "STIL", 
+      "name": "Abzug", 
+      "defaultwert": "0.0", 
+      "editierbar": true, 
+      "reihenfolge": 1, 
+      "postenart": 2, 
+      "signum": -1, 
+      "wertebereich": "0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "gruppe": "ZIEL", 
+      "name": "Distanznote", 
+      "defaultwert": "10.0", 
+      "editierbar": true, 
+      "reihenfolge": 2, 
+      "postenart": 2, 
+      "signum": 1, 
+      "wertebereich": "3, 5, 6, 7, 7.5, 8, 8.5, 9, 9.5, 10", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 18, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "gruppe": "STIL", 
+      "name": "Max", 
+      "defaultwert": "10.0", 
+      "editierbar": false, 
+      "reihenfolge": 0, 
+      "postenart": 3, 
+      "signum": 1, 
+      "wertebereich": "10", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 4, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "gruppe": "STIL", 
+      "name": "Abzug", 
+      "defaultwert": "0.0", 
+      "editierbar": true, 
+      "reihenfolge": 1, 
+      "postenart": 3, 
+      "signum": -1, 
+      "wertebereich": "0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 5, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "gruppe": "ZIEL", 
+      "name": "Distanznote", 
+      "defaultwert": "10.0", 
+      "editierbar": true, 
+      "reihenfolge": 2, 
+      "postenart": 3, 
+      "signum": 1, 
+      "wertebereich": "3, 5, 6, 7, 7.5, 8, 8.5, 9, 9.5, 10", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "gruppe": "STIL", 
+      "name": "Sanktion", 
+      "defaultwert": "0.0", 
+      "editierbar": true, 
+      "reihenfolge": 1, 
+      "postenart": 1, 
+      "signum": -1, 
+      "wertebereich": "0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 23, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "gruppe": "STIL", 
+      "name": "Max", 
+      "defaultwert": "10.0", 
+      "editierbar": false, 
+      "reihenfolge": 0, 
+      "postenart": 8, 
+      "signum": 1, 
+      "wertebereich": "10", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 14, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "gruppe": "STIL", 
+      "name": "Abzug", 
+      "defaultwert": "0.0", 
+      "editierbar": true, 
+      "reihenfolge": 1, 
+      "postenart": 8, 
+      "signum": -1, 
+      "wertebereich": "0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 15, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "gruppe": "ZIEL", 
+      "name": "Zielnote", 
+      "defaultwert": "10.0", 
+      "editierbar": true, 
+      "reihenfolge": 2, 
+      "postenart": 8, 
+      "signum": 1, 
+      "wertebereich": "10, 8, 6, 0", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 22, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "gruppe": "STIL", 
+      "name": "Max", 
+      "defaultwert": "10.0", 
+      "editierbar": false, 
+      "reihenfolge": 0, 
+      "postenart": 7, 
+      "signum": 1, 
+      "wertebereich": "10", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 12, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "gruppe": "STIL", 
+      "name": "Abzug", 
+      "defaultwert": "0.0", 
+      "editierbar": true, 
+      "reihenfolge": 1, 
+      "postenart": 7, 
+      "signum": -1, 
+      "wertebereich": "0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 13, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "gruppe": "ZIEL", 
+      "name": "Zielnote", 
+      "defaultwert": "10.0", 
+      "editierbar": true, 
+      "reihenfolge": 2, 
+      "postenart": 7, 
+      "signum": 1, 
+      "wertebereich": "10, 8, 6, 0", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 20, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "gruppe": "STIL", 
+      "name": "Max", 
+      "defaultwert": "10.0", 
+      "editierbar": false, 
+      "reihenfolge": 0, 
+      "postenart": 5, 
+      "signum": 1, 
+      "wertebereich": "10", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 8, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "gruppe": "STIL", 
+      "name": "Abzug", 
+      "defaultwert": "0.0", 
+      "editierbar": true, 
+      "reihenfolge": 1, 
+      "postenart": 5, 
+      "signum": -1, 
+      "wertebereich": "0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 9, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "gruppe": "ZIEL", 
+      "name": "Zielnote", 
+      "defaultwert": "10.0", 
+      "editierbar": true, 
+      "reihenfolge": 2, 
+      "postenart": 5, 
+      "signum": 1, 
+      "wertebereich": "3, 5, 6, 7, 7.5, 8, 8.5, 9, 9.5, 10", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 21, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "gruppe": "STIL", 
+      "name": "Max", 
+      "defaultwert": "10.0", 
+      "editierbar": false, 
+      "reihenfolge": 0, 
+      "postenart": 6, 
+      "signum": 1, 
+      "wertebereich": "10", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 10, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "gruppe": "STIL", 
+      "name": "Abzug", 
+      "defaultwert": "0.0", 
+      "editierbar": true, 
+      "reihenfolge": 1, 
+      "postenart": 6, 
+      "signum": -1, 
+      "wertebereich": "0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 11, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "gruppe": "ZIEL", 
+      "name": "Zielnote", 
+      "defaultwert": "15.0", 
+      "editierbar": true, 
+      "reihenfolge": 2, 
+      "postenart": 6, 
+      "signum": 1, 
+      "wertebereich": "3, 5, 6, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12, 12.5, 13, 13.5, 14, 14.5, 15", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 19, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "gruppe": "STIL", 
+      "name": "Max", 
+      "defaultwert": "10.0", 
+      "editierbar": false, 
+      "reihenfolge": 0, 
+      "postenart": 4, 
+      "signum": 1, 
+      "wertebereich": "10", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 6, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "gruppe": "STIL", 
+      "name": "Abzug", 
+      "defaultwert": "0.0", 
+      "editierbar": true, 
+      "reihenfolge": 1, 
+      "postenart": 4, 
+      "signum": -1, 
+      "wertebereich": "0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 7, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "gruppe": "ZIEL", 
+      "name": "Distanznote", 
+      "defaultwert": "10.0", 
+      "editierbar": true, 
+      "reihenfolge": 2, 
+      "postenart": 4, 
+      "signum": 1, 
+      "wertebereich": "3, 5, 6, 7, 7.5, 8, 8.5, 9, 9.5, 10", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 16, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "gruppe": "ZIEL", 
+      "name": "Zeit", 
+      "defaultwert": "0.0", 
+      "editierbar": true, 
+      "reihenfolge": 1, 
+      "postenart": 9, 
+      "signum": 1, 
+      "wertebereich": "0", 
+      "einheit": "ZEIT"
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "sasse.kategorie", 
+    "fields": {
+      "reihenfolge": 1, 
+      "alter_von": 0, 
+      "disziplinart": 1, 
+      "alter_bis": 14, 
+      "name": "I"
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "sasse.kategorie", 
+    "fields": {
+      "reihenfolge": 2, 
+      "alter_von": 15, 
+      "disziplinart": 1, 
+      "alter_bis": 17, 
+      "name": "II"
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "sasse.kategorie", 
+    "fields": {
+      "reihenfolge": 3, 
+      "alter_von": 18, 
+      "disziplinart": 1, 
+      "alter_bis": 20, 
+      "name": "III"
+    }
+  }, 
+  {
+    "pk": 6, 
+    "model": "sasse.kategorie", 
+    "fields": {
+      "reihenfolge": 4, 
+      "alter_von": 15, 
+      "disziplinart": 1, 
+      "alter_bis": 99, 
+      "name": "F"
+    }
+  }, 
+  {
+    "pk": 5, 
+    "model": "sasse.kategorie", 
+    "fields": {
+      "reihenfolge": 5, 
+      "alter_von": 43, 
+      "disziplinart": 1, 
+      "alter_bis": 99, 
+      "name": "D"
+    }
+  }, 
+  {
+    "pk": 4, 
+    "model": "sasse.kategorie", 
+    "fields": {
+      "reihenfolge": 6, 
+      "alter_von": 21, 
+      "disziplinart": 1, 
+      "alter_bis": 42, 
+      "name": "C"
+    }
+  }, 
+  {
     "pk": 4, 
     "model": "sasse.wettkampf", 
     "fields": {
       "von": "2010-05-15", 
+      "JPSM": false, 
       "name": "F\u00e4llbaum-Cup", 
       "bis": null, 
       "zusatz": "Bremgarten, 15. Mai 2010"
@@ -3734,6 +4077,7 @@
     "model": "sasse.wettkampf", 
     "fields": {
       "von": "2008-05-18", 
+      "JPSM": false, 
       "name": "Glanzenburg-Cup", 
       "bis": null, 
       "zusatz": "Dietikon, 18. Mai 2008"
@@ -3779,9 +4123,9 @@
       "kategorien": [
         2, 
         3, 
-        4, 
+        6, 
         5, 
-        6
+        4
       ], 
       "name": "Einzelfahren-II-III-C-D-F", 
       "disziplinart": 1
@@ -3795,9 +4139,9 @@
       "kategorien": [
         2, 
         3, 
-        4, 
+        6, 
         5, 
-        6
+        4
       ], 
       "name": "Einzelfahren-II-III-C-D-F", 
       "disziplinart": 1
@@ -3998,7 +4342,7 @@
     "model": "sasse.bewertung", 
     "fields": {
       "note": "1.5", 
-      "zeit": "0", 
+      "zeit": "0.00", 
       "bewertungsart": 1, 
       "posten": 1, 
       "teilnehmer": 67
@@ -4008,8 +4352,8 @@
     "pk": 3, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "1", 
-      "zeit": "0", 
+      "note": "1.0", 
+      "zeit": "0.00", 
       "bewertungsart": 1, 
       "posten": 1, 
       "teilnehmer": 3
@@ -4019,8 +4363,8 @@
     "pk": 4, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "1", 
-      "zeit": "0", 
+      "note": "1.0", 
+      "zeit": "0.00", 
       "bewertungsart": 1, 
       "posten": 1, 
       "teilnehmer": 4
@@ -4030,8 +4374,8 @@
     "pk": 5, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "1", 
-      "zeit": "0", 
+      "note": "1.0", 
+      "zeit": "0.00", 
       "bewertungsart": 1, 
       "posten": 1, 
       "teilnehmer": 5
@@ -4041,8 +4385,8 @@
     "pk": 7, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "1", 
-      "zeit": "0", 
+      "note": "1.0", 
+      "zeit": "0.00", 
       "bewertungsart": 1, 
       "posten": 1, 
       "teilnehmer": 7
@@ -4052,8 +4396,8 @@
     "pk": 8, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "2", 
-      "zeit": "0", 
+      "note": "2.0", 
+      "zeit": "0.00", 
       "bewertungsart": 1, 
       "posten": 1, 
       "teilnehmer": 8
@@ -4063,8 +4407,8 @@
     "pk": 9, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "1", 
-      "zeit": "0", 
+      "note": "1.0", 
+      "zeit": "0.00", 
       "bewertungsart": 1, 
       "posten": 1, 
       "teilnehmer": 9
@@ -4074,8 +4418,8 @@
     "pk": 10, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "1", 
-      "zeit": "0", 
+      "note": "1.0", 
+      "zeit": "0.00", 
       "bewertungsart": 1, 
       "posten": 1, 
       "teilnehmer": 10
@@ -4085,8 +4429,8 @@
     "pk": 11, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "1", 
-      "zeit": "0", 
+      "note": "1.0", 
+      "zeit": "0.00", 
       "bewertungsart": 1, 
       "posten": 1, 
       "teilnehmer": 11
@@ -4096,8 +4440,8 @@
     "pk": 12, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "1", 
-      "zeit": "0", 
+      "note": "1.0", 
+      "zeit": "0.00", 
       "bewertungsart": 1, 
       "posten": 1, 
       "teilnehmer": 12
@@ -4107,8 +4451,8 @@
     "pk": 14, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "1", 
-      "zeit": "0", 
+      "note": "1.0", 
+      "zeit": "0.00", 
       "bewertungsart": 1, 
       "posten": 1, 
       "teilnehmer": 18
@@ -4118,8 +4462,8 @@
     "pk": 15, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "1", 
-      "zeit": "0", 
+      "note": "1.0", 
+      "zeit": "0.00", 
       "bewertungsart": 1, 
       "posten": 1, 
       "teilnehmer": 19
@@ -4129,8 +4473,8 @@
     "pk": 16, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "1", 
-      "zeit": "0", 
+      "note": "1.0", 
+      "zeit": "0.00", 
       "bewertungsart": 2, 
       "posten": 3, 
       "teilnehmer": 67
@@ -4140,8 +4484,8 @@
     "pk": 17, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "1", 
-      "zeit": "0", 
+      "note": "1.0", 
+      "zeit": "0.00", 
       "bewertungsart": 2, 
       "posten": 3, 
       "teilnehmer": 2
@@ -4151,8 +4495,8 @@
     "pk": 18, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "1", 
-      "zeit": "0", 
+      "note": "1.0", 
+      "zeit": "0.00", 
       "bewertungsart": 2, 
       "posten": 3, 
       "teilnehmer": 3
@@ -4162,8 +4506,8 @@
     "pk": 19, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "1", 
-      "zeit": "0", 
+      "note": "1.0", 
+      "zeit": "0.00", 
       "bewertungsart": 2, 
       "posten": 3, 
       "teilnehmer": 4
@@ -4173,8 +4517,8 @@
     "pk": 20, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "2", 
-      "zeit": "0", 
+      "note": "2.0", 
+      "zeit": "0.00", 
       "bewertungsart": 2, 
       "posten": 3, 
       "teilnehmer": 5
@@ -4184,8 +4528,8 @@
     "pk": 22, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "1", 
-      "zeit": "0", 
+      "note": "1.0", 
+      "zeit": "0.00", 
       "bewertungsart": 2, 
       "posten": 3, 
       "teilnehmer": 7
@@ -4195,8 +4539,8 @@
     "pk": 23, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "2", 
-      "zeit": "0", 
+      "note": "2.0", 
+      "zeit": "0.00", 
       "bewertungsart": 2, 
       "posten": 3, 
       "teilnehmer": 8
@@ -4206,8 +4550,8 @@
     "pk": 24, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "1", 
-      "zeit": "0", 
+      "note": "1.0", 
+      "zeit": "0.00", 
       "bewertungsart": 2, 
       "posten": 3, 
       "teilnehmer": 9
@@ -4217,8 +4561,8 @@
     "pk": 25, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "1", 
-      "zeit": "0", 
+      "note": "1.0", 
+      "zeit": "0.00", 
       "bewertungsart": 2, 
       "posten": 3, 
       "teilnehmer": 10
@@ -4228,8 +4572,8 @@
     "pk": 26, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "2", 
-      "zeit": "0", 
+      "note": "2.0", 
+      "zeit": "0.00", 
       "bewertungsart": 2, 
       "posten": 3, 
       "teilnehmer": 11
@@ -4239,8 +4583,8 @@
     "pk": 27, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "1", 
-      "zeit": "0", 
+      "note": "1.0", 
+      "zeit": "0.00", 
       "bewertungsart": 2, 
       "posten": 3, 
       "teilnehmer": 12
@@ -4250,8 +4594,8 @@
     "pk": 29, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 2, 
       "posten": 3, 
       "teilnehmer": 18
@@ -4261,8 +4605,8 @@
     "pk": 30, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "1", 
-      "zeit": "0", 
+      "note": "1.0", 
+      "zeit": "0.00", 
       "bewertungsart": 2, 
       "posten": 3, 
       "teilnehmer": 19
@@ -4272,8 +4616,8 @@
     "pk": 31, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "9", 
-      "zeit": "0", 
+      "note": "9.0", 
+      "zeit": "0.00", 
       "bewertungsart": 3, 
       "posten": 3, 
       "teilnehmer": 67
@@ -4283,8 +4627,8 @@
     "pk": 32, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "9", 
-      "zeit": "0", 
+      "note": "9.0", 
+      "zeit": "0.00", 
       "bewertungsart": 3, 
       "posten": 3, 
       "teilnehmer": 2
@@ -4295,7 +4639,7 @@
     "model": "sasse.bewertung", 
     "fields": {
       "note": "8.5", 
-      "zeit": "0", 
+      "zeit": "0.00", 
       "bewertungsart": 3, 
       "posten": 3, 
       "teilnehmer": 3
@@ -4305,8 +4649,8 @@
     "pk": 34, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "9", 
-      "zeit": "0", 
+      "note": "9.0", 
+      "zeit": "0.00", 
       "bewertungsart": 3, 
       "posten": 3, 
       "teilnehmer": 4
@@ -4317,7 +4661,7 @@
     "model": "sasse.bewertung", 
     "fields": {
       "note": "8.5", 
-      "zeit": "0", 
+      "zeit": "0.00", 
       "bewertungsart": 3, 
       "posten": 3, 
       "teilnehmer": 5
@@ -4327,8 +4671,8 @@
     "pk": 37, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "8", 
-      "zeit": "0", 
+      "note": "8.0", 
+      "zeit": "0.00", 
       "bewertungsart": 3, 
       "posten": 3, 
       "teilnehmer": 7
@@ -4338,8 +4682,8 @@
     "pk": 38, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "7", 
-      "zeit": "0", 
+      "note": "7.0", 
+      "zeit": "0.00", 
       "bewertungsart": 3, 
       "posten": 3, 
       "teilnehmer": 8
@@ -4350,7 +4694,7 @@
     "model": "sasse.bewertung", 
     "fields": {
       "note": "9.5", 
-      "zeit": "0", 
+      "zeit": "0.00", 
       "bewertungsart": 3, 
       "posten": 3, 
       "teilnehmer": 9
@@ -4360,8 +4704,8 @@
     "pk": 40, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "6", 
-      "zeit": "0", 
+      "note": "6.0", 
+      "zeit": "0.00", 
       "bewertungsart": 3, 
       "posten": 3, 
       "teilnehmer": 10
@@ -4371,8 +4715,8 @@
     "pk": 41, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "9", 
-      "zeit": "0", 
+      "note": "9.0", 
+      "zeit": "0.00", 
       "bewertungsart": 3, 
       "posten": 3, 
       "teilnehmer": 11
@@ -4382,8 +4726,8 @@
     "pk": 42, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "9", 
-      "zeit": "0", 
+      "note": "9.0", 
+      "zeit": "0.00", 
       "bewertungsart": 3, 
       "posten": 3, 
       "teilnehmer": 12
@@ -4394,7 +4738,7 @@
     "model": "sasse.bewertung", 
     "fields": {
       "note": "6.5", 
-      "zeit": "0", 
+      "zeit": "0.00", 
       "bewertungsart": 3, 
       "posten": 3, 
       "teilnehmer": 18
@@ -4404,8 +4748,8 @@
     "pk": 45, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "9", 
-      "zeit": "0", 
+      "note": "9.0", 
+      "zeit": "0.00", 
       "bewertungsart": 3, 
       "posten": 3, 
       "teilnehmer": 19
@@ -4415,8 +4759,8 @@
     "pk": 46, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "1", 
-      "zeit": "0", 
+      "note": "1.0", 
+      "zeit": "0.00", 
       "bewertungsart": 4, 
       "posten": 4, 
       "teilnehmer": 67
@@ -4426,8 +4770,8 @@
     "pk": 47, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "2", 
-      "zeit": "0", 
+      "note": "2.0", 
+      "zeit": "0.00", 
       "bewertungsart": 4, 
       "posten": 4, 
       "teilnehmer": 2
@@ -4437,8 +4781,8 @@
     "pk": 48, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "1", 
-      "zeit": "0", 
+      "note": "1.0", 
+      "zeit": "0.00", 
       "bewertungsart": 4, 
       "posten": 4, 
       "teilnehmer": 3
@@ -4448,8 +4792,8 @@
     "pk": 49, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "3", 
-      "zeit": "0", 
+      "note": "3.0", 
+      "zeit": "0.00", 
       "bewertungsart": 4, 
       "posten": 4, 
       "teilnehmer": 4
@@ -4459,8 +4803,8 @@
     "pk": 50, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "1", 
-      "zeit": "0", 
+      "note": "1.0", 
+      "zeit": "0.00", 
       "bewertungsart": 4, 
       "posten": 4, 
       "teilnehmer": 5
@@ -4470,8 +4814,8 @@
     "pk": 52, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "2", 
-      "zeit": "0", 
+      "note": "2.0", 
+      "zeit": "0.00", 
       "bewertungsart": 4, 
       "posten": 4, 
       "teilnehmer": 7
@@ -4481,8 +4825,8 @@
     "pk": 53, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "1", 
-      "zeit": "0", 
+      "note": "1.0", 
+      "zeit": "0.00", 
       "bewertungsart": 4, 
       "posten": 4, 
       "teilnehmer": 8
@@ -4492,8 +4836,8 @@
     "pk": 54, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "1", 
-      "zeit": "0", 
+      "note": "1.0", 
+      "zeit": "0.00", 
       "bewertungsart": 4, 
       "posten": 4, 
       "teilnehmer": 9
@@ -4503,8 +4847,8 @@
     "pk": 55, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "1", 
-      "zeit": "0", 
+      "note": "1.0", 
+      "zeit": "0.00", 
       "bewertungsart": 4, 
       "posten": 4, 
       "teilnehmer": 10
@@ -4514,8 +4858,8 @@
     "pk": 56, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "3", 
-      "zeit": "0", 
+      "note": "3.0", 
+      "zeit": "0.00", 
       "bewertungsart": 4, 
       "posten": 4, 
       "teilnehmer": 11
@@ -4526,7 +4870,7 @@
     "model": "sasse.bewertung", 
     "fields": {
       "note": "1.5", 
-      "zeit": "0", 
+      "zeit": "0.00", 
       "bewertungsart": 4, 
       "posten": 4, 
       "teilnehmer": 12
@@ -4536,8 +4880,8 @@
     "pk": 59, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "1", 
-      "zeit": "0", 
+      "note": "1.0", 
+      "zeit": "0.00", 
       "bewertungsart": 4, 
       "posten": 4, 
       "teilnehmer": 18
@@ -4547,8 +4891,8 @@
     "pk": 60, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 4, 
       "posten": 4, 
       "teilnehmer": 19
@@ -4558,8 +4902,8 @@
     "pk": 61, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "9", 
-      "zeit": "0", 
+      "note": "9.0", 
+      "zeit": "0.00", 
       "bewertungsart": 5, 
       "posten": 4, 
       "teilnehmer": 67
@@ -4569,8 +4913,8 @@
     "pk": 62, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "8", 
-      "zeit": "0", 
+      "note": "8.0", 
+      "zeit": "0.00", 
       "bewertungsart": 5, 
       "posten": 4, 
       "teilnehmer": 2
@@ -4580,8 +4924,8 @@
     "pk": 63, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "9", 
-      "zeit": "0", 
+      "note": "9.0", 
+      "zeit": "0.00", 
       "bewertungsart": 5, 
       "posten": 4, 
       "teilnehmer": 3
@@ -4592,7 +4936,7 @@
     "model": "sasse.bewertung", 
     "fields": {
       "note": "9.5", 
-      "zeit": "0", 
+      "zeit": "0.00", 
       "bewertungsart": 5, 
       "posten": 4, 
       "teilnehmer": 4
@@ -4602,8 +4946,8 @@
     "pk": 65, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "4", 
-      "zeit": "0", 
+      "note": "4.0", 
+      "zeit": "0.00", 
       "bewertungsart": 5, 
       "posten": 4, 
       "teilnehmer": 5
@@ -4613,8 +4957,8 @@
     "pk": 67, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "9", 
-      "zeit": "0", 
+      "note": "9.0", 
+      "zeit": "0.00", 
       "bewertungsart": 5, 
       "posten": 4, 
       "teilnehmer": 7
@@ -4625,7 +4969,7 @@
     "model": "sasse.bewertung", 
     "fields": {
       "note": "5.5", 
-      "zeit": "0", 
+      "zeit": "0.00", 
       "bewertungsart": 5, 
       "posten": 4, 
       "teilnehmer": 8
@@ -4635,8 +4979,8 @@
     "pk": 69, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "7", 
-      "zeit": "0", 
+      "note": "7.0", 
+      "zeit": "0.00", 
       "bewertungsart": 5, 
       "posten": 4, 
       "teilnehmer": 9
@@ -4646,8 +4990,8 @@
     "pk": 70, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "7", 
-      "zeit": "0", 
+      "note": "7.0", 
+      "zeit": "0.00", 
       "bewertungsart": 5, 
       "posten": 4, 
       "teilnehmer": 10
@@ -4657,8 +5001,8 @@
     "pk": 71, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "9", 
-      "zeit": "0", 
+      "note": "9.0", 
+      "zeit": "0.00", 
       "bewertungsart": 5, 
       "posten": 4, 
       "teilnehmer": 11
@@ -4668,8 +5012,8 @@
     "pk": 72, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "7", 
-      "zeit": "0", 
+      "note": "7.0", 
+      "zeit": "0.00", 
       "bewertungsart": 5, 
       "posten": 4, 
       "teilnehmer": 12
@@ -4680,7 +5024,7 @@
     "model": "sasse.bewertung", 
     "fields": {
       "note": "9.5", 
-      "zeit": "0", 
+      "zeit": "0.00", 
       "bewertungsart": 5, 
       "posten": 4, 
       "teilnehmer": 18
@@ -4690,8 +5034,8 @@
     "pk": 75, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "7", 
-      "zeit": "0", 
+      "note": "7.0", 
+      "zeit": "0.00", 
       "bewertungsart": 5, 
       "posten": 4, 
       "teilnehmer": 19
@@ -4701,8 +5045,8 @@
     "pk": 76, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "3", 
-      "zeit": "0", 
+      "note": "3.0", 
+      "zeit": "0.00", 
       "bewertungsart": 14, 
       "posten": 7, 
       "teilnehmer": 67
@@ -4712,8 +5056,8 @@
     "pk": 77, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "1", 
-      "zeit": "0", 
+      "note": "1.0", 
+      "zeit": "0.00", 
       "bewertungsart": 14, 
       "posten": 7, 
       "teilnehmer": 2
@@ -4723,8 +5067,8 @@
     "pk": 78, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "1", 
-      "zeit": "0", 
+      "note": "1.0", 
+      "zeit": "0.00", 
       "bewertungsart": 14, 
       "posten": 7, 
       "teilnehmer": 3
@@ -4734,8 +5078,8 @@
     "pk": 79, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "2", 
-      "zeit": "0", 
+      "note": "2.0", 
+      "zeit": "0.00", 
       "bewertungsart": 14, 
       "posten": 7, 
       "teilnehmer": 4
@@ -4745,8 +5089,8 @@
     "pk": 80, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "5", 
-      "zeit": "0", 
+      "note": "5.0", 
+      "zeit": "0.00", 
       "bewertungsart": 14, 
       "posten": 7, 
       "teilnehmer": 5
@@ -4756,8 +5100,8 @@
     "pk": 82, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "9", 
-      "zeit": "0", 
+      "note": "9.0", 
+      "zeit": "0.00", 
       "bewertungsart": 14, 
       "posten": 7, 
       "teilnehmer": 7
@@ -4768,7 +5112,7 @@
     "model": "sasse.bewertung", 
     "fields": {
       "note": "9.5", 
-      "zeit": "0", 
+      "zeit": "0.00", 
       "bewertungsart": 14, 
       "posten": 7, 
       "teilnehmer": 8
@@ -4778,8 +5122,8 @@
     "pk": 84, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "7", 
-      "zeit": "0", 
+      "note": "7.0", 
+      "zeit": "0.00", 
       "bewertungsart": 14, 
       "posten": 7, 
       "teilnehmer": 9
@@ -4789,8 +5133,8 @@
     "pk": 85, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "9", 
-      "zeit": "0", 
+      "note": "9.0", 
+      "zeit": "0.00", 
       "bewertungsart": 14, 
       "posten": 7, 
       "teilnehmer": 10
@@ -4800,8 +5144,8 @@
     "pk": 86, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "9", 
-      "zeit": "0", 
+      "note": "9.0", 
+      "zeit": "0.00", 
       "bewertungsart": 14, 
       "posten": 7, 
       "teilnehmer": 11
@@ -4811,8 +5155,8 @@
     "pk": 87, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 14, 
       "posten": 7, 
       "teilnehmer": 12
@@ -4822,8 +5166,8 @@
     "pk": 89, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "7", 
-      "zeit": "0", 
+      "note": "7.0", 
+      "zeit": "0.00", 
       "bewertungsart": 14, 
       "posten": 7, 
       "teilnehmer": 18
@@ -4833,8 +5177,8 @@
     "pk": 90, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "9", 
-      "zeit": "0", 
+      "note": "9.0", 
+      "zeit": "0.00", 
       "bewertungsart": 14, 
       "posten": 7, 
       "teilnehmer": 19
@@ -4844,8 +5188,8 @@
     "pk": 91, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "9", 
-      "zeit": "0", 
+      "note": "9.0", 
+      "zeit": "0.00", 
       "bewertungsart": 15, 
       "posten": 7, 
       "teilnehmer": 67
@@ -4856,7 +5200,7 @@
     "model": "sasse.bewertung", 
     "fields": {
       "note": "5.5", 
-      "zeit": "0", 
+      "zeit": "0.00", 
       "bewertungsart": 15, 
       "posten": 7, 
       "teilnehmer": 2
@@ -4866,8 +5210,8 @@
     "pk": 93, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "4", 
-      "zeit": "0", 
+      "note": "4.0", 
+      "zeit": "0.00", 
       "bewertungsart": 15, 
       "posten": 7, 
       "teilnehmer": 3
@@ -4877,8 +5221,8 @@
     "pk": 94, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "9", 
-      "zeit": "0", 
+      "note": "9.0", 
+      "zeit": "0.00", 
       "bewertungsart": 15, 
       "posten": 7, 
       "teilnehmer": 4
@@ -4888,8 +5232,8 @@
     "pk": 95, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "9", 
-      "zeit": "0", 
+      "note": "9.0", 
+      "zeit": "0.00", 
       "bewertungsart": 15, 
       "posten": 7, 
       "teilnehmer": 5
@@ -4900,7 +5244,7 @@
     "model": "sasse.bewertung", 
     "fields": {
       "note": "8.5", 
-      "zeit": "0", 
+      "zeit": "0.00", 
       "bewertungsart": 15, 
       "posten": 7, 
       "teilnehmer": 7
@@ -4910,8 +5254,8 @@
     "pk": 98, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "9", 
-      "zeit": "0", 
+      "note": "9.0", 
+      "zeit": "0.00", 
       "bewertungsart": 15, 
       "posten": 7, 
       "teilnehmer": 8
@@ -4921,8 +5265,8 @@
     "pk": 99, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "8", 
-      "zeit": "0", 
+      "note": "8.0", 
+      "zeit": "0.00", 
       "bewertungsart": 15, 
       "posten": 7, 
       "teilnehmer": 9
@@ -4932,8 +5276,8 @@
     "pk": 100, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "7", 
-      "zeit": "0", 
+      "note": "7.0", 
+      "zeit": "0.00", 
       "bewertungsart": 15, 
       "posten": 7, 
       "teilnehmer": 10
@@ -4943,8 +5287,8 @@
     "pk": 101, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "9", 
-      "zeit": "0", 
+      "note": "9.0", 
+      "zeit": "0.00", 
       "bewertungsart": 15, 
       "posten": 7, 
       "teilnehmer": 11
@@ -4954,8 +5298,8 @@
     "pk": 102, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "2", 
-      "zeit": "0", 
+      "note": "2.0", 
+      "zeit": "0.00", 
       "bewertungsart": 15, 
       "posten": 7, 
       "teilnehmer": 12
@@ -4965,8 +5309,8 @@
     "pk": 104, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "7", 
-      "zeit": "0", 
+      "note": "7.0", 
+      "zeit": "0.00", 
       "bewertungsart": 15, 
       "posten": 7, 
       "teilnehmer": 18
@@ -4976,8 +5320,8 @@
     "pk": 105, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "9", 
-      "zeit": "0", 
+      "note": "9.0", 
+      "zeit": "0.00", 
       "bewertungsart": 15, 
       "posten": 7, 
       "teilnehmer": 19
@@ -4987,8 +5331,8 @@
     "pk": 106, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "7", 
-      "zeit": "0", 
+      "note": "7.0", 
+      "zeit": "0.00", 
       "bewertungsart": 8, 
       "posten": 8, 
       "teilnehmer": 67
@@ -4998,8 +5342,8 @@
     "pk": 107, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "1", 
-      "zeit": "0", 
+      "note": "1.0", 
+      "zeit": "0.00", 
       "bewertungsart": 8, 
       "posten": 8, 
       "teilnehmer": 2
@@ -5009,8 +5353,8 @@
     "pk": 108, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "2", 
-      "zeit": "0", 
+      "note": "2.0", 
+      "zeit": "0.00", 
       "bewertungsart": 8, 
       "posten": 8, 
       "teilnehmer": 3
@@ -5020,8 +5364,8 @@
     "pk": 109, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "1", 
-      "zeit": "0", 
+      "note": "1.0", 
+      "zeit": "0.00", 
       "bewertungsart": 8, 
       "posten": 8, 
       "teilnehmer": 4
@@ -5031,8 +5375,8 @@
     "pk": 110, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "1", 
-      "zeit": "0", 
+      "note": "1.0", 
+      "zeit": "0.00", 
       "bewertungsart": 8, 
       "posten": 8, 
       "teilnehmer": 5
@@ -5042,8 +5386,8 @@
     "pk": 112, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "6", 
-      "zeit": "0", 
+      "note": "6.0", 
+      "zeit": "0.00", 
       "bewertungsart": 8, 
       "posten": 8, 
       "teilnehmer": 7
@@ -5053,8 +5397,8 @@
     "pk": 113, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "1", 
-      "zeit": "0", 
+      "note": "1.0", 
+      "zeit": "0.00", 
       "bewertungsart": 8, 
       "posten": 8, 
       "teilnehmer": 8
@@ -5064,8 +5408,8 @@
     "pk": 114, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "1", 
-      "zeit": "0", 
+      "note": "1.0", 
+      "zeit": "0.00", 
       "bewertungsart": 8, 
       "posten": 8, 
       "teilnehmer": 9
@@ -5075,8 +5419,8 @@
     "pk": 115, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "1", 
-      "zeit": "0", 
+      "note": "1.0", 
+      "zeit": "0.00", 
       "bewertungsart": 8, 
       "posten": 8, 
       "teilnehmer": 10
@@ -5086,8 +5430,8 @@
     "pk": 116, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "1", 
-      "zeit": "0", 
+      "note": "1.0", 
+      "zeit": "0.00", 
       "bewertungsart": 8, 
       "posten": 8, 
       "teilnehmer": 11
@@ -5097,8 +5441,8 @@
     "pk": 117, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "4", 
-      "zeit": "0", 
+      "note": "4.0", 
+      "zeit": "0.00", 
       "bewertungsart": 8, 
       "posten": 8, 
       "teilnehmer": 12
@@ -5108,8 +5452,8 @@
     "pk": 119, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "2", 
-      "zeit": "0", 
+      "note": "2.0", 
+      "zeit": "0.00", 
       "bewertungsart": 8, 
       "posten": 8, 
       "teilnehmer": 18
@@ -5119,8 +5463,8 @@
     "pk": 120, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "1", 
-      "zeit": "0", 
+      "note": "1.0", 
+      "zeit": "0.00", 
       "bewertungsart": 8, 
       "posten": 8, 
       "teilnehmer": 19
@@ -5130,8 +5474,8 @@
     "pk": 121, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "9", 
-      "zeit": "0", 
+      "note": "9.0", 
+      "zeit": "0.00", 
       "bewertungsart": 9, 
       "posten": 8, 
       "teilnehmer": 67
@@ -5142,7 +5486,7 @@
     "model": "sasse.bewertung", 
     "fields": {
       "note": "5.5", 
-      "zeit": "0", 
+      "zeit": "0.00", 
       "bewertungsart": 9, 
       "posten": 8, 
       "teilnehmer": 2
@@ -5152,8 +5496,8 @@
     "pk": 123, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "4", 
-      "zeit": "0", 
+      "note": "4.0", 
+      "zeit": "0.00", 
       "bewertungsart": 9, 
       "posten": 8, 
       "teilnehmer": 3
@@ -5163,8 +5507,8 @@
     "pk": 124, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "9", 
-      "zeit": "0", 
+      "note": "9.0", 
+      "zeit": "0.00", 
       "bewertungsart": 9, 
       "posten": 8, 
       "teilnehmer": 4
@@ -5175,7 +5519,7 @@
     "model": "sasse.bewertung", 
     "fields": {
       "note": "9.5", 
-      "zeit": "0", 
+      "zeit": "0.00", 
       "bewertungsart": 9, 
       "posten": 8, 
       "teilnehmer": 5
@@ -5185,8 +5529,8 @@
     "pk": 127, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "10", 
-      "zeit": "0", 
+      "note": "10.0", 
+      "zeit": "0.00", 
       "bewertungsart": 9, 
       "posten": 8, 
       "teilnehmer": 7
@@ -5196,8 +5540,8 @@
     "pk": 128, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "8", 
-      "zeit": "0", 
+      "note": "8.0", 
+      "zeit": "0.00", 
       "bewertungsart": 9, 
       "posten": 8, 
       "teilnehmer": 8
@@ -5208,7 +5552,7 @@
     "model": "sasse.bewertung", 
     "fields": {
       "note": "9.5", 
-      "zeit": "0", 
+      "zeit": "0.00", 
       "bewertungsart": 9, 
       "posten": 8, 
       "teilnehmer": 9
@@ -5219,7 +5563,7 @@
     "model": "sasse.bewertung", 
     "fields": {
       "note": "9.5", 
-      "zeit": "0", 
+      "zeit": "0.00", 
       "bewertungsart": 9, 
       "posten": 8, 
       "teilnehmer": 10
@@ -5229,8 +5573,8 @@
     "pk": 131, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "7", 
-      "zeit": "0", 
+      "note": "7.0", 
+      "zeit": "0.00", 
       "bewertungsart": 9, 
       "posten": 8, 
       "teilnehmer": 11
@@ -5241,7 +5585,7 @@
     "model": "sasse.bewertung", 
     "fields": {
       "note": "9.5", 
-      "zeit": "0", 
+      "zeit": "0.00", 
       "bewertungsart": 9, 
       "posten": 8, 
       "teilnehmer": 12
@@ -5251,8 +5595,8 @@
     "pk": 134, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "9", 
-      "zeit": "0", 
+      "note": "9.0", 
+      "zeit": "0.00", 
       "bewertungsart": 9, 
       "posten": 8, 
       "teilnehmer": 18
@@ -5262,8 +5606,8 @@
     "pk": 135, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "10", 
-      "zeit": "0", 
+      "note": "10.0", 
+      "zeit": "0.00", 
       "bewertungsart": 9, 
       "posten": 8, 
       "teilnehmer": 19
@@ -5273,8 +5617,8 @@
     "pk": 136, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "1", 
-      "zeit": "0", 
+      "note": "1.0", 
+      "zeit": "0.00", 
       "bewertungsart": 10, 
       "posten": 10, 
       "teilnehmer": 67
@@ -5284,8 +5628,8 @@
     "pk": 137, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "2", 
-      "zeit": "0", 
+      "note": "2.0", 
+      "zeit": "0.00", 
       "bewertungsart": 10, 
       "posten": 10, 
       "teilnehmer": 2
@@ -5295,8 +5639,8 @@
     "pk": 138, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "3", 
-      "zeit": "0", 
+      "note": "3.0", 
+      "zeit": "0.00", 
       "bewertungsart": 10, 
       "posten": 10, 
       "teilnehmer": 3
@@ -5306,8 +5650,8 @@
     "pk": 139, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "1", 
-      "zeit": "0", 
+      "note": "1.0", 
+      "zeit": "0.00", 
       "bewertungsart": 10, 
       "posten": 10, 
       "teilnehmer": 4
@@ -5317,8 +5661,8 @@
     "pk": 140, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "1", 
-      "zeit": "0", 
+      "note": "1.0", 
+      "zeit": "0.00", 
       "bewertungsart": 10, 
       "posten": 10, 
       "teilnehmer": 5
@@ -5328,8 +5672,8 @@
     "pk": 142, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "5", 
-      "zeit": "0", 
+      "note": "5.0", 
+      "zeit": "0.00", 
       "bewertungsart": 10, 
       "posten": 10, 
       "teilnehmer": 7
@@ -5339,8 +5683,8 @@
     "pk": 143, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "1", 
-      "zeit": "0", 
+      "note": "1.0", 
+      "zeit": "0.00", 
       "bewertungsart": 10, 
       "posten": 10, 
       "teilnehmer": 8
@@ -5350,8 +5694,8 @@
     "pk": 144, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "5", 
-      "zeit": "0", 
+      "note": "5.0", 
+      "zeit": "0.00", 
       "bewertungsart": 10, 
       "posten": 10, 
       "teilnehmer": 9
@@ -5361,8 +5705,8 @@
     "pk": 145, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 10, 
       "posten": 10, 
       "teilnehmer": 10
@@ -5372,8 +5716,8 @@
     "pk": 146, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "1", 
-      "zeit": "0", 
+      "note": "1.0", 
+      "zeit": "0.00", 
       "bewertungsart": 10, 
       "posten": 10, 
       "teilnehmer": 11
@@ -5383,8 +5727,8 @@
     "pk": 147, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "1", 
-      "zeit": "0", 
+      "note": "1.0", 
+      "zeit": "0.00", 
       "bewertungsart": 10, 
       "posten": 10, 
       "teilnehmer": 12
@@ -5394,8 +5738,8 @@
     "pk": 149, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "1", 
-      "zeit": "0", 
+      "note": "1.0", 
+      "zeit": "0.00", 
       "bewertungsart": 10, 
       "posten": 10, 
       "teilnehmer": 18
@@ -5405,8 +5749,8 @@
     "pk": 150, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 10, 
       "posten": 10, 
       "teilnehmer": 19
@@ -5416,8 +5760,8 @@
     "pk": 151, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "14", 
-      "zeit": "0", 
+      "note": "14.0", 
+      "zeit": "0.00", 
       "bewertungsart": 11, 
       "posten": 10, 
       "teilnehmer": 67
@@ -5427,8 +5771,8 @@
     "pk": 152, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "12", 
-      "zeit": "0", 
+      "note": "12.0", 
+      "zeit": "0.00", 
       "bewertungsart": 11, 
       "posten": 10, 
       "teilnehmer": 2
@@ -5438,8 +5782,8 @@
     "pk": 153, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "12", 
-      "zeit": "0", 
+      "note": "12.0", 
+      "zeit": "0.00", 
       "bewertungsart": 11, 
       "posten": 10, 
       "teilnehmer": 3
@@ -5449,8 +5793,8 @@
     "pk": 154, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "13", 
-      "zeit": "0", 
+      "note": "13.0", 
+      "zeit": "0.00", 
       "bewertungsart": 11, 
       "posten": 10, 
       "teilnehmer": 4
@@ -5460,8 +5804,8 @@
     "pk": 155, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "14", 
-      "zeit": "0", 
+      "note": "14.0", 
+      "zeit": "0.00", 
       "bewertungsart": 11, 
       "posten": 10, 
       "teilnehmer": 5
@@ -5471,8 +5815,8 @@
     "pk": 157, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "14", 
-      "zeit": "0", 
+      "note": "14.0", 
+      "zeit": "0.00", 
       "bewertungsart": 11, 
       "posten": 10, 
       "teilnehmer": 7
@@ -5482,8 +5826,8 @@
     "pk": 158, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "13", 
-      "zeit": "0", 
+      "note": "13.0", 
+      "zeit": "0.00", 
       "bewertungsart": 11, 
       "posten": 10, 
       "teilnehmer": 8
@@ -5493,8 +5837,8 @@
     "pk": 159, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "11", 
-      "zeit": "0", 
+      "note": "11.0", 
+      "zeit": "0.00", 
       "bewertungsart": 11, 
       "posten": 10, 
       "teilnehmer": 9
@@ -5504,8 +5848,8 @@
     "pk": 160, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "9", 
-      "zeit": "0", 
+      "note": "9.0", 
+      "zeit": "0.00", 
       "bewertungsart": 11, 
       "posten": 10, 
       "teilnehmer": 10
@@ -5515,8 +5859,8 @@
     "pk": 161, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "11", 
-      "zeit": "0", 
+      "note": "11.0", 
+      "zeit": "0.00", 
       "bewertungsart": 11, 
       "posten": 10, 
       "teilnehmer": 11
@@ -5526,8 +5870,8 @@
     "pk": 162, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "12", 
-      "zeit": "0", 
+      "note": "12.0", 
+      "zeit": "0.00", 
       "bewertungsart": 11, 
       "posten": 10, 
       "teilnehmer": 12
@@ -5537,8 +5881,8 @@
     "pk": 164, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "14", 
-      "zeit": "0", 
+      "note": "14.0", 
+      "zeit": "0.00", 
       "bewertungsart": 11, 
       "posten": 10, 
       "teilnehmer": 18
@@ -5548,8 +5892,8 @@
     "pk": 165, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "13", 
-      "zeit": "0", 
+      "note": "13.0", 
+      "zeit": "0.00", 
       "bewertungsart": 11, 
       "posten": 10, 
       "teilnehmer": 19
@@ -5559,8 +5903,8 @@
     "pk": 166, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "1", 
-      "zeit": "0", 
+      "note": "1.0", 
+      "zeit": "0.00", 
       "bewertungsart": 14, 
       "posten": 9, 
       "teilnehmer": 67
@@ -5570,8 +5914,8 @@
     "pk": 167, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "1", 
-      "zeit": "0", 
+      "note": "1.0", 
+      "zeit": "0.00", 
       "bewertungsart": 14, 
       "posten": 9, 
       "teilnehmer": 2
@@ -5581,8 +5925,8 @@
     "pk": 168, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "1", 
-      "zeit": "0", 
+      "note": "1.0", 
+      "zeit": "0.00", 
       "bewertungsart": 14, 
       "posten": 9, 
       "teilnehmer": 3
@@ -5592,8 +5936,8 @@
     "pk": 169, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "2", 
-      "zeit": "0", 
+      "note": "2.0", 
+      "zeit": "0.00", 
       "bewertungsart": 14, 
       "posten": 9, 
       "teilnehmer": 4
@@ -5603,8 +5947,8 @@
     "pk": 170, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "2", 
-      "zeit": "0", 
+      "note": "2.0", 
+      "zeit": "0.00", 
       "bewertungsart": 14, 
       "posten": 9, 
       "teilnehmer": 5
@@ -5614,8 +5958,8 @@
     "pk": 172, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "3", 
-      "zeit": "0", 
+      "note": "3.0", 
+      "zeit": "0.00", 
       "bewertungsart": 14, 
       "posten": 9, 
       "teilnehmer": 7
@@ -5625,8 +5969,8 @@
     "pk": 173, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "1", 
-      "zeit": "0", 
+      "note": "1.0", 
+      "zeit": "0.00", 
       "bewertungsart": 14, 
       "posten": 9, 
       "teilnehmer": 8
@@ -5636,8 +5980,8 @@
     "pk": 174, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "1", 
-      "zeit": "0", 
+      "note": "1.0", 
+      "zeit": "0.00", 
       "bewertungsart": 14, 
       "posten": 9, 
       "teilnehmer": 9
@@ -5647,8 +5991,8 @@
     "pk": 175, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 14, 
       "posten": 9, 
       "teilnehmer": 10
@@ -5658,8 +6002,8 @@
     "pk": 176, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "1", 
-      "zeit": "0", 
+      "note": "1.0", 
+      "zeit": "0.00", 
       "bewertungsart": 14, 
       "posten": 9, 
       "teilnehmer": 11
@@ -5669,8 +6013,8 @@
     "pk": 177, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "2", 
-      "zeit": "0", 
+      "note": "2.0", 
+      "zeit": "0.00", 
       "bewertungsart": 14, 
       "posten": 9, 
       "teilnehmer": 12
@@ -5680,8 +6024,8 @@
     "pk": 179, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "1", 
-      "zeit": "0", 
+      "note": "1.0", 
+      "zeit": "0.00", 
       "bewertungsart": 14, 
       "posten": 9, 
       "teilnehmer": 18
@@ -5691,8 +6035,8 @@
     "pk": 180, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 14, 
       "posten": 9, 
       "teilnehmer": 19
@@ -5702,8 +6046,8 @@
     "pk": 181, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "5", 
-      "zeit": "0", 
+      "note": "5.0", 
+      "zeit": "0.00", 
       "bewertungsart": 15, 
       "posten": 9, 
       "teilnehmer": 67
@@ -5713,8 +6057,8 @@
     "pk": 182, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "9", 
-      "zeit": "0", 
+      "note": "9.0", 
+      "zeit": "0.00", 
       "bewertungsart": 15, 
       "posten": 9, 
       "teilnehmer": 2
@@ -5724,8 +6068,8 @@
     "pk": 183, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "9", 
-      "zeit": "0", 
+      "note": "9.0", 
+      "zeit": "0.00", 
       "bewertungsart": 15, 
       "posten": 9, 
       "teilnehmer": 3
@@ -5735,8 +6079,8 @@
     "pk": 184, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "5", 
-      "zeit": "0", 
+      "note": "5.0", 
+      "zeit": "0.00", 
       "bewertungsart": 15, 
       "posten": 9, 
       "teilnehmer": 4
@@ -5746,8 +6090,8 @@
     "pk": 185, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "9", 
-      "zeit": "0", 
+      "note": "9.0", 
+      "zeit": "0.00", 
       "bewertungsart": 15, 
       "posten": 9, 
       "teilnehmer": 5
@@ -5757,8 +6101,8 @@
     "pk": 187, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "8", 
-      "zeit": "0", 
+      "note": "8.0", 
+      "zeit": "0.00", 
       "bewertungsart": 15, 
       "posten": 9, 
       "teilnehmer": 7
@@ -5768,8 +6112,8 @@
     "pk": 188, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "9", 
-      "zeit": "0", 
+      "note": "9.0", 
+      "zeit": "0.00", 
       "bewertungsart": 15, 
       "posten": 9, 
       "teilnehmer": 8
@@ -5780,7 +6124,7 @@
     "model": "sasse.bewertung", 
     "fields": {
       "note": "5.5", 
-      "zeit": "0", 
+      "zeit": "0.00", 
       "bewertungsart": 15, 
       "posten": 9, 
       "teilnehmer": 9
@@ -5790,8 +6134,8 @@
     "pk": 190, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "9", 
-      "zeit": "0", 
+      "note": "9.0", 
+      "zeit": "0.00", 
       "bewertungsart": 15, 
       "posten": 9, 
       "teilnehmer": 10
@@ -5801,8 +6145,8 @@
     "pk": 191, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "9", 
-      "zeit": "0", 
+      "note": "9.0", 
+      "zeit": "0.00", 
       "bewertungsart": 15, 
       "posten": 9, 
       "teilnehmer": 11
@@ -5812,8 +6156,8 @@
     "pk": 192, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "8", 
-      "zeit": "0", 
+      "note": "8.0", 
+      "zeit": "0.00", 
       "bewertungsart": 15, 
       "posten": 9, 
       "teilnehmer": 12
@@ -5823,8 +6167,8 @@
     "pk": 194, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "9", 
-      "zeit": "0", 
+      "note": "9.0", 
+      "zeit": "0.00", 
       "bewertungsart": 15, 
       "posten": 9, 
       "teilnehmer": 18
@@ -5834,8 +6178,8 @@
     "pk": 195, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "8", 
-      "zeit": "0", 
+      "note": "8.0", 
+      "zeit": "0.00", 
       "bewertungsart": 15, 
       "posten": 9, 
       "teilnehmer": 19
@@ -5845,8 +6189,8 @@
     "pk": 196, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "90", 
+      "note": "0.0", 
+      "zeit": "90.00", 
       "bewertungsart": 16, 
       "posten": 11, 
       "teilnehmer": 67
@@ -5856,8 +6200,8 @@
     "pk": 197, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "122", 
+      "note": "0.0", 
+      "zeit": "122.00", 
       "bewertungsart": 16, 
       "posten": 11, 
       "teilnehmer": 2
@@ -5867,8 +6211,8 @@
     "pk": 198, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "112", 
+      "note": "0.0", 
+      "zeit": "112.00", 
       "bewertungsart": 16, 
       "posten": 11, 
       "teilnehmer": 3
@@ -5878,8 +6222,8 @@
     "pk": 199, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "123", 
+      "note": "0.0", 
+      "zeit": "123.00", 
       "bewertungsart": 16, 
       "posten": 11, 
       "teilnehmer": 4
@@ -5889,8 +6233,8 @@
     "pk": 200, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "114", 
+      "note": "0.0", 
+      "zeit": "114.00", 
       "bewertungsart": 16, 
       "posten": 11, 
       "teilnehmer": 5
@@ -5900,8 +6244,8 @@
     "pk": 202, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "115", 
+      "note": "0.0", 
+      "zeit": "115.00", 
       "bewertungsart": 16, 
       "posten": 11, 
       "teilnehmer": 7
@@ -5911,8 +6255,8 @@
     "pk": 203, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "123", 
+      "note": "0.0", 
+      "zeit": "123.00", 
       "bewertungsart": 16, 
       "posten": 11, 
       "teilnehmer": 8
@@ -5922,8 +6266,8 @@
     "pk": 204, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "145", 
+      "note": "0.0", 
+      "zeit": "145.00", 
       "bewertungsart": 16, 
       "posten": 11, 
       "teilnehmer": 9
@@ -5933,8 +6277,8 @@
     "pk": 205, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "156", 
+      "note": "0.0", 
+      "zeit": "156.00", 
       "bewertungsart": 16, 
       "posten": 11, 
       "teilnehmer": 10
@@ -5944,8 +6288,8 @@
     "pk": 206, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "123", 
+      "note": "0.0", 
+      "zeit": "123.00", 
       "bewertungsart": 16, 
       "posten": 11, 
       "teilnehmer": 11
@@ -5955,8 +6299,8 @@
     "pk": 207, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "156", 
+      "note": "0.0", 
+      "zeit": "156.00", 
       "bewertungsart": 16, 
       "posten": 11, 
       "teilnehmer": 12
@@ -5966,8 +6310,8 @@
     "pk": 209, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "156", 
+      "note": "0.0", 
+      "zeit": "156.00", 
       "bewertungsart": 16, 
       "posten": 11, 
       "teilnehmer": 18
@@ -5977,8 +6321,8 @@
     "pk": 210, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "123", 
+      "note": "0.0", 
+      "zeit": "123.00", 
       "bewertungsart": 16, 
       "posten": 11, 
       "teilnehmer": 19
@@ -5988,8 +6332,8 @@
     "pk": 211, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "56", 
+      "note": "0.0", 
+      "zeit": "56.00", 
       "bewertungsart": 16, 
       "posten": 12, 
       "teilnehmer": 67
@@ -5999,8 +6343,8 @@
     "pk": 212, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "55", 
+      "note": "0.0", 
+      "zeit": "55.00", 
       "bewertungsart": 16, 
       "posten": 12, 
       "teilnehmer": 2
@@ -6010,8 +6354,8 @@
     "pk": 213, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "57", 
+      "note": "0.0", 
+      "zeit": "57.00", 
       "bewertungsart": 16, 
       "posten": 12, 
       "teilnehmer": 3
@@ -6021,8 +6365,8 @@
     "pk": 214, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "59", 
+      "note": "0.0", 
+      "zeit": "59.00", 
       "bewertungsart": 16, 
       "posten": 12, 
       "teilnehmer": 4
@@ -6032,8 +6376,8 @@
     "pk": 215, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "63", 
+      "note": "0.0", 
+      "zeit": "63.00", 
       "bewertungsart": 16, 
       "posten": 12, 
       "teilnehmer": 5
@@ -6043,8 +6387,8 @@
     "pk": 217, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "49", 
+      "note": "0.0", 
+      "zeit": "49.00", 
       "bewertungsart": 16, 
       "posten": 12, 
       "teilnehmer": 7
@@ -6054,8 +6398,8 @@
     "pk": 218, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "55", 
+      "note": "0.0", 
+      "zeit": "55.00", 
       "bewertungsart": 16, 
       "posten": 12, 
       "teilnehmer": 8
@@ -6065,8 +6409,8 @@
     "pk": 219, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "56", 
+      "note": "0.0", 
+      "zeit": "56.00", 
       "bewertungsart": 16, 
       "posten": 12, 
       "teilnehmer": 9
@@ -6076,8 +6420,8 @@
     "pk": 220, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "64", 
+      "note": "0.0", 
+      "zeit": "64.00", 
       "bewertungsart": 16, 
       "posten": 12, 
       "teilnehmer": 10
@@ -6087,8 +6431,8 @@
     "pk": 221, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "58", 
+      "note": "0.0", 
+      "zeit": "58.00", 
       "bewertungsart": 16, 
       "posten": 12, 
       "teilnehmer": 11
@@ -6098,8 +6442,8 @@
     "pk": 222, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "66", 
+      "note": "0.0", 
+      "zeit": "66.00", 
       "bewertungsart": 16, 
       "posten": 12, 
       "teilnehmer": 12
@@ -6109,8 +6453,8 @@
     "pk": 224, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "55", 
+      "note": "0.0", 
+      "zeit": "55.00", 
       "bewertungsart": 16, 
       "posten": 12, 
       "teilnehmer": 18
@@ -6120,8 +6464,8 @@
     "pk": 225, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "68", 
+      "note": "0.0", 
+      "zeit": "68.00", 
       "bewertungsart": 16, 
       "posten": 12, 
       "teilnehmer": 19
@@ -6131,8 +6475,8 @@
     "pk": 226, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 1, 
       "posten": 1, 
       "teilnehmer": 59
@@ -6142,8 +6486,8 @@
     "pk": 227, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 1, 
       "posten": 1, 
       "teilnehmer": 60
@@ -6153,8 +6497,8 @@
     "pk": 228, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 1, 
       "posten": 1, 
       "teilnehmer": 15
@@ -6164,8 +6508,8 @@
     "pk": 235, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 1, 
       "posten": 1, 
       "teilnehmer": 36
@@ -6175,8 +6519,8 @@
     "pk": 239, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 1, 
       "posten": 1, 
       "teilnehmer": 41
@@ -6186,8 +6530,8 @@
     "pk": 240, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 1, 
       "posten": 1, 
       "teilnehmer": 42
@@ -6197,8 +6541,8 @@
     "pk": 241, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 2, 
       "posten": 3, 
       "teilnehmer": 59
@@ -6208,8 +6552,8 @@
     "pk": 242, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 2, 
       "posten": 3, 
       "teilnehmer": 60
@@ -6219,8 +6563,8 @@
     "pk": 243, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 2, 
       "posten": 3, 
       "teilnehmer": 15
@@ -6230,8 +6574,8 @@
     "pk": 250, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 2, 
       "posten": 3, 
       "teilnehmer": 36
@@ -6241,8 +6585,8 @@
     "pk": 254, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 2, 
       "posten": 3, 
       "teilnehmer": 41
@@ -6252,8 +6596,8 @@
     "pk": 255, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 2, 
       "posten": 3, 
       "teilnehmer": 42
@@ -6263,8 +6607,8 @@
     "pk": 256, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "10", 
-      "zeit": "0", 
+      "note": "10.0", 
+      "zeit": "0.00", 
       "bewertungsart": 3, 
       "posten": 3, 
       "teilnehmer": 59
@@ -6274,8 +6618,8 @@
     "pk": 257, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "10", 
-      "zeit": "0", 
+      "note": "10.0", 
+      "zeit": "0.00", 
       "bewertungsart": 3, 
       "posten": 3, 
       "teilnehmer": 60
@@ -6285,8 +6629,8 @@
     "pk": 258, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "10", 
-      "zeit": "0", 
+      "note": "10.0", 
+      "zeit": "0.00", 
       "bewertungsart": 3, 
       "posten": 3, 
       "teilnehmer": 15
@@ -6296,8 +6640,8 @@
     "pk": 265, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "10", 
-      "zeit": "0", 
+      "note": "10.0", 
+      "zeit": "0.00", 
       "bewertungsart": 3, 
       "posten": 3, 
       "teilnehmer": 36
@@ -6307,8 +6651,8 @@
     "pk": 269, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "10", 
-      "zeit": "0", 
+      "note": "10.0", 
+      "zeit": "0.00", 
       "bewertungsart": 3, 
       "posten": 3, 
       "teilnehmer": 41
@@ -6318,8 +6662,8 @@
     "pk": 270, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "10", 
-      "zeit": "0", 
+      "note": "10.0", 
+      "zeit": "0.00", 
       "bewertungsart": 3, 
       "posten": 3, 
       "teilnehmer": 42
@@ -6329,8 +6673,8 @@
     "pk": 271, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 4, 
       "posten": 4, 
       "teilnehmer": 59
@@ -6340,8 +6684,8 @@
     "pk": 272, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 4, 
       "posten": 4, 
       "teilnehmer": 60
@@ -6351,8 +6695,8 @@
     "pk": 273, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 4, 
       "posten": 4, 
       "teilnehmer": 15
@@ -6362,8 +6706,8 @@
     "pk": 280, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 4, 
       "posten": 4, 
       "teilnehmer": 36
@@ -6373,8 +6717,8 @@
     "pk": 284, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 4, 
       "posten": 4, 
       "teilnehmer": 41
@@ -6384,8 +6728,8 @@
     "pk": 285, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 4, 
       "posten": 4, 
       "teilnehmer": 42
@@ -6395,8 +6739,8 @@
     "pk": 286, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "10", 
-      "zeit": "0", 
+      "note": "10.0", 
+      "zeit": "0.00", 
       "bewertungsart": 5, 
       "posten": 4, 
       "teilnehmer": 59
@@ -6406,8 +6750,8 @@
     "pk": 287, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "10", 
-      "zeit": "0", 
+      "note": "10.0", 
+      "zeit": "0.00", 
       "bewertungsart": 5, 
       "posten": 4, 
       "teilnehmer": 60
@@ -6417,8 +6761,8 @@
     "pk": 288, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "10", 
-      "zeit": "0", 
+      "note": "10.0", 
+      "zeit": "0.00", 
       "bewertungsart": 5, 
       "posten": 4, 
       "teilnehmer": 15
@@ -6428,8 +6772,8 @@
     "pk": 295, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "10", 
-      "zeit": "0", 
+      "note": "10.0", 
+      "zeit": "0.00", 
       "bewertungsart": 5, 
       "posten": 4, 
       "teilnehmer": 36
@@ -6439,8 +6783,8 @@
     "pk": 299, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "10", 
-      "zeit": "0", 
+      "note": "10.0", 
+      "zeit": "0.00", 
       "bewertungsart": 5, 
       "posten": 4, 
       "teilnehmer": 41
@@ -6450,8 +6794,8 @@
     "pk": 300, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "10", 
-      "zeit": "0", 
+      "note": "10.0", 
+      "zeit": "0.00", 
       "bewertungsart": 5, 
       "posten": 4, 
       "teilnehmer": 42
@@ -6461,8 +6805,8 @@
     "pk": 301, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 14, 
       "posten": 7, 
       "teilnehmer": 59
@@ -6472,8 +6816,8 @@
     "pk": 302, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 14, 
       "posten": 7, 
       "teilnehmer": 60
@@ -6483,8 +6827,8 @@
     "pk": 303, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 14, 
       "posten": 7, 
       "teilnehmer": 15
@@ -6494,8 +6838,8 @@
     "pk": 310, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 14, 
       "posten": 7, 
       "teilnehmer": 36
@@ -6505,8 +6849,8 @@
     "pk": 314, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 14, 
       "posten": 7, 
       "teilnehmer": 41
@@ -6516,8 +6860,8 @@
     "pk": 315, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 14, 
       "posten": 7, 
       "teilnehmer": 42
@@ -6527,8 +6871,8 @@
     "pk": 316, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "10", 
-      "zeit": "0", 
+      "note": "10.0", 
+      "zeit": "0.00", 
       "bewertungsart": 15, 
       "posten": 7, 
       "teilnehmer": 59
@@ -6538,8 +6882,8 @@
     "pk": 317, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "10", 
-      "zeit": "0", 
+      "note": "10.0", 
+      "zeit": "0.00", 
       "bewertungsart": 15, 
       "posten": 7, 
       "teilnehmer": 60
@@ -6549,8 +6893,8 @@
     "pk": 318, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "10", 
-      "zeit": "0", 
+      "note": "10.0", 
+      "zeit": "0.00", 
       "bewertungsart": 15, 
       "posten": 7, 
       "teilnehmer": 15
@@ -6560,8 +6904,8 @@
     "pk": 325, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "10", 
-      "zeit": "0", 
+      "note": "10.0", 
+      "zeit": "0.00", 
       "bewertungsart": 15, 
       "posten": 7, 
       "teilnehmer": 36
@@ -6571,8 +6915,8 @@
     "pk": 329, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "10", 
-      "zeit": "0", 
+      "note": "10.0", 
+      "zeit": "0.00", 
       "bewertungsart": 15, 
       "posten": 7, 
       "teilnehmer": 41
@@ -6582,8 +6926,8 @@
     "pk": 330, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "10", 
-      "zeit": "0", 
+      "note": "10.0", 
+      "zeit": "0.00", 
       "bewertungsart": 15, 
       "posten": 7, 
       "teilnehmer": 42
@@ -6593,8 +6937,8 @@
     "pk": 331, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 8, 
       "posten": 8, 
       "teilnehmer": 59
@@ -6604,8 +6948,8 @@
     "pk": 332, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 8, 
       "posten": 8, 
       "teilnehmer": 60
@@ -6615,8 +6959,8 @@
     "pk": 333, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 8, 
       "posten": 8, 
       "teilnehmer": 15
@@ -6626,8 +6970,8 @@
     "pk": 340, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 8, 
       "posten": 8, 
       "teilnehmer": 36
@@ -6637,8 +6981,8 @@
     "pk": 344, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 8, 
       "posten": 8, 
       "teilnehmer": 41
@@ -6648,8 +6992,8 @@
     "pk": 345, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 8, 
       "posten": 8, 
       "teilnehmer": 42
@@ -6659,8 +7003,8 @@
     "pk": 346, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "10", 
-      "zeit": "0", 
+      "note": "10.0", 
+      "zeit": "0.00", 
       "bewertungsart": 9, 
       "posten": 8, 
       "teilnehmer": 59
@@ -6670,8 +7014,8 @@
     "pk": 347, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "10", 
-      "zeit": "0", 
+      "note": "10.0", 
+      "zeit": "0.00", 
       "bewertungsart": 9, 
       "posten": 8, 
       "teilnehmer": 60
@@ -6681,8 +7025,8 @@
     "pk": 348, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "10", 
-      "zeit": "0", 
+      "note": "10.0", 
+      "zeit": "0.00", 
       "bewertungsart": 9, 
       "posten": 8, 
       "teilnehmer": 15
@@ -6692,8 +7036,8 @@
     "pk": 355, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "10", 
-      "zeit": "0", 
+      "note": "10.0", 
+      "zeit": "0.00", 
       "bewertungsart": 9, 
       "posten": 8, 
       "teilnehmer": 36
@@ -6703,8 +7047,8 @@
     "pk": 359, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "10", 
-      "zeit": "0", 
+      "note": "10.0", 
+      "zeit": "0.00", 
       "bewertungsart": 9, 
       "posten": 8, 
       "teilnehmer": 41
@@ -6714,8 +7058,8 @@
     "pk": 360, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "10", 
-      "zeit": "0", 
+      "note": "10.0", 
+      "zeit": "0.00", 
       "bewertungsart": 9, 
       "posten": 8, 
       "teilnehmer": 42
@@ -6725,8 +7069,8 @@
     "pk": 361, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 10, 
       "posten": 10, 
       "teilnehmer": 59
@@ -6736,8 +7080,8 @@
     "pk": 362, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 10, 
       "posten": 10, 
       "teilnehmer": 60
@@ -6747,8 +7091,8 @@
     "pk": 363, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 10, 
       "posten": 10, 
       "teilnehmer": 15
@@ -6758,8 +7102,8 @@
     "pk": 370, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 10, 
       "posten": 10, 
       "teilnehmer": 36
@@ -6769,8 +7113,8 @@
     "pk": 374, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 10, 
       "posten": 10, 
       "teilnehmer": 41
@@ -6780,8 +7124,8 @@
     "pk": 375, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 10, 
       "posten": 10, 
       "teilnehmer": 42
@@ -6791,8 +7135,8 @@
     "pk": 376, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "15", 
-      "zeit": "0", 
+      "note": "15.0", 
+      "zeit": "0.00", 
       "bewertungsart": 11, 
       "posten": 10, 
       "teilnehmer": 59
@@ -6802,8 +7146,8 @@
     "pk": 377, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "15", 
-      "zeit": "0", 
+      "note": "15.0", 
+      "zeit": "0.00", 
       "bewertungsart": 11, 
       "posten": 10, 
       "teilnehmer": 60
@@ -6813,8 +7157,8 @@
     "pk": 378, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "15", 
-      "zeit": "0", 
+      "note": "15.0", 
+      "zeit": "0.00", 
       "bewertungsart": 11, 
       "posten": 10, 
       "teilnehmer": 15
@@ -6824,8 +7168,8 @@
     "pk": 385, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "15", 
-      "zeit": "0", 
+      "note": "15.0", 
+      "zeit": "0.00", 
       "bewertungsart": 11, 
       "posten": 10, 
       "teilnehmer": 36
@@ -6835,8 +7179,8 @@
     "pk": 389, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "15", 
-      "zeit": "0", 
+      "note": "15.0", 
+      "zeit": "0.00", 
       "bewertungsart": 11, 
       "posten": 10, 
       "teilnehmer": 41
@@ -6846,8 +7190,8 @@
     "pk": 390, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "15", 
-      "zeit": "0", 
+      "note": "15.0", 
+      "zeit": "0.00", 
       "bewertungsart": 11, 
       "posten": 10, 
       "teilnehmer": 42
@@ -6857,8 +7201,8 @@
     "pk": 391, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 14, 
       "posten": 9, 
       "teilnehmer": 59
@@ -6868,8 +7212,8 @@
     "pk": 392, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 14, 
       "posten": 9, 
       "teilnehmer": 60
@@ -6879,8 +7223,8 @@
     "pk": 393, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 14, 
       "posten": 9, 
       "teilnehmer": 15
@@ -6890,8 +7234,8 @@
     "pk": 400, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 14, 
       "posten": 9, 
       "teilnehmer": 36
@@ -6901,8 +7245,8 @@
     "pk": 404, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 14, 
       "posten": 9, 
       "teilnehmer": 41
@@ -6912,8 +7256,8 @@
     "pk": 405, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 14, 
       "posten": 9, 
       "teilnehmer": 42
@@ -6923,8 +7267,8 @@
     "pk": 406, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "10", 
-      "zeit": "0", 
+      "note": "10.0", 
+      "zeit": "0.00", 
       "bewertungsart": 15, 
       "posten": 9, 
       "teilnehmer": 59
@@ -6934,8 +7278,8 @@
     "pk": 407, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "10", 
-      "zeit": "0", 
+      "note": "10.0", 
+      "zeit": "0.00", 
       "bewertungsart": 15, 
       "posten": 9, 
       "teilnehmer": 60
@@ -6945,8 +7289,8 @@
     "pk": 408, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "10", 
-      "zeit": "0", 
+      "note": "10.0", 
+      "zeit": "0.00", 
       "bewertungsart": 15, 
       "posten": 9, 
       "teilnehmer": 15
@@ -6956,8 +7300,8 @@
     "pk": 415, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "10", 
-      "zeit": "0", 
+      "note": "10.0", 
+      "zeit": "0.00", 
       "bewertungsart": 15, 
       "posten": 9, 
       "teilnehmer": 36
@@ -6967,8 +7311,8 @@
     "pk": 419, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "10", 
-      "zeit": "0", 
+      "note": "10.0", 
+      "zeit": "0.00", 
       "bewertungsart": 15, 
       "posten": 9, 
       "teilnehmer": 41
@@ -6978,8 +7322,8 @@
     "pk": 420, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "10", 
-      "zeit": "0", 
+      "note": "10.0", 
+      "zeit": "0.00", 
       "bewertungsart": 15, 
       "posten": 9, 
       "teilnehmer": 42
@@ -6989,8 +7333,8 @@
     "pk": 421, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 1, 
       "posten": 1, 
       "teilnehmer": 43
@@ -7000,8 +7344,8 @@
     "pk": 422, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 1, 
       "posten": 1, 
       "teilnehmer": 44
@@ -7011,8 +7355,8 @@
     "pk": 423, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 2, 
       "posten": 3, 
       "teilnehmer": 43
@@ -7022,8 +7366,8 @@
     "pk": 424, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 2, 
       "posten": 3, 
       "teilnehmer": 44
@@ -7033,8 +7377,8 @@
     "pk": 425, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "10", 
-      "zeit": "0", 
+      "note": "10.0", 
+      "zeit": "0.00", 
       "bewertungsart": 3, 
       "posten": 3, 
       "teilnehmer": 43
@@ -7044,8 +7388,8 @@
     "pk": 426, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "10", 
-      "zeit": "0", 
+      "note": "10.0", 
+      "zeit": "0.00", 
       "bewertungsart": 3, 
       "posten": 3, 
       "teilnehmer": 44
@@ -7055,8 +7399,8 @@
     "pk": 427, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 4, 
       "posten": 4, 
       "teilnehmer": 43
@@ -7066,8 +7410,8 @@
     "pk": 428, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 4, 
       "posten": 4, 
       "teilnehmer": 44
@@ -7077,8 +7421,8 @@
     "pk": 429, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "10", 
-      "zeit": "0", 
+      "note": "10.0", 
+      "zeit": "0.00", 
       "bewertungsart": 5, 
       "posten": 4, 
       "teilnehmer": 43
@@ -7088,8 +7432,8 @@
     "pk": 430, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "10", 
-      "zeit": "0", 
+      "note": "10.0", 
+      "zeit": "0.00", 
       "bewertungsart": 5, 
       "posten": 4, 
       "teilnehmer": 44
@@ -7099,8 +7443,8 @@
     "pk": 431, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 14, 
       "posten": 7, 
       "teilnehmer": 43
@@ -7110,8 +7454,8 @@
     "pk": 432, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 14, 
       "posten": 7, 
       "teilnehmer": 44
@@ -7121,8 +7465,8 @@
     "pk": 433, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "10", 
-      "zeit": "0", 
+      "note": "10.0", 
+      "zeit": "0.00", 
       "bewertungsart": 15, 
       "posten": 7, 
       "teilnehmer": 43
@@ -7132,8 +7476,8 @@
     "pk": 434, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "10", 
-      "zeit": "0", 
+      "note": "10.0", 
+      "zeit": "0.00", 
       "bewertungsart": 15, 
       "posten": 7, 
       "teilnehmer": 44
@@ -7143,8 +7487,8 @@
     "pk": 435, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 8, 
       "posten": 8, 
       "teilnehmer": 43
@@ -7154,8 +7498,8 @@
     "pk": 436, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 8, 
       "posten": 8, 
       "teilnehmer": 44
@@ -7165,8 +7509,8 @@
     "pk": 437, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "10", 
-      "zeit": "0", 
+      "note": "10.0", 
+      "zeit": "0.00", 
       "bewertungsart": 9, 
       "posten": 8, 
       "teilnehmer": 43
@@ -7176,8 +7520,8 @@
     "pk": 438, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "10", 
-      "zeit": "0", 
+      "note": "10.0", 
+      "zeit": "0.00", 
       "bewertungsart": 9, 
       "posten": 8, 
       "teilnehmer": 44
@@ -7187,8 +7531,8 @@
     "pk": 439, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 10, 
       "posten": 10, 
       "teilnehmer": 43
@@ -7198,8 +7542,8 @@
     "pk": 440, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 10, 
       "posten": 10, 
       "teilnehmer": 44
@@ -7209,8 +7553,8 @@
     "pk": 441, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "15", 
-      "zeit": "0", 
+      "note": "15.0", 
+      "zeit": "0.00", 
       "bewertungsart": 11, 
       "posten": 10, 
       "teilnehmer": 43
@@ -7220,8 +7564,8 @@
     "pk": 442, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "15", 
-      "zeit": "0", 
+      "note": "15.0", 
+      "zeit": "0.00", 
       "bewertungsart": 11, 
       "posten": 10, 
       "teilnehmer": 44
@@ -7231,8 +7575,8 @@
     "pk": 443, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 14, 
       "posten": 9, 
       "teilnehmer": 43
@@ -7242,8 +7586,8 @@
     "pk": 444, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 14, 
       "posten": 9, 
       "teilnehmer": 44
@@ -7253,8 +7597,8 @@
     "pk": 445, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "10", 
-      "zeit": "0", 
+      "note": "10.0", 
+      "zeit": "0.00", 
       "bewertungsart": 15, 
       "posten": 9, 
       "teilnehmer": 43
@@ -7264,8 +7608,8 @@
     "pk": 446, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "10", 
-      "zeit": "0", 
+      "note": "10.0", 
+      "zeit": "0.00", 
       "bewertungsart": 15, 
       "posten": 9, 
       "teilnehmer": 44
@@ -7275,8 +7619,8 @@
     "pk": 447, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "123", 
+      "note": "0.0", 
+      "zeit": "123.00", 
       "bewertungsart": 16, 
       "posten": 11, 
       "teilnehmer": 15
@@ -7286,8 +7630,8 @@
     "pk": 454, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "131.3", 
+      "note": "0.0", 
+      "zeit": "131.30", 
       "bewertungsart": 16, 
       "posten": 11, 
       "teilnehmer": 36
@@ -7297,8 +7641,8 @@
     "pk": 458, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "130.3", 
+      "note": "0.0", 
+      "zeit": "130.30", 
       "bewertungsart": 16, 
       "posten": 11, 
       "teilnehmer": 41
@@ -7308,8 +7652,8 @@
     "pk": 459, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "133.8", 
+      "note": "0.0", 
+      "zeit": "133.80", 
       "bewertungsart": 16, 
       "posten": 11, 
       "teilnehmer": 42
@@ -7319,8 +7663,8 @@
     "pk": 460, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "133", 
+      "note": "0.0", 
+      "zeit": "133.00", 
       "bewertungsart": 16, 
       "posten": 11, 
       "teilnehmer": 43
@@ -7330,8 +7674,8 @@
     "pk": 461, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "131.9", 
+      "note": "0.0", 
+      "zeit": "131.90", 
       "bewertungsart": 16, 
       "posten": 11, 
       "teilnehmer": 44
@@ -7341,8 +7685,8 @@
     "pk": 462, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "63.3", 
+      "note": "0.0", 
+      "zeit": "63.30", 
       "bewertungsart": 16, 
       "posten": 12, 
       "teilnehmer": 15
@@ -7352,8 +7696,8 @@
     "pk": 469, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "69.3", 
+      "note": "0.0", 
+      "zeit": "69.30", 
       "bewertungsart": 16, 
       "posten": 12, 
       "teilnehmer": 36
@@ -7363,8 +7707,8 @@
     "pk": 473, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "67.4", 
+      "note": "0.0", 
+      "zeit": "67.40", 
       "bewertungsart": 16, 
       "posten": 12, 
       "teilnehmer": 41
@@ -7374,8 +7718,8 @@
     "pk": 474, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "55.8", 
+      "note": "0.0", 
+      "zeit": "55.80", 
       "bewertungsart": 16, 
       "posten": 12, 
       "teilnehmer": 42
@@ -7385,8 +7729,8 @@
     "pk": 475, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "69.4", 
+      "note": "0.0", 
+      "zeit": "69.40", 
       "bewertungsart": 16, 
       "posten": 12, 
       "teilnehmer": 43
@@ -7396,8 +7740,8 @@
     "pk": 476, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "78.4", 
+      "note": "0.0", 
+      "zeit": "78.40", 
       "bewertungsart": 16, 
       "posten": 12, 
       "teilnehmer": 44
@@ -7407,8 +7751,8 @@
     "pk": 477, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "120", 
+      "note": "0.0", 
+      "zeit": "120.00", 
       "bewertungsart": 16, 
       "posten": 11, 
       "teilnehmer": 55
@@ -7418,8 +7762,8 @@
     "pk": 478, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "123", 
+      "note": "0.0", 
+      "zeit": "123.00", 
       "bewertungsart": 16, 
       "posten": 11, 
       "teilnehmer": 56
@@ -7429,8 +7773,8 @@
     "pk": 479, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "129", 
+      "note": "0.0", 
+      "zeit": "129.00", 
       "bewertungsart": 16, 
       "posten": 11, 
       "teilnehmer": 57
@@ -7440,8 +7784,8 @@
     "pk": 480, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "111", 
+      "note": "0.0", 
+      "zeit": "111.00", 
       "bewertungsart": 16, 
       "posten": 11, 
       "teilnehmer": 58
@@ -7451,8 +7795,8 @@
     "pk": 481, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "133", 
+      "note": "0.0", 
+      "zeit": "133.00", 
       "bewertungsart": 16, 
       "posten": 11, 
       "teilnehmer": 59
@@ -7462,8 +7806,8 @@
     "pk": 482, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "120", 
+      "note": "0.0", 
+      "zeit": "120.00", 
       "bewertungsart": 16, 
       "posten": 11, 
       "teilnehmer": 60
@@ -7473,8 +7817,8 @@
     "pk": 483, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "64.2", 
+      "note": "0.0", 
+      "zeit": "64.20", 
       "bewertungsart": 16, 
       "posten": 12, 
       "teilnehmer": 55
@@ -7484,8 +7828,8 @@
     "pk": 484, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "67.3", 
+      "note": "0.0", 
+      "zeit": "67.30", 
       "bewertungsart": 16, 
       "posten": 12, 
       "teilnehmer": 56
@@ -7495,8 +7839,8 @@
     "pk": 485, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "59.3", 
+      "note": "0.0", 
+      "zeit": "59.30", 
       "bewertungsart": 16, 
       "posten": 12, 
       "teilnehmer": 57
@@ -7506,8 +7850,8 @@
     "pk": 486, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "71.3", 
+      "note": "0.0", 
+      "zeit": "71.30", 
       "bewertungsart": 16, 
       "posten": 12, 
       "teilnehmer": 58
@@ -7517,8 +7861,8 @@
     "pk": 487, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "67.3", 
+      "note": "0.0", 
+      "zeit": "67.30", 
       "bewertungsart": 16, 
       "posten": 12, 
       "teilnehmer": 59
@@ -7528,8 +7872,8 @@
     "pk": 488, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "68.3", 
+      "note": "0.0", 
+      "zeit": "68.30", 
       "bewertungsart": 16, 
       "posten": 12, 
       "teilnehmer": 60
@@ -7539,8 +7883,8 @@
     "pk": 492, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "193.9", 
+      "note": "0.0", 
+      "zeit": "193.90", 
       "bewertungsart": 16, 
       "posten": 11, 
       "teilnehmer": 53
@@ -7550,8 +7894,8 @@
     "pk": 498, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "55.4", 
+      "note": "0.0", 
+      "zeit": "55.40", 
       "bewertungsart": 16, 
       "posten": 12, 
       "teilnehmer": 53
@@ -7561,8 +7905,8 @@
     "pk": 501, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "99", 
+      "note": "0.0", 
+      "zeit": "99.00", 
       "bewertungsart": 16, 
       "posten": 13, 
       "teilnehmer": 20
@@ -7572,8 +7916,8 @@
     "pk": 502, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "88", 
+      "note": "0.0", 
+      "zeit": "88.00", 
       "bewertungsart": 16, 
       "posten": 13, 
       "teilnehmer": 21
@@ -7583,8 +7927,8 @@
     "pk": 503, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "90", 
+      "note": "0.0", 
+      "zeit": "90.00", 
       "bewertungsart": 16, 
       "posten": 13, 
       "teilnehmer": 63
@@ -7594,8 +7938,8 @@
     "pk": 505, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "77", 
+      "note": "0.0", 
+      "zeit": "77.00", 
       "bewertungsart": 16, 
       "posten": 13, 
       "teilnehmer": 61
@@ -7605,8 +7949,8 @@
     "pk": 506, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "98", 
+      "note": "0.0", 
+      "zeit": "98.00", 
       "bewertungsart": 16, 
       "posten": 13, 
       "teilnehmer": 64
@@ -7616,8 +7960,8 @@
     "pk": 507, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "99", 
+      "note": "0.0", 
+      "zeit": "99.00", 
       "bewertungsart": 16, 
       "posten": 13, 
       "teilnehmer": 65
@@ -7627,8 +7971,8 @@
     "pk": 508, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 2, 
       "posten": 15, 
       "teilnehmer": 68
@@ -7638,8 +7982,8 @@
     "pk": 509, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "1", 
-      "zeit": "0", 
+      "note": "1.0", 
+      "zeit": "0.00", 
       "bewertungsart": 2, 
       "posten": 15, 
       "teilnehmer": 69
@@ -7649,8 +7993,8 @@
     "pk": 510, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 2, 
       "posten": 15, 
       "teilnehmer": 70
@@ -7660,8 +8004,8 @@
     "pk": 511, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 2, 
       "posten": 15, 
       "teilnehmer": 71
@@ -7671,8 +8015,8 @@
     "pk": 512, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 2, 
       "posten": 15, 
       "teilnehmer": 75
@@ -7682,8 +8026,8 @@
     "pk": 513, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 2, 
       "posten": 15, 
       "teilnehmer": 72
@@ -7693,8 +8037,8 @@
     "pk": 514, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "1", 
-      "zeit": "0", 
+      "note": "1.0", 
+      "zeit": "0.00", 
       "bewertungsart": 2, 
       "posten": 15, 
       "teilnehmer": 74
@@ -7704,8 +8048,8 @@
     "pk": 515, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "1", 
-      "zeit": "0", 
+      "note": "1.0", 
+      "zeit": "0.00", 
       "bewertungsart": 2, 
       "posten": 15, 
       "teilnehmer": 76
@@ -7715,8 +8059,8 @@
     "pk": 516, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "1", 
-      "zeit": "0", 
+      "note": "1.0", 
+      "zeit": "0.00", 
       "bewertungsart": 2, 
       "posten": 15, 
       "teilnehmer": 77
@@ -7726,8 +8070,8 @@
     "pk": 517, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 2, 
       "posten": 15, 
       "teilnehmer": 78
@@ -7737,8 +8081,8 @@
     "pk": 518, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 2, 
       "posten": 15, 
       "teilnehmer": 79
@@ -7748,8 +8092,8 @@
     "pk": 519, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "1", 
-      "zeit": "0", 
+      "note": "1.0", 
+      "zeit": "0.00", 
       "bewertungsart": 2, 
       "posten": 15, 
       "teilnehmer": 80
@@ -7759,8 +8103,8 @@
     "pk": 520, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 2, 
       "posten": 15, 
       "teilnehmer": 81
@@ -7770,8 +8114,8 @@
     "pk": 521, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 2, 
       "posten": 15, 
       "teilnehmer": 82
@@ -7781,8 +8125,8 @@
     "pk": 522, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "10", 
-      "zeit": "0", 
+      "note": "10.0", 
+      "zeit": "0.00", 
       "bewertungsart": 3, 
       "posten": 15, 
       "teilnehmer": 68
@@ -7792,8 +8136,8 @@
     "pk": 523, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "10", 
-      "zeit": "0", 
+      "note": "10.0", 
+      "zeit": "0.00", 
       "bewertungsart": 3, 
       "posten": 15, 
       "teilnehmer": 69
@@ -7804,7 +8148,7 @@
     "model": "sasse.bewertung", 
     "fields": {
       "note": "9.5", 
-      "zeit": "0", 
+      "zeit": "0.00", 
       "bewertungsart": 3, 
       "posten": 15, 
       "teilnehmer": 70
@@ -7814,8 +8158,8 @@
     "pk": 525, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "10", 
-      "zeit": "0", 
+      "note": "10.0", 
+      "zeit": "0.00", 
       "bewertungsart": 3, 
       "posten": 15, 
       "teilnehmer": 71
@@ -7825,8 +8169,8 @@
     "pk": 526, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "10", 
-      "zeit": "0", 
+      "note": "10.0", 
+      "zeit": "0.00", 
       "bewertungsart": 3, 
       "posten": 15, 
       "teilnehmer": 75
@@ -7837,7 +8181,7 @@
     "model": "sasse.bewertung", 
     "fields": {
       "note": "9.5", 
-      "zeit": "0", 
+      "zeit": "0.00", 
       "bewertungsart": 3, 
       "posten": 15, 
       "teilnehmer": 72
@@ -7847,8 +8191,8 @@
     "pk": 528, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "10", 
-      "zeit": "0", 
+      "note": "10.0", 
+      "zeit": "0.00", 
       "bewertungsart": 3, 
       "posten": 15, 
       "teilnehmer": 74
@@ -7858,8 +8202,8 @@
     "pk": 529, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "10", 
-      "zeit": "0", 
+      "note": "10.0", 
+      "zeit": "0.00", 
       "bewertungsart": 3, 
       "posten": 15, 
       "teilnehmer": 76
@@ -7869,8 +8213,8 @@
     "pk": 530, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "10", 
-      "zeit": "0", 
+      "note": "10.0", 
+      "zeit": "0.00", 
       "bewertungsart": 3, 
       "posten": 15, 
       "teilnehmer": 77
@@ -7880,8 +8224,8 @@
     "pk": 531, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "10", 
-      "zeit": "0", 
+      "note": "10.0", 
+      "zeit": "0.00", 
       "bewertungsart": 3, 
       "posten": 15, 
       "teilnehmer": 78
@@ -7891,8 +8235,8 @@
     "pk": 532, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "10", 
-      "zeit": "0", 
+      "note": "10.0", 
+      "zeit": "0.00", 
       "bewertungsart": 3, 
       "posten": 15, 
       "teilnehmer": 79
@@ -7902,8 +8246,8 @@
     "pk": 533, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "10", 
-      "zeit": "0", 
+      "note": "10.0", 
+      "zeit": "0.00", 
       "bewertungsart": 3, 
       "posten": 15, 
       "teilnehmer": 80
@@ -7914,7 +8258,7 @@
     "model": "sasse.bewertung", 
     "fields": {
       "note": "9.5", 
-      "zeit": "0", 
+      "zeit": "0.00", 
       "bewertungsart": 3, 
       "posten": 15, 
       "teilnehmer": 81
@@ -7924,8 +8268,8 @@
     "pk": 535, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "10", 
-      "zeit": "0", 
+      "note": "10.0", 
+      "zeit": "0.00", 
       "bewertungsart": 3, 
       "posten": 15, 
       "teilnehmer": 82
@@ -7935,8 +8279,8 @@
     "pk": 536, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "1", 
-      "zeit": "0", 
+      "note": "1.0", 
+      "zeit": "0.00", 
       "bewertungsart": 14, 
       "posten": 17, 
       "teilnehmer": 68
@@ -7946,8 +8290,8 @@
     "pk": 537, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 14, 
       "posten": 17, 
       "teilnehmer": 69
@@ -7957,8 +8301,8 @@
     "pk": 538, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 14, 
       "posten": 17, 
       "teilnehmer": 70
@@ -7968,8 +8312,8 @@
     "pk": 539, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 14, 
       "posten": 17, 
       "teilnehmer": 71
@@ -7979,8 +8323,8 @@
     "pk": 540, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 14, 
       "posten": 17, 
       "teilnehmer": 75
@@ -7990,8 +8334,8 @@
     "pk": 541, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "2", 
-      "zeit": "0", 
+      "note": "2.0", 
+      "zeit": "0.00", 
       "bewertungsart": 14, 
       "posten": 17, 
       "teilnehmer": 72
@@ -8001,8 +8345,8 @@
     "pk": 542, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 14, 
       "posten": 17, 
       "teilnehmer": 74
@@ -8012,8 +8356,8 @@
     "pk": 543, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 14, 
       "posten": 17, 
       "teilnehmer": 76
@@ -8023,8 +8367,8 @@
     "pk": 544, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 14, 
       "posten": 17, 
       "teilnehmer": 77
@@ -8034,8 +8378,8 @@
     "pk": 545, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 14, 
       "posten": 17, 
       "teilnehmer": 78
@@ -8045,8 +8389,8 @@
     "pk": 546, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 14, 
       "posten": 17, 
       "teilnehmer": 79
@@ -8056,8 +8400,8 @@
     "pk": 547, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 14, 
       "posten": 17, 
       "teilnehmer": 80
@@ -8067,8 +8411,8 @@
     "pk": 548, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 14, 
       "posten": 17, 
       "teilnehmer": 81
@@ -8078,8 +8422,8 @@
     "pk": 549, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 14, 
       "posten": 17, 
       "teilnehmer": 82
@@ -8089,8 +8433,8 @@
     "pk": 550, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "9", 
-      "zeit": "0", 
+      "note": "9.0", 
+      "zeit": "0.00", 
       "bewertungsart": 15, 
       "posten": 17, 
       "teilnehmer": 68
@@ -8100,8 +8444,8 @@
     "pk": 551, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "10", 
-      "zeit": "0", 
+      "note": "10.0", 
+      "zeit": "0.00", 
       "bewertungsart": 15, 
       "posten": 17, 
       "teilnehmer": 69
@@ -8111,8 +8455,8 @@
     "pk": 552, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "10", 
-      "zeit": "0", 
+      "note": "10.0", 
+      "zeit": "0.00", 
       "bewertungsart": 15, 
       "posten": 17, 
       "teilnehmer": 70
@@ -8122,8 +8466,8 @@
     "pk": 553, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "8", 
-      "zeit": "0", 
+      "note": "8.0", 
+      "zeit": "0.00", 
       "bewertungsart": 15, 
       "posten": 17, 
       "teilnehmer": 71
@@ -8133,8 +8477,8 @@
     "pk": 554, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "10", 
-      "zeit": "0", 
+      "note": "10.0", 
+      "zeit": "0.00", 
       "bewertungsart": 15, 
       "posten": 17, 
       "teilnehmer": 75
@@ -8144,8 +8488,8 @@
     "pk": 555, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "9", 
-      "zeit": "0", 
+      "note": "9.0", 
+      "zeit": "0.00", 
       "bewertungsart": 15, 
       "posten": 17, 
       "teilnehmer": 72
@@ -8155,8 +8499,8 @@
     "pk": 556, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "10", 
-      "zeit": "0", 
+      "note": "10.0", 
+      "zeit": "0.00", 
       "bewertungsart": 15, 
       "posten": 17, 
       "teilnehmer": 74
@@ -8166,8 +8510,8 @@
     "pk": 557, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "10", 
-      "zeit": "0", 
+      "note": "10.0", 
+      "zeit": "0.00", 
       "bewertungsart": 15, 
       "posten": 17, 
       "teilnehmer": 76
@@ -8177,8 +8521,8 @@
     "pk": 558, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "10", 
-      "zeit": "0", 
+      "note": "10.0", 
+      "zeit": "0.00", 
       "bewertungsart": 15, 
       "posten": 17, 
       "teilnehmer": 77
@@ -8188,8 +8532,8 @@
     "pk": 559, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "10", 
-      "zeit": "0", 
+      "note": "10.0", 
+      "zeit": "0.00", 
       "bewertungsart": 15, 
       "posten": 17, 
       "teilnehmer": 78
@@ -8199,8 +8543,8 @@
     "pk": 560, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "8", 
-      "zeit": "0", 
+      "note": "8.0", 
+      "zeit": "0.00", 
       "bewertungsart": 15, 
       "posten": 17, 
       "teilnehmer": 79
@@ -8210,8 +8554,8 @@
     "pk": 561, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "10", 
-      "zeit": "0", 
+      "note": "10.0", 
+      "zeit": "0.00", 
       "bewertungsart": 15, 
       "posten": 17, 
       "teilnehmer": 80
@@ -8221,8 +8565,8 @@
     "pk": 562, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "9", 
-      "zeit": "0", 
+      "note": "9.0", 
+      "zeit": "0.00", 
       "bewertungsart": 15, 
       "posten": 17, 
       "teilnehmer": 81
@@ -8232,8 +8576,8 @@
     "pk": 563, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "10", 
-      "zeit": "0", 
+      "note": "10.0", 
+      "zeit": "0.00", 
       "bewertungsart": 15, 
       "posten": 17, 
       "teilnehmer": 82
@@ -8243,8 +8587,8 @@
     "pk": 564, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "43.2", 
+      "note": "0.0", 
+      "zeit": "43.20", 
       "bewertungsart": 16, 
       "posten": 18, 
       "teilnehmer": 68
@@ -8254,8 +8598,8 @@
     "pk": 565, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "44.3", 
+      "note": "0.0", 
+      "zeit": "44.30", 
       "bewertungsart": 16, 
       "posten": 18, 
       "teilnehmer": 69
@@ -8265,8 +8609,8 @@
     "pk": 566, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "49.5", 
+      "note": "0.0", 
+      "zeit": "49.50", 
       "bewertungsart": 16, 
       "posten": 18, 
       "teilnehmer": 70
@@ -8276,8 +8620,8 @@
     "pk": 567, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "39.2", 
+      "note": "0.0", 
+      "zeit": "39.20", 
       "bewertungsart": 16, 
       "posten": 18, 
       "teilnehmer": 71
@@ -8287,8 +8631,8 @@
     "pk": 568, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "50.3", 
+      "note": "0.0", 
+      "zeit": "50.30", 
       "bewertungsart": 16, 
       "posten": 18, 
       "teilnehmer": 75
@@ -8298,8 +8642,8 @@
     "pk": 569, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "41.2", 
+      "note": "0.0", 
+      "zeit": "41.20", 
       "bewertungsart": 16, 
       "posten": 18, 
       "teilnehmer": 72
@@ -8309,8 +8653,8 @@
     "pk": 570, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "44.3", 
+      "note": "0.0", 
+      "zeit": "44.30", 
       "bewertungsart": 16, 
       "posten": 18, 
       "teilnehmer": 74
@@ -8320,8 +8664,8 @@
     "pk": 571, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "45.2", 
+      "note": "0.0", 
+      "zeit": "45.20", 
       "bewertungsart": 16, 
       "posten": 18, 
       "teilnehmer": 76
@@ -8331,8 +8675,8 @@
     "pk": 572, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "41.1", 
+      "note": "0.0", 
+      "zeit": "41.10", 
       "bewertungsart": 16, 
       "posten": 18, 
       "teilnehmer": 77
@@ -8342,8 +8686,8 @@
     "pk": 573, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "49.9", 
+      "note": "0.0", 
+      "zeit": "49.90", 
       "bewertungsart": 16, 
       "posten": 18, 
       "teilnehmer": 78
@@ -8353,8 +8697,8 @@
     "pk": 574, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "40.3", 
+      "note": "0.0", 
+      "zeit": "40.30", 
       "bewertungsart": 16, 
       "posten": 18, 
       "teilnehmer": 79
@@ -8364,8 +8708,8 @@
     "pk": 575, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "44.3", 
+      "note": "0.0", 
+      "zeit": "44.30", 
       "bewertungsart": 16, 
       "posten": 18, 
       "teilnehmer": 80
@@ -8375,8 +8719,8 @@
     "pk": 576, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "51.3", 
+      "note": "0.0", 
+      "zeit": "51.30", 
       "bewertungsart": 16, 
       "posten": 18, 
       "teilnehmer": 81
@@ -8386,8 +8730,8 @@
     "pk": 577, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "49.3", 
+      "note": "0.0", 
+      "zeit": "49.30", 
       "bewertungsart": 16, 
       "posten": 18, 
       "teilnehmer": 82
@@ -8397,8 +8741,8 @@
     "pk": 578, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "87.5", 
+      "note": "0.0", 
+      "zeit": "87.50", 
       "bewertungsart": 16, 
       "posten": 19, 
       "teilnehmer": 68
@@ -8408,8 +8752,8 @@
     "pk": 579, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "80.4", 
+      "note": "0.0", 
+      "zeit": "80.40", 
       "bewertungsart": 16, 
       "posten": 19, 
       "teilnehmer": 69
@@ -8419,8 +8763,8 @@
     "pk": 580, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "88.3", 
+      "note": "0.0", 
+      "zeit": "88.30", 
       "bewertungsart": 16, 
       "posten": 19, 
       "teilnehmer": 70
@@ -8430,8 +8774,8 @@
     "pk": 581, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "89.3", 
+      "note": "0.0", 
+      "zeit": "89.30", 
       "bewertungsart": 16, 
       "posten": 19, 
       "teilnehmer": 71
@@ -8441,8 +8785,8 @@
     "pk": 582, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "93.4", 
+      "note": "0.0", 
+      "zeit": "93.40", 
       "bewertungsart": 16, 
       "posten": 19, 
       "teilnehmer": 75
@@ -8452,8 +8796,8 @@
     "pk": 583, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "99.3", 
+      "note": "0.0", 
+      "zeit": "99.30", 
       "bewertungsart": 16, 
       "posten": 19, 
       "teilnehmer": 72
@@ -8463,8 +8807,8 @@
     "pk": 584, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "80.3", 
+      "note": "0.0", 
+      "zeit": "80.30", 
       "bewertungsart": 16, 
       "posten": 19, 
       "teilnehmer": 74
@@ -8474,8 +8818,8 @@
     "pk": 585, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "78.3", 
+      "note": "0.0", 
+      "zeit": "78.30", 
       "bewertungsart": 16, 
       "posten": 19, 
       "teilnehmer": 76
@@ -8485,8 +8829,8 @@
     "pk": 586, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "94.4", 
+      "note": "0.0", 
+      "zeit": "94.40", 
       "bewertungsart": 16, 
       "posten": 19, 
       "teilnehmer": 77
@@ -8496,8 +8840,8 @@
     "pk": 587, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "90.3", 
+      "note": "0.0", 
+      "zeit": "90.30", 
       "bewertungsart": 16, 
       "posten": 19, 
       "teilnehmer": 78
@@ -8507,8 +8851,8 @@
     "pk": 588, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "86.4", 
+      "note": "0.0", 
+      "zeit": "86.40", 
       "bewertungsart": 16, 
       "posten": 19, 
       "teilnehmer": 79
@@ -8518,8 +8862,8 @@
     "pk": 589, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "90.3", 
+      "note": "0.0", 
+      "zeit": "90.30", 
       "bewertungsart": 16, 
       "posten": 19, 
       "teilnehmer": 80
@@ -8529,8 +8873,8 @@
     "pk": 590, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "99.3", 
+      "note": "0.0", 
+      "zeit": "99.30", 
       "bewertungsart": 16, 
       "posten": 19, 
       "teilnehmer": 81
@@ -8540,8 +8884,8 @@
     "pk": 591, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "82.3", 
+      "note": "0.0", 
+      "zeit": "82.30", 
       "bewertungsart": 16, 
       "posten": 19, 
       "teilnehmer": 82
@@ -8551,8 +8895,8 @@
     "pk": 592, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "0", 
+      "note": "0.0", 
+      "zeit": "0.00", 
       "bewertungsart": 2, 
       "posten": 15, 
       "teilnehmer": 83
@@ -8562,8 +8906,8 @@
     "pk": 593, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "10", 
-      "zeit": "0", 
+      "note": "10.0", 
+      "zeit": "0.00", 
       "bewertungsart": 3, 
       "posten": 15, 
       "teilnehmer": 83
@@ -8573,8 +8917,8 @@
     "pk": 594, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "1", 
-      "zeit": "0", 
+      "note": "1.0", 
+      "zeit": "0.00", 
       "bewertungsart": 14, 
       "posten": 17, 
       "teilnehmer": 83
@@ -8584,8 +8928,8 @@
     "pk": 595, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "10", 
-      "zeit": "0", 
+      "note": "10.0", 
+      "zeit": "0.00", 
       "bewertungsart": 15, 
       "posten": 17, 
       "teilnehmer": 83
@@ -8595,8 +8939,8 @@
     "pk": 596, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "52.3", 
+      "note": "0.0", 
+      "zeit": "52.30", 
       "bewertungsart": 16, 
       "posten": 18, 
       "teilnehmer": 83
@@ -8606,21 +8950,11 @@
     "pk": 597, 
     "model": "sasse.bewertung", 
     "fields": {
-      "note": "0", 
-      "zeit": "92.3", 
+      "note": "0.0", 
+      "zeit": "92.30", 
       "bewertungsart": 16, 
       "posten": 19, 
       "teilnehmer": 83
-    }
-  }, 
-  {
-    "pk": 20, 
-    "model": "sasse.teilnehmer", 
-    "fields": {
-      "startnummer": 1, 
-      "disqualifiziert": false, 
-      "disziplin": 2, 
-      "ausgeschieden": false
     }
   }, 
   {
@@ -8638,6 +8972,26 @@
     "model": "sasse.teilnehmer", 
     "fields": {
       "startnummer": 1, 
+      "disqualifiziert": false, 
+      "disziplin": 11, 
+      "ausgeschieden": false
+    }
+  }, 
+  {
+    "pk": 20, 
+    "model": "sasse.teilnehmer", 
+    "fields": {
+      "startnummer": 1, 
+      "disqualifiziert": false, 
+      "disziplin": 2, 
+      "ausgeschieden": false
+    }
+  }, 
+  {
+    "pk": 69, 
+    "model": "sasse.teilnehmer", 
+    "fields": {
+      "startnummer": 2, 
       "disqualifiziert": false, 
       "disziplin": 11, 
       "ausgeschieden": false
@@ -8664,10 +9018,10 @@
     }
   }, 
   {
-    "pk": 69, 
+    "pk": 70, 
     "model": "sasse.teilnehmer", 
     "fields": {
-      "startnummer": 2, 
+      "startnummer": 3, 
       "disqualifiziert": false, 
       "disziplin": 11, 
       "ausgeschieden": false
@@ -8684,10 +9038,10 @@
     }
   }, 
   {
-    "pk": 70, 
+    "pk": 71, 
     "model": "sasse.teilnehmer", 
     "fields": {
-      "startnummer": 3, 
+      "startnummer": 4, 
       "disqualifiziert": false, 
       "disziplin": 11, 
       "ausgeschieden": false
@@ -8710,16 +9064,6 @@
       "startnummer": 4, 
       "disqualifiziert": false, 
       "disziplin": 2, 
-      "ausgeschieden": false
-    }
-  }, 
-  {
-    "pk": 71, 
-    "model": "sasse.teilnehmer", 
-    "fields": {
-      "startnummer": 4, 
-      "disqualifiziert": false, 
-      "disziplin": 11, 
       "ausgeschieden": false
     }
   }, 
@@ -8774,22 +9118,22 @@
     }
   }, 
   {
-    "pk": 9, 
-    "model": "sasse.teilnehmer", 
-    "fields": {
-      "startnummer": 9, 
-      "disqualifiziert": false, 
-      "disziplin": 1, 
-      "ausgeschieden": false
-    }
-  }, 
-  {
     "pk": 77, 
     "model": "sasse.teilnehmer", 
     "fields": {
       "startnummer": 9, 
       "disqualifiziert": true, 
       "disziplin": 11, 
+      "ausgeschieden": false
+    }
+  }, 
+  {
+    "pk": 9, 
+    "model": "sasse.teilnehmer", 
+    "fields": {
+      "startnummer": 9, 
+      "disqualifiziert": false, 
+      "disziplin": 1, 
       "ausgeschieden": false
     }
   }, 
@@ -8814,22 +9158,22 @@
     }
   }, 
   {
-    "pk": 11, 
-    "model": "sasse.teilnehmer", 
-    "fields": {
-      "startnummer": 11, 
-      "disqualifiziert": false, 
-      "disziplin": 1, 
-      "ausgeschieden": false
-    }
-  }, 
-  {
     "pk": 79, 
     "model": "sasse.teilnehmer", 
     "fields": {
       "startnummer": 11, 
       "disqualifiziert": false, 
       "disziplin": 11, 
+      "ausgeschieden": false
+    }
+  }, 
+  {
+    "pk": 11, 
+    "model": "sasse.teilnehmer", 
+    "fields": {
+      "startnummer": 11, 
+      "disqualifiziert": false, 
+      "disziplin": 1, 
       "ausgeschieden": false
     }
   }, 
@@ -9084,480 +9428,574 @@
     }
   }, 
   {
-    "pk": 20, 
-    "model": "sasse.schiffeinzel", 
-    "fields": {
-      "steuermann": 312, 
-      "kategorie": 4, 
-      "sektion": 10, 
-      "vorderfahrer": 300
-    }
-  }, 
-  {
     "pk": 67, 
     "model": "sasse.schiffeinzel", 
     "fields": {
-      "steuermann": 312, 
-      "kategorie": 4, 
       "sektion": 10, 
-      "vorderfahrer": 300
+      "steuermann": 312, 
+      "vorderfahrer": 300, 
+      "vorderfahrer_ist_ds": false, 
+      "kategorie": 4, 
+      "steuermann_ist_ds": false
     }
   }, 
   {
     "pk": 68, 
     "model": "sasse.schiffeinzel", 
     "fields": {
+      "sektion": 10, 
       "steuermann": 312, 
+      "vorderfahrer": 300, 
+      "vorderfahrer_ist_ds": false, 
       "kategorie": 4, 
-      "sektion": 10, 
-      "vorderfahrer": 300
+      "steuermann_ist_ds": false
     }
   }, 
   {
-    "pk": 2, 
+    "pk": 20, 
     "model": "sasse.schiffeinzel", 
     "fields": {
-      "steuermann": 295, 
-      "kategorie": 4, 
       "sektion": 10, 
-      "vorderfahrer": 317
-    }
-  }, 
-  {
-    "pk": 21, 
-    "model": "sasse.schiffeinzel", 
-    "fields": {
-      "steuermann": 513, 
+      "steuermann": 312, 
+      "vorderfahrer": 300, 
+      "vorderfahrer_ist_ds": false, 
       "kategorie": 4, 
-      "sektion": 14, 
-      "vorderfahrer": 503
+      "steuermann_ist_ds": false
     }
   }, 
   {
     "pk": 69, 
     "model": "sasse.schiffeinzel", 
     "fields": {
-      "steuermann": 317, 
-      "kategorie": 4, 
       "sektion": 10, 
-      "vorderfahrer": 288
+      "steuermann": 317, 
+      "vorderfahrer": 288, 
+      "vorderfahrer_ist_ds": false, 
+      "kategorie": 4, 
+      "steuermann_ist_ds": false
     }
   }, 
   {
-    "pk": 3, 
+    "pk": 2, 
     "model": "sasse.schiffeinzel", 
     "fields": {
-      "steuermann": 304, 
-      "kategorie": 4, 
       "sektion": 10, 
-      "vorderfahrer": 312
+      "steuermann": 295, 
+      "vorderfahrer": 317, 
+      "vorderfahrer_ist_ds": false, 
+      "kategorie": 4, 
+      "steuermann_ist_ds": false
+    }
+  }, 
+  {
+    "pk": 21, 
+    "model": "sasse.schiffeinzel", 
+    "fields": {
+      "sektion": 14, 
+      "steuermann": 513, 
+      "vorderfahrer": 503, 
+      "vorderfahrer_ist_ds": false, 
+      "kategorie": 4, 
+      "steuermann_ist_ds": false
     }
   }, 
   {
     "pk": 70, 
     "model": "sasse.schiffeinzel", 
     "fields": {
+      "sektion": 10, 
       "steuermann": 295, 
+      "vorderfahrer": 293, 
+      "vorderfahrer_ist_ds": false, 
       "kategorie": 4, 
-      "sektion": 10, 
-      "vorderfahrer": 293
+      "steuermann_ist_ds": false
     }
   }, 
   {
-    "pk": 4, 
+    "pk": 3, 
     "model": "sasse.schiffeinzel", 
     "fields": {
+      "sektion": 10, 
       "steuermann": 304, 
-      "kategorie": 6, 
-      "sektion": 10, 
-      "vorderfahrer": 294
-    }
-  }, 
-  {
-    "pk": 63, 
-    "model": "sasse.schiffeinzel", 
-    "fields": {
-      "steuermann": 312, 
-      "kategorie": 5, 
-      "sektion": 10, 
-      "vorderfahrer": 317
+      "vorderfahrer": 312, 
+      "vorderfahrer_ist_ds": true, 
+      "kategorie": 4, 
+      "steuermann_ist_ds": false
     }
   }, 
   {
     "pk": 71, 
     "model": "sasse.schiffeinzel", 
     "fields": {
-      "steuermann": 329, 
-      "kategorie": 5, 
       "sektion": 10, 
-      "vorderfahrer": 305
+      "steuermann": 329, 
+      "vorderfahrer": 305, 
+      "vorderfahrer_ist_ds": false, 
+      "kategorie": 5, 
+      "steuermann_ist_ds": false
+    }
+  }, 
+  {
+    "pk": 4, 
+    "model": "sasse.schiffeinzel", 
+    "fields": {
+      "sektion": 10, 
+      "steuermann": 304, 
+      "vorderfahrer": 294, 
+      "vorderfahrer_ist_ds": false, 
+      "kategorie": 6, 
+      "steuermann_ist_ds": true
+    }
+  }, 
+  {
+    "pk": 63, 
+    "model": "sasse.schiffeinzel", 
+    "fields": {
+      "sektion": 10, 
+      "steuermann": 312, 
+      "vorderfahrer": 317, 
+      "vorderfahrer_ist_ds": false, 
+      "kategorie": 5, 
+      "steuermann_ist_ds": true
     }
   }, 
   {
     "pk": 5, 
     "model": "sasse.schiffeinzel", 
     "fields": {
-      "steuermann": 304, 
-      "kategorie": 6, 
       "sektion": 10, 
-      "vorderfahrer": 294
+      "steuermann": 304, 
+      "vorderfahrer": 294, 
+      "vorderfahrer_ist_ds": true, 
+      "kategorie": 6, 
+      "steuermann_ist_ds": true
     }
   }, 
   {
     "pk": 72, 
     "model": "sasse.schiffeinzel", 
     "fields": {
-      "steuermann": 1091, 
-      "kategorie": 4, 
       "sektion": 31, 
-      "vorderfahrer": 1092
+      "steuermann": 1091, 
+      "vorderfahrer": 1092, 
+      "vorderfahrer_ist_ds": false, 
+      "kategorie": 4, 
+      "steuermann_ist_ds": false
     }
   }, 
   {
     "pk": 7, 
     "model": "sasse.schiffeinzel", 
     "fields": {
-      "steuermann": 317, 
-      "kategorie": 5, 
       "sektion": 10, 
-      "vorderfahrer": 329
+      "steuermann": 317, 
+      "vorderfahrer": 329, 
+      "vorderfahrer_ist_ds": false, 
+      "kategorie": 5, 
+      "steuermann_ist_ds": true
     }
   }, 
   {
     "pk": 8, 
     "model": "sasse.schiffeinzel", 
     "fields": {
-      "steuermann": 304, 
-      "kategorie": 6, 
       "sektion": 10, 
-      "vorderfahrer": 294
+      "steuermann": 304, 
+      "vorderfahrer": 294, 
+      "vorderfahrer_ist_ds": true, 
+      "kategorie": 6, 
+      "steuermann_ist_ds": true
     }
   }, 
   {
     "pk": 76, 
     "model": "sasse.schiffeinzel", 
     "fields": {
-      "steuermann": 1015, 
-      "kategorie": 5, 
       "sektion": 29, 
-      "vorderfahrer": 1016
-    }
-  }, 
-  {
-    "pk": 9, 
-    "model": "sasse.schiffeinzel", 
-    "fields": {
-      "steuermann": 312, 
-      "kategorie": 4, 
-      "sektion": 10, 
-      "vorderfahrer": 304
+      "steuermann": 1015, 
+      "vorderfahrer": 1016, 
+      "vorderfahrer_ist_ds": false, 
+      "kategorie": 5, 
+      "steuermann_ist_ds": false
     }
   }, 
   {
     "pk": 77, 
     "model": "sasse.schiffeinzel", 
     "fields": {
-      "steuermann": 1024, 
-      "kategorie": 4, 
       "sektion": 29, 
-      "vorderfahrer": 1025
+      "steuermann": 1024, 
+      "vorderfahrer": 1025, 
+      "vorderfahrer_ist_ds": false, 
+      "kategorie": 4, 
+      "steuermann_ist_ds": false
+    }
+  }, 
+  {
+    "pk": 9, 
+    "model": "sasse.schiffeinzel", 
+    "fields": {
+      "sektion": 10, 
+      "steuermann": 312, 
+      "vorderfahrer": 304, 
+      "vorderfahrer_ist_ds": true, 
+      "kategorie": 4, 
+      "steuermann_ist_ds": true
     }
   }, 
   {
     "pk": 10, 
     "model": "sasse.schiffeinzel", 
     "fields": {
-      "steuermann": 312, 
-      "kategorie": 4, 
       "sektion": 10, 
-      "vorderfahrer": 300
+      "steuermann": 312, 
+      "vorderfahrer": 300, 
+      "vorderfahrer_ist_ds": true, 
+      "kategorie": 4, 
+      "steuermann_ist_ds": true
     }
   }, 
   {
     "pk": 78, 
     "model": "sasse.schiffeinzel", 
     "fields": {
-      "steuermann": 1026, 
-      "kategorie": 4, 
       "sektion": 29, 
-      "vorderfahrer": 1023
-    }
-  }, 
-  {
-    "pk": 11, 
-    "model": "sasse.schiffeinzel", 
-    "fields": {
-      "steuermann": 304, 
+      "steuermann": 1026, 
+      "vorderfahrer": 1023, 
+      "vorderfahrer_ist_ds": false, 
       "kategorie": 4, 
-      "sektion": 10, 
-      "vorderfahrer": 294
+      "steuermann_ist_ds": false
     }
   }, 
   {
     "pk": 79, 
     "model": "sasse.schiffeinzel", 
     "fields": {
-      "steuermann": 503, 
-      "kategorie": 4, 
       "sektion": 14, 
-      "vorderfahrer": 1573
+      "steuermann": 503, 
+      "vorderfahrer": 1573, 
+      "vorderfahrer_ist_ds": false, 
+      "kategorie": 4, 
+      "steuermann_ist_ds": false
+    }
+  }, 
+  {
+    "pk": 11, 
+    "model": "sasse.schiffeinzel", 
+    "fields": {
+      "sektion": 10, 
+      "steuermann": 304, 
+      "vorderfahrer": 294, 
+      "vorderfahrer_ist_ds": true, 
+      "kategorie": 4, 
+      "steuermann_ist_ds": true
     }
   }, 
   {
     "pk": 12, 
     "model": "sasse.schiffeinzel", 
     "fields": {
-      "steuermann": 312, 
-      "kategorie": 5, 
       "sektion": 10, 
-      "vorderfahrer": 317
+      "steuermann": 312, 
+      "vorderfahrer": 317, 
+      "vorderfahrer_ist_ds": true, 
+      "kategorie": 5, 
+      "steuermann_ist_ds": true
     }
   }, 
   {
     "pk": 80, 
     "model": "sasse.schiffeinzel", 
     "fields": {
-      "steuermann": 501, 
-      "kategorie": 4, 
       "sektion": 14, 
-      "vorderfahrer": 496
+      "steuermann": 501, 
+      "vorderfahrer": 496, 
+      "vorderfahrer_ist_ds": false, 
+      "kategorie": 4, 
+      "steuermann_ist_ds": false
     }
   }, 
   {
     "pk": 81, 
     "model": "sasse.schiffeinzel", 
     "fields": {
-      "steuermann": 492, 
-      "kategorie": 4, 
       "sektion": 14, 
-      "vorderfahrer": 493
+      "steuermann": 492, 
+      "vorderfahrer": 493, 
+      "vorderfahrer_ist_ds": false, 
+      "kategorie": 4, 
+      "steuermann_ist_ds": false
     }
   }, 
   {
     "pk": 82, 
     "model": "sasse.schiffeinzel", 
     "fields": {
-      "steuermann": 491, 
-      "kategorie": 4, 
       "sektion": 14, 
-      "vorderfahrer": 490
+      "steuermann": 491, 
+      "vorderfahrer": 490, 
+      "vorderfahrer_ist_ds": false, 
+      "kategorie": 4, 
+      "steuermann_ist_ds": false
     }
   }, 
   {
     "pk": 18, 
     "model": "sasse.schiffeinzel", 
     "fields": {
-      "steuermann": 312, 
-      "kategorie": 5, 
       "sektion": 10, 
-      "vorderfahrer": 317
+      "steuermann": 312, 
+      "vorderfahrer": 317, 
+      "vorderfahrer_ist_ds": true, 
+      "kategorie": 5, 
+      "steuermann_ist_ds": true
     }
   }, 
   {
     "pk": 19, 
     "model": "sasse.schiffeinzel", 
     "fields": {
-      "steuermann": 295, 
-      "kategorie": 4, 
       "sektion": 10, 
-      "vorderfahrer": 300
+      "steuermann": 295, 
+      "vorderfahrer": 300, 
+      "vorderfahrer_ist_ds": true, 
+      "kategorie": 4, 
+      "steuermann_ist_ds": true
     }
   }, 
   {
     "pk": 55, 
     "model": "sasse.schiffeinzel", 
     "fields": {
-      "steuermann": 312, 
-      "kategorie": 5, 
       "sektion": 10, 
-      "vorderfahrer": 317
+      "steuermann": 312, 
+      "vorderfahrer": 317, 
+      "vorderfahrer_ist_ds": true, 
+      "kategorie": 5, 
+      "steuermann_ist_ds": true
     }
   }, 
   {
     "pk": 56, 
     "model": "sasse.schiffeinzel", 
     "fields": {
-      "steuermann": 300, 
-      "kategorie": 4, 
       "sektion": 10, 
-      "vorderfahrer": 1564
+      "steuermann": 300, 
+      "vorderfahrer": 1564, 
+      "vorderfahrer_ist_ds": false, 
+      "kategorie": 4, 
+      "steuermann_ist_ds": true
     }
   }, 
   {
     "pk": 57, 
     "model": "sasse.schiffeinzel", 
     "fields": {
-      "steuermann": 295, 
-      "kategorie": 4, 
       "sektion": 10, 
-      "vorderfahrer": 288
+      "steuermann": 295, 
+      "vorderfahrer": 288, 
+      "vorderfahrer_ist_ds": false, 
+      "kategorie": 4, 
+      "steuermann_ist_ds": true
     }
   }, 
   {
     "pk": 58, 
     "model": "sasse.schiffeinzel", 
     "fields": {
-      "steuermann": 295, 
-      "kategorie": 4, 
       "sektion": 10, 
-      "vorderfahrer": 288
+      "steuermann": 295, 
+      "vorderfahrer": 288, 
+      "vorderfahrer_ist_ds": true, 
+      "kategorie": 4, 
+      "steuermann_ist_ds": true
     }
   }, 
   {
     "pk": 59, 
     "model": "sasse.schiffeinzel", 
     "fields": {
-      "steuermann": 312, 
-      "kategorie": 4, 
       "sektion": 10, 
-      "vorderfahrer": 300
+      "steuermann": 312, 
+      "vorderfahrer": 300, 
+      "vorderfahrer_ist_ds": true, 
+      "kategorie": 4, 
+      "steuermann_ist_ds": true
     }
   }, 
   {
     "pk": 60, 
     "model": "sasse.schiffeinzel", 
     "fields": {
-      "steuermann": 312, 
-      "kategorie": 4, 
       "sektion": 10, 
-      "vorderfahrer": 300
+      "steuermann": 312, 
+      "vorderfahrer": 300, 
+      "vorderfahrer_ist_ds": true, 
+      "kategorie": 4, 
+      "steuermann_ist_ds": true
     }
   }, 
   {
     "pk": 61, 
     "model": "sasse.schiffeinzel", 
     "fields": {
-      "steuermann": 312, 
-      "kategorie": 5, 
       "sektion": 10, 
-      "vorderfahrer": 317
+      "steuermann": 312, 
+      "vorderfahrer": 317, 
+      "vorderfahrer_ist_ds": true, 
+      "kategorie": 5, 
+      "steuermann_ist_ds": true
     }
   }, 
   {
     "pk": 64, 
     "model": "sasse.schiffeinzel", 
     "fields": {
-      "steuermann": 312, 
-      "kategorie": 5, 
       "sektion": 10, 
-      "vorderfahrer": 317
+      "steuermann": 312, 
+      "vorderfahrer": 317, 
+      "vorderfahrer_ist_ds": true, 
+      "kategorie": 5, 
+      "steuermann_ist_ds": true
     }
   }, 
   {
     "pk": 65, 
     "model": "sasse.schiffeinzel", 
     "fields": {
-      "steuermann": 312, 
-      "kategorie": 4, 
       "sektion": 10, 
-      "vorderfahrer": 300
+      "steuermann": 312, 
+      "vorderfahrer": 300, 
+      "vorderfahrer_ist_ds": true, 
+      "kategorie": 4, 
+      "steuermann_ist_ds": true
     }
   }, 
   {
     "pk": 75, 
     "model": "sasse.schiffeinzel", 
     "fields": {
-      "steuermann": 312, 
-      "kategorie": 4, 
       "sektion": 10, 
-      "vorderfahrer": 304
+      "steuermann": 312, 
+      "vorderfahrer": 304, 
+      "vorderfahrer_ist_ds": false, 
+      "kategorie": 4, 
+      "steuermann_ist_ds": true
     }
   }, 
   {
     "pk": 74, 
     "model": "sasse.schiffeinzel", 
     "fields": {
-      "steuermann": 1094, 
-      "kategorie": 4, 
       "sektion": 31, 
-      "vorderfahrer": 1092
+      "steuermann": 1094, 
+      "vorderfahrer": 1092, 
+      "vorderfahrer_ist_ds": true, 
+      "kategorie": 4, 
+      "steuermann_ist_ds": false
     }
   }, 
   {
     "pk": 83, 
     "model": "sasse.schiffeinzel", 
     "fields": {
-      "steuermann": 488, 
-      "kategorie": 4, 
       "sektion": 14, 
-      "vorderfahrer": 492
+      "steuermann": 488, 
+      "vorderfahrer": 492, 
+      "vorderfahrer_ist_ds": true, 
+      "kategorie": 4, 
+      "steuermann_ist_ds": false
     }
   }, 
   {
     "pk": 15, 
     "model": "sasse.schiffeinzel", 
     "fields": {
-      "steuermann": 300, 
-      "kategorie": 4, 
       "sektion": 10, 
-      "vorderfahrer": 312
+      "steuermann": 300, 
+      "vorderfahrer": 312, 
+      "vorderfahrer_ist_ds": true, 
+      "kategorie": 4, 
+      "steuermann_ist_ds": true
     }
   }, 
   {
     "pk": 36, 
     "model": "sasse.schiffeinzel", 
     "fields": {
-      "steuermann": 300, 
-      "kategorie": 5, 
       "sektion": 10, 
-      "vorderfahrer": 312
+      "steuermann": 300, 
+      "vorderfahrer": 312, 
+      "vorderfahrer_ist_ds": true, 
+      "kategorie": 5, 
+      "steuermann_ist_ds": true
     }
   }, 
   {
     "pk": 41, 
     "model": "sasse.schiffeinzel", 
     "fields": {
-      "steuermann": 503, 
-      "kategorie": 4, 
       "sektion": 14, 
-      "vorderfahrer": 312
+      "steuermann": 503, 
+      "vorderfahrer": 312, 
+      "vorderfahrer_ist_ds": true, 
+      "kategorie": 4, 
+      "steuermann_ist_ds": false
     }
   }, 
   {
     "pk": 42, 
     "model": "sasse.schiffeinzel", 
     "fields": {
-      "steuermann": 503, 
-      "kategorie": 4, 
       "sektion": 14, 
-      "vorderfahrer": 312
+      "steuermann": 503, 
+      "vorderfahrer": 312, 
+      "vorderfahrer_ist_ds": true, 
+      "kategorie": 4, 
+      "steuermann_ist_ds": true
     }
   }, 
   {
     "pk": 43, 
     "model": "sasse.schiffeinzel", 
     "fields": {
-      "steuermann": 503, 
-      "kategorie": 4, 
       "sektion": 14, 
-      "vorderfahrer": 312
+      "steuermann": 503, 
+      "vorderfahrer": 312, 
+      "vorderfahrer_ist_ds": true, 
+      "kategorie": 4, 
+      "steuermann_ist_ds": true
     }
   }, 
   {
     "pk": 44, 
     "model": "sasse.schiffeinzel", 
     "fields": {
-      "steuermann": 312, 
-      "kategorie": 4, 
       "sektion": 10, 
-      "vorderfahrer": 300
+      "steuermann": 312, 
+      "vorderfahrer": 300, 
+      "vorderfahrer_ist_ds": true, 
+      "kategorie": 4, 
+      "steuermann_ist_ds": true
     }
   }, 
   {
     "pk": 53, 
     "model": "sasse.schiffeinzel", 
     "fields": {
-      "steuermann": 312, 
-      "kategorie": 4, 
       "sektion": 10, 
-      "vorderfahrer": 300
+      "steuermann": 312, 
+      "vorderfahrer": 300, 
+      "vorderfahrer_ist_ds": true, 
+      "kategorie": 4, 
+      "steuermann_ist_ds": true
     }
   }, 
   {
     "pk": 1, 
     "model": "sasse.richtzeit", 
     "fields": {
-      "zeit": "55", 
+      "zeit": "55.00", 
       "posten": 12
     }
   }, 
@@ -9565,7 +10003,7 @@
     "pk": 3, 
     "model": "sasse.richtzeit", 
     "fields": {
-      "zeit": "90", 
+      "zeit": "90.00", 
       "posten": 13
     }
   }, 
@@ -9573,7 +10011,7 @@
     "pk": 4, 
     "model": "sasse.richtzeit", 
     "fields": {
-      "zeit": "100", 
+      "zeit": "100.00", 
       "posten": 11
     }
   }, 
@@ -9581,7 +10019,7 @@
     "pk": 5, 
     "model": "sasse.richtzeit", 
     "fields": {
-      "zeit": "40", 
+      "zeit": "40.00", 
       "posten": 18
     }
   }, 
@@ -9589,10 +10027,10 @@
     "pk": 6, 
     "model": "sasse.richtzeit", 
     "fields": {
-      "zeit": "80", 
+      "zeit": "80.00", 
       "posten": 19
     }
-  },
+  }, 
   {
     "pk": 1, 
     "model": "sasse.kranzlimite", 

@@ -246,6 +246,10 @@ class SchiffeinzelListFormTest(TestCase):
                 name="Steinmann", vorname="Daniel", geschlecht="m",
                 geburtsdatum=datetime.date(1967, 4, 30),
                 sektion=bremgarten, nummer="1234")
+        self.wendel = Mitglied.objects.create(
+                name="Wendel", vorname="René", geschlecht="m",
+                geburtsdatum=datetime.date(1956, 4, 30),
+                sektion=bremgarten, nummer="1239")
         self.kohler = Mitglied.objects.create(
                 name="Kohler", vorname="Bernhard", geschlecht="m",
                 geburtsdatum=datetime.date(1978, 1, 1),
@@ -259,12 +263,24 @@ class SchiffeinzelListFormTest(TestCase):
                 geburtsdatum=datetime.date(2000, 4, 30),
                 sektion=bremgarten, nummer="6232")
         w = Wettkampf.objects.create(name="Test-Cup", von=datetime.date(2009, 5, 15))
-        d = Disziplin.objects.create(wettkampf=w, name="Test")
+        self.einzel_gross = w.disziplin_set.create(name="Einzel-Gross")
+        self.einzel_klein = w.disziplin_set.create(name="Einzel-Klein")
         for startnr in range(1, 10):
-            Schiffeinzel.objects.create(startnummer=startnr, disziplin=d,
-                    steuermann_id=1, vorderfahrer_id=2, sektion_id=1,
-                    kategorie_id=1)
-        self.sut = SchiffeinzelListForm(d, data={})
+            for disziplin in (self.einzel_gross, self.einzel_klein):
+                fahrerpaar = (
+                        Mitglied.objects.create(nummer="1%02d%02d" % (startnr, disziplin.id),
+                            name="Muster-%d" % startnr, vorname="Hans",
+                            geschlecht="m", geburtsdatum=datetime.date(1967, 4, 30),
+                            sektion=bremgarten),
+                        Mitglied.objects.create(nummer="2%02d%02d" % (startnr, disziplin.id),
+                            name="Foo-%d" % startnr, vorname="Bar",
+                            geschlecht="m", geburtsdatum=datetime.date(1967, 4, 30),
+                            sektion=bremgarten) )
+                Schiffeinzel.objects.create(startnummer=startnr,
+                        disziplin=disziplin, steuermann=fahrerpaar[0],
+                        vorderfahrer=fahrerpaar[1], sektion=bremgarten,
+                        kategorie_id=3)
+        self.sut = SchiffeinzelListForm(self.einzel_gross, data={})
 
     def test_alles_in_ordung(self):
         self.sut.data['startnummer'] = "19"
@@ -308,5 +324,52 @@ class SchiffeinzelListFormTest(TestCase):
         self.sut.data['vorderfahrer'] = self.kohler.nummer
         self.failIf(self.sut.is_valid(), self.sut.errors)
         expected = u"Teilnehmer with this Disziplin and Startnummer already exists."
+        errors = self.sut.non_field_errors()
+        self.failUnless(expected in errors, errors)
+
+    def test_doppeltstarter_gleiche_disziplin(self):
+        data = {}
+        data['startnummer'] = "19"
+        data['steuermann'] = self.steinmann.nummer
+        data['vorderfahrer'] = self.kohler.nummer
+        self.sut = SchiffeinzelListForm(self.einzel_gross, data=data)
+        self.assertTrue(self.sut.is_valid(), self.sut.errors)
+        regulaer = self.sut.save()
+        data['startnummer'] = "600"
+        data['vorderfahrer'] = self.wendel.nummer
+        self.sut = SchiffeinzelListForm(self.einzel_gross, data=data)
+        self.assertTrue(self.sut.is_valid(), self.sut.errors)
+        doppelt = self.sut.save()
+        self.assertTrue(doppelt.steuermann_ist_ds)
+        self.assertFalse(doppelt.vorderfahrer_ist_ds)
+
+    def test_doppeltstarter_andere_disziplin(self):
+        data = {}
+        data['startnummer'] = "19"
+        data['steuermann'] = self.steinmann.nummer
+        data['vorderfahrer'] = self.kohler.nummer
+        self.sut = SchiffeinzelListForm(self.einzel_gross, data=data)
+        self.assertTrue(self.sut.is_valid(), self.sut.errors)
+        regulaer = self.sut.save()
+        self.sut = SchiffeinzelListForm(self.einzel_klein, data=data)
+        data['startnummer'] = "11"
+        data['steuermann'] = self.wendel.nummer
+        self.assertTrue(self.sut.is_valid(), self.sut.errors)
+        doppelt = self.sut.save()
+        self.assertTrue(doppelt.vorderfahrer_ist_ds)
+        self.assertFalse(doppelt.steuermann_ist_ds)
+
+    def test_doppeltstarter_doppelt(self):
+        data = {}
+        data['startnummer'] = "19"
+        data['steuermann'] = self.steinmann.nummer
+        data['vorderfahrer'] = self.kohler.nummer
+        self.sut = SchiffeinzelListForm(self.einzel_gross, data=data)
+        self.assertTrue(self.sut.is_valid(), self.sut.errors)
+        regulaer = self.sut.save()
+        self.sut = SchiffeinzelListForm(self.einzel_gross, data=data)
+        data['startnummer'] = "500"
+        expected = u"Ein Schiff darf nicht aus zwei Doppelstartern bestehen."
+        self.failIf(self.sut.is_valid(), "Erwartete Meldung: " + expected)
         errors = self.sut.non_field_errors()
         self.failUnless(expected in errors, errors)
