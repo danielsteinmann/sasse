@@ -1,6 +1,5 @@
 {% extends "base_disziplin.html" %}
-{% block nav_disziplin %}selected{% endblock %}
-
+{% block nav_einzelfahren %}selected{% endblock %}
 {% block content %}
 <table class="display">
   <tr>
@@ -23,7 +22,13 @@
     <th>Posten:</th>
     <td>
       {% for posten in disziplin.posten_set.all %}
-      <a href="{% url posten_get wettkampf.jahr, wettkampf.name, disziplin.name, posten.name %}">{{ posten.name }}</a>{% if not forloop.last %},{% endif %}
+        <a href="{% url posten_get wettkampf.jahr, wettkampf.name, disziplin.name, posten.name %}">{{ posten.name }}</a> -
+        {{ posten.postenart }}
+        {% if posten.postenart.name == 'Zeitnote' %}
+        <a href="{% url richtzeit wettkampf.jahr, wettkampf.name, disziplin.name, posten.name %}">(Richtzeit)</a>
+        {% endif %}<br>
+      {% empty %}
+        Noch keine Posten erfasst.
       {% endfor %}
     </td>
   </tr>
@@ -33,6 +38,7 @@
       <br />
       <a href="{% url disziplin_update wettkampf.jahr, wettkampf.name, disziplin.name %}">Ändern</a>
       | <a href="{% url disziplin_delete_confirm wettkampf.jahr, wettkampf.name, disziplin.name %}">Löschen</a>
+      | <a href="{% url posten_list wettkampf.jahr, wettkampf.name, disziplin.name %}">Posten hinzufügen</a></li>
     </td>
   </tr>
 </table>

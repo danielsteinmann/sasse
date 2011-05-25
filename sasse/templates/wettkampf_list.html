@@ -1,12 +1,4 @@
 {% extends "base_wettkaempfe.html" %}
-
-{% block breadcrumbs %}
-{{ block.super }}
-{% if year %}
-/ <a href="{% url wettkaempfe_by_year year %}">{{ year }}</a>
-{% endif %}
-{% endblock %}
-
 {% block content %}
 {% if wettkaempfe %}
 <table class="list">

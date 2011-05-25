@@ -27,6 +27,55 @@ Mitglieder via File Upload importieren
 Startliste: export/import
 - Basierend auf Zeitstempfel. Alles was seit letztem Export geändert hat, wird exportiert.
 - Import überschreibt Aenderungen im Rechnungsbüro
+
+Export "startliste-einzelfahren-201106041023.csv":
+  WETTKAMPF_JAHR
+  WETTKAMPF_NAME
+  DISZIPLIN_NAME
+  STARTNUMMER
+  DISQUALIFIZIERT
+  AUSGESCHIEDEN
+  SEKTION_NAME
+  KATEGORIE_NAME
+  STEUERMANN_IST_DS
+  VORDERFAHRER_IST_DS
+  STEUERMANN_(NUMMER,NAME,VORNAME,GEBURTSDATUM,GESCHLECHT,SEKTION_NAME)
+  VORDERFAHRER_(NUMMER,NAME,VORNAME,GEBURTSDATUM,GESCHLECHT,SEKTION_NAME)
+
+Import:
+  Vielleicht geht auch das:
+     Schiffeinzel.objects.get(
+         disziplin__wettkampf__name=
+         disziplin__wettkampf__jahr=
+         disziplin__name=
+         sektion__name=
+         kategorie__name=
+         startnummer=
+         disqualifiziert=
+         ausgeschieden=
+         disqualifiziert=
+
+  def parse_row(row):
+     disziplin = Disziplin.objects.get(wettkampf__name=, wettkampf__jahr=, name=disziplin_name)
+     steuermann = Mitglied.objects.get_or_create(steuermann)
+     vorderfahrer = Mitglied.objects.get_or_create(vorderfahrer)
+
+  for row in file:
+     from_input = parse_row(row)
+     try:
+         schiff = Schiffeinzel.get(from_input.disziplin, from_input.startnummer)
+     except Schiffeinzel.DoesNotExist:
+         schiff = Schiffeinzel()
+     updated = update(schiff, from_input)
+     if not updated:
+         unchanged += 1
+     elif m.id:
+         m.save()
+         changed += 1
+     else:
+         m.save()
+         inserted += 1
+
 --
 Teilnehmer: Als 'abstract' markieren, damit keine eigene Tabelle entsteht. Das
 macht einige SQL Statements einfacher.

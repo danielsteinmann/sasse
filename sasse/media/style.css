@@ -107,7 +107,6 @@ ul.tabnav li a {
     background-color: #E0ECF8;
     color: Black;
     padding: 3px 4px;
-    text-decoration: none;
     margin-right: 2px; /* space between tabs */
 }
 ul.tabnav li a:hover {
