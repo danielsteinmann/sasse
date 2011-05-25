@@ -48,6 +48,7 @@ from queries import read_rangliste
 from queries import sort_rangliste
 from queries import read_startende_kategorien
 from queries import read_anzahl_wettkaempfer
+from queries import read_doppelstarter
 
 from reports import create_rangliste_doctemplate
 from reports import create_rangliste_flowables
@@ -857,6 +858,15 @@ def kranzlimiten_set_defaults(request, jahr, wettkampf, disziplin):
                 break
     url = reverse(kranzlimiten, args=[jahr, wettkampf, d.name])
     return HttpResponseRedirect(url)
+
+def doppelstarter_einzelfahren(request, jahr, wettkampf):
+    assert request.method == 'GET'
+    w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
+    einzelfahren = Disziplinart.objects.get(name="Einzelfahren")
+    doppelstarter = read_doppelstarter(w, einzelfahren)
+    return direct_to_template(request, 'doppelstarter_einzelfahren.html', {'wettkampf': w,
+        'doppelstarter': doppelstarter},
+        context_instance=RequestContext(request))
 
 #-----------
 #    from django.db import connection
