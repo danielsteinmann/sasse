@@ -32,9 +32,7 @@ Nicht eingeloggt | <a href="{% url django.contrib.auth.views.login %}?next={{ re
 </td>
 </tr>
 </table>
-<div align=right><font size="-2">
-{% block breadcrumbs %}<a href="{% url wettkaempfe_get %}">Wettkämpfe</a>{% endblock %}
-</font></div>
+<p></p>
 {% block content %}{% endblock %}
 <script type="text/javascript">
 $('form:first :input:visible:first').focus().select();

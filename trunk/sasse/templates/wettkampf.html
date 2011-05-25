@@ -1,6 +1,5 @@
 {% extends "base_wettkampf.html" %}
 {% block nav_wettkampf %}selected{% endblock %}
-
 {% block content %}
 <table class="display">
   <tr>
@@ -26,13 +25,11 @@
   <tr>
     <th>Disziplinen:</th>
     <td>
-      {% if disziplinen %}
       {% for disziplin in disziplinen %}
       <a href="{% url disziplin_get wettkampf.jahr, wettkampf.name, disziplin.name %}">{{ disziplin.name }}</a><br/>
-      {% endfor %}
-      {% else %}
+      {% empty %}
       Noch keine Disziplin erfasst.
-      {% endif %}
+      {% endfor %}
     </td>
   </tr>
   <tr>
