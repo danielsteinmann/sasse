@@ -303,6 +303,7 @@ def read_doppelstarter(wettkampf, disziplinart):
     ds = _read_doppelstarter(wettkampf, disziplinart)
     grouped_ds = _group_doppelstarter(ds)
     sorted_ds = sorted(grouped_ds, key=_sort_doppelstarter_nummer)
+    _mark_double_trouble(sorted_ds)
     return sorted_ds
 
 def _read_doppelstarter(wettkampf, disziplinart):
@@ -399,3 +400,19 @@ def _sort_doppelstarter_nummer(row):
         # Passiert durch Falscheingabe, wenn ein Mitglied mehrfach startet,
         # aber nicht als Doppelstarter markiert ist.
         return None
+
+def _mark_double_trouble(sorted_ds):
+    """
+    Am Fällbaumcup 2011 kam es vor, dass zwei Doppelstarter zusammen in einem
+    Schiff auf der Rangliste erschienen. Dieser Zustand wird hier geprüft.
+    """
+    previous_row = None
+    for row in sorted_ds:
+        if previous_row and previous_row['doppel'] and row['doppel']:
+            previous_item = previous_row['doppel'][0]
+            item = row['doppel'][0]
+            if item['startnummer'] == previous_item['startnummer']:
+                previous_row['trouble'] = True
+                row['trouble'] = True
+        previous_row = row
+
