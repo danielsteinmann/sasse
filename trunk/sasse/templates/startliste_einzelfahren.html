@@ -9,6 +9,7 @@
 {% if not searchform.errors %}
 <form id="myform" name="myform" action="" method="POST">
 <a target="_blank" href="{% url startliste_einzelfahren_pdf wettkampf.jahr, wettkampf.name, disziplin.name%}?{{request.META.QUERY_STRING}}">Startliste drucken</a>
+| <a href="{% url doppelstarter_einzelfahren wettkampf.jahr, wettkampf.name%}">Doppelstarter kontrollieren</a>
 <table class="list">
   <tr>
     <th class="startnummer">Stnr</th>

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from decimal import Decimal
+from itertools import groupby
 from django.template.loader import render_to_string
 from django.db import connection
 from models import Bewertungsart
@@ -268,7 +269,6 @@ def create_mitglieder_nummer():
         nummer = u"%d" % (int(nummer)+1,)
     return unicode(nummer)
 
-
 def sind_doppelstarter(wettkampf, disziplinart, steuermann, vorderfahrer):
     """
     Aus Performance Gründen in *einem* SQL Select für beide den Test machen
@@ -299,3 +299,103 @@ def sind_doppelstarter(wettkampf, disziplinart, steuermann, vorderfahrer):
             vorne_ds = True
     return (hinten_ds, vorne_ds)
 
+def read_doppelstarter(wettkampf, disziplinart):
+    ds = _read_doppelstarter(wettkampf, disziplinart)
+    grouped_ds = _group_doppelstarter(ds)
+    sorted_ds = sorted(grouped_ds, key=_sort_doppelstarter_nummer)
+    return sorted_ds
+
+def _read_doppelstarter(wettkampf, disziplinart):
+    cursor = connection.cursor()
+    sql = """
+select m.id
+     , m.name
+     , m.vorname
+     , s.name as sektion
+     , tn.startnummer
+     , dz.name as disziplin
+     , case when schiff.steuermann_ist_ds or schiff.vorderfahrer_ist_ds then 1 else 0 end as ds
+  from (
+        -- Markiert (Steuermann)
+        select schiff.steuermann_id as id
+          from sasse_disziplin dz
+          join sasse_teilnehmer tn on (tn.disziplin_id = dz.id)
+          join sasse_schiffeinzel schiff on (schiff.teilnehmer_ptr_id = tn.id)
+         where dz.wettkampf_id = %s
+           and dz.disziplinart_id = %s
+           and schiff.steuermann_ist_ds
+        union
+        -- Markiert (Vorderfahrer)
+        select schiff.vorderfahrer_id as id
+          from sasse_disziplin dz
+          join sasse_teilnehmer tn on (tn.disziplin_id = dz.id)
+          join sasse_schiffeinzel schiff on (schiff.teilnehmer_ptr_id = tn.id)
+         where dz.wettkampf_id = %s
+           and dz.disziplinart_id = %s
+           and schiff.vorderfahrer_ist_ds
+        union
+        -- Berechnet
+        select m.id
+          from sasse_mitglied m
+          join sasse_sektion s on (s.id = m.sektion_id)
+          join sasse_schiffeinzel schiff on schiff.vorderfahrer_id = m.id or schiff.steuermann_id = m.id
+          join sasse_teilnehmer tn on tn.id = schiff.teilnehmer_ptr_id
+          join sasse_disziplin dz on dz.id = tn.disziplin_id
+         where dz.wettkampf_id = %s
+           and dz.disziplinart_id = %s
+         group by m.id, m.name, m.vorname, s.name
+        having count(tn.id) > 1
+        ) as ds
+   join sasse_mitglied m on (m.id = ds.id)
+   join sasse_sektion s on (s.id = m.sektion_id)
+   join sasse_schiffeinzel schiff on schiff.vorderfahrer_id = ds.id or schiff.steuermann_id = ds.id
+   join sasse_teilnehmer tn on tn.id = schiff.teilnehmer_ptr_id
+   join sasse_disziplin dz on dz.id = tn.disziplin_id
+  where dz.wettkampf_id = %s
+    and dz.disziplinart_id = %s
+  -- Muss nach Mitglied sortieren, damit in Python 'groupby' moeglich ist.
+  order by m.name, m.vorname, s.name, ds, tn.startnummer
+     """
+    args = [wettkampf.id, disziplinart.id, wettkampf.id, disziplinart.id, wettkampf.id, disziplinart.id, wettkampf.id, disziplinart.id]
+    cursor.execute(sql, args)
+    for row in cursor:
+        result = {}; i = 0
+        result['mid'] = row[i]; i += 1
+        result['name'] = row[i]; i += 1
+        result['vorname'] = row[i]; i += 1
+        result['sektion'] = row[i]; i += 1
+        result['startnummer'] = row[i]; i += 1
+        result['disziplin'] = row[i]; i += 1
+        result['doppelstarter'] = row[i]; i += 1
+        yield result
+
+def _group_doppelstarter(doppelstarter):
+    result = []
+    for key, group in groupby(doppelstarter, lambda x: (x['name'], x['vorname'],x['sektion'])):
+        row = {}
+        row['name'] = key[0]
+        row['vorname'] = key[1]
+        row['sektion'] = key[2]
+        row['trouble'] = False
+        normal = []
+        doppel = []
+        for item in group:
+            if item['doppelstarter']:
+                doppel.append(item)
+            else:
+                normal.append(item)
+        row['doppel'] = doppel
+        row['normal'] = normal
+        if len(normal) != 1 or len(doppel) != 1:
+            row['trouble'] = True
+        result.append(row)
+    return result
+
+def _sort_doppelstarter_nummer(row):
+    doppel = row['doppel']
+    if doppel:
+        return doppel[0]['startnummer']
+    else:
+        # Passiert durch Falscheingabe, wenn ein Mitglied mehrfach startet,
+        # aber nicht als Doppelstarter markiert ist.
+        return None
