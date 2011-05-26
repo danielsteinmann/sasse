@@ -2,8 +2,6 @@ Allgemein: Wenn man einen Teilnehmern ändern muss, sollte es einen Link 'Zurüc
 zur Startliste' geben, damit man den Kontext nicht verliert. Siehe
 contrib.auth.view.login, wie man das richtig macht.
 --
-Kranzlimite: Muss nach Kategorie sortieren
---
 Fahrchefblatt Link einfügen, dass für alle Sektionen das Fahrchefblatt
 ausdruckt. Vielleicht auch gleich an die Notenblätter anschliessen.
 --
@@ -43,22 +41,31 @@ Export "startliste-einzelfahren-201106041023.csv":
   VORDERFAHRER_(NUMMER,NAME,VORNAME,GEBURTSDATUM,GESCHLECHT,SEKTION_NAME)
 
 Import:
-  Vielleicht geht auch das:
-     Schiffeinzel.objects.get(
-         disziplin__wettkampf__name=
-         disziplin__wettkampf__jahr=
-         disziplin__name=
-         sektion__name=
-         kategorie__name=
-         startnummer=
-         disqualifiziert=
-         ausgeschieden=
-         disqualifiziert=
+  def parse_mitglied(row):
+      """Erzeugt Mitgliedobject aus den Daten der CSV Zeile"""
 
-  def parse_row(row):
+  def get_mitglied(mitglied_from_input)):
+      """
+      Gibt Mitglied basierend auf Input Daten, welches genau so in der DB
+      vorhanden ist, etwas modifiziert oder ganz neu erzeugt wurde.
+      """
+
+  def parse_schiffeinzel(row):
+     wettkampf = get_wettkampf(wettkampf_name)
+     => Exception, falls Wettkampf nicht existiert
      disziplin = Disziplin.objects.get(wettkampf__name=, wettkampf__jahr=, name=disziplin_name)
-     steuermann = Mitglied.objects.get_or_create(steuermann)
-     vorderfahrer = Mitglied.objects.get_or_create(vorderfahrer)
+     => Exception, falls ..
+     disziplin = get_kategorie(disziplin, kategorie_name)
+     => Exception, falls ..
+     disziplin = get_kategorie(disziplin, kategorie_name)
+     => Exception, falls ..
+     disziplin = get_sektion(sektion_name)
+     => Exception, falls ..
+
+     steuermann = get_mitglied(parse_mitglied(steuermann_row))
+     => Keine Exception
+     vorderfahrer = get_mitglied(parse_mitglied(vorderfahrer_row))
+     => Keine Exception
 
   for row in file:
      from_input = parse_row(row)

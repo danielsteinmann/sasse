@@ -183,7 +183,7 @@ def read_kranzlimite_pro_kategorie(disziplin):
 
 def read_kranzlimiten(disziplin):
     sql = render_to_string('kranzlimite.sql', {"disziplin": disziplin, "kategorie": None})
-    args = [disziplin.id, disziplin.id]
+    args = [disziplin.id, disziplin.id, disziplin.disziplinart_id]
     cursor = connection.cursor()
     cursor.execute(sql, args)
     wettkaempfer_sum = 0
