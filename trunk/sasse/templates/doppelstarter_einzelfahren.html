@@ -21,7 +21,7 @@ Doppelstarter markiert).
     <th>Sektion</th>
   </tr>
   {% for row in doppelstarter %}
-  <tr class="{% cycle "odd" "even" %}{{row.trouble|yesno:" trouble,"}}">
+  <tr class="{{row.trouble|yesno:"trouble,"}}">
     <td>
     {% for item in row.doppel %}
     <a href="{% url teilnehmer_get wettkampf.jahr, wettkampf.name, item.disziplin, item.startnummer %}">{{item.startnummer}}</a>
