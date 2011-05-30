@@ -39,7 +39,9 @@
       <a href="{% url wettkampf_update wettkampf.jahr, wettkampf.name %}">Ändern</a>
       | <a href="{% url wettkampf_delete_confirm wettkampf.jahr, wettkampf.name %}">Löschen</a>
       | <a href="{% url disziplinen_add wettkampf.jahr, wettkampf.name %}">Disziplin hinzufügen</a>
-    </td>
+      | Startliste <a href="{% url startlisten_einzelfahren_export wettkampf.jahr, wettkampf.name%}">export</a>
+      / <a href="{% url startlisten_einzelfahren_import wettkampf.jahr, wettkampf.name%}">import</a>
+  </td>
   </tr>
 </table>
 {% endblock %}
