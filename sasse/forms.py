@@ -17,6 +17,7 @@ from django.forms import RegexField
 from django.forms import Select
 from django.forms import TextInput
 from django.forms import ValidationError
+from django.forms import FileField
 
 from django.forms.formsets import BaseFormSet
 from django.forms.formsets import formset_factory
@@ -386,7 +387,7 @@ def create_bewertung_initials(posten, bewertungsart, teilnehmer_ids):
     # Mit Hilfe eines einzigen Select (Performance) sich merken, zu
     # welchem Teilnehmer bereits eine Bewertung existiert
     bewertung_by_tid = {}
-    for b in Bewertung.objects.filter(posten=posten,
+    for b in Bewertung.objects.select_related('bewertungsart').filter(posten=posten,
             bewertungsart=bewertungsart, teilnehmer__id__in=teilnehmer_ids):
         bewertung_by_tid[b.teilnehmer_id] = b
     # Nun pro Teilnehmer die Initials für die BewertungForm definieren
