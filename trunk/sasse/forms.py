@@ -516,3 +516,5 @@ class MitgliedForm(Form):
         m.save()
         return m
 
+class StartlisteUploadFileForm(Form):
+    startliste = FileField()

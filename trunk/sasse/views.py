@@ -4,6 +4,9 @@
 # RequestContext verwendet wird. Das braucht man zum Beispiel, um die Login
 # Information (Variable 'user') darzustellen.
 
+import datetime
+
+from django.db import transaction
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.http import Http404
@@ -37,6 +40,7 @@ from forms import create_postenblatt_formsets
 from forms import RichtzeitForm
 from forms import KranzlimiteForm
 from forms import MitgliedForm
+from forms import StartlisteUploadFileForm
 
 from queries import read_topzeiten
 from queries import read_notenliste
@@ -61,6 +65,8 @@ from reports import create_startliste_doctemplate
 from reports import create_startliste_flowables
 from reports import create_notenliste_doctemplate
 from reports import create_notenliste_flowables
+
+import eai_startliste
 
 def wettkaempfe_get(request):
     assert request.method == 'GET'
@@ -517,6 +523,7 @@ def postenblatt_update(request, jahr, wettkampf, disziplin, posten):
         'posten_next_name': p_next_name})
 
 @permission_required('sasse.change_bewertung')
+@transaction.commit_on_success
 def postenblatt_post(request, jahr, wettkampf, disziplin, posten):
     assert request.method == 'POST'
     p = Posten.objects.select_related().get(
@@ -867,6 +874,31 @@ def doppelstarter_einzelfahren(request, jahr, wettkampf):
     return direct_to_template(request, 'doppelstarter_einzelfahren.html', {'wettkampf': w,
         'doppelstarter': doppelstarter},
         context_instance=RequestContext(request))
+
+def startlisten_einzelfahren_export(request, jahr, wettkampf):
+    assert request.method == 'GET'
+    w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
+    response = HttpResponse(mimetype='text/csv')
+    now = datetime.datetime.now()
+    filename = "startlisten-einzelfahren-%s.csv" % now.strftime("%Y%m%d%H%M")
+    response['Content-Disposition'] = 'attachment; filename=%s' % filename
+    eai_startliste.dump(w, response)
+    return response
+
+@permission_required("sasse.change_schiffeinzel")
+@transaction.commit_on_success
+def startlisten_einzelfahren_import(request, jahr, wettkampf):
+    w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
+    if request.method == 'POST':
+        form = StartlisteUploadFileForm(request.POST, request.FILES)
+        if form.is_valid():
+            eai_startliste.load(w, request.FILES['startliste'])
+            url = reverse(wettkampf_get, args=[w.jahr(), w.name])
+            return HttpResponseRedirect(url)
+    else:
+        form = StartlisteUploadFileForm()
+    return direct_to_template(request, 'startlisten_einzelfahren_upload.html',
+            {'wettkampf': w, 'form': form})
 
 #-----------
 #    from django.db import connection
