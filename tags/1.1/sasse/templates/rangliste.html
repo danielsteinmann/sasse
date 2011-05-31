@@ -1,0 +1,44 @@
+{% extends "base_disziplin.html" %}
+{% block nav_rangliste %}selected{% endblock %}
+{% block content %}
+{% load pagination_tags %}
+{% autopaginate rangliste 20 %}
+{% for k in kategorien %}
+{% ifequal k.id kategorie.id %}<b>{{ k.name }}</b>
+{% else %}<a href="{% url rangliste wettkampf.jahr, wettkampf.name, disziplin.name, k.name %}">{{ k.name }}</a>
+{% endifequal %}{% if not forloop.last %}|{% endif %}
+{% endfor %}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a target="_blank" href="{% url rangliste_pdf wettkampf.jahr, wettkampf.name, disziplin.name, kategorie.name %}">PDF</a>
+| <a target="_blank" href="{% url rangliste_pdf_all wettkampf.jahr, wettkampf.name, disziplin.name %}">Alle Kategorien als PDF</a>
+| <a href="{% url kranzlimiten wettkampf.jahr, wettkampf.name, disziplin.name %}">Kranzlimiten</a></li>
+| <a href="{% url richtzeiten wettkampf.jahr, wettkampf.name, disziplin.name %}">Bestzeiten</a>
+<p>
+<table class="list">
+  <tr>
+    <th class="rang">Rang</th>
+    <th>Steuermann</th>
+    <th>Vorderfahrer</th>
+    <th>Sektion</th>
+    <th class="startnummer">Stnr</th>
+    <th class="zeit">Zeit</th>
+    <th class="note">Punkte</th>
+  </tr>
+{% for row in rangliste %}
+  {% ifchanged row.kranz %}{% if not forloop.first %}
+  <tr><td colspan="7"><a href="{% url kranzlimiten wettkampf.jahr, wettkampf.name, disziplin.name %}">Kranzlimite:</a> {{kranzlimite}} Punkte</td></tr>
+  {% endif %}{% endifchanged %}
+  <tr class="{% cycle "odd" "even" %}">
+    <td class="rang">{{row.rang}}</td>
+    <td>{{row.steuermann}}<font size="-2">{% if row.steuermann_ist_ds %} (DS){% endif %} {{row.steuermann_jg|date:"Y"}}</font></td>
+    <td>{{row.vorderfahrer}}<font size="-2">{% if row.vorderfahrer_ist_ds %} (DS){% endif %} {{row.vorderfahrer_jg|date:"Y"}}</font></td>
+    <td>{{row.sektion}}</td>
+    <td class="startnummer"><a href="{% url teilnehmer_get wettkampf.jahr, wettkampf.name, disziplin.name, row.startnummer %}">{{row.startnummer}}</a></td>
+    <td class="zeit">{{row.zeit_tot}}</td>
+    <td class="note"><a title="Notenblatt" href="{% url notenblatt wettkampf.jahr, wettkampf.name, disziplin.name, row.startnummer %}">{{row.punkt_tot}}</a></td>
+  </tr>
+{% endfor %}
+</table>
+<p>
+{% paginate %}
+{% endblock %}

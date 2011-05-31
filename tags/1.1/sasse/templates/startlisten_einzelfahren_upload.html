@@ -1,0 +1,16 @@
+{% extends "base_wettkampf.html" %}
+{% block nav_wettkampf %}selected{% endblock %}
+{% block content %}
+<p>
+<strong>Startlisten Einzelfahren Import.</strong>
+</p>
+<form action="" method="POST" enctype="multipart/form-data">
+<table class="form">
+  {{ form.as_table }}
+  <tr>
+    <td></td>
+    <td><input type="submit" value="Startliste importieren"/></td>
+  </tr>
+</table>
+</form>
+{% endblock %}
