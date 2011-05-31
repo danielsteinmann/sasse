@@ -21,7 +21,7 @@
   <tr>
     <th>Posten:</th>
     <td>
-      {% for posten in disziplin.posten_set.all %}
+      {% for posten in disziplin.posten_set.select_related.all %}
         <a href="{% url posten_get wettkampf.jahr, wettkampf.name, disziplin.name, posten.name %}">{{ posten.name }}</a> -
         {{ posten.postenart }}
         {% if posten.postenart.name == 'Zeitnote' %}
