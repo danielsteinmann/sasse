@@ -19,8 +19,15 @@ DATABASES = {
 #            'NAME': 'db.sqlite',
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
             'NAME': 'spsv',
+            'USER': 'postgres',
             }
         }
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+    }
+}
 
 TIME_ZONE = 'Europe/Zurich'
 LANGUAGE_CODE = 'de-CH'
@@ -36,7 +43,6 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.transaction.TransactionMiddleware',
     'pagination.middleware.PaginationMiddleware',
-#    'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 
 ROOT_URLCONF = 'urls'
@@ -59,9 +65,7 @@ INSTALLED_APPS = (
     'south',
     'sasse',
     'pagination',
-#    'debug_toolbar',
 )
-INTERNAL_IPS = ('127.0.0.1',)
 
 # Have local changes?
 try:
