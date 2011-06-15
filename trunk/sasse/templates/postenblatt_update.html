@@ -9,14 +9,14 @@
     <tr>
       <td></td>
       {% for cell in header_row %}
-      <th class="note" width="30">{{ cell }}</th>
+      <th style="text-align: center" width="30">{{ cell }}</th>
       {% endfor %}
     </tr>
     {% for first_cell, next_cells in data_rows %}
     <tr>
       <th class="note">{{ first_cell }}</th>
       {% for cell in next_cells %}
-      <td class="note" {% if not cell.initial.id %}bgcolor="LightGreen"{% endif %}>
+      <td class="text-align: center" {% if not cell.initial.id %}bgcolor="LightGreen"{% endif %}>
         {{ cell.wert.errors }}{{ cell.wert }}{{ cell.id }}
       </td>
       {% endfor %}
@@ -39,6 +39,10 @@
 $(document).ready(function(){
     textboxes = $("input[type=text]");
     $(textboxes).keydown(checkForEnter);
+    if ('{{ posten.postenart.name }}' == 'Zeitnote') {
+        $(textboxes).mask("9:99.99");
+        $('form:first :input:visible:first').focus().select();
+    }
 });
 function checkForEnter(event) {
     if (event.keyCode == 13) {
