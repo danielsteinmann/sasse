@@ -1,4 +1,32 @@
-Frische Installation
+Frische Installation (Kurz)
+--------------------
+  mkdir c:\_tmp_sasse
+  cd c:\_tmp_sasse
+  unzip sasse-setup.zip
+  cd sasse-setup
+  installers/python-2.7.1.msi
+  installers/reportlab-2.5.win32-py2.7.exe
+  installers/postgresql-9.0.4-1-windows.exe
+  installers/psycopg2-2.4.1.win32-py2.7-pg9.0.4-release.exe
+  set Path=%Path%;c:\Python27;C:\Programme\PostgreSQL\9.0\bin
+  # Diesen Pfad auch permanent setzen:
+  #  Start->Einstellungen->Systemsteuerung->System->Erweiterungen->Umgebungsvariable
+  rmdir /s c:\pythonenv
+  rmdir /s c:\django
+  python virtualenv.py --distribute --extra-search-dir=pypi C:\pythonenv\sasse
+  c:\pythonenv\sasse\Scripts\activate.bat
+  pip install -f file://%CD%/pypi -f file://%CD% sasse
+  createdb -U postgres spsv                      #Passwort von PostgreSQL Installation
+  psql -U postgres -d spsv -f spsv.pgdump
+  unzip djangosites.zip -d c:\
+  copy local_settings_example.py C:\djangosites\wettkaempfe
+  cd C:\djangosites\wettkaempfe
+  rename local_settings_example.py local_settings.py
+  notepad local_settings.py                      #Passwort von PostgreSQL Installation
+  rmdir /s c:\_tmp_sasse
+  python manage.py runserver --noreload 0.0.0.0:8000
+
+Frische Installation (Lang)
 --------------------
 - python-2.7.1.msi
   Alle Defaults wählen. Python wird in das Verzeichnis c:/python27 installiert.
@@ -26,29 +54,24 @@ Frische Installation
 - Python Environment
   Um nicht von einer Internet Verbindung abhängig zu sein, wird eine Kopie der
   relevanten Packages des Python Packaging Repostories (PyPI) mitgeliefert.
-  Der Rest dieser Anleitung geht davon aus, dass diese Packages unter 'y:\pypi'
-  erreichbar sind.
   Mit 'virtualenv.py' ein Python Environment erzeugen. Dazu eine Windows Shell
   öffnen und folgendes eintippen:
-    python y:\virtualenv.py --extra-search-dir=y:\pypi C:\pythonenv\sasse
+    cd SOME-TMP-DIR
+    unzip sasse-setup.zip
+    cd sasse-setup
+    python virtualenv.py --distribute --extra-search-dir=pypi C:\pythonenv\sasse
 
 - Python Software
   Mit folgenden Befehlen werden Sasse und all die davon abhängigen
   Softwarekomponenten in das Python Environment installiert:
     c:\pythonenv\sasse\Scripts\activate.bat
-    pip install -f file:y:\pypi sasse
-
-  Das Package 'sasse' hängt von folgenden Packages ab:
-  - Django-1.3.tar.gz
-  - South-0.7.3.tar.gz
-  - django-pagination-1.0.7.tar.gz
-  - xlrd-0.7.1.zip
+    pip install -f file://%CD%/pypi -f file://%CD% sasse
 
 - Django Website
   Die Website ist mit Hilfe des Django Framework erzeugt worden. Folgendes
   ZIP File enthält Konfigurationsscripte, welche die Website für die SPSV
   Wettkämpfe definieren:
-    unzip y:\djangosites.zip -d c:\
+    unzip djangosites.zip -d c:\
 
 - Datenbank
   Mit folgenden Befehlen wird eine Datenbank Instanz erzeugt, die Tabellen
@@ -66,7 +89,7 @@ Upgrade
 -------
     cd c:\djangosites\wettkaempfe
     c:\pythonenv\sasse\Scripts\activate.bat
-    pip install -U --no-deps -f file:y:\ sasse
+    pip install -U --no-deps sasse-X.X.tar.gz
     python manage.py syncdb
     python manage.py migrate
 

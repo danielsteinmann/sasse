@@ -1,3 +1,39 @@
+- Kranzlimiten/Ranglisten: Sämtliche Kategorien aller Einzelfahren eingeben.
+
+- Duplicates in Mitglieder:
+  - Brem Sven, Dietikon (5x)
+  - Stutz Aline, Zürich (4x)
+  Passierte in Bremgarten. Wahrscheinlich, weil kein Double Submit Check
+  gemacht wurde.
+
+- Double Submit (MitgliedForm, Startliste, Postenblatt):
+  - GUID in Session merken
+  - GUID Hidden Field
+  - Submit (alles OK): GUID aus Session entfernen. Falls GUID nicht existiert,
+    wurde das Form schon mal abgeschickt oder die Session ist abgelaufen.
+
+- Startliste Eingabe: Keine Startnummer vorschlagen, die schon existiert.
+
+- Die Notenliste auf einen Klick für alle Sektionen ausgeben.
+
+- Startlisten export/import: Gelöschte auch transportieren. Irgendwie noch
+  nicht klar, ob 'löschen' wirklich den Record löscht, oder einfach nur einen
+  Status 'gelöscht' setzt. Einer in Status 'gelöscht' darf nirgends erscheinen
+  (Notenliste/Rangliste). Am besten ist wahrscheinlich, dass man beim Import
+  merkt, dass eine bestimmte Startnummer nicht kommt => diese Startnummer
+  löschen.
+  Zudem mit Zeitstempfel (Mutationsdatum) arbeiten: Nur solche Records ändern,
+  die einen älteren Zeitstempfel haben. Bedingt, dass die Zeit auf den Compis
+  gut übereinstimmt.
+
+- Zusatzinfo in Wettkampf streichen. Dafür Disziplinen darstellen
+
+======
+
+Release Notes schreiben
+
+=======
+
 Allgemein: Wenn man einen Teilnehmern ändern muss, sollte es einen Link 'Zurück
 zur Startliste' geben, damit man den Kontext nicht verliert. Siehe
 contrib.auth.view.login, wie man das richtig macht.
@@ -36,6 +72,7 @@ Installation als ein EXE File:
 - pyinstaller.org
 - py2exe.org
 - http://misunderstandings.wordpress.com/2008/06/26/django-desktop-app/
+- bitnami.org
 --
 Freeze Wettkampf, damit man nicht fälschlicherweise etwas eingeben
 --
