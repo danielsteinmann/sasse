@@ -46,7 +46,15 @@
        <div id="neuer_vorderfahrer">{{ vorderfahrer_neu_form.as_ul }}</div>
     </td>
     <td>{{ form.kategorie }}</td>
-    <td>{{ form.sektion }} <input type="submit" value="Schiff hinzufügen"/></td>
+    <td>
+        {{ form.sektion }}
+        <input type="submit" value="Schiff hinzufügen"/>
+        {% if form.errors %}
+        <font size="-1">
+            <a href="{% url startliste wettkampf.jahr, wettkampf.name, disziplin.name %}?{{ request.META.QUERY_STRING }}">Abbrechen</a>
+        </font>
+        {% endif %}
+    </td>
   </tr>
   {% endif %}
 </table>
