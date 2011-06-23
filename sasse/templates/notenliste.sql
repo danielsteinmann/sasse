@@ -22,7 +22,4 @@ select tn.startnummer as Startnr
        {% if sektion %}and schiff.sektion_id = %s{% endif %}
        {% if startnummern %}and tn.startnummer in (__startnummern__){% endif %}
  group by tn.startnummer
--- Aus Performance Gruenden nur sortieren, falls genuegend gefiltert wird
-{% if sektion %}
  order by Punkte desc, Zeit asc
-{% endif %}
