@@ -679,12 +679,29 @@ def notenliste_pdf(request, jahr, wettkampf, disziplin):
     startnummern = [schiff.startnummer for schiff in searchform.schiffe]
     notenliste = read_notenliste(d, posten, sektion, startnummern)
     doc = create_notenliste_doctemplate(w, d)
-    flowables = create_notenliste_flowables(posten, notenliste)
+    flowables = create_notenliste_flowables(posten, notenliste, sektion)
     response = HttpResponse(mimetype='application/pdf')
     response['Content-Disposition'] = smart_str(u'filename=notenliste')
     doc.build(flowables, filename=response)
     return response
 
+def notenliste_pdf_all(request, jahr, wettkampf, disziplin):
+    assert request.method == 'GET'
+    w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
+    d = Disziplin.objects.get(wettkampf=w, name=disziplin)
+    posten = d.posten_set.all().select_related()
+    response = HttpResponse(mimetype='application/pdf')
+    response['Content-Disposition'] = smart_str(u'filename=notenliste')
+    doc = create_notenliste_doctemplate(w, d)
+    flowables = []
+    for sektion in Sektion.objects.all():
+        schiffe = Schiffeinzel.objects.filter(disziplin=d, sektion=sektion)
+        if schiffe:
+            startnummern = [schiff.startnummer for schiff in schiffe]
+            notenliste = read_notenliste(d, posten, sektion, startnummern)
+            flowables += create_notenliste_flowables(posten, notenliste, sektion)
+    doc.build(flowables, filename=response)
+    return response
 
 def rangliste(request, jahr, wettkampf, disziplin, kategorie=None):
     assert request.method == 'GET'
