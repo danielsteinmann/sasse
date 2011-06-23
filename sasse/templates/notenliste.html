@@ -8,8 +8,10 @@
 </form>
 <p></p>
 {% if not searchform.errors %}
-<a target="_blank" href="{% url notenblaetter_pdf wettkampf.jahr, wettkampf.name, disziplin.name%}?{{request.META.QUERY_STRING}}">Notenblätter drucken</a>
-| <a target="_blank" href="{% url notenliste_pdf wettkampf.jahr, wettkampf.name, disziplin.name%}?{{request.META.QUERY_STRING}}">Notenliste drucken</a>
+PDF: <a target="_blank" href="{% url notenblaetter_pdf wettkampf.jahr, wettkampf.name, disziplin.name%}?{{request.META.QUERY_STRING}}">Notenblätter</a>
+| <a target="_blank" href="{% url notenliste_pdf wettkampf.jahr, wettkampf.name, disziplin.name%}?{{request.META.QUERY_STRING}}">Notenliste</a>
+| <a target="_blank" href="{% url notenliste_pdf_all wettkampf.jahr, wettkampf.name, disziplin.name%}">Notenliste aller Sektionen</a> <font size="-1">(dauert lange)</font>
+<p></p>
 <table class="list">
   <tr>
     <th class="startnummer">Stnr</th>

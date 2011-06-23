@@ -323,11 +323,12 @@ def write_notenliste_header_footer(canvas, doc):
     canvas.drawImage(settings.MEDIA_ROOT + '/spsv-logo.jpg', 2*cm, PAGE_WIDTH-2*cm, width=1.5*cm, height=1.5*cm)
     canvas.line(4*cm, PAGE_WIDTH-1.2*cm, PAGE_HEIGHT-2*cm, PAGE_WIDTH-1.2*cm)
     canvas.drawString(4*cm, PAGE_WIDTH-1*cm, "Notenliste %s" % (doc.disziplin.disziplinart))
+    canvas.drawCentredString(PAGE_HEIGHT/2, PAGE_WIDTH-1*cm, "Sektion %s" % (doc.docEval("sektion_name")))
     canvas.drawRightString(PAGE_HEIGHT-2*cm, PAGE_WIDTH-1*cm, "%s %d" % (doc.wettkampf.name, doc.wettkampf.jahr()))
     canvas.drawCentredString(PAGE_HEIGHT/2, 1*cm, "Seite %d" % (doc.page,))
     canvas.restoreState()
 
-def create_notenliste_flowables(posten, notenliste):
+def create_notenliste_flowables(posten, notenliste, sektion=None):
     data = []
     posten_header = []
     posten_header_width = []
@@ -339,12 +340,15 @@ def create_notenliste_flowables(posten, notenliste):
             posten_header_width.append(35)
     header = ['Stnr', 'Fahrerpaar', 'Kat'] + posten_header + ['Zeit', 'Punkte']
     data.append(header)
-    col_widths = [30, 160, 30] + posten_header_width + [40, 30]
+    col_widths = [30, 130, 30] + posten_header_width + [40, 30]
     ss = _create_style_sheet()
     for i, row in enumerate(notenliste):
         record = []
         record.append(Paragraph(unicode(row['startnummer']), ss['center']))
-        record.append(Paragraph(row['steuermann'] + " / " + row['vorderfahrer'] + " - " + row['sektion'], ss['left']))
+        fahrerpaar = row['steuermann'] + " / " + row['vorderfahrer']
+        if not sektion:
+            fahrerpaar += " - " + row['sektion']
+        record.append(Paragraph(fahrerpaar, ss['left']))
         record.append(Paragraph(row['kategorie'], ss['center']))
         for note in row['noten']:
             if note.bewertungsart.einheit == "ZEIT":
@@ -367,6 +371,11 @@ def create_notenliste_flowables(posten, notenliste):
         ('ROWBACKGROUNDS', (0,1), (-1,-1), (None, colors.HexColor(0xf0f0f0))),
         ]
     result = []
+    sektion_name = ""
+    if sektion:
+        sektion_name = sektion.name
+    result.append(DocExec("sektion_name = '%s'" % sektion_name))
     result.append(Platypus_Table(data, repeatRows=1, colWidths=col_widths, style=TableStyle(table_props)))
     result.append(Spacer(1, 10))
+    result.append(PageBreak())
     return result
