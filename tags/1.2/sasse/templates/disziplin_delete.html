@@ -1,0 +1,9 @@
+{% extends "base_disziplin.html" %}
+{% block nav_einzelfahren %}selected{% endblock %}
+{% block content %}
+<form action="" method="POST">
+  <p>Die Disziplin <b>{{ disziplin.name }}</b>, inklusive Startliste
+  und den erfassten Noten löschen?</p>
+  <input type="submit" value="Ja" />
+</form>
+{% endblock %}
