@@ -1,3 +1,7 @@
+Version 1.3 (xx. Juli 2011)
+https://sasse.googlecode.com/svn/tags/1.3
+
+
 Version 1.2 (23. Juni 2011)
 https://sasse.googlecode.com/svn/tags/1.2
 
@@ -10,7 +14,7 @@ https://sasse.googlecode.com/svn/tags/1.2
 - Notenliste sämtlicher Sektionen können mit einem Click ausgedruckt werden.
   Achtung: Das kann lange (dutzende Sekunden) dauern.
 
-- Notenliste PDF enhält in der Kopfzeile den Sektionsnamen (sofern nach einer
+- Notenliste PDF enthält in der Kopfzeile den Sektionsnamen (sofern nach einer
   Sektion gefiltert wurde). Das spart Platz in der Fahrerpaar Spalte.
 
 - Startnummern auf dem Beurteilungsblatt sind zentriert.
