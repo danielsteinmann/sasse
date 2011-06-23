@@ -31,9 +31,6 @@
   contrib.auth.view.login, wie man das richtig macht.
 
 --
-Release Notes schreiben
-
---
 Startliste: Falls ein Tippfehler beim Erfassen des Mitgliedes passiert ist,
 muss man mit einem Link auf eine Mitglieder Update Seite kommen.
 ===> Geht nicht so einfach. Wie wäre es, das Mitglied als Link darzustellen?
