@@ -14,8 +14,6 @@
 
 - Startliste Eingabe: Keine Startnummer vorschlagen, die schon existiert.
 
-- Die Notenliste auf einen Klick für alle Sektionen ausgeben.
-
 - Startlisten export/import: Gelöschte auch transportieren. Irgendwie noch
   nicht klar, ob 'löschen' wirklich den Record löscht, oder einfach nur einen
   Status 'gelöscht' setzt. Einer in Status 'gelöscht' darf nirgends erscheinen
@@ -28,20 +26,12 @@
 
 - Zusatzinfo in Wettkampf streichen. Dafür Disziplinen darstellen
 
-======
+- Allgemein: Wenn man einen Teilnehmern ändern muss, sollte es einen Link
+  'Zurück zur Startliste' geben, damit man den Kontext nicht verliert. Siehe
+  contrib.auth.view.login, wie man das richtig macht.
 
-Release Notes schreiben
-
-=======
-
-Allgemein: Wenn man einen Teilnehmern ändern muss, sollte es einen Link 'Zurück
-zur Startliste' geben, damit man den Kontext nicht verliert. Siehe
-contrib.auth.view.login, wie man das richtig macht.
 --
-WICHTIG: Postenblatt: Wenn nur ein einzige Startnummer eingeben wird, wechselt
-es mit 'Speichern&Weiter' nicht auf den nächsten Posten. Ist ein Problem mit IE7
-=> Auf neuesten Firefox oder IE wechseln.
-===========
+Release Notes schreiben
 
 --
 Startliste: Falls ein Tippfehler beim Erfassen des Mitgliedes passiert ist,
@@ -54,10 +44,6 @@ Backup eines gesamten Wettkampf:
 - Dump einer Datenbank oder kopieren des sqlite Files
 --
 Mitglieder via File Upload importieren
---
-Startliste: export/import
-- Basierend auf Zeitstempfel. Alles was seit letztem Export geändert hat, wird exportiert.
-- Import überschreibt Aenderungen im Rechnungsbüro
 --
 Teilnehmer: Als 'abstract' markieren, damit keine eigene Tabelle entsteht. Das
 macht einige SQL Statements einfacher.
