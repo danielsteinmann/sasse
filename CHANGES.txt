@@ -1,5 +1,8 @@
-Version 1.3 (xx. Juli 2011)
+Version 1.3 (xx. August 2011)
 https://sasse.googlecode.com/svn/tags/1.3
+
+- Bei der Startlisteneingabe wird nächste gültige Startnummer gewählt, falls
+  eine neue Sektion beginnt. Bisher wurde immer nur '1' gezeigt.
 
 
 Version 1.2 (23. Juni 2011)

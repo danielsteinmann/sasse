@@ -210,9 +210,10 @@ class SchiffeinzelFilterFormTest(TestCase):
             Schiffeinzel.objects.create(startnummer=startnr, disziplin=d,
                     steuermann_id=1, vorderfahrer_id=2, sektion_id=1,
                     kategorie_id=1)
-        self.sut = SchiffeinzelFilterForm(d, data={'startnummern': '1,2,3'})
+        self.sut = SchiffeinzelFilterForm(d, data={})
 
     def test_valid_input(self):
+        self.sut.data['startnummern'] = '1,2,3'
         self.failUnless(self.sut.is_valid(), self.sut.errors)
 
     def test_invalid_input(self):
@@ -236,6 +237,59 @@ class SchiffeinzelFilterFormTest(TestCase):
         self.sut.is_valid()
         actual = self.sut.selected_startnummern(visible=10)
         self.assertEquals(6, actual.count())
+
+
+class NachsteStartnummerTest(TestCase):
+    def setUp(self):
+        d = Disziplin.objects.create(wettkampf_id=1, name="Test")
+        self.bremgarten = Sektion.objects.get(name="Bremgarten")
+        self.dietikon = Sektion.objects.get(name="Dietikon")
+        self.sut = SchiffeinzelFilterForm(d, data={}, sektion_check=False)
+
+    def _insert_schiff(self, startnummer, sektion):
+        schiff = Schiffeinzel.objects.create(startnummer=startnummer,
+                disziplin=self.sut.disziplin, steuermann_id=1,
+                vorderfahrer_id=2, sektion=sektion, kategorie_id=1)
+        return schiff
+
+    def test_allererstes_schiff(self):
+        self.sut.data['sektion'] = self.bremgarten.id
+        self.sut.is_valid()
+        actual = self.sut.naechste_nummer()
+        self.assertEquals(1, actual)
+
+    def test_letzte_sichtbare_nummer_plus_eins(self):
+        self._insert_schiff(1, self.bremgarten)
+        self._insert_schiff(2, self.bremgarten)
+        self._insert_schiff(3, self.dietikon)
+        self.sut.data['sektion'] = self.dietikon.id
+        self.sut.is_valid()
+        actual = self.sut.naechste_nummer()
+        self.assertEquals(4, actual)
+
+    def test_naechste_freie_nummer_kleiner_parcour(self):
+        kat_I = Kategorie.objects.get(name="I")
+        self.sut.disziplin.kategorien.add(kat_I)
+        self._insert_schiff(1, self.bremgarten)
+        self._insert_schiff(2, self.bremgarten)
+        self._insert_schiff(151, self.bremgarten) # Doppelstarter
+        self.sut.data['sektion'] = self.dietikon.id
+        self.sut.is_valid()
+        actual = self.sut.naechste_nummer()
+        self.assertEquals(3, actual)
+
+    def test_naechste_freie_nummer_grosser_parcour(self):
+        kat_C = Kategorie.objects.get(name="C")
+        kat_D = Kategorie.objects.get(name="D")
+        self.sut.disziplin.kategorien.add(kat_C)
+        self.sut.disziplin.kategorien.add(kat_D)
+        self._insert_schiff(320, self.bremgarten)
+        self._insert_schiff(321, self.bremgarten)
+        self._insert_schiff(601, self.bremgarten) # Doppelstarter
+        self.sut.data['sektion'] = self.dietikon.id
+        self.sut.is_valid()
+        actual = self.sut.naechste_nummer()
+        self.assertEquals(322, actual)
 
 
 class SchiffeinzelListFormTest(TestCase):
