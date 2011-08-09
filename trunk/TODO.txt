@@ -1,5 +1,46 @@
-- Kranzlimiten/Ranglisten: Sämtliche Kategorien aller Einzelfahren eingeben.
+- REST API
+  https://github.com/funkbit/django-dynamicresponse
+  => Gleiche Views
+  https://bitbucket.org/jespern/django-piston
+  => Neue Views (called Handlers)
 
+- Zwei Tabellen nebeneinander:
+  http://stackoverflow.com/questions/6548880/css-positioning-tables-next-to-each-other
+
+- http://code.google.com/p/django-dynamic-fixture/
+
+- Reset south history:
+   https://groups.google.com/forum/#!msg/south-users/iIQT8ZWs2cI/GQ4kONoT5Q4J
+
+- Neues URL Schema:
+  - 2011/Faellbaumcup/einzelfahren/I
+  - 2011/Faellbaumcup/einzelfahren/II-III-C-D-F
+  - 2011/Faellbaumcup/einzelfahren/ranglisten
+  - 2011/Faellbaumcup/einzelfahren/kranzlimiten
+  - 2011/Faellbaumcup/einzelfahren/notenliste (Links pro Parcours: I | II-III-C-D-F)
+  - 2011/Faellbaumcup/einzelfahren/I/notenliste
+  - 2011/Faellbaumcup/einzelfahren/II-III-C-D-F/beurteilungsblaetter
+  - 2011/Faellbaumcup/einzelfahren/II-III-C-D-F/startliste
+
+  Validierung, dass eine Kategorie in einem Einzelfahren pro Wettkampf nur
+  einmal vorkommen kann. Mit "Neues Einzelfahren" nach Kategorien fragen.
+
+
+  Wettkämpfe  Fällbaucup-2011  Einzelfahren
+  Überblick  Kranzlimiten  Ranglisten  Doppelstarter
+  
+   Parcours:  I
+              II-III-F-D-C
+
+              Parcours hinzufügen
+
+   Startliste exportieren/importieren
+
+
+  Wettkämpfe  Fällbaucup-2011  Einzelfahren  Kat-II-III-F-D-C
+  Postenliste  Startliste  Beurteilungsblätter  Bestzeiten  Notenliste
+
+  
 - Duplicates in Mitglieder:
   - Brem Sven, Dietikon (5x)
   - Stutz Aline, Zürich (4x)
@@ -11,8 +52,6 @@
   - GUID Hidden Field
   - Submit (alles OK): GUID aus Session entfernen. Falls GUID nicht existiert,
     wurde das Form schon mal abgeschickt oder die Session ist abgelaufen.
-
-- Startliste Eingabe: Keine Startnummer vorschlagen, die schon existiert.
 
 - Startlisten export/import: Gelöschte auch transportieren. Irgendwie noch
   nicht klar, ob 'löschen' wirklich den Record löscht, oder einfach nur einen
@@ -31,14 +70,8 @@
   contrib.auth.view.login, wie man das richtig macht.
 
 --
-Startliste: Falls ein Tippfehler beim Erfassen des Mitgliedes passiert ist,
-muss man mit einem Link auf eine Mitglieder Update Seite kommen.
-===> Geht nicht so einfach. Wie wäre es, das Mitglied als Link darzustellen?
---
 Startliste: Neuer Teilnehmer am Ende der Seite => Es wechselt nicht auf neue Seite
---
-Backup eines gesamten Wettkampf:
-- Dump einer Datenbank oder kopieren des sqlite Files
+Eventuell http://code.google.com/p/django-pagination/issues/detail?id=54 brauchen.
 --
 Mitglieder via File Upload importieren
 --

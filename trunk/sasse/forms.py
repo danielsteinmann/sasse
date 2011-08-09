@@ -22,6 +22,9 @@ from django.forms import FileField
 from django.forms.formsets import BaseFormSet
 from django.forms.formsets import formset_factory
 
+from django.db.models import Max
+from django.conf import settings
+
 from models import Bewertung
 from models import Bewertungsart
 from models import Disziplin
@@ -45,6 +48,10 @@ from fields import StartnummernSelectionField
 
 from queries import create_mitglieder_nummer
 from queries import sind_doppelstarter
+
+ERSTE_DOPPELSTARTER_NUMMER_KLEINER_PARCOUR = getattr(settings, 'ERSTE_DOPPELSTARTER_NUMMER_KLEINER_PARCOUR', 151)
+ERSTE_DOPPELSTARTER_NUMMER_GROSSER_PARCOUR = getattr(settings, 'ERSTE_DOPPELSTARTER_NUMMER_GROSSER_PARCOUR', 601)
+
 
 class WettkampfForm(ModelForm):
     name = UnicodeSlugField(
@@ -173,9 +180,9 @@ class SchiffeinzelFilterForm(Form):
 
     def clean(self):
         schiffe = self.cleaned_data.get('startnummern')
-        if schiffe:
+        if schiffe is not None:
             sektion = self.cleaned_data.get('sektion')
-            if sektion:
+            if sektion is not None:
                 schiffe = schiffe.filter(sektion=sektion)
                 if self.sektion_check and not schiffe:
                     text = u"Keine Schiffe mit diesen Suchkritierien gefunden."
@@ -183,13 +190,29 @@ class SchiffeinzelFilterForm(Form):
         self.schiffe = schiffe
         return self.cleaned_data
 
+    def _naechste_freie_nummer(self):
+        if self.disziplin.kategorien.count() == 1:
+            erste_doppelstarter_nummer = ERSTE_DOPPELSTARTER_NUMMER_KLEINER_PARCOUR
+        else:
+            erste_doppelstarter_nummer = ERSTE_DOPPELSTARTER_NUMMER_GROSSER_PARCOUR
+        result = Schiffeinzel.objects.filter(
+                disziplin=self.disziplin,
+                startnummer__lt=erste_doppelstarter_nummer
+                ).aggregate(Max('startnummer'))
+        nummer = result['startnummer__max']
+        if not nummer:
+            nummer = 1
+        else:
+            nummer = nummer + 1
+        return nummer
+
     def naechste_nummer(self):
         """
         Nächste Startnummer ist die zuletzt dargestellte Nummer plus 1
         """
         anzahl_sichtbar = self.schiffe.count()
         if anzahl_sichtbar == 0:
-            result = 1
+            result = self._naechste_freie_nummer()
         else:
             letzter_sichtbar = self.schiffe[anzahl_sichtbar - 1]
             result = letzter_sichtbar.startnummer + 1
