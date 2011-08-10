@@ -223,6 +223,7 @@ class PostenPageTest(TestCase):
         response = self.client.post(deleteURL)
         self.assertRedirects(response, listURL)
 
+
 class EinzelfahrenStartlistePageTest(TestCase):
 
     def setUp(self):
@@ -243,6 +244,10 @@ class EinzelfahrenStartlistePageTest(TestCase):
 
     def test_list(self):
         response = self.client.get('/2009/Test-Cup/klein/startliste/')
+        self.failUnlessEqual(response.status_code, 200)
+
+    def test_pdf(self):
+        response = self.client.get('/2009/Test-Cup/klein/startliste/pdf/')
         self.failUnlessEqual(response.status_code, 200)
 
     def test_add(self):
@@ -664,8 +669,13 @@ class RichtzeitPageTest(TestCase):
         self.failUnlessEqual(response.status_code, 200)
         self.assertContains(response, u'Die besten Zeiten für Posten E-F:')
 
+    def test_pdf(self):
+        url = '/2009/Test-Cup/einzel/richtzeiten/pdf/'
+        response = self.client.get(url)
+        self.failUnlessEqual(response.status_code, 200)
 
-class NotenlistePageTest(TestCase):
+
+class NotenPageTest(TestCase):
     def setUp(self):
         w = Wettkampf.objects.create(name="Test-Cup", von="2009-04-04")
         d = w.disziplin_set.create(name="einzel")
@@ -692,7 +702,40 @@ class NotenlistePageTest(TestCase):
 
     def test_notenliste(self):
         notenliste = '/2009/Test-Cup/einzel/notenliste/'
+        response = self.client.get(notenliste, {'startnummern': '43'})
+        self.assertContains(response, 'Keine Schiffe mit dieser Eingabe von Startnummern gefunden')
+        self.assertNotContains(response, 'Steinmann / Kohler')
+        response = self.client.get(notenliste, {'startnummern': '3'})
+        self.assertContains(response, 'Steinmann / Kohler')
         response = self.client.get(notenliste)
+        self.assertContains(response, 'Steinmann / Kohler')
+
+    def test_notenliste_pdf(self):
+        notenliste = '/2009/Test-Cup/einzel/notenliste/pdf/'
+        response = self.client.get(notenliste)
+        self.failUnlessEqual(response.status_code, 200)
+        notenliste = '/2009/Test-Cup/einzel/notenliste/pdf/alle-sektionen'
+        response = self.client.get(notenliste)
+        self.failUnlessEqual(response.status_code, 200)
+
+    def test_notenblatt(self):
+        url = '/2009/Test-Cup/einzel/notenblatt/'
+        response = self.client.get(url)
+        self.failUnlessEqual(response.status_code, 200)
+
+    def test_notenblatt_mit_startnummer(self):
+        url = '/2009/Test-Cup/einzel/notenblatt/3/'
+        response = self.client.get(url)
+        self.failUnlessEqual(response.status_code, 200)
+
+    def test_notenblatt_einzel_pdf(self):
+        url = '/2009/Test-Cup/einzel/notenblatt/3/pdf/'
+        response = self.client.get(url)
+        self.failUnlessEqual(response.status_code, 200)
+
+    def test_notenblatt_alle_pdf(self):
+        url = '/2009/Test-Cup/einzel/notenblaetter/'
+        response = self.client.get(url)
         self.failUnlessEqual(response.status_code, 200)
 
 
@@ -703,8 +746,12 @@ class RanglistePageTest(TestCase):
         rangliste = '/2010/F%C3%A4llbaum-Cup/Einzelfahren-II-III-C-D-F/rangliste/'
         response = self.client.get(rangliste)
         self.failUnlessEqual(response.status_code, 200)
+        response = self.client.get(rangliste + "pdf/")
+        self.failUnlessEqual(response.status_code, 200)
 
     def test_rangliste_kat_c(self):
         rangliste = '/2010/F%C3%A4llbaum-Cup/Einzelfahren-II-III-C-D-F/rangliste/C/'
         response = self.client.get(rangliste)
+        self.failUnlessEqual(response.status_code, 200)
+        response = self.client.get(rangliste + "pdf/")
         self.failUnlessEqual(response.status_code, 200)
