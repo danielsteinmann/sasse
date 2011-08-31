@@ -60,17 +60,23 @@ def handle_file_upload(filename):
         try:
             m = Mitglied.objects.get(nummer=from_input.nummer)
         except Mitglied.DoesNotExist:
-            try:
-                m = Mitglied.objects.get(
-                        sektion__id=from_input.sektion_id,
-                        name=from_input.name,
-                        vorname=from_input.vorname,
-                        geburtsdatum__year=from_input.geburtsdatum.year,
-                        geschlecht=from_input.geschlecht
-                        )
-                # Mitglied nummer change from %s to %s" % (m.nummer, from_input.nummer)
-                nummer_changed += 1
-            except Mitglied.DoesNotExist:
+            count = 0
+            for mitglied in Mitglied.objects.filter(
+                    sektion__id=from_input.sektion_id,
+                    name=from_input.name,
+                    vorname=from_input.vorname,
+                    geburtsdatum__year=from_input.geburtsdatum.year,
+                    geschlecht=from_input.geschlecht
+                    ):
+                count += 1
+                if count == 1:
+                    m = mitglied
+                    # Mitglied nummer change from %s to %s" % (m.nummer, from_input.nummer)
+                    nummer_changed += 1
+                else:
+                    sys.stdout.write("\n%s %s (%s): Existiert mehr als einmal (%s) " % (mitglied.name, mitglied.vorname, mitglied.nummer, m.nummer))
+            if count == 0:
+                # New Mitglied
                 m = Mitglied(nummer=from_input.nummer)
         updated = update(m, from_input)
         if not updated:
