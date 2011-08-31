@@ -1,8 +1,15 @@
-Version 1.3 (xx. August 2011)
+Version 1.3 (31. August 2011)
 https://sasse.googlecode.com/svn/tags/1.3
+
+- Der Import von Mitgliederdaten stürzt nicht mehr ab, wenn ein Mitglied
+  geliefert wird, dass zuvor schon *mehrmals* beim Posten A0 erfasst wurde.
 
 - Bei der Startlisteneingabe wird nächste gültige Startnummer gewählt, falls
   eine neue Sektion beginnt. Bisher wurde immer nur '1' gezeigt.
+  Folgende Defaults existieren und können in den Settings (local_settings.py)
+  umdefiniert werden:
+     ERSTE_DOPPELSTARTER_NUMMER_KLEINER_PARCOUR = 151
+     ERSTE_DOPPELSTARTER_NUMMER_GROSSER_PARCOUR = 601
 
 
 Version 1.2 (23. Juni 2011)
