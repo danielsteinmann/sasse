@@ -1,0 +1,96 @@
+Sektionsfahren Überblick:
+ 
+  Anzahl Durchgänge: 2  (Default)
+
+Postenliste:
+
+  Posten Art                      Punkte
+  ------ ------------------------ ------
+  A      Anmeldung                    10
+  B-1    Abfahrt an einer Stange      10
+  C-1    Durchfahrt                   10
+  D      Zwischenbesprechung           0 
+  B-2    Abfahrt an einer Stange      10
+  C-2    Durchfahrt                   10
+  N      Abmeldung                    10
+
+---
+Startliste (sortiert nach Name, evtl nach Startzeit):
+
+  Startzeit  Sektion      Schiffe   JPs  Frauen  Senioren
+  ---------  ----------   -------  ----  ------  --------
+  08:30      Bremgarten-1       3
+  09:30      Bremgarten-2       4
+  10:55      Baden              3
+  11:31      Murgenthal-1       3
+  11:45      Murgenthal-2       2
+
+  Gruppe hinzufügen (Form Wizard: Zuerst nur Sektion wählen)
+
+---
+/2012/Bremgarten/Sektionsfahren/startliste/bremgarten/1/update
+
+  Gruppe: Bremgarten-1  (oder 'Baden')
+
+                    Steuermann             Vorderfahrer
+                    ---------------------  ----------------
+  1. Schiff:
+     1. Fahrtrupp:  Steinmann Daniel 1967  Wendel René 1958
+     2. Fahrtrupp:  Wendel Patrik 1984     Wendel Peter 1984
+
+  2. Schiff:
+     1. Fahrtrupp:  ___________  _____________
+     2. Fahrtrupp:  ___________  _____________
+                    
+                    Schiff hinzufügen  (Nach 5 Schiffen kommt kein Formular mehr)
+
+  Ändern | Löschen | Gruppe für diese Sektion hinzufügen
+
+(Mit Ändern kommt ein Formset mit allen Schiffen dieser Gruppe)
+---
+                   
+Beurteilungsblätter:
+
+    Gruppe: _________  (Bremgarten-1, Bremgarten-2, Baden, ...)
+
+ Postenwahl: A | B-1 | D-1 | ....
+
+  Posten B-1: Durchfahrt
+
+      Schiff:  1   2   3   4   5
+       Abzug:
+    Zielnote:
+
+Die Noten der gesamten Sektion (Anmeldung/Abmeldung/Zwischenbesprechung)
+entweder direkt als Attribute auf 'Schiffsektion' einführen, oder als
+'Bewertung' für den Teilnehmner 'Gruppe'. Eine Spezialeingabe bei diesen
+Notenblättern.
+
+---
+
+----
+Rangliste      Bestes Schiff | Beste Gruppe | Kranzlimiten
+
+  Rang  Sektion     Gruppen Schiffe  JPs Frauen Senioren  Punkte
+  ----  ----------  ------- ------- ---- ------ -------- -------
+     1  Murgenthal        2       8
+     2  Sisseln           2       8
+
+
+Beste Gruppe:
+
+  Rang  Gruppe       Schiffe  JPs Frauen Senioren  Punkte
+  ----  ------------ ------- ---- ------ -------- -------
+     1  Murgenthal-1  
+     2  Sisseln-2     
+     3  Baden
+
+
+Bestes Schiff:
+
+  Rang Gruppe         Schiff  Fahrtrupp                       Zeit  Punkte
+  ---- -------------- ------  ---------------------------- ------- -------
+    1  Murgenthal-1        1  Steinmann 1967 / Wendel 1958 2:10.23   124.4
+                              Wendel 1985 / Wendel 1985
+    2  Sisseln-3           2  
+
