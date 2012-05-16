@@ -1,4 +1,4 @@
-{% extends "base_disziplin.html" %}
+{% extends disziplin.get_base_template %}
 {% block nav_rangliste %}selected{% endblock %}
 {% load sasse %}
 {% block content %}
@@ -17,5 +17,5 @@
 Noch keine Richtzeit vorhanden.
 <a href="{% url richtzeit_update wettkampf.jahr, wettkampf.name, disziplin.name, posten.name %}">Richtzeit eingeben</a>
 {% endif %}
-{% include "richtzeit_topn.html" %}
+{% include topn_template %}
 {% endblock %}

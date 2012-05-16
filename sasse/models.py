@@ -206,6 +206,22 @@ class Disziplin(models.Model):
     def __unicode__(self):
         return u'%s' % (self.name,)
 
+    @models.permalink
+    def get_absolute_url(self):
+        if self.disziplinart.name == "Sektionsfahren":
+            return ('sektionsfahren_get', [str(self.wettkampf.jahr()), self.wettkampf.name])
+        else:
+            return ('disziplin_get', [str(self.wettkampf.jahr()), self.wettkampf.name, self.name])
+
+    def get_base_template(self):
+        art = self.disziplinart.name
+        if art == "Einzelfahren":
+            return "base_disziplin.html"
+        elif art == "Sektionsfahren":
+            return "base_sektionsfahren.html"
+        else:
+            return None
+
     class Meta:
         unique_together = ['wettkampf', 'name']
         ordering = ['name']
@@ -275,23 +291,69 @@ class Person(Teilnehmer):
     kategorie = models.ForeignKey('Kategorie')
 
 
+class SektionsfahrenGruppeManager(models.Manager):
+    def with_counts(self, disziplin):
+        from queries import read_sektionsfahren_gruppen_counts
+        counts = read_sektionsfahren_gruppen_counts(disziplin)
+        result_list = []
+        for p in self.get_query_set().select_related(depth=1).filter(disziplin=disziplin).order_by('startnummer'):
+            p._set_counts(counts)
+            result_list.append(p)
+        return result_list
+
 class Gruppe(Teilnehmer):
     """
     Eine Schnürgruppe, eine Bootfährenbautrupp oder eine Sektion beim
     Sektionsfahren.
-
-    Beim Erstellen der Startliste für ein Sektionsfahren wird nach Anzahl
-    Booten und Weidlingen gefragt. Diese Zahlen werden beim Speichern benutzt,
-    um die entsprechende Anzahl 'Schiffsektion' Records in der richtigen
-    Schiffsart zu erzeugen. Somit braucht es kein eigenes Feld.
-    
-    Der JP Zuschlag des Sektionsfahren wird ebenfalls beim Speichern als eine
-    'Bewertung' für die Gruppe gespeichert. Darum kein eigenes Feld.
-    
     """
     chef = models.ForeignKey('Mitglied')
     sektion = models.ForeignKey('Sektion')
     name = models.CharField(max_length=20) # z.B. Bremgarten I
+    abzug_gruppe = models.DecimalField(max_digits=6, decimal_places=1, default=0, blank=True)
+    abzug_sektion = models.DecimalField(max_digits=6, decimal_places=1, default=0, blank=True)
+    abzug_gruppe_comment = models.CharField(null=True, blank=True, max_length=400)
+    abzug_sektion_comment = models.CharField(null=True, blank=True, max_length=400)
+    objects = SektionsfahrenGruppeManager()
+
+    class Meta:
+        ordering = ['name']
+
+    def __unicode__(self):
+        return u'%s' % (self.name,)
+
+    def schiffe(self):
+        return Schiffsektion.objects.select_related(depth=1).filter(gruppe=self.id)
+
+    def _set_counts(self, counts=None):
+        if counts is None:
+            from queries import read_sektionsfahren_gruppen_counts
+            counts = read_sektionsfahren_gruppen_counts(self.disziplin, self)
+        anz_schiffe, anz_jps, anz_frauen, anz_senioren = counts
+        grp = self.name
+        self._anz_schiffe = anz_schiffe[grp]
+        self._anz_jps = anz_jps[grp]
+        self._anz_frauen = anz_frauen[grp]
+        self._anz_senioren = anz_senioren[grp]
+
+    def anz_schiffe(self):
+        if not hasattr(self, '_anz_schiffe'):
+            self._set_counts()
+        return self._anz_schiffe
+
+    def anz_jps(self):
+        if not hasattr(self, '_anz_jps'):
+            self._set_counts()
+        return self._anz_jps
+
+    def anz_frauen(self):
+        if not hasattr(self, '_anz_frauen'):
+            self._set_counts()
+        return self._anz_frauen
+
+    def anz_senioren(self):
+        if not hasattr(self, '_anz_senioren'):
+            self._set_counts()
+        return self._anz_senioren
 
 
 class Schiffsektion(Teilnehmer):
@@ -302,7 +364,10 @@ class Schiffsektion(Teilnehmer):
     """
     gruppe = models.ForeignKey('Gruppe')
     position = models.PositiveSmallIntegerField()
-    schiffsart = models.CharField(max_length=1, choices=SCHIFFS_ART)
+    ft1_steuermann = models.ForeignKey('Mitglied', related_name='ft1_steuermann')
+    ft1_vorderfahrer = models.ForeignKey('Mitglied', related_name='ft1_vorderfahrer')
+    ft2_steuermann = models.ForeignKey('Mitglied', related_name='ft2_steuermann')
+    ft2_vorderfahrer = models.ForeignKey('Mitglied', related_name='ft2_vorderfahrer')
 
     class Meta:
         unique_together = ['gruppe', 'position']
@@ -424,3 +489,13 @@ class Kranzlimite(models.Model):
     def __unicode__(self):
         return u'%s, %s, %d' % (self.disziplin, self.kategorie, self.wert)
 
+
+class SektionsfahrenKranzlimiten(models.Model):
+    disziplin = models.ForeignKey('Disziplin')
+    gold = models.DecimalField(max_digits=10, decimal_places=3, default=0)
+    silber = models.DecimalField(max_digits=10, decimal_places=3, default=0)
+    lorbeer = models.DecimalField(max_digits=10, decimal_places=3, default=0)
+    ausser_konkurrenz = models.ForeignKey('Sektion', null=True, blank=True)
+
+    def __unicode__(self):
+        return u'%s' % (self.disziplin)

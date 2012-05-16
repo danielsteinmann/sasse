@@ -1,0 +1,38 @@
+{% extends "base_startliste.html" %}
+{% block content %}
+<form action="" method="POST">
+  <table class="form">
+    {% if form.non_field_errors %}
+    <tr><td colspan="2">{{ form.non_field_errors }}</td></tr>
+    {% endif %}
+    <tr>
+      <th>{{ form.startnummer.label }}:</th>
+      <td>{{ form.startnummer.errors }}{{ form.startnummer }}</td>
+    </tr>
+    <tr>
+      <th>{{ form.sektion.label }}:</th>
+      <td>{{ form.sektion.errors }}{{ form.sektion }}</td>
+    </tr>
+    <tr>
+      <th>Gruppe:</th>
+      <td>{{ form.name.errors }}{{ form.name }}</td>
+    </tr>
+    <tr>
+      <th>{{ form.chef.label }}:</th>
+      <td>{{ form.chef.errors }}{{ form.chef }}</td>
+    </tr>
+    <tr>
+      <th>{{ form.disqualifiziert.label }}:</th>
+      <td>{{ form.disqualifiziert.errors }}{{ form.disqualifiziert }}</td>
+    </tr>
+    <tr>
+      <th>{{ form.ausgeschieden.label }}:</th>
+      <td>{{ form.ausgeschieden.errors }}{{ form.ausgeschieden }}</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td><input type="submit" value="Änderungen speichern"/></td>
+    </tr>
+  </table>
+</form>
+{% endblock %}

@@ -1,5 +1,5 @@
-{% extends "base_disziplin.html" %}
-{% block nav_einzelfahren %}selected{% endblock %}
+{% extends disziplin.get_base_template %}
+{% block nav_ueberblick %}selected{% endblock %}
 {% block content %}
 <table class="display">
   <tr>
@@ -10,6 +10,7 @@
     <th>Disziplinart:</th>
     <td>{{ disziplin.disziplinart }}</td>
   </tr>
+  {% if disziplin.kategorien.all %}
   <tr>
     <th>Kategorien:</th>
     <td>
@@ -18,6 +19,7 @@
       {% endfor %}
     </td>
   </tr>
+  {% endif %}
   <tr>
     <th>Posten:</th>
     <td>

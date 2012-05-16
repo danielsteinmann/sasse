@@ -33,12 +33,29 @@
 - Neues URL Schema:
   - 2011/Faellbaumcup/einzelfahren/I
   - 2011/Faellbaumcup/einzelfahren/II-III-C-D-F
+  - 2011/Faellbaumcup/einzelfahren/II-III-C-D-F/startliste
+  - 2011/Faellbaumcup/einzelfahren/II-III-C-D-F/beurteilungsblaetter
+  - 2011/Faellbaumcup/einzelfahren/II-III-C-D-F/richtzeiten
+  - 2011/Faellbaumcup/einzelfahren/II-III-C-D-F/notenliste
+  - 2011/Faellbaumcup/einzelfahren/II-III-C-D-F/posten
   - 2011/Faellbaumcup/einzelfahren/ranglisten
   - 2011/Faellbaumcup/einzelfahren/kranzlimiten
-  - 2011/Faellbaumcup/einzelfahren/notenliste (Links pro Parcours: I | II-III-C-D-F)
-  - 2011/Faellbaumcup/einzelfahren/I/notenliste
-  - 2011/Faellbaumcup/einzelfahren/II-III-C-D-F/beurteilungsblaetter
-  - 2011/Faellbaumcup/einzelfahren/II-III-C-D-F/startliste
+  - 2011/Faellbaumcup/einzelfahren/doppelstarter
+  - 2011/Faellbaumcup/einzelfahren/startliste-[export|import]
+
+  - 2012/Bremgarten/sektionsfahren
+  - 2012/Bremgarten/sektionsfahren/update
+  - 2012/Bremgarten/sektionsfahren/startliste
+  - 2012/Bremgarten/sektionsfahren/startliste [POST] => Neue Gruppe
+  - 2012/Bremgarten/sektionsfahren/gruppe/add?sektion=Bremgarten
+  - 2012/Bremgarten/sektionsfahren/gruppe/Bremgarten/1
+  - 2012/Bremgarten/sektionsfahren/gruppe/Bremgarten/1/schiff [POST: neues Schiff, GET: brauchts nicht] 
+  - 2012/Bremgarten/sektionsfahren/gruppe/Bremgarten/1/schiff/1
+  - 2012/Bremgarten/sektionsfahren/gruppe/Bremgarten/1/schiff/1/delete
+  - 2012/Bremgarten/sektionsfahren/gruppe/Bremgarten/1/update [GET: alle Schiffe editable]
+  - 2012/Bremgarten/sektionsfahren/gruppe/Bremgarten/1/delete
+  - 2012/Bremgarten/sektionsfahren/rangliste
+  - 2012/Bremgarten/sektionsfahren/posten
 
   Validierung, dass eine Kategorie in einem Einzelfahren pro Wettkampf nur
   einmal vorkommen kann. Mit "Neues Einzelfahren" nach Kategorien fragen.

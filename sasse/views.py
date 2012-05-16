@@ -25,8 +25,11 @@ from models import Teilnehmer
 from models import Schiffeinzel
 from models import Richtzeit
 from models import Sektion
+from models import Gruppe
 from models import Kranzlimite
 from models import Mitglied
+from models import Schiffsektion
+from models import SektionsfahrenKranzlimiten
 
 from forms import DisziplinForm
 from forms import PostenEditForm
@@ -41,6 +44,11 @@ from forms import RichtzeitForm
 from forms import KranzlimiteForm
 from forms import MitgliedForm
 from forms import StartlisteUploadFileForm
+from forms import GruppeForm
+from forms import GruppeFilterForm
+from forms import SchiffsektionForm
+from forms import SektionsfahrenGruppeAbzugForm
+from forms import SektionsfahrenKranzlimitenForm
 
 from queries import read_topzeiten
 from queries import read_notenliste
@@ -53,6 +61,11 @@ from queries import sort_rangliste
 from queries import read_startende_kategorien
 from queries import read_anzahl_wettkaempfer
 from queries import read_doppelstarter
+from queries import read_sektionsfahren_rangliste
+from queries import read_sektionsfahren_rangliste_gruppe
+from queries import read_sektionsfahren_rangliste_schiff
+from queries import read_sektionsfahren_notenblatt_gruppe
+from queries import read_sektionsfahren_topzeiten
 
 from reports import create_rangliste_doctemplate
 from reports import create_rangliste_flowables
@@ -170,14 +183,8 @@ def disziplin_get(request, jahr, wettkampf, disziplin):
     assert request.method == 'GET'
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
-    template = None
-    if d.disziplinart == Disziplinart.objects.get(name="Einzelfahren"):
-        template = "einzelfahren.html"
-    elif d.disziplinart == Disziplinart.objects.get(name="Sektionsfahren"):
-        template = "einzelfahren.html"
-    else:
-        raise Http404(u"Disziplin %s noch nicht implementiert" % d.disziplinart)
-    return direct_to_template(request, template, {'wettkampf': w, 'disziplin': d})
+    return direct_to_template(request, "einzelfahren.html", {'wettkampf': w,
+        'disziplin': d})
 
 @permission_required('sasse.change_disziplin')
 def disziplin_update(request, jahr, wettkampf, disziplin):
@@ -251,7 +258,7 @@ def posten_get(request, jahr, wettkampf, disziplin, posten):
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
     p = Posten.objects.get(disziplin=d, name=posten)
     return direct_to_template(request, 'posten_get.html',
-        {'wettkampf': w, 'disziplin': d, 'posten': p, })
+            {'wettkampf': w, 'disziplin': d, 'posten': p, 'base_disziplin': 'base_sektionsfahren.html'})
 
 @permission_required('sasse.change_posten')
 def posten_update(request, jahr, wettkampf, disziplin, posten):
@@ -464,6 +471,12 @@ def bewertungen(request, jahr, wettkampf, disziplin):
     url = reverse(postenblatt, args=[jahr, wettkampf, disziplin, p.name])
     return HttpResponseRedirect(url)
 
+def get_postenblatt_filter_form(disziplin):
+    if disziplin.disziplinart.name == "Einzelfahren":
+        return SchiffeinzelFilterForm
+    else:
+        return GruppeFilterForm
+
 def postenblatt(request, jahr, wettkampf, disziplin, posten):
     assert request.method == 'GET'
     p = Posten.objects.select_related().get(
@@ -477,7 +490,8 @@ def postenblatt(request, jahr, wettkampf, disziplin, posten):
     orientation = get_orientation(p, request)
     header_row = []
     data_rows = []
-    filterform = SchiffeinzelFilterForm(d, request.GET)
+    filter_form_class = get_postenblatt_filter_form(d)
+    filterform = filter_form_class(d, request.GET)
     if filterform.is_valid():
         startnummern = filterform.selected_startnummern(visible=15)
         teilnehmer_ids = [t.id for t in startnummern]
@@ -504,7 +518,8 @@ def postenblatt_update(request, jahr, wettkampf, disziplin, posten):
     teilnehmer_formset = []
     sets = []
     p_next_name = None
-    filterform = SchiffeinzelFilterForm(d, request.GET)
+    filter_form_class = get_postenblatt_filter_form(d)
+    filterform = filter_form_class(d, request.GET)
     if filterform.is_valid():
         startnummern = filterform.selected_startnummern(visible=15)
         TeilnehmerFormSet = formset_factory(TeilnehmerForm, extra=0)
@@ -604,6 +619,12 @@ def richtzeiten(request, jahr, wettkampf, disziplin):
     url = reverse(richtzeit, args=[jahr, wettkampf, disziplin, p.name])
     return HttpResponseRedirect(url)
 
+def get_richtzeit_topn(disziplin):
+    if disziplin.disziplinart.name == "Einzelfahren":
+        return (read_topzeiten, "richtzeit_topn.html")
+    else:
+        return (read_sektionsfahren_topzeiten, "sektionsfahren_richtzeit_topn.html")
+
 def richtzeiten_pdf(request, jahr, wettkampf, disziplin):
     assert request.method == 'GET'
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
@@ -626,10 +647,11 @@ def richtzeit(request, jahr, wettkampf, disziplin, posten, template='richtzeit.h
     p = Posten.objects.get(disziplin=d, name=posten)
     form = RichtzeitForm(p)
     zeitposten = d.posten_set.filter(postenart__name='Zeitnote')
+    read_topzeiten, topn_template = get_richtzeit_topn(d)
     rangliste = list(read_topzeiten(p, topn=None))
     return direct_to_template(request, template, {'wettkampf': w, 'disziplin':
         d, 'posten': p, 'zeitposten': zeitposten, 'rangliste': rangliste,
-        'form': form})
+        'form': form, 'topn_template': topn_template})
 
 @permission_required('sasse.change_richtzeit')
 def richtzeit_update(request, jahr, wettkampf, disziplin, posten):
@@ -917,9 +939,278 @@ def startlisten_einzelfahren_import(request, jahr, wettkampf):
     return direct_to_template(request, 'startlisten_einzelfahren_upload.html',
             {'wettkampf': w, 'form': form})
 
-#-----------
-#    from django.db import connection
-#    for q in connection.queries:
-#        print "--------"
-#        print q
-#    print "Anzahl Queries", len(connection.queries)
+#
+# Sektionsfahren
+#
+def sektionsfahren_get(request, jahr, wettkampf):
+    d = Disziplin.objects.select_related().get(
+            disziplinart__name="Sektionsfahren",
+            wettkampf__name=wettkampf,
+            wettkampf__von__year=jahr)
+    return direct_to_template(request, "einzelfahren.html",
+            {'wettkampf': d.wettkampf, 'disziplin': d})
+
+def sektionsfahren_startliste(request, jahr, wettkampf):
+    assert request.method == 'GET'
+    d = Disziplin.objects.select_related().get(
+            disziplinart__name="Sektionsfahren",
+            wettkampf__name=wettkampf,
+            wettkampf__von__year=jahr)
+    w = d.wettkampf
+    startliste = Gruppe.objects.with_counts(d)
+    return direct_to_template(request, 'sektionsfahren_startliste.html', {
+        'wettkampf': w, 'disziplin': d, 'startliste': startliste})
+
+@permission_required('sasse.add_gruppe')
+def sektionsfahren_gruppe_add(request, jahr, wettkampf):
+    if request.method == 'POST':
+        return sektionsfahren_gruppe_post(request, jahr, wettkampf)
+    assert request.method == 'GET'
+    d = Disziplin.objects.select_related().get(
+            disziplinart__name="Sektionsfahren",
+            wettkampf__name=wettkampf,
+            wettkampf__von__year=jahr)
+    w = d.wettkampf
+    form = GruppeForm(d, initial={'sektion': request.GET.get('sektion')})
+    return direct_to_template(request, 'sektionsfahren_gruppe_add.html', {
+        'wettkampf': d.wettkampf, 'disziplin': d, 'form': form})
+
+@permission_required('sasse.add_gruppe')
+def sektionsfahren_gruppe_post(request, jahr, wettkampf):
+    assert request.method == 'POST'
+    d = Disziplin.objects.select_related().get(
+            disziplinart__name="Sektionsfahren",
+            wettkampf__name=wettkampf,
+            wettkampf__von__year=jahr)
+    form = GruppeForm(d, request.POST.copy())
+    if form.is_valid():
+        gruppe = form.save()
+        url = reverse(sektionsfahren_gruppe_get, args=[jahr, wettkampf, gruppe.name])
+        return HttpResponseRedirect(url)
+    return direct_to_template(request, 'sektionsfahren_gruppe_add.html',
+            {'wettkampf': d.wettkampf, 'disziplin': d, 'form': form})
+
+@permission_required('sasse.delete_gruppe')
+def sektionsfahren_gruppe_delete(request, jahr, wettkampf, gruppe):
+    g = Gruppe.objects.select_related().get(
+            name=gruppe,
+            disziplin__disziplinart__name="Sektionsfahren",
+            disziplin__wettkampf__name=wettkampf,
+            disziplin__wettkampf__von__year=jahr)
+    if request.method == 'POST':
+        g.delete()
+        url = reverse(sektionsfahren_startliste, args=[jahr, wettkampf])
+        return HttpResponseRedirect(url)
+    d = g.disziplin
+    w = d.wettkampf
+    return direct_to_template(request, 'sektionsfahren_gruppe_delete.html', {
+        'wettkampf': w, 'disziplin': d, 'gruppe': g})
+
+def sektionsfahren_gruppe_get(request, jahr, wettkampf, gruppe):
+    assert request.method == 'GET'
+    g = Gruppe.objects.select_related().get(
+            name=gruppe,
+            disziplin__disziplinart__name="Sektionsfahren",
+            disziplin__wettkampf__name=wettkampf,
+            disziplin__wettkampf__von__year=jahr)
+    d = g.disziplin
+    w = d.wettkampf
+    form = SchiffsektionForm(g)
+    return direct_to_template(request, 'sektionsfahren_gruppe.html', {
+        'wettkampf': w, 'disziplin': d, 'gruppe': g, 'form': form})
+
+@permission_required('sasse.change_gruppe')
+def sektionsfahren_gruppe_update(request, jahr, wettkampf, gruppe):
+    g = Gruppe.objects.select_related().get(
+            name=gruppe,
+            disziplin__disziplinart__name="Sektionsfahren",
+            disziplin__wettkampf__name=wettkampf,
+            disziplin__wettkampf__von__year=jahr)
+    d = g.disziplin
+    w = d.wettkampf
+    if request.method == 'POST':
+        form = GruppeForm(d, request.POST.copy(), instance=g)
+        if form.is_valid():
+            g = form.save()
+            url = reverse(sektionsfahren_gruppe_get, args=[jahr, wettkampf, g.name])
+            return HttpResponseRedirect(url)
+    else:
+        form = GruppeForm(d, instance=g)
+    return direct_to_template(request, 'sektionsfahren_gruppe_update.html', {
+        'wettkampf': w, 'disziplin': d, 'gruppe': g, 'form': form})
+
+@permission_required('sasse.add_schiffsektion')
+def sektionsfahren_schiff_post(request, jahr, wettkampf, gruppe):
+    assert request.method == 'POST'
+    g = Gruppe.objects.select_related().get(
+            name=gruppe,
+            disziplin__disziplinart__name="Sektionsfahren",
+            disziplin__wettkampf__name=wettkampf,
+            disziplin__wettkampf__von__year=jahr)
+    form = SchiffsektionForm(g, request.POST.copy())
+    if form.is_valid():
+        schiff = form.save()
+        url = reverse(sektionsfahren_gruppe_get, args=[jahr, wettkampf, gruppe])
+        return HttpResponseRedirect(url)
+    d = g.disziplin
+    w = d.wettkampf
+    return direct_to_template(request, 'sektionsfahren_gruppe.html', {
+        'wettkampf': w, 'disziplin': d, 'gruppe': g, 'form': form})
+
+@permission_required('sasse.change_schiffsektion')
+def sektionsfahren_schiff_update(request, jahr, wettkampf, gruppe, position):
+    schiff = Schiffsektion.objects.select_related(depth=1).get(
+            position=position,
+            gruppe__name=gruppe,
+            disziplin__disziplinart__name="Sektionsfahren",
+            disziplin__wettkampf__name=wettkampf,
+            disziplin__wettkampf__von__year=jahr)
+    g = schiff.gruppe
+    d = g.disziplin
+    w = d.wettkampf
+    if request.method == 'POST':
+        form = SchiffsektionForm(g, request.POST.copy(), instance=schiff)
+        if form.is_valid():
+            if request.POST.has_key('delete'):
+                schiff.delete()
+            else:
+                form.save()
+            url = reverse(sektionsfahren_gruppe_get, args=[jahr, wettkampf, gruppe])
+            return HttpResponseRedirect(url)
+    else:
+        form = SchiffsektionForm(g, instance=schiff)
+    return direct_to_template(request, 'sektionsfahren_schiff_update.html', {
+        'wettkampf': w, 'disziplin': d, 'schiff': schiff, 'form': form})
+
+@permission_required('sasse.change_gruppe')
+def sektionsfahren_gruppe_abzug(request, jahr, wettkampf, gruppe):
+    g = Gruppe.objects.select_related().get(
+            name=gruppe,
+            disziplin__disziplinart__name="Sektionsfahren",
+            disziplin__wettkampf__name=wettkampf,
+            disziplin__wettkampf__von__year=jahr)
+    d = g.disziplin
+    w = d.wettkampf
+    if request.method == 'POST':
+        form = SektionsfahrenGruppeAbzugForm(request.POST, instance=g)
+        if form.is_valid():
+            g = form.save()
+            url = form.cleaned_data['referrer']
+            return HttpResponseRedirect(url)
+    else:
+        referrer = request.META['HTTP_REFERER']
+        form = SektionsfahrenGruppeAbzugForm(initial={'referrer': referrer}, instance=g)
+    return direct_to_template(request, 'sektionsfahren_gruppe_abzug_update.html', {
+        'wettkampf': w, 'disziplin': d, 'gruppe': g, 'form': form})
+
+def sektionsfahren_postenblatt(request, jahr, wettkampf, posten=None):
+    if posten:
+        p = Posten.objects.select_related().get(
+                name=posten,
+                disziplin__disziplinart__name="Sektionsfahren",
+                disziplin__wettkampf__name=wettkampf,
+                disziplin__wettkampf__von__year=jahr)
+        d = p.disziplin
+    else:
+        d = Disziplin.objects.select_related().get(
+                disziplinart__name="Sektionsfahren",
+                wettkampf__name=wettkampf,
+                wettkampf__von__year=jahr)
+        p = d.posten_set.all()[0]
+    return postenblatt(request, jahr, wettkampf, d.name, p.name)
+
+def sektionsfahren_rangliste(request, jahr, wettkampf):
+    assert request.method == 'GET'
+    d = Disziplin.objects.select_related().get(
+            disziplinart__name="Sektionsfahren",
+            wettkampf__name=wettkampf,
+            wettkampf__von__year=jahr)
+    w = d.wettkampf
+    rangliste = read_sektionsfahren_rangliste(d)
+    return direct_to_template(request, 'sektionsfahren_rangliste.html', {
+        'wettkampf': w, 'disziplin': d, 'rangliste': rangliste})
+
+def sektionsfahren_kranzlimiten(request, jahr, wettkampf):
+    assert request.method == 'GET'
+    d = Disziplin.objects.select_related().get(
+            disziplinart__name="Sektionsfahren",
+            wettkampf__name=wettkampf,
+            wettkampf__von__year=jahr)
+    w = d.wettkampf
+    limiten, created = SektionsfahrenKranzlimiten.objects.get_or_create(disziplin=d)
+    return direct_to_template(request, 'sektionsfahren_kranzlimiten.html', {
+        'wettkampf': w, 'disziplin': d, 'limiten': limiten})
+
+@permission_required('sasse.change_sektionsfahrenkranzlimiten')
+def sektionsfahren_kranzlimiten_update(request, jahr, wettkampf):
+    d = Disziplin.objects.select_related().get(
+            disziplinart__name="Sektionsfahren",
+            wettkampf__name=wettkampf,
+            wettkampf__von__year=jahr)
+    w = d.wettkampf
+    limiten, created = SektionsfahrenKranzlimiten.objects.get_or_create(disziplin=d)
+    if request.method == 'POST':
+        form = SektionsfahrenKranzlimitenForm(request.POST, instance=limiten)
+        if form.is_valid():
+            g = form.save()
+            url = reverse(sektionsfahren_rangliste, args=[jahr, wettkampf])
+            return HttpResponseRedirect(url)
+    else:
+        form = SektionsfahrenKranzlimitenForm(instance=limiten)
+    return direct_to_template(request, 'sektionsfahren_kranzlimiten_update.html', {
+        'wettkampf': w, 'disziplin': d, 'form': form})
+
+def sektionsfahren_rangliste_gruppe(request, jahr, wettkampf):
+    assert request.method == 'GET'
+    d = Disziplin.objects.select_related().get(
+            disziplinart__name="Sektionsfahren",
+            wettkampf__name=wettkampf,
+            wettkampf__von__year=jahr)
+    w = d.wettkampf
+    rangliste = read_sektionsfahren_rangliste_gruppe(d)
+    return direct_to_template(request, 'sektionsfahren_rangliste_gruppe.html', {
+        'wettkampf': w, 'disziplin': d, 'rangliste': rangliste})
+
+def sektionsfahren_rangliste_schiff(request, jahr, wettkampf):
+    assert request.method == 'GET'
+    d = Disziplin.objects.select_related().get(
+            disziplinart__name="Sektionsfahren",
+            wettkampf__name=wettkampf,
+            wettkampf__von__year=jahr)
+    w = d.wettkampf
+    rangliste = list(read_sektionsfahren_rangliste_schiff(d))
+    return direct_to_template(request, 'sektionsfahren_rangliste_schiff.html', {
+        'wettkampf': w, 'disziplin': d, 'rangliste': rangliste})
+
+def sektionsfahren_notenblatt(request, jahr, wettkampf, sektion_name):
+    assert request.method == 'GET'
+    d = Disziplin.objects.select_related().get(
+            disziplinart__name="Sektionsfahren",
+            wettkampf__name=wettkampf,
+            wettkampf__von__year=jahr)
+    w = d.wettkampf
+    result = {}
+    rangliste = read_sektionsfahren_rangliste(d)
+    for item in rangliste:
+        if item['name'] == sektion_name:
+            result = item
+            break
+    return direct_to_template(request, 'sektionsfahren_notenblatt.html', {
+        'wettkampf': w, 'disziplin': d, 'sektion': result})
+
+def sektionsfahren_notenblatt_gruppe(request, jahr, wettkampf, gruppe):
+    assert request.method == 'GET'
+    d = Disziplin.objects.select_related().get(
+            disziplinart__name="Sektionsfahren",
+            wettkampf__name=wettkampf,
+            wettkampf__von__year=jahr)
+    w = d.wettkampf
+    # Muss Rangliste lesen wegen den berechneten Werte der Gruppe
+    rangliste = read_sektionsfahren_rangliste_gruppe(d)
+    for item in rangliste:
+        if item.name == gruppe:
+            g = item
+            break
+    notenliste = read_sektionsfahren_notenblatt_gruppe(g)
+    return direct_to_template(request, 'sektionsfahren_notenblatt_gruppe.html', {
+        'wettkampf': w, 'disziplin': d, 'gruppe': g, 'notenliste': notenliste})
