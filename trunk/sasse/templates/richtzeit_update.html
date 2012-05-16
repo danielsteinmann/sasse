@@ -1,4 +1,4 @@
-{% extends "base_disziplin.html" %}
+{% extends disziplin.get_base_template %}
 {% block nav_rangliste %}selected{% endblock %}
 {% block content %}
 {% for p in zeitposten %}
@@ -12,5 +12,5 @@
 {{ form.zeit.errors }}
 <b>Richtzeit:</b> {{ form.zeit }} <input type="submit" name="save" value="Speichern">
 </form>
-{% include "richtzeit_topn.html" %}
+{% include topn_template %}
 {% endblock %}

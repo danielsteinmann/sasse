@@ -18,6 +18,9 @@ from django.forms import Select
 from django.forms import TextInput
 from django.forms import ValidationError
 from django.forms import FileField
+from django.forms import Textarea
+
+from django.template.defaultfilters import slugify
 
 from django.forms.formsets import BaseFormSet
 from django.forms.formsets import formset_factory
@@ -34,11 +37,14 @@ from models import Posten
 from models import Postenart
 from models import Schiffeinzel
 from models import Sektion
+from models import Gruppe
 from models import Teilnehmer
 from models import Wettkampf
 from models import Richtzeit
 from models import Kranzlimite
 from models import GESCHLECHT_ART
+from models import Schiffsektion
+from models import SektionsfahrenKranzlimiten
 
 from fields import MitgliedSearchField
 from fields import UnicodeSlugField
@@ -156,6 +162,7 @@ class SchiffeinzelFilterForm(Form):
             required=False,
             queryset=Sektion.objects.all(),
             )
+    template = "schiffeinzel_filter_form.html"
 
     @classmethod
     def create_with_sektion(cls, disziplin, data):
@@ -541,3 +548,145 @@ class MitgliedForm(Form):
 
 class StartlisteUploadFileForm(Form):
     startliste = FileField()
+
+
+class GruppeForm(ModelForm):
+    name = UnicodeSlugField()
+    chef = MitgliedSearchField(queryset=Mitglied.objects.all())
+
+    class Meta:
+        model = Gruppe
+        exclude = ('abzug_gruppe', 'abzug_sektion')
+
+    def __init__(self, disziplin, *args, **kwargs):
+        super(GruppeForm, self).__init__(*args, **kwargs)
+        self.data['disziplin'] = disziplin.id
+        self.fields['startnummer'].widget.attrs['size'] = 3
+        self.fields['startnummer'].required = False
+        self.fields['name'].required = False
+        if self.instance.id is not None:
+            self.initial['chef'] = self.fields['chef'].value_for_form(self.instance.chef)
+
+    def clean(self):
+        super(GruppeForm, self).clean()
+        if self.instance.id is None:
+            disziplin = self.cleaned_data['disziplin']
+            # Calculate name
+            sektion = self.cleaned_data['sektion']
+            sektion_name = sektion.name
+            sektion_name = sektion_name.replace(" ", "-")
+            count = 0
+            for gruppe in Gruppe.objects.filter(disziplin=disziplin, sektion=sektion):
+                count += 1
+                gruppe.name = u"%s-%d" % (sektion_name, count)
+                gruppe.save()
+            if count > 0:
+                name = u"%s-%d" % (sektion_name, count + 1)
+            else:
+                name = sektion_name
+            self.cleaned_data['name'] = name
+            # Calculate startnummer, if necessary
+            if not self.cleaned_data['startnummer']:
+                q = Gruppe.objects.filter(disziplin=disziplin).aggregate(Max('startnummer'))
+                max_nummer = q['startnummer__max']
+                if max_nummer is None:
+                    max_nummer = 0
+                self.cleaned_data['startnummer'] = max_nummer + 1
+        return self.cleaned_data
+
+
+class SektionsfahrenGruppeAbzugForm(ModelForm):
+    referrer = CharField(widget=HiddenInput())
+    abzug_gruppe = CharField(widget=TextInput(attrs={'size':'4'}))
+    abzug_sektion = CharField(widget=TextInput(attrs={'size':'4'}))
+    abzug_gruppe_comment = CharField(widget=Textarea(attrs={'rows':4, 'cols':50}))
+    abzug_sektion_comment = CharField(widget=Textarea(attrs={'rows':4, 'cols':50}))
+
+    class Meta:
+        model = Gruppe
+        fields = ('abzug_gruppe', 'abzug_sektion',
+                'abzug_gruppe_comment', 'abzug_sektion_comment')
+
+
+class GruppeFilterForm(Form):
+    gruppe = ModelChoiceField(
+            required=False,
+            queryset=Gruppe.objects.all(),
+            )
+    template = "sektionsfahren_gruppe_filter_form.html"
+
+    def __init__(self, disziplin, *args, **kwargs):
+        super(GruppeFilterForm, self).__init__(*args, **kwargs)
+        gruppe_query = Gruppe.objects.filter(disziplin=disziplin)
+        self.fields["gruppe"].queryset = gruppe_query
+        self.fields["gruppe"].empty_label = None
+        self.disziplin = disziplin
+
+    def clean(self):
+        gruppe = self.cleaned_data['gruppe']
+        if gruppe is None:
+            gruppe = Gruppe.objects.filter(disziplin=self.disziplin)[0]
+        self.schiffe = Schiffsektion.objects.filter(gruppe=gruppe)
+        self.instance = gruppe
+        return self.cleaned_data
+
+    def selected_startnummern(self, visible=5):
+        """Gleiche Signatur wie SchiffeinzelFilterForm"""
+        schiffe = self.schiffe.filter()[:visible]
+        # Startnummern temporaer anders setzen. Funktioniert, weil die
+        # Startnummer beim Speichern des Postenblatts nicht auf die DB
+        # geschrieben werden
+        for i, s in enumerate(schiffe, 1):
+            s.startnummer = i
+        return schiffe
+
+
+class SchiffsektionForm(ModelForm):
+    ft1_steuermann = MitgliedSearchField(queryset=Mitglied.objects.all())
+    ft1_vorderfahrer = MitgliedSearchField(queryset=Mitglied.objects.all())
+    ft2_steuermann = MitgliedSearchField(queryset=Mitglied.objects.all())
+    ft2_vorderfahrer = MitgliedSearchField(queryset=Mitglied.objects.all())
+
+    class Meta:
+        model = Schiffsektion
+
+    def __init__(self, gruppe, *args, **kwargs):
+        super(SchiffsektionForm, self).__init__(*args, **kwargs)
+        self.data['gruppe'] = gruppe.id
+        self.data['disziplin'] = gruppe.disziplin.id
+        self.fields['startnummer'].required = False
+        self.fields['position'].required = False
+        self.fields['position'].widget.attrs['size'] = 2
+        if self.instance.id is not None:
+            self.initial['ft1_steuermann'] = self.fields['ft1_steuermann'].value_for_form(self.instance.ft1_steuermann)
+            self.initial['ft2_steuermann'] = self.fields['ft2_steuermann'].value_for_form(self.instance.ft2_steuermann)
+            self.initial['ft1_vorderfahrer'] = self.fields['ft1_vorderfahrer'].value_for_form(self.instance.ft1_vorderfahrer)
+            self.initial['ft2_vorderfahrer'] = self.fields['ft2_vorderfahrer'].value_for_form(self.instance.ft2_vorderfahrer)
+
+    def clean(self):
+        super(SchiffsektionForm, self).clean()
+        for name in ('ft1_steuermann', 'ft1_vorderfahrer',
+                'ft2_steuermann', 'ft2_vorderfahrer'):
+            mitglied = self.cleaned_data.get(name)
+            self.data[name] = self.fields[name].value_for_form(mitglied)
+        if self.instance.id is None:
+            # Set position
+            gruppe = self.cleaned_data['gruppe']
+            q = Schiffsektion.objects.filter(gruppe=gruppe)
+            q = q.exclude(id=self.instance.id)
+            self.cleaned_data['position'] = q.count() + 1
+            # Set startnummer
+            disziplin = self.cleaned_data['disziplin']
+            q = Schiffsektion.objects.filter(disziplin=disziplin).aggregate(Max('startnummer'))
+            max_nummer = q['startnummer__max']
+            if max_nummer is None:
+                max_nummer = 1000
+            self.cleaned_data['startnummer'] = max_nummer + 1
+        return self.cleaned_data
+
+
+class SektionsfahrenKranzlimitenForm(ModelForm):
+    class Meta:
+        model = SektionsfahrenKranzlimiten
+        exclude = ('disziplin',)
+

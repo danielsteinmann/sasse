@@ -1,4 +1,4 @@
-{% extends "base_disziplin.html" %}
+{% extends disziplin.get_base_template %}
 {% block nav_postenblatt %}selected{% endblock %}
 {% block content %}
 <b>Posten {{ posten.name }}: {{ posten.postenart.name }}</b>

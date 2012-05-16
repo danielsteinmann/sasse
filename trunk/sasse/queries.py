@@ -9,6 +9,8 @@ from models import Bewertung
 from models import Schiffeinzel
 from models import Kranzlimite
 from models import Kategorie
+from models import Gruppe
+from models import SektionsfahrenKranzlimiten
 
 # Hilfskonstanten
 ZEIT = Bewertungsart(einheit='ZEIT')
@@ -415,4 +417,261 @@ def _mark_double_trouble(sorted_ds):
                 previous_row['trouble'] = True
                 row['trouble'] = True
         previous_row = row
+
+def read_sektionsfahren_gruppen_counts(disziplin, gruppe=None):
+    cursor = connection.cursor()
+    sql = render_to_string('sektionsfahren_gruppe_counts.sql',
+            {"disziplin": disziplin, "gruppe": gruppe})
+    args = [disziplin.id]
+    if gruppe:
+        args.append(gruppe.id)
+    cursor.execute(sql, args)
+    anz_schiffe = {}
+    anz_jps = {}
+    anz_frauen = {}
+    anz_senioren = {}
+    for row in cursor.fetchall():
+        grp = row[0]
+        anz_schiffe[grp] = row[1]
+        anz_jps[grp] = row[2]
+        anz_frauen[grp] = row[3]
+        anz_senioren[grp] = row[4]
+    return (anz_schiffe, anz_jps, anz_frauen, anz_senioren)
+
+def read_sektionsfahren_gruppe_punkte(disziplin):
+    sql = """
+select grp.name as Gruppe
+     , sum(b.note) as Punkte
+  from sasse_schiffsektion schiff
+  join sasse_teilnehmer tn on (tn.id = schiff.teilnehmer_ptr_id)
+  join sasse_gruppe grp on (grp.teilnehmer_ptr_id = schiff.gruppe_id)
+  join bewertung_calc b on (b.teilnehmer_id = tn.id)
+ where 1=1
+   and tn.disziplin_id = %s
+ group by grp.name
+    """
+    args = [disziplin.id]
+    cursor = connection.cursor()
+    cursor.execute(sql, args)
+    punkte = {}
+    for row in cursor:
+        grp = row[0]
+        punkte[grp] = Decimal(str(row[1]))
+    return punkte
+
+def read_sektionsfahren_rangliste_gruppe(disziplin):
+    punkte = read_sektionsfahren_gruppe_punkte(disziplin)
+    result = []
+    for g in Gruppe.objects.with_counts(disziplin):
+        if g.anz_schiffe() > 0:
+            g.gefahren = (punkte[g.name] / g.anz_schiffe()).quantize(Decimal("0.001"))
+            g.zuschlag = (((g.anz_jps() + g.anz_frauen() + g.anz_senioren()) * Decimal("2")) / g.anz_schiffe()).quantize(Decimal("0.001"))
+            g.total = g.gefahren + g.zuschlag - g.abzug_gruppe
+            g.gewichtet = g.total * g.anz_schiffe()
+            result.append(g)
+    result.sort(key=lambda g: (-g.total, -g.anz_schiffe()))
+    rang = 1
+    for g in result:
+        g.rang = rang
+        rang += 1
+    return result
+
+def read_sektionsfahren_rangliste(disziplin):
+    result = []
+    limiten, created = SektionsfahrenKranzlimiten.objects.get_or_create(disziplin=disziplin)
+    ausser_konkurrenz = None
+    ausser_konkurrenz_name = None
+    if limiten.ausser_konkurrenz:
+        ausser_konkurrenz_name = limiten.ausser_konkurrenz.name
+    gruppen_rangliste = read_sektionsfahren_rangliste_gruppe(disziplin)
+    gruppen_rangliste.sort(key=lambda g: (g.sektion.name, g.name))
+    for sektion, gruppen in groupby(gruppen_rangliste, lambda g: g.sektion.name):
+        anz_gruppen = 0
+        anz_schiffe = 0
+        anz_jps = 0
+        anz_frauen = 0
+        anz_senioren = 0
+        abzug_sektion = 0
+        gewichtet = 0
+        gruppen = list(gruppen)
+        for g in gruppen:
+            anz_gruppen += 1
+            anz_schiffe += g.anz_schiffe()
+            anz_jps += g.anz_jps()
+            anz_frauen += g.anz_frauen()
+            anz_senioren += g.anz_senioren()
+            abzug_sektion += g.abzug_sektion
+            gewichtet += g.gewichtet
+        gewichtet_avg = (gewichtet / anz_schiffe).quantize(Decimal("0.001"))
+        row = {
+            'name': sektion,
+            'gruppen': gruppen,
+            'anz_gruppen': anz_gruppen,
+            'anz_schiffe': anz_schiffe,
+            'anz_jps': anz_jps,
+            'anz_frauen': anz_frauen,
+            'anz_senioren': anz_senioren,
+            'abzug': abzug_sektion,
+            'gewichtet': gewichtet,
+            'gewichtet_avg': gewichtet_avg,
+            'total': gewichtet_avg - abzug_sektion,
+            }
+        if sektion != ausser_konkurrenz_name:
+            result.append(row)
+        else:
+            ausser_konkurrenz = row
+    result.sort(key=lambda s: (-s['total'], -s['anz_schiffe']))
+    rang = 1
+    for s in result:
+        s['rang'] = rang
+        total = s['total']
+        if total >= limiten.gold:
+            kranz_typ = 'Gold'
+        elif total >= limiten.silber:
+            kranz_typ = 'Silber'
+        else:
+            kranz_typ = 'Lorbeer'
+        s['kranz_typ'] = kranz_typ
+        rang += 1
+    if ausser_konkurrenz is not None:
+        ausser_konkurrenz['rang'] = ""
+        ausser_konkurrenz['kranz_typ'] = "AC"
+        result.insert(0, ausser_konkurrenz)
+    return result
+
+def sort_sektionsfahren_rangliste(disziplin, rangliste):
+    limiten, created = SektionsfahrenKranzlimiten.objects.get_or_create(disziplin=disziplin)
+
+def read_sektionsfahren_notenblatt_gruppe(gruppe):
+    sql = """
+select grp.name as "Gruppe"
+     , p.name as "Posten"
+     , pa.name as "Postenart"
+     , sum(case when schiff.position = 1 then b.note end) as "1"
+     , sum(case when schiff.position = 2 then b.note end) as "2"
+     , sum(case when schiff.position = 3 then b.note end) as "3"
+     , sum(case when schiff.position = 4 then b.note end) as "4"
+     , sum(case when schiff.position = 5 then b.note end) as "5"
+  from sasse_teilnehmer tn
+  join sasse_schiffsektion schiff on (schiff.teilnehmer_ptr_id = tn.id)
+  join sasse_gruppe grp on (grp.teilnehmer_ptr_id = schiff.gruppe_id)
+  join bewertung_calc b on (b.teilnehmer_id = tn.id)
+  join sasse_posten p on (p.id = b.posten_id)
+  join sasse_postenart pa on (pa.id = p.postenart_id)
+ where schiff.gruppe_id = %s
+ group by grp.name, p.name, pa.name, p.reihenfolge
+ order by grp.name, p.reihenfolge
+    """
+    args = [gruppe.id]
+    cursor = connection.cursor()
+    cursor.execute(sql, args)
+    schiff_1_sum = 0
+    schiff_2_sum = 0
+    schiff_3_sum = 0
+    schiff_4_sum = 0
+    schiff_5_sum = 0
+    for row in cursor:
+        result = {}; i = 0
+        result['gruppe'] = row[i]; i += 1
+        result['posten'] = row[i]; i += 1
+        result['postenart'] = row[i]; i += 1
+        result['schiff_1'] = new_bew(row[i], PUNKT); i += 1
+        result['schiff_2'] = new_bew(row[i], PUNKT); i += 1
+        result['schiff_3'] = new_bew(row[i], PUNKT); i += 1
+        result['schiff_4'] = new_bew(row[i], PUNKT); i += 1
+        result['schiff_5'] = new_bew(row[i], PUNKT); i += 1
+        schiff_1_sum += result['schiff_1'].note
+        schiff_2_sum += result['schiff_2'].note
+        schiff_3_sum += result['schiff_3'].note
+        schiff_4_sum += result['schiff_4'].note
+        schiff_5_sum += result['schiff_5'].note
+        yield result
+    yield {
+            'schiff_1': schiff_1_sum,
+            'schiff_2': schiff_2_sum,
+            'schiff_3': schiff_3_sum,
+            'schiff_4': schiff_4_sum,
+            'schiff_5': schiff_5_sum,
+            }
+
+def read_sektionsfahren_rangliste_schiff(disziplin):
+    sql = """
+select grp.name as gruppe
+     , schiff.position as schiff
+     , max(s1.name) ft1_steuermann
+     , max(s2.name) ft2_steuermann
+     , max(v1.name) ft1_vorderfahrer
+     , max(v2.name) ft2_vorderfahrer
+     , sum(b.zeit) as zeit
+     , sum(b.note) as punkte
+  from sasse_schiffsektion schiff
+  join sasse_teilnehmer tn on (tn.id = schiff.teilnehmer_ptr_id)
+  join sasse_gruppe grp on (grp.teilnehmer_ptr_id = schiff.gruppe_id)
+  join bewertung_calc b on (b.teilnehmer_id = tn.id)
+  join sasse_mitglied s1 on (s1.id = schiff.ft1_steuermann_id)
+  join sasse_mitglied s2 on (s2.id = schiff.ft2_steuermann_id)
+  join sasse_mitglied v1 on (v1.id = schiff.ft1_vorderfahrer_id)
+  join sasse_mitglied v2 on (v2.id = schiff.ft2_vorderfahrer_id)
+ where 1=1
+   and tn.disziplin_id = %s
+ group by grp.name, schiff.position
+ order by punkte desc, zeit asc
+    """
+    args = [disziplin.id]
+    cursor = connection.cursor()
+    cursor.execute(sql, args)
+    for i, row in enumerate(cursor, 1):
+        result = {}
+        result['rang'] = i
+        result['gruppe'] = row[0]
+        result['schiff'] = row[1]
+        result['ft1_steuermann'] = row[2]
+        result['ft2_steuermann'] = row[3]
+        result['ft1_vorderfahrer'] = row[4]
+        result['ft2_vorderfahrer'] = row[5]
+        result['zeit'] = new_bew(row[6], ZEIT)
+        result['note'] = new_bew(row[7], PUNKT)
+        yield result
+
+def read_sektionsfahren_topzeiten(posten, topn=15):
+    sql = """
+select grp.name as gruppe
+     , schiff.position as schiff
+     , s1.name ft1_steuermann
+     , s2.name ft2_steuermann
+     , v1.name  ft1_vorderfahrer
+     , v2.name  ft2_vorderfahrer
+     , b.zeit as Zeit
+     , b.note as Note
+     , b.richtzeit as Richtzeit
+  from sasse_schiffsektion schiff
+  join sasse_teilnehmer tn on (tn.id = schiff.teilnehmer_ptr_id)
+  join sasse_gruppe grp on (grp.teilnehmer_ptr_id = schiff.gruppe_id)
+  join bewertung_calc b on (b.teilnehmer_id = tn.id)
+  join sasse_mitglied s1 on (s1.id = schiff.ft1_steuermann_id)
+  join sasse_mitglied s2 on (s2.id = schiff.ft2_steuermann_id)
+  join sasse_mitglied v1 on (v1.id = schiff.ft1_vorderfahrer_id)
+  join sasse_mitglied v2 on (v2.id = schiff.ft2_vorderfahrer_id)
+ where 1=1
+   and b.posten_id = %s
+   and b.zeit > 0
+ order by Zeit asc
+    """
+    args = [posten.id]
+    cursor = connection.cursor()
+    cursor.execute(sql, args)
+    for n, row in enumerate(cursor):
+        if n == topn:
+            break
+        result = {}; i = 0
+        result['gruppe'] = row[i]; i += 1
+        result['schiff'] = row[i]; i += 1
+        result['ft1_steuermann'] = row[i]; i += 1
+        result['ft2_steuermann'] = row[i]; i += 1
+        result['ft1_vorderfahrer'] = row[i]; i += 1
+        result['ft2_vorderfahrer'] = row[i]; i += 1
+        result['zeit'] = new_bew(row[i], ZEIT); i += 1
+        result['note'] = new_bew(row[i], PUNKT); i += 1
+        result['richtzeit'] = new_bew(row[i], ZEIT); i += 1
+        yield result
 

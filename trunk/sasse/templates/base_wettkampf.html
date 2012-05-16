@@ -8,7 +8,7 @@
     <a href="{% url wettkampf_get wettkampf.jahr, wettkampf.name %}">{{wettkampf.name}}-{{wettkampf.jahr}}</a></li>
 {% if disziplin %}
   <li class="{% block nav_disziplin %}{% endblock %}">
-    <a href="{% url disziplin_get wettkampf.jahr, wettkampf.name, disziplin.name %}">{{disziplin.name}}</a></li>
+    <a href="{{ disziplin.get_absolute_url }}">{{disziplin.name}}</a></li>
 {% endif %}
 </ul>
 {% block subnav %}{% endblock %}

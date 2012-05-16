@@ -26,7 +26,7 @@
     <th>Disziplinen:</th>
     <td>
       {% for disziplin in disziplinen %}
-      <a href="{% url disziplin_get wettkampf.jahr, wettkampf.name, disziplin.name %}">{{ disziplin.name }}</a><br/>
+      <a href="{{ disziplin.get_absolute_url }}">{{ disziplin.name }}</a><br/>
       {% empty %}
       Noch keine Disziplin erfasst.
       {% endfor %}

@@ -1,10 +1,10 @@
-{% extends "base_disziplin.html" %}
+{% extends disziplin.get_base_template %}
 {% block nav_postenblatt %}selected{% endblock %}
 {% load sasse %}
 
 {% block content %}
 <form id="filterform" name="filterform" action="" method="GET">
-{% include "schiffeinzel_filter_form.html" with form=filterform %}
+{% include filterform.template with form=filterform %}
 </form>
 {% if not filterform.errors %}
 <p>Postenwahl:
