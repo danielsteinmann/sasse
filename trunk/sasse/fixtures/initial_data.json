@@ -517,19 +517,10 @@
     "model": "sasse.postenart", 
     "fields": {
       "disziplinarten": [
-        1
-      ], 
-      "name": "Landung auf h\u00f6chstes Ziel"
-    }
-  }, 
-  {
-    "pk": 13, 
-    "model": "sasse.postenart", 
-    "fields": {
-      "disziplinarten": [
+        1,
         2
       ], 
-      "name": "Landung auf h\u00f6chstes Ziel (Sektionsfahren)"
+      "name": "Landung auf h\u00f6chstes Ziel"
     }
   }, 
   {
