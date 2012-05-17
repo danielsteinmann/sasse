@@ -90,7 +90,6 @@ Upgrade
     cd c:\djangosites\wettkaempfe
     c:\pythonenv\sasse\Scripts\activate.bat
     pip install -U --no-deps sasse-X.X.tar.gz
-    python manage.py syncdb
     python manage.py migrate
 
 
