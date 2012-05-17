@@ -1,8 +1,7 @@
 {% extends "base_sektionsfahren.html" %}
 {% block nav_rangliste %}selected{% endblock %}
 {% block content %}
-<h3>Notenblatt {{ sektion.name }}</h3>
-<p></p>
+<p>Notenblatt Sektion <b>{{ sektion.name }}</b></p>
 <table class="display">
   <tr>
     <td>Durchschnitt gewichtet:</td>
@@ -12,11 +11,12 @@
   <tr>
     <td>Abzüge Sektionstotal:</td>
     <td align="right">{{ sektion.abzug }}</td>
-    <td>{{ sektion.abzug_comment|default:""|linebreaksbr }}</td>
+    <td></td>
   </tr>
   <tr>
     <th>Sektionstotal:</th>
     <th align="right">{{ sektion.total }}</th>
+    <th></th>
   </tr>
 </table>
 <p></p>
@@ -27,6 +27,7 @@
     <th class="note">Punkte</th>
     <th class="note">Gewichtet</th>
     <th class="note">Abzug</th>
+    <th>Bemerkung</th>
   </tr>
 {% for gruppe in sektion.gruppen %}
   <tr>
@@ -35,6 +36,7 @@
     <td class="note"><a href="{% url sektionsfahren_notenblatt_gruppe wettkampf.jahr, wettkampf.name, gruppe.name %}">{{ gruppe.total }}</a></td>
     <td class="note">{{ gruppe.gewichtet }}</td>
     <td class="note">{{ gruppe.abzug_sektion }}</td>
+    <td>{{ gruppe.abzug_sektion_comment }}</td>
   </tr>
 {% endfor %}
   <tr style="font-weight: bold;">
@@ -43,5 +45,6 @@
     <td></td>
     <td class="note">{{ sektion.gewichtet }}</td>
     <td class="note">{{ sektion.abzug }}</td>
+    <td></td>
   </tr>
 {% endblock %}

@@ -379,3 +379,68 @@ def create_notenliste_flowables(posten, notenliste, sektion=None):
     result.append(Spacer(1, 10))
     result.append(PageBreak())
     return result
+
+#
+# Rangliste Sektionsfahren
+#
+def create_sektionsfahren_rangliste_doctemplate(wettkampf, disziplin):
+    f = Frame(1*cm, 1*cm, PAGE_WIDTH-2*cm, PAGE_HEIGHT-3*cm, id='normal')
+    pt = PageTemplate(id="Rangliste", frames=f, onPageEnd=write_sektionsfahren_rangliste_header_footer)
+    doc = BaseDocTemplate(None, pageTemplates=[pt], pagesize=A4)
+    doc.wettkampf = wettkampf
+    doc.disziplin = disziplin
+    return doc
+
+def write_sektionsfahren_rangliste_header_footer(canvas, doc):
+    canvas.saveState()
+    canvas.setFont('Helvetica', 8)
+    canvas.drawImage(settings.MEDIA_ROOT + '/spsv-logo.jpg', 2*cm, PAGE_HEIGHT-2*cm, width=1.5*cm, height=1.5*cm)
+    canvas.line(4*cm, PAGE_HEIGHT-1.2*cm, PAGE_WIDTH-2*cm, PAGE_HEIGHT-1.2*cm)
+    canvas.drawString(4*cm, PAGE_HEIGHT-1*cm, "Rangliste %s" % (doc.disziplin.disziplinart))
+    canvas.drawRightString(PAGE_WIDTH-2*cm, PAGE_HEIGHT-1*cm, "%s %d" % (doc.wettkampf.name, doc.wettkampf.jahr()))
+    canvas.drawCentredString(PAGE_WIDTH/2, 1*cm, "Seite %d" % (doc.page,))
+    canvas.restoreState()
+
+def create_sektionsfahren_rangliste_flowables(rangliste):
+    data = [['Kranz', 'Rang', 'Sektion', 'Gruppen', 'Schiffe', 'JP', 'Fr.', 'Sen.', 'Total']]
+    col_widths = (50, 40, 110, 50, 40, 30, 30, 30, 70)
+    ss = _create_style_sheet(10)
+    table_props = [
+        ('LINEBELOW', (0,0), (-1,0), 1, colors.black),
+        ('FONT', (0,0), (-1,0), 'Helvetica-Bold', 10),
+        ('FONT', (0,1), (-1,-1), 'Helvetica', 10),
+        ('TOPPADDING', (0,0), (-1,-1), 1),
+        ('BOTTOMPADDING', (0,0), (-1,-1), 1),
+        ('ALIGN', (0,0), (0,-1), 'LEFT'),
+        ('ALIGN', (3,0), (-1,-1), 'CENTER'),
+        ]
+    kranz_typ = None
+    for i, row in enumerate(rangliste):
+        if row['kranz_typ'] == kranz_typ:
+            # Zeige Kranztyp nur wenn Wert wechselt
+            row['kranz_typ'] = ""
+        else:
+            kranz_typ = row['kranz_typ']
+            if i > 0:
+                table_props.extend([
+                    ('LINEBELOW', (0,i), (-1,i), 1, colors.black),
+                    ('BOTTOMPADDING', (0,i), (-1,i), 10),
+                    ])
+        record = []
+        record.append(Paragraph(row['kranz_typ'], ss['left']))
+        record.append(Paragraph(unicode(row['rang']), ss['center']))
+        record.append(Paragraph(row['name'], ss['left']))
+        record.append(Paragraph(unicode(row['anz_gruppen']), ss['center']))
+        record.append(Paragraph(unicode(row['anz_schiffe']), ss['center']))
+        record.append(Paragraph(unicode(row['anz_jps']), ss['center']))
+        record.append(Paragraph(unicode(row['anz_frauen']), ss['center']))
+        record.append(Paragraph(unicode(row['anz_senioren']), ss['center']))
+        record.append(Paragraph(unicode(row['total']), ss['center']))
+        data.append(record)
+    result = []
+    result.append(Platypus_Table(data, repeatRows=1, colWidths=col_widths, style=TableStyle(table_props)))
+    result.append(PageBreak())
+    return result
+
+
+
