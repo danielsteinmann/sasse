@@ -650,7 +650,7 @@
     "fields": {
       "gruppe": "STIL", 
       "name": "Max", 
-      "defaultwert": "10", 
+      "defaultwert": "10.0", 
       "editierbar": false, 
       "reihenfolge": 0, 
       "postenart": 2, 
@@ -665,7 +665,7 @@
     "fields": {
       "gruppe": "STIL", 
       "name": "Abzug", 
-      "defaultwert": "0", 
+      "defaultwert": "0.0", 
       "editierbar": true, 
       "reihenfolge": 1, 
       "postenart": 2, 
@@ -680,7 +680,7 @@
     "fields": {
       "gruppe": "ZIEL", 
       "name": "Distanznote", 
-      "defaultwert": "10", 
+      "defaultwert": "10.0", 
       "editierbar": true, 
       "reihenfolge": 2, 
       "postenart": 2, 
@@ -690,12 +690,42 @@
     }
   }, 
   {
+    "pk": 28, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "gruppe": "STIL", 
+      "name": "Max", 
+      "defaultwert": "10.0", 
+      "editierbar": false, 
+      "reihenfolge": 1, 
+      "postenart": 18, 
+      "signum": 1, 
+      "wertebereich": "10", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 29, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "gruppe": "STIL", 
+      "name": "Abzug", 
+      "defaultwert": "0.0", 
+      "editierbar": true, 
+      "reihenfolge": 2, 
+      "postenart": 18, 
+      "signum": -1, 
+      "wertebereich": "0,0.5,1.0,1.5,2.0,2.5,3.0,3.5,4.0,4.5,5.0", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
     "pk": 18, 
     "model": "sasse.bewertungsart", 
     "fields": {
       "gruppe": "STIL", 
       "name": "Max", 
-      "defaultwert": "10", 
+      "defaultwert": "10.0", 
       "editierbar": false, 
       "reihenfolge": 0, 
       "postenart": 3, 
@@ -710,7 +740,7 @@
     "fields": {
       "gruppe": "STIL", 
       "name": "Abzug", 
-      "defaultwert": "0", 
+      "defaultwert": "0.0", 
       "editierbar": true, 
       "reihenfolge": 1, 
       "postenart": 3, 
@@ -725,7 +755,7 @@
     "fields": {
       "gruppe": "ZIEL", 
       "name": "Distanznote", 
-      "defaultwert": "10", 
+      "defaultwert": "10.0", 
       "editierbar": true, 
       "reihenfolge": 2, 
       "postenart": 3, 
@@ -735,12 +765,42 @@
     }
   }, 
   {
+    "pk": 32, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "gruppe": "STIL", 
+      "name": "Max", 
+      "defaultwert": "10.0", 
+      "editierbar": false, 
+      "reihenfolge": 1, 
+      "postenart": 20, 
+      "signum": 1, 
+      "wertebereich": "10", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 33, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "gruppe": "STIL", 
+      "name": "Abzug", 
+      "defaultwert": "0.0", 
+      "editierbar": true, 
+      "reihenfolge": 1, 
+      "postenart": 20, 
+      "signum": -1, 
+      "wertebereich": "0,0.5,1.0,1.5,2.0,2.5,3.0,3.5,4.0,4.5,5.0", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
     "pk": 1, 
     "model": "sasse.bewertungsart", 
     "fields": {
       "gruppe": "STIL", 
       "name": "Sanktion", 
-      "defaultwert": "0", 
+      "defaultwert": "0.0", 
       "editierbar": true, 
       "reihenfolge": 1, 
       "postenart": 1, 
@@ -750,12 +810,42 @@
     }
   }, 
   {
+    "pk": 24, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "gruppe": "STIL", 
+      "name": "Max", 
+      "defaultwert": "10.0", 
+      "editierbar": false, 
+      "reihenfolge": 1, 
+      "postenart": 10, 
+      "signum": 1, 
+      "wertebereich": "10", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 25, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "gruppe": "STIL", 
+      "name": "Abzug", 
+      "defaultwert": "0.0", 
+      "editierbar": true, 
+      "reihenfolge": 1, 
+      "postenart": 10, 
+      "signum": -1, 
+      "wertebereich": "0,0.5,1.0,1.5,2.0,2.5,3.0,3.5,4.0", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
     "pk": 23, 
     "model": "sasse.bewertungsart", 
     "fields": {
       "gruppe": "STIL", 
       "name": "Max", 
-      "defaultwert": "10", 
+      "defaultwert": "10.0", 
       "editierbar": false, 
       "reihenfolge": 0, 
       "postenart": 8, 
@@ -770,7 +860,7 @@
     "fields": {
       "gruppe": "STIL", 
       "name": "Abzug", 
-      "defaultwert": "0", 
+      "defaultwert": "0.0", 
       "editierbar": true, 
       "reihenfolge": 1, 
       "postenart": 8, 
@@ -785,7 +875,7 @@
     "fields": {
       "gruppe": "ZIEL", 
       "name": "Zielnote", 
-      "defaultwert": "10", 
+      "defaultwert": "10.0", 
       "editierbar": true, 
       "reihenfolge": 2, 
       "postenart": 8, 
@@ -800,7 +890,7 @@
     "fields": {
       "gruppe": "STIL", 
       "name": "Max", 
-      "defaultwert": "10", 
+      "defaultwert": "10.0", 
       "editierbar": false, 
       "reihenfolge": 0, 
       "postenart": 7, 
@@ -815,7 +905,7 @@
     "fields": {
       "gruppe": "STIL", 
       "name": "Abzug", 
-      "defaultwert": "0", 
+      "defaultwert": "0.0", 
       "editierbar": true, 
       "reihenfolge": 1, 
       "postenart": 7, 
@@ -830,7 +920,7 @@
     "fields": {
       "gruppe": "ZIEL", 
       "name": "Zielnote", 
-      "defaultwert": "10", 
+      "defaultwert": "10.0", 
       "editierbar": true, 
       "reihenfolge": 2, 
       "postenart": 7, 
@@ -840,12 +930,42 @@
     }
   }, 
   {
+    "pk": 26, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "gruppe": "STIL", 
+      "name": "Max", 
+      "defaultwert": "10.0", 
+      "editierbar": false, 
+      "reihenfolge": 1, 
+      "postenart": 11, 
+      "signum": 1, 
+      "wertebereich": "10", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 27, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "gruppe": "STIL", 
+      "name": "Abz\u00fcge", 
+      "defaultwert": "0.0", 
+      "editierbar": true, 
+      "reihenfolge": 2, 
+      "postenart": 11, 
+      "signum": -1, 
+      "wertebereich": "0.5,1,1.5,2.0,2.5,3.0,3.5,4.0", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
     "pk": 20, 
     "model": "sasse.bewertungsart", 
     "fields": {
       "gruppe": "STIL", 
       "name": "Max", 
-      "defaultwert": "10", 
+      "defaultwert": "10.0", 
       "editierbar": false, 
       "reihenfolge": 0, 
       "postenart": 5, 
@@ -860,7 +980,7 @@
     "fields": {
       "gruppe": "STIL", 
       "name": "Abzug", 
-      "defaultwert": "0", 
+      "defaultwert": "0.0", 
       "editierbar": true, 
       "reihenfolge": 1, 
       "postenart": 5, 
@@ -875,7 +995,7 @@
     "fields": {
       "gruppe": "ZIEL", 
       "name": "Zielnote", 
-      "defaultwert": "10", 
+      "defaultwert": "10.0", 
       "editierbar": true, 
       "reihenfolge": 2, 
       "postenart": 5, 
@@ -890,7 +1010,7 @@
     "fields": {
       "gruppe": "STIL", 
       "name": "Max", 
-      "defaultwert": "10", 
+      "defaultwert": "10.0", 
       "editierbar": false, 
       "reihenfolge": 0, 
       "postenart": 6, 
@@ -905,7 +1025,7 @@
     "fields": {
       "gruppe": "STIL", 
       "name": "Abzug", 
-      "defaultwert": "0", 
+      "defaultwert": "0.0", 
       "editierbar": true, 
       "reihenfolge": 1, 
       "postenart": 6, 
@@ -920,7 +1040,7 @@
     "fields": {
       "gruppe": "ZIEL", 
       "name": "Zielnote", 
-      "defaultwert": "15", 
+      "defaultwert": "15.0", 
       "editierbar": true, 
       "reihenfolge": 2, 
       "postenart": 6, 
@@ -930,12 +1050,42 @@
     }
   }, 
   {
+    "pk": 30, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "gruppe": "STIL", 
+      "name": "Max", 
+      "defaultwert": "10.0", 
+      "editierbar": false, 
+      "reihenfolge": 1, 
+      "postenart": 19, 
+      "signum": 1, 
+      "wertebereich": "10", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
+    "pk": 31, 
+    "model": "sasse.bewertungsart", 
+    "fields": {
+      "gruppe": "STIL", 
+      "name": "Abzug", 
+      "defaultwert": "0.0", 
+      "editierbar": true, 
+      "reihenfolge": 1, 
+      "postenart": 19, 
+      "signum": -1, 
+      "wertebereich": "0,1,2,3,4,5,6,7,8,9,10", 
+      "einheit": "PUNKT"
+    }
+  }, 
+  {
     "pk": 19, 
     "model": "sasse.bewertungsart", 
     "fields": {
       "gruppe": "STIL", 
       "name": "Max", 
-      "defaultwert": "10", 
+      "defaultwert": "10.0", 
       "editierbar": false, 
       "reihenfolge": 0, 
       "postenart": 4, 
@@ -950,7 +1100,7 @@
     "fields": {
       "gruppe": "STIL", 
       "name": "Abzug", 
-      "defaultwert": "0", 
+      "defaultwert": "0.0", 
       "editierbar": true, 
       "reihenfolge": 1, 
       "postenart": 4, 
@@ -965,7 +1115,7 @@
     "fields": {
       "gruppe": "ZIEL", 
       "name": "Distanznote", 
-      "defaultwert": "10", 
+      "defaultwert": "10.0", 
       "editierbar": true, 
       "reihenfolge": 2, 
       "postenart": 4, 
@@ -980,7 +1130,7 @@
     "fields": {
       "gruppe": "ZIEL", 
       "name": "Zeit", 
-      "defaultwert": "0", 
+      "defaultwert": "0.0", 
       "editierbar": true, 
       "reihenfolge": 1, 
       "postenart": 9, 
