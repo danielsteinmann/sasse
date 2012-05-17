@@ -534,8 +534,8 @@ def read_sektionsfahren_rangliste(disziplin):
         s['kranz_typ'] = kranz_typ
         rang += 1
     if ausser_konkurrenz is not None:
-        ausser_konkurrenz['rang'] = ""
-        ausser_konkurrenz['kranz_typ'] = "AC"
+        ausser_konkurrenz['rang'] = "AC"
+        ausser_konkurrenz['kranz_typ'] = ''
         result.insert(0, ausser_konkurrenz)
     return result
 

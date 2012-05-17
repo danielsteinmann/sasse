@@ -78,6 +78,8 @@ from reports import create_startliste_doctemplate
 from reports import create_startliste_flowables
 from reports import create_notenliste_doctemplate
 from reports import create_notenliste_flowables
+from reports import create_sektionsfahren_rangliste_doctemplate
+from reports import create_sektionsfahren_rangliste_flowables
 
 import eai_startliste
 
@@ -1129,6 +1131,21 @@ def sektionsfahren_rangliste(request, jahr, wettkampf):
     rangliste = read_sektionsfahren_rangliste(d)
     return direct_to_template(request, 'sektionsfahren_rangliste.html', {
         'wettkampf': w, 'disziplin': d, 'rangliste': rangliste})
+
+def sektionsfahren_rangliste_pdf(request, jahr, wettkampf):
+    assert request.method == 'GET'
+    d = Disziplin.objects.select_related().get(
+            disziplinart__name="Sektionsfahren",
+            wettkampf__name=wettkampf,
+            wettkampf__von__year=jahr)
+    w = d.wettkampf
+    rangliste = read_sektionsfahren_rangliste(d)
+    doc = create_sektionsfahren_rangliste_doctemplate(w, d)
+    flowables = create_sektionsfahren_rangliste_flowables(rangliste)
+    response = HttpResponse(mimetype='application/pdf')
+    response['Content-Disposition'] = smart_str(u'filename=rangliste-%s-%s' % (w.name, d.name))
+    doc.build(flowables, filename=response)
+    return response
 
 def sektionsfahren_kranzlimiten(request, jahr, wettkampf):
     assert request.method == 'GET'

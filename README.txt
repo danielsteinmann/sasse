@@ -103,5 +103,5 @@ Webserver
 
 Datenbank Export/Import
 -----------------------
-    pg_dump -U postgres -f spsv.pgdump spsv   # Export
-    psql -U postgres -d spsv -f spsv.pgdump   # Import
+    pg_dump --clean -U postgres -f spsv.pgdump spsv   # Export
+    psql -U postgres -d spsv -f spsv.pgdump           # Import
