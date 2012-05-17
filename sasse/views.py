@@ -672,10 +672,11 @@ def richtzeit_post(request, jahr, wettkampf, disziplin, posten):
         url = reverse(richtzeit, args=[jahr, wettkampf, disziplin, posten])
         return HttpResponseRedirect(url)
     zeitposten = d.posten_set.filter(postenart__name='Zeitnote')
+    read_topzeiten, topn_template = get_richtzeit_topn(d)
     rangliste = list(read_topzeiten(p, topn=None))
     return direct_to_template(request, 'richtzeit_update.html', {'wettkampf': w,
         'disziplin': d, 'posten': p, 'zeitposten': zeitposten, 'rangliste':
-        rangliste, 'form': form})
+        rangliste, 'form': form, 'topn_template': topn_template})
 
 def notenliste(request, jahr, wettkampf, disziplin):
     assert request.method == 'GET'
