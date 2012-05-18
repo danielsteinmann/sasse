@@ -1,5 +1,4 @@
 - PDFs für Beste Sektion/Gruppe/Schiff/Zeit und Notenblatt (Sektion + einzelne Gruppen)
-- Konfiguration Disziplinenart in eine Migration packen.
 
 ---
 Apawan Jeremeah (99086): Existiert mehr als einmal (99079)
