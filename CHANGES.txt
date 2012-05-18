@@ -1,3 +1,10 @@
+Version 2.0.1 (18. Mai 2012)
+https://sasse.googlecode.com/svn/tags/2.0.1
+
+- Problem mit Python Packing gefixt. Nun sind Templates/Fixtures/Media auch in
+  der Distribution enthalten.
+
+
 Version 2.0 (18. Mai 2012)
 https://sasse.googlecode.com/svn/tags/2.0
 
