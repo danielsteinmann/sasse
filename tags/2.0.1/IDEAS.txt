@@ -1,0 +1,134 @@
+- Doppeltstarter optional machen. Wird beim Wettfahren 7-er Club gebraucht.
+  Dort kann einer zweimal mit einem aus einer anderen Sektion starten und wird
+  genau gleich gewertet.
+
+- Sortierung ebenfalls in SQL machen:
+
+    select punkt, stnr, doppel, ausg
+         , case
+             when ausg = 1 or disq = 1 then 99
+             when kranz = 1 and doppel = 0 then 1
+             when kranz = 1 and doppel = 1 then 2
+             when kranz = 0 and doppel = 0 then 3
+             when kranz = 0 and doppel = 1 then 4
+             else 99
+           end as typ
+      from t
+     order by typ, punkt desc, zeit asc
+    /
+
+- Zwei Tabellen nebeneinander:
+  http://stackoverflow.com/questions/6548880/css-positioning-tables-next-to-each-other
+
+- No fixutres:
+  http://code.google.com/p/django-dynamic-fixture/
+  https://github.com/rbarrois/factory_boy
+
+- Bessere Acceptance Tests:
+  http://pypi.python.org/pypi/django-webtest
+
+- Reset south history:
+   https://groups.google.com/forum/#!msg/south-users/iIQT8ZWs2cI/GQ4kONoT5Q4J
+
+- Neues URL Schema:
+  - 2011/Faellbaumcup/einzelfahren/I
+  - 2011/Faellbaumcup/einzelfahren/II-III-C-D-F
+  - 2011/Faellbaumcup/einzelfahren/II-III-C-D-F/startliste
+  - 2011/Faellbaumcup/einzelfahren/II-III-C-D-F/beurteilungsblaetter
+  - 2011/Faellbaumcup/einzelfahren/II-III-C-D-F/richtzeiten
+  - 2011/Faellbaumcup/einzelfahren/II-III-C-D-F/notenliste
+  - 2011/Faellbaumcup/einzelfahren/II-III-C-D-F/posten
+  - 2011/Faellbaumcup/einzelfahren/ranglisten
+  - 2011/Faellbaumcup/einzelfahren/kranzlimiten
+  - 2011/Faellbaumcup/einzelfahren/doppelstarter
+  - 2011/Faellbaumcup/einzelfahren/startliste-[export|import]
+
+  - 2012/Bremgarten/sektionsfahren
+  - 2012/Bremgarten/sektionsfahren/update
+  - 2012/Bremgarten/sektionsfahren/startliste
+  - 2012/Bremgarten/sektionsfahren/startliste [POST] => Neue Gruppe
+  - 2012/Bremgarten/sektionsfahren/gruppe/add?sektion=Bremgarten
+  - 2012/Bremgarten/sektionsfahren/gruppe/Bremgarten/1
+  - 2012/Bremgarten/sektionsfahren/gruppe/Bremgarten/1/schiff [POST: neues Schiff, GET: brauchts nicht] 
+  - 2012/Bremgarten/sektionsfahren/gruppe/Bremgarten/1/schiff/1
+  - 2012/Bremgarten/sektionsfahren/gruppe/Bremgarten/1/schiff/1/delete
+  - 2012/Bremgarten/sektionsfahren/gruppe/Bremgarten/1/update [GET: alle Schiffe editable]
+  - 2012/Bremgarten/sektionsfahren/gruppe/Bremgarten/1/delete
+  - 2012/Bremgarten/sektionsfahren/rangliste
+  - 2012/Bremgarten/sektionsfahren/posten
+
+  Validierung, dass eine Kategorie in einem Einzelfahren pro Wettkampf nur
+  einmal vorkommen kann. Mit "Neues Einzelfahren" nach Kategorien fragen.
+
+
+  Wettkämpfe  Fällbaucup-2011  Einzelfahren
+  Überblick  Kranzlimiten  Ranglisten  Doppelstarter
+  
+   Parcours:  I
+              II-III-F-D-C
+
+              Parcours hinzufügen
+
+   Startliste exportieren/importieren
+
+
+  Wettkämpfe  Fällbaucup-2011  Einzelfahren  Kat-II-III-F-D-C
+  Postenliste  Startliste  Beurteilungsblätter  Bestzeiten  Notenliste
+
+--
+from itertools import *
+from django.db import connection
+
+def query_to_dicts(query_string, *query_args):
+    """Run a simple query and produce a generator
+    that returns the results as a bunch of dictionaries
+    with keys for the column values selected.
+
+    http://blog.doughellmann.com/2007/12/using-raw-sql-in-django.html
+    """
+    cursor = connection.cursor()
+    cursor.execute(query_string, query_args)
+    col_names = [desc[0] for desc in cursor.description]
+    while True:
+        row = cursor.fetchone()
+        if row is None:
+            break
+        row_dict = dict(izip(col_names, row))
+        yield row_dict
+    return
+--
+Mögliche Apps:
+- basis: Stammdaten
+- event: Wettkampf, Disziplin, Posten, Bewertung, Teilnehmer, Richtzeit, Kranzlimite
+- einzelfahren: Startliste
+- sektionsfahren: Startliste
+- spezialwettkaempfe: Schnüren, Schwimmen, Bootfährenbau
+
+
+---
+
+from django.db.models import Sum
+
+f = Schiffeinzel.objects.filter(disziplin__id=1, startnummer__in=[5,10]) \
+        .extra(tables=['bewertung_calc'],
+                where=["bewertung_calc.teilnehmer_id = sasse_teilnehmer.id"])
+
+f = Schiffeinzel.objects.filter(disziplin__id=1, startnummer__in=[5,6,7,8,9,10]) \
+        .values("startnummer", "steuermann__name", "vorderfahrer__name") \
+        .annotate(tot_zeit=Sum("bewertungcalc__zeit"),
+                  tot_note=Sum("bewertungcalc__note")) \
+        .order_by('-tot_note', 'tot_zeit')[1:3]
+
+
+class BewertungCalc(models.Model):
+    teilnehmer = models.ForeignKey('Teilnehmer')
+    posten = models.ForeignKey('Posten')
+    bewertungsart = models.ForeignKey('Bewertungsart')
+    zeit = models.DecimalField(max_digits=6, decimal_places=2, default=0)
+    note = models.DecimalField(max_digits=6, decimal_places=1, default=0)
+    richtzeit = models.DecimalField(max_digits=6, decimal_places=2, default=0)
+
+    class Meta:
+        managed = False
+        db_table = "bewertung_calc"
+
