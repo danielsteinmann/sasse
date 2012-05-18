@@ -1,0 +1,36 @@
+{% extends "base_sektionsfahren.html" %}
+{% block nav_rangliste %}selected{% endblock %}
+{% block content %}
+<p><b>Beste Sektion</b> (<small><a target="_blank" href="{% url sektionsfahren_rangliste_pdf wettkampf.jahr, wettkampf.name %}">PDF</a></small>)
+| <a href="{% url sektionsfahren_rangliste_gruppe wettkampf.jahr, wettkampf.name %}">Beste Gruppe</a>
+| <a href="{% url sektionsfahren_rangliste_schiff wettkampf.jahr, wettkampf.name %}">Bestes Schiff</a>
+| <a href="{% url richtzeiten wettkampf.jahr, wettkampf.name, disziplin.name %}">Richtzeiten</a>
+| <a href="{% url sektionsfahren_kranzlimiten wettkampf.jahr, wettkampf.name %}">Kranzlimiten</a>
+</p>
+<table class="list">
+  <tr>
+    <th>Kranz</th>
+    <th>Rang</th>
+    <th>Sektion</th>
+    <th class="rang">Gruppen</th>
+    <th class="rang">Schiffe</th>
+    <th class="rang">JP</th>
+    <th class="rang">Fr.</th>
+    <th class="rang">Sen.</th>
+    <th class="note">Total</th>
+  </tr>
+  {% for sektion in rangliste %}
+  <tr class="{% cycle 'odd' 'even' %}">
+    <td>{% ifchanged sektion.kranz_typ %}{{ sektion.kranz_typ }}{% endifchanged %}</td>
+    <td class="rang">{{ sektion.rang }}</td>
+    <td>{{ sektion.name }}</td>
+    <td class="rang">{{ sektion.anz_gruppen }}</td>
+    <td class="rang">{{ sektion.anz_schiffe }}</td>
+    <td class="rang">{{ sektion.anz_jps|default:"-" }}</td>
+    <td class="rang">{{ sektion.anz_frauen|default:"-" }}</td>
+    <td class="rang">{{ sektion.anz_senioren|default:"-" }}</td>
+    <td class="note"><a href="{% url sektionsfahren_notenblatt wettkampf.jahr, wettkampf.name, sektion.name %}">{{ sektion.total }}</a></td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

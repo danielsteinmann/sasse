@@ -1,0 +1,12 @@
+- PDFs für Beste Sektion/Gruppe/Schiff/Zeit und Notenblatt (Sektion + einzelne Gruppen)
+- Konfiguration Disziplinenart in eine Migration packen.
+
+---
+Apawan Jeremeah (99086): Existiert mehr als einmal (99079)
+Zurbuchen Sacha (99089): Existiert mehr als einmal (99080)
+Herzog Robin (99085): Existiert mehr als einmal (99078) .
+Brem Sven (99025): Existiert mehr als einmal (99024)
+Brem Sven (99026): Existiert mehr als einmal (99024)
+Brem Sven (99027): Existiert mehr als einmal (99024)
+Brem Sven (99029): Existiert mehr als einmal (99024)
+Schwab Annina (99092): Existiert mehr als einmal (99091) fertig.

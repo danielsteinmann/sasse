@@ -1,0 +1,90 @@
+Version 2.0 (18. Mai 2012)
+https://sasse.googlecode.com/svn/tags/2.0
+
+- Sektionsfahren implementiert.
+
+
+Version 1.3 (31. August 2011)
+https://sasse.googlecode.com/svn/tags/1.3
+
+- Der Import von Mitgliederdaten stürzt nicht mehr ab, wenn ein Mitglied
+  geliefert wird, dass zuvor schon *mehrmals* beim Posten A0 erfasst wurde.
+
+- Bei der Startlisteneingabe wird nächste gültige Startnummer gewählt, falls
+  eine neue Sektion beginnt. Bisher wurde immer nur '1' gezeigt.
+  Folgende Defaults existieren und können in den Settings (local_settings.py)
+  umdefiniert werden:
+     ERSTE_DOPPELSTARTER_NUMMER_KLEINER_PARCOUR = 151
+     ERSTE_DOPPELSTARTER_NUMMER_GROSSER_PARCOUR = 601
+
+
+Version 1.2 (23. Juni 2011)
+https://sasse.googlecode.com/svn/tags/1.2
+
+- Startliste hat einen Abbrechen Link, falls es Eingabefehler gegeben hat.
+  Somit kann der Benutzer bei Falscheingaben nochmals von vorne beginnen.
+
+- Notenliste ist immer nach Punkte und Zeit sortiert, auch wenn keine Sektion
+  gewählt wurde. Aus Performance Gründen wurde auf diese Sortierung verzichtet.
+
+- Notenliste sämtlicher Sektionen können mit einem Click ausgedruckt werden.
+  Achtung: Das kann lange (dutzende Sekunden) dauern.
+
+- Notenliste PDF enthält in der Kopfzeile den Sektionsnamen (sofern nach einer
+  Sektion gefiltert wurde). Das spart Platz in der Fahrerpaar Spalte.
+
+- Startnummern auf dem Beurteilungsblatt sind zentriert.
+
+- Zeitnoten auf dem Beurteilungsblatt sind mit einer Input Mask versehen, damit
+  der Benutzer nur noch Zahlen und keine Punkte mehr eingeben muss.
+
+
+Version 1.1 (31. Mai 2011)
+https://sasse.googlecode.com/svn/tags/1.1
+
+- Startliste export/import eingeführt. Achtung: Beim Import werden sämtliche
+  schon vorhandene Daten der Startliste überschrieben. Auch gelöschte
+  Startnummern werden durch den Import wieder eingeführt.
+
+- Performance bei Darstellung des Beurteilungsblatt durch Reduktion der Anzahl
+  SQL Selects optimiert.
+
+- Kranzlimiten Seite ist nach Kategorien sortiert.
+
+- Navigation der gesamten Applikation vereinfacht. Auf Breadcrumbs verzichtet,
+  dafür den expliziten Wettkampf und Disziplin Namen dargestellt.
+
+- Doppelstarter Kontrollseite: Zwei Doppelstarter in *einem* Schiff werden auch
+  rot dargestellt.
+
+- Doppelstarter Kontrollseite eingeführt, damit Probleme bei der
+  Startlisteneingabe entdeckt werden können.
+
+- Kranzlimite und Defaultpunktzahl sind auch Decimal(6,1). Nun sind sämtliche
+  Punktzahlen im gleichen Format gespeichert.
+
+- Startliste: Focus auf Steuermann, und nicht auf Startnummer (analog altes
+  Programm).
+
+- Erstes Eingabefeld nicht nur fokusieren, sondern auch auswählen. Somit kann
+  man sofort mit Dateneingabe beginnen, ohne zuerst Defaultwert zu löschen.
+
+- Performance der Startlisten Anzeige durch Reduktion der Anzahl SQL Selects
+  optimiert.
+
+- Startkategorie bei einem Schiff mit zwei Frauen (Alter 18 und 23) wird nun
+  richtigerweise der Kategorie F (und nicht wie vorher Kategorie C) zugewiesen.
+  Zudem kann man einen Wettkampf als JPSM (JP Schweizermeisterschaft)
+  deklarieren. Dann wird ein Frauenpaar (z.B. Alter 18 und 19) nicht der
+  Kategorie F, sondern der Kategorie III zugeordnet.
+
+- Horror: Sortierung in SQL Lite funktioniert nicht, da diese Datenbank keine
+  Decimals kennt, sondern nur floats. Dann kann es zu Rundungsfehler kommen,
+  welche die Sortierreihenfolge verfälschen. Darum auf PostgreSQL gewechselt.
+  Einige SQL Selects angepasst, damit wieder alles funktioniert.
+
+
+Version 1.0 (13. Mai 2011)
+https://sasse.googlecode.com/svn/tags/1.0
+
+- Erster öffentlicher Release für den Fällbaumcup 2011.

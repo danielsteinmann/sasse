@@ -1,0 +1,78 @@
+{% extends "base_sektionsfahren.html" %}
+{% block nav_rangliste %}selected{% endblock %}
+{% block content %}
+<p>Notenblatt Gruppe <b>{{ gruppe.name }}</b></p>
+<table class="display">
+  <tr>
+    <td>Durchschnitt Punkte:</td>
+    <td align="right">{{ gruppe.gefahren }}</td>
+    <td>(Summe aller Schiffe) / {{ gruppe.anz_schiffe }}</td>
+  </tr>
+  <tr>
+    <td>Durchschnitt Zuschläge:</td>
+    <td align="right">{{ gruppe.zuschlag }}</td>
+    <td>(2 * ({{ gruppe.anz_jps }}JP + {{ gruppe.anz_frauen }}Fr. + {{ gruppe.anz_senioren }}Sen.)) / {{ gruppe.anz_schiffe }}</td>
+  </tr>
+  <tr>
+    <td>Abzüge Gruppentotal:</td>
+    <td align="right">{{ gruppe.abzug_gruppe }}</td>
+    <td>{{ gruppe.abzug_gruppe_comment|default:""|linebreaksbr }}</td>
+  </tr>
+  <tr>
+    <th>Gruppentotal:</th>
+    <th align="right">{{ gruppe.total }}</th>
+  </tr>
+{% if gruppe.abzug_sektion %}
+  <tr>
+    <td>Abzüge Sektionstotal:</td>
+    <td align="right">{{ gruppe.abzug_sektion }}</td>
+    <td>{{ gruppe.abzug_sektion_comment|default:""|linebreaksbr }}</td>
+  </tr>
+{% endif %}
+</table>
+<p></p>
+<table class="list">
+  <tr>
+    <th class="startnummer">Posten</th>
+    <th>Übungsteil</th>
+    <th class="note">1</th>
+    <th class="note">2</th>
+    <th class="note">3</th>
+    {% if gruppe.anz_schiffe > 3 %}
+    <th class="note">4</th>
+    {% endif %}
+    {% if gruppe.anz_schiffe > 4 %}
+    <th class="note">5</th>
+    {% endif %}
+  </tr>
+{% for note in notenliste %}
+{% if not forloop.last %}
+  <tr class="{% cycle "odd" "even" %}">
+    <td class="startnummer">{{ note.posten }}</td>
+    <td>{{ note.postenart }}</td>
+    <td class="note">{{ note.schiff_1 }}</td>
+    <td class="note">{{ note.schiff_2 }}</td>
+    <td class="note">{{ note.schiff_3 }}</td>
+    {% if gruppe.anz_schiffe > 3 %}
+    <td class="note">{{ note.schiff_4 }}</td>
+    {% endif %}
+    {% if gruppe.anz_schiffe > 4 %}
+    <td class="note">{{ note.schiff_5 }}</td>
+    {% endif %}
+  </tr>
+  {% else %}
+  <tr style="font-weight: bold;">
+    <td colspan="2" align="center">Total</td>
+    <td class="note">{{ note.schiff_1 }}</td>
+    <td class="note">{{ note.schiff_2 }}</td>
+    <td class="note">{{ note.schiff_3 }}</td>
+    {% if gruppe.anz_schiffe > 3 %}
+    <td class="note">{{ note.schiff_4 }}</td>
+    {% endif %}
+    {% if gruppe.anz_schiffe > 4 %}
+    <td class="note">{{ note.schiff_5 }}</td>
+    {% endif %}
+  </tr>
+{% endif %}
+{% endfor %}
+{% endblock %}
