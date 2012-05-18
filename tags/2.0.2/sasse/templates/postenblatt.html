@@ -1,0 +1,39 @@
+{% extends disziplin.get_base_template %}
+{% block nav_postenblatt %}selected{% endblock %}
+{% load sasse %}
+
+{% block content %}
+<form id="filterform" name="filterform" action="" method="GET">
+{% include filterform.template with form=filterform %}
+</form>
+{% if not filterform.errors %}
+<p>Postenwahl:
+{% for p in disziplin.posten_set.all %}
+{% ifequal p.id posten.id %}<b>{{ p.name }}</b>
+{% else %}<a href="{% url postenblatt wettkampf.jahr, wettkampf.name, disziplin.name, p.name %}?{{ query }}">{{ p.name }}</a>
+{% endifequal %}{% if not forloop.last %}|{% endif %}
+{% endfor %}
+</p>
+<b>Posten {{ posten.name }}: {{ posten.postenart.name }}</b>
+<table class="list">
+  <tr>
+    <td></td>
+    {% for cell in header_row %}
+    <th class="note" width="30">{{ cell }}</th>
+    {% endfor %}
+  </tr>
+  {% for first_cell, next_cells in data_rows %}
+  <tr>
+    <th class="note">{{ first_cell }}</th>
+    {% for cell in next_cells %}
+    <td class="note" {% if not cell.initial.id %}bgcolor="LightGreen"{% endif %}>
+      {{ cell.initial.wert|bewertung:cell.bewertungsart.einheit }}
+    </td>
+    {% endfor %}
+  </tr>
+  {% endfor %}
+</table>
+<p></p>
+<a href="{% url postenblatt_update wettkampf.jahr, wettkampf.name, disziplin.name, posten.name %}?{{ query }}">Ändern</a>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends "base_teilnehmer.html" %}
+
+{% block content %}
+<form action="" method="POST">
+  <p>Den Teilnehmer <b>{{ teilnehmer.startnummer }}</b> inklusive den erfassten
+  Noten löschen?</p>
+  <input type="submit" value="Ja" />
+</form>
+{% endblock %}
