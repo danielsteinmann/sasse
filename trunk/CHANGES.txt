@@ -1,3 +1,12 @@
+Version 2.0.2 (18. Mai 2012)
+https://sasse.googlecode.com/svn/tags/2.0.2
+
+- Label für Sektionszuschlöge Formular korrigiert
+  (war 'Gruppe' statt 'Sektion').
+
+- Navigation von Startliste Sektionsfahren verbessert.
+
+
 Version 2.0.1 (18. Mai 2012)
 https://sasse.googlecode.com/svn/tags/2.0.1
 

@@ -2,6 +2,10 @@
 {% block content %}
 <table class="form">
     <tr>
+      <th>Startnummer:</th>
+      <td>{{ gruppe.startnummer }}</td>
+    </tr>
+    <tr>
       <th>Gruppe:</th>
       <td>{{ gruppe.name }}</td>
     </tr>
@@ -12,11 +16,18 @@
     <tr>
       <th>Zuschläge:</th>
       <td>
-          JPs={{ gruppe.anz_jps }},
-          Frauen={{ gruppe.anz_frauen }},
-          Senioren={{ gruppe.anz_senioren }}
+          JPs: {{ gruppe.anz_jps }},
+          Frauen: {{ gruppe.anz_frauen }},
+          Senioren: {{ gruppe.anz_senioren }}
       </td>
-  </tr>
+    </tr>
+    <tr>
+      <td></td>
+      <td>
+        <a href="{% url sektionsfahren_gruppe_update wettkampf.jahr, wettkampf.name, gruppe.name %}">Ändern</a>
+        | <a href="{% url sektionsfahren_gruppe_delete wettkampf.jahr, wettkampf.name, gruppe.name %}">Löschen</a>
+      </td>
+    </tr>
 </table>
 <form action="{% url sektionsfahren_schiff_post wettkampf.jahr, wettkampf.name, gruppe.name %}" method="POST">
 <table class="list">
@@ -56,7 +67,7 @@
 </table>
 </form>
 <p>
-<a href="{% url sektionsfahren_gruppe_update wettkampf.jahr, wettkampf.name, gruppe.name %}">Ändern</a>
-| <a href="{% url sektionsfahren_gruppe_delete wettkampf.jahr, wettkampf.name, gruppe.name %}">Löschen</a>
+<a href="{% url sektionsfahren_gruppe_add wettkampf.jahr, wettkampf.name %}">Weitere Gruppe hinzufügen</a>
+| <a href="{% url sektionsfahren_startliste wettkampf.jahr, wettkampf.name %}">Zurück zur Startliste</a></li>
 </p>
 {% endblock %}
