@@ -1,3 +1,10 @@
+Version 2.1 (xx xxxxxx 2012)
+https://sasse.googlecode.com/svn/tags/2.1
+
+- Initialdaten für Postenart 'Höchstes Ziel' und 'Abmeldung Sektionsfahren'
+  angepasst.
+
+
 Version 2.0.2 (18. Mai 2012)
 https://sasse.googlecode.com/svn/tags/2.0.2
 
