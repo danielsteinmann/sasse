@@ -1,6 +1,9 @@
 Version 2.1 (26. Juni 2012)
 https://sasse.googlecode.com/svn/tags/2.1
 
+- Disqualifiziert und Ausgeschieden für Ranglisten der Spezialwettkämpfe
+  implementiert.
+
 - Spezialwettkämpfe (Schwimmen, Einzelschnüren, Gruppenschnüren, Bootfährenbau)
   eingeführt.
 

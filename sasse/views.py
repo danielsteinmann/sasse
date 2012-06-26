@@ -1281,25 +1281,39 @@ def _get_spezialwettkampf_limite(disziplin, aktuelle_kategorie):
             disziplin=disziplin, kategorie=aktuelle_kategorie)
     if q.count() > 0:
         kranzlimite = q[0].zeit
-    print "Kranzlimite", kranzlimite
     return kranzlimite
 
 def _create_spezialwettkampf_rangliste(rangliste, kranzlimite):
     result = []
+    rang = 1
     anz_mit_kranz = 0
     previous_row = None
-    for i, row in enumerate(rangliste, 1):
-        if previous_row is not None and row.zeit == previous_row.zeit:
-            row.rang = previous_row.rang
+    trailer_indexes = []
+    for i, row in enumerate(rangliste):
+        row.kranz = False
+        if row.disqualifiziert or row.ausgeschieden:
+            trailer_indexes.append(i)
+            if row.disqualifiziert:
+                row.rang = "DISQ"
+            if row.ausgeschieden:
+                row.rang = "AUSG"
         else:
-            row.rang = i
-        if row.zeit <= kranzlimite:
-            row.kranz = True
-            anz_mit_kranz += 1
-        else:
-            row.kranz = False
+            if previous_row is not None and row.zeit == previous_row.zeit:
+                row.rang = previous_row.rang
+            else:
+                row.rang = rang
+            rang += 1
+            if row.zeit <= kranzlimite:
+                row.kranz = True
+                anz_mit_kranz += 1
         previous_row = row
         result.append(row)
+    # Move ausgeschieden/disqualifizert to the end
+    if trailer_indexes:
+        trailer_rows = []
+        for i in trailer_indexes:
+            trailer_rows.append(result.pop(i))
+        result.extend(trailer_rows)
     kranz_prozent = round(((anz_mit_kranz * 1.0) / len(rangliste)) * 100, 1)
     return result, kranz_prozent
 
