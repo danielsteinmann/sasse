@@ -1,5 +1,8 @@
-Version 2.1 (xx xxxxxx 2012)
+Version 2.1 (26. Juni 2012)
 https://sasse.googlecode.com/svn/tags/2.1
+
+- Spezialwettkämpfe (Schwimmen, Einzelschnüren, Gruppenschnüren, Bootfährenbau)
+  eingeführt.
 
 - Initialdaten für Postenart 'Höchstes Ziel' und 'Abmeldung Sektionsfahren'
   angepasst.
@@ -8,7 +11,7 @@ https://sasse.googlecode.com/svn/tags/2.1
 Version 2.0.2 (18. Mai 2012)
 https://sasse.googlecode.com/svn/tags/2.0.2
 
-- Label für Sektionszuschlöge Formular korrigiert
+- Label für Sektionszuschläge Formular korrigiert
   (war 'Gruppe' statt 'Sektion').
 
 - Navigation von Startliste Sektionsfahren verbessert.

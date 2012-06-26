@@ -675,3 +675,56 @@ select grp.name as gruppe
         result['richtzeit'] = new_bew(row[i], ZEIT); i += 1
         yield result
 
+def read_schwimmen_gestartete_kategorien(disziplin):
+    cursor = connection.cursor()
+    sql = """
+    select distinct kategorie
+      from sasse_teilnehmer tn
+      join sasse_schwimmer sw on (sw.teilnehmer_ptr_id = tn.id)
+     where tn.disziplin_id = %s
+    """
+    args = [disziplin.id]
+    cursor.execute(sql, args)
+    for row in cursor:
+        yield row[0]
+
+def read_einzelschnueren_gestartete_kategorien(disziplin):
+    cursor = connection.cursor()
+    sql = """
+    select distinct kategorie
+      from sasse_teilnehmer tn
+      join sasse_einzelschnuerer sw on (sw.teilnehmer_ptr_id = tn.id)
+     where tn.disziplin_id = %s
+    """
+    args = [disziplin.id]
+    cursor.execute(sql, args)
+    for row in cursor:
+        yield row[0]
+
+def read_gruppenschnueren_gestartete_kategorien(disziplin):
+    cursor = connection.cursor()
+    sql = """
+    select distinct kategorie
+      from sasse_teilnehmer tn
+      join sasse_schnuergruppe sw on (sw.teilnehmer_ptr_id = tn.id)
+     where tn.disziplin_id = %s
+    """
+    args = [disziplin.id]
+    cursor.execute(sql, args)
+    for row in cursor:
+        yield row[0]
+
+
+def read_bootfaehrenbau_gestartete_kategorien(disziplin):
+    cursor = connection.cursor()
+    sql = """
+    select distinct kategorie
+      from sasse_teilnehmer tn
+      join sasse_bootfaehrengruppe sw on (sw.teilnehmer_ptr_id = tn.id)
+     where tn.disziplin_id = %s
+    """
+    args = [disziplin.id]
+    cursor.execute(sql, args)
+    for row in cursor:
+        yield row[0]
+

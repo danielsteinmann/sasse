@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from templatetags.sasse import zeit2str
 from django.conf import settings
 
 from reportlab.lib import colors
@@ -443,4 +444,181 @@ def create_sektionsfahren_rangliste_flowables(rangliste):
     return result
 
 
+#
+# Schwimmen
+#
 
+def create_schwimmen_rangliste_flowables(rangliste, kategorie, kranzlimite):
+    data = [['Rang', 'Schwimmer', 'Sektion', 'Zeit']]
+    col_widths = (30, 140, 80, 40)
+    anzahl_ohne_kranz = 0
+    ss = _create_style_sheet()
+    for row in rangliste:
+        if not row.kranz: anzahl_ohne_kranz += 1
+        schwimmer = row.mitglied
+        record = []
+        record.append(Paragraph(unicode(row.rang), ss['center']))
+        record.append(Paragraph(schwimmer.name + " " + schwimmer.vorname + _extract_jahrgang(schwimmer.geburtsdatum), ss['left']))
+        record.append(Paragraph(schwimmer.sektion.name, ss['left']))
+        record.append(Paragraph(unicode(zeit2str(row.zeit)), ss['center']))
+        data.append(record)
+    table_props = [
+        ('LINEBELOW', (0,0), (-1,0), 1, colors.black),
+        ('FONT', (0,0), (-1,0), 'Helvetica-Bold', 8),
+        ('FONT', (0,1), (-1,-1), 'Helvetica', 8),
+        ('TOPPADDING', (0,0), (-1,-1), 1),
+        ('BOTTOMPADDING', (0,0), (-1,-1), 0),
+        ('ALIGN', (1,0), (2,-1), 'LEFT'),
+        ('ALIGN', (0,0), (0,-1), 'CENTER'),
+        ('ALIGN', (-1,0), (-1,-1), 'CENTER'),
+        ('ROWBACKGROUNDS', (0,1), (-1,-1), (None, colors.HexColor(0xf0f0f0))),
+        ]
+    if anzahl_ohne_kranz and kranzlimite:
+        kranzlimite_row = len(data) - anzahl_ohne_kranz
+        text = Paragraph('Kranzlimite: %s ' % (zeit2str(kranzlimite)), ss['left'])
+        data.insert(kranzlimite_row, [text, None, None, None])
+        table_props.extend([
+            ('SPAN', (0,kranzlimite_row), (-1,kranzlimite_row)),
+            ('BACKGROUND', (0,kranzlimite_row), (-1,kranzlimite_row), colors.lightgrey),
+            ])
+    result = []
+    result.append(DocExec("kategorie_name = '%s'" % kategorie))
+    result.append(Platypus_Table(data, repeatRows=1, colWidths=col_widths, style=TableStyle(table_props)))
+    result.append(PageBreak())
+    return result
+
+
+#
+# Einzelschnüren
+#
+
+def create_einzelschnueren_rangliste_flowables(rangliste, kategorie, kranzlimite):
+    data = [['Rang', 'Schnürer', 'Sektion', 'Parcourszeit', 'Zuschläge', 'Totalzeit']]
+    col_widths = (30, 140, 80, 60, 50, 60)
+    anzahl_ohne_kranz = 0
+    ss = _create_style_sheet()
+    for row in rangliste:
+        if not row.kranz: anzahl_ohne_kranz += 1
+        schnuerer = row.mitglied
+        record = []
+        record.append(Paragraph(unicode(row.rang), ss['center']))
+        record.append(Paragraph(schnuerer.name + " " + schnuerer.vorname + _extract_jahrgang(schnuerer.geburtsdatum), ss['left']))
+        record.append(Paragraph(schnuerer.sektion.name, ss['left']))
+        record.append(Paragraph(unicode(zeit2str(row.parcourszeit)), ss['center']))
+        record.append(Paragraph(unicode(row.zuschlaege), ss['center']))
+        record.append(Paragraph(unicode(zeit2str(row.zeit)), ss['center']))
+        data.append(record)
+    table_props = [
+        ('LINEBELOW', (0,0), (-1,0), 1, colors.black),
+        ('FONT', (0,0), (-1,0), 'Helvetica-Bold', 8),
+        ('FONT', (0,1), (-1,-1), 'Helvetica', 8),
+        ('TOPPADDING', (0,0), (-1,-1), 1),
+        ('BOTTOMPADDING', (0,0), (-1,-1), 0),
+        ('ALIGN', (1,0), (2,-1), 'LEFT'),
+        ('ALIGN', (0,0), (0,-1), 'CENTER'),
+        ('ALIGN', (-3,0), (-1,-1), 'CENTER'),
+        ('ROWBACKGROUNDS', (0,1), (-1,-1), (None, colors.HexColor(0xf0f0f0))),
+        ]
+    if anzahl_ohne_kranz and kranzlimite:
+        kranzlimite_row = len(data) - anzahl_ohne_kranz
+        text = Paragraph('Kranzlimite: %s ' % (zeit2str(kranzlimite)), ss['left'])
+        data.insert(kranzlimite_row, [text, None, None, None, None, None])
+        table_props.extend([
+            ('SPAN', (0,kranzlimite_row), (-1,kranzlimite_row)),
+            ('BACKGROUND', (0,kranzlimite_row), (-1,kranzlimite_row), colors.lightgrey),
+            ])
+    result = []
+    result.append(DocExec("kategorie_name = '%s'" % kategorie))
+    result.append(Platypus_Table(data, repeatRows=1, colWidths=col_widths, style=TableStyle(table_props)))
+    result.append(PageBreak())
+    return result
+
+
+#
+# Gruppenschnüren
+#
+
+def create_gruppenschnueren_rangliste_flowables(rangliste, kategorie, kranzlimite):
+    data = [['Rang', 'Gruppe', 'Aufbauzeit', 'Abbauzeit', 'Zuschläge', 'Totalzeit']]
+    col_widths = (30, 110, 60, 60, 50, 60)
+    anzahl_ohne_kranz = 0
+    ss = _create_style_sheet()
+    for row in rangliste:
+        if not row.kranz: anzahl_ohne_kranz += 1
+        record = []
+        record.append(Paragraph(unicode(row.rang), ss['center']))
+        record.append(Paragraph(row.name, ss['left']))
+        record.append(Paragraph(unicode(zeit2str(row.aufbauzeit)), ss['center']))
+        record.append(Paragraph(unicode(zeit2str(row.abbauzeit)), ss['center']))
+        record.append(Paragraph(unicode(row.zuschlaege), ss['center']))
+        record.append(Paragraph(unicode(zeit2str(row.zeit)), ss['center']))
+        data.append(record)
+    table_props = [
+        ('LINEBELOW', (0,0), (-1,0), 1, colors.black),
+        ('FONT', (0,0), (-1,0), 'Helvetica-Bold', 8),
+        ('FONT', (0,1), (-1,-1), 'Helvetica', 8),
+        ('TOPPADDING', (0,0), (-1,-1), 1),
+        ('BOTTOMPADDING', (0,0), (-1,-1), 0),
+        ('ALIGN', (1,0), (2,-1), 'LEFT'),
+        ('ALIGN', (0,0), (0,-1), 'CENTER'),
+        ('ALIGN', (-4,0), (-1,-1), 'CENTER'),
+        ('ROWBACKGROUNDS', (0,1), (-1,-1), (None, colors.HexColor(0xf0f0f0))),
+        ]
+    if anzahl_ohne_kranz and kranzlimite:
+        kranzlimite_row = len(data) - anzahl_ohne_kranz
+        text = Paragraph('Kranzlimite: %s ' % (zeit2str(kranzlimite)), ss['left'])
+        data.insert(kranzlimite_row, [text, None, None, None, None, None])
+        table_props.extend([
+            ('SPAN', (0,kranzlimite_row), (-1,kranzlimite_row)),
+            ('BACKGROUND', (0,kranzlimite_row), (-1,kranzlimite_row), colors.lightgrey),
+            ])
+    result = []
+    result.append(DocExec("kategorie_name = '%s'" % kategorie))
+    result.append(Platypus_Table(data, repeatRows=1, colWidths=col_widths, style=TableStyle(table_props)))
+    result.append(PageBreak())
+    return result
+
+
+#
+# Bootfährenbau
+#
+
+def create_bootfaehrenbau_rangliste_flowables(rangliste, kategorie, kranzlimite):
+    data = [['Rang', 'Gruppe', 'Einbauzeit', 'Ausbauzeit', 'Zuschläge', 'Totalzeit']]
+    col_widths = (30, 110, 60, 60, 50, 60)
+    anzahl_ohne_kranz = 0
+    ss = _create_style_sheet()
+    for row in rangliste:
+        if not row.kranz: anzahl_ohne_kranz += 1
+        record = []
+        record.append(Paragraph(unicode(row.rang), ss['center']))
+        record.append(Paragraph(row.name, ss['left']))
+        record.append(Paragraph(unicode(zeit2str(row.einbauzeit)), ss['center']))
+        record.append(Paragraph(unicode(zeit2str(row.ausbauzeit)), ss['center']))
+        record.append(Paragraph(unicode(row.zuschlaege), ss['center']))
+        record.append(Paragraph(unicode(zeit2str(row.zeit)), ss['center']))
+        data.append(record)
+    table_props = [
+        ('LINEBELOW', (0,0), (-1,0), 1, colors.black),
+        ('FONT', (0,0), (-1,0), 'Helvetica-Bold', 8),
+        ('FONT', (0,1), (-1,-1), 'Helvetica', 8),
+        ('TOPPADDING', (0,0), (-1,-1), 1),
+        ('BOTTOMPADDING', (0,0), (-1,-1), 0),
+        ('ALIGN', (1,0), (2,-1), 'LEFT'),
+        ('ALIGN', (0,0), (0,-1), 'CENTER'),
+        ('ALIGN', (-4,0), (-1,-1), 'CENTER'),
+        ('ROWBACKGROUNDS', (0,1), (-1,-1), (None, colors.HexColor(0xf0f0f0))),
+        ]
+    if anzahl_ohne_kranz and kranzlimite:
+        kranzlimite_row = len(data) - anzahl_ohne_kranz
+        text = Paragraph('Kranzlimite: %s ' % (zeit2str(kranzlimite)), ss['left'])
+        data.insert(kranzlimite_row, [text, None, None, None, None, None])
+        table_props.extend([
+            ('SPAN', (0,kranzlimite_row), (-1,kranzlimite_row)),
+            ('BACKGROUND', (0,kranzlimite_row), (-1,kranzlimite_row), colors.lightgrey),
+            ])
+    result = []
+    result.append(DocExec("kategorie_name = '%s'" % kategorie))
+    result.append(Platypus_Table(data, repeatRows=1, colWidths=col_widths, style=TableStyle(table_props)))
+    result.append(PageBreak())
+    return result

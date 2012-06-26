@@ -1,4 +1,10 @@
-- PDFs für Beste Sektion/Gruppe/Schiff/Zeit und Notenblatt (Sektion + einzelne Gruppen)
+Amerikanerbecher: 6 beste Fahrerpaare im Einzelfahren C und D
+Becher der Regierung von Liechtenstein: 2 beste Fahrerpaare im Einzelfahren II und III
+
+--
+- Regroup
+- Richtzeiten auf Notenblatt ausgeben
+- PDFs für beste Gruppe/Schiff/Zeit und Notenblatt (Sektion + einzelne Gruppen)
 
 ---
 Apawan Jeremeah (99086): Existiert mehr als einmal (99079)

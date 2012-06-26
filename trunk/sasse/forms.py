@@ -45,6 +45,11 @@ from models import Kranzlimite
 from models import GESCHLECHT_ART
 from models import Schiffsektion
 from models import SektionsfahrenKranzlimiten
+from models import SpezialwettkaempfeKranzlimite
+from models import Schwimmer
+from models import Einzelschnuerer
+from models import Schnuergruppe
+from models import Bootfaehrengruppe
 
 from fields import MitgliedSearchField
 from fields import UnicodeSlugField
@@ -569,10 +574,10 @@ class GruppeForm(ModelForm):
 
     def clean(self):
         super(GruppeForm, self).clean()
-        if self.instance.id is None:
+        sektion = self.cleaned_data.get('sektion')
+        if self.instance.id is None and sektion:
             disziplin = self.cleaned_data['disziplin']
             # Calculate name
-            sektion = self.cleaned_data['sektion']
             sektion_name = sektion.name
             sektion_name = sektion_name.replace(" ", "-")
             count = 0
@@ -690,3 +695,199 @@ class SektionsfahrenKranzlimitenForm(ModelForm):
         model = SektionsfahrenKranzlimiten
         exclude = ('disziplin',)
 
+class SpezialwettkaempfeKranzlimiteForm(ModelForm):
+    zeit = ZeitInSekundenField()
+    class Meta:
+        model = SpezialwettkaempfeKranzlimite
+        exclude = ('disziplin', 'kategorie')
+
+
+class SchwimmerForm(ModelForm):
+    mitglied = MitgliedSearchField(queryset=Mitglied.objects.all())
+    zeit = ZeitInSekundenField()
+
+    class Meta:
+        model = Schwimmer
+
+    def __init__(self, disziplin, *args, **kwargs):
+        super(SchwimmerForm, self).__init__(*args, **kwargs)
+        self.data['disziplin'] = disziplin.id
+        self.fields['startnummer'].widget.attrs['size'] = 3
+        self.fields['kategorie'].required = False
+        if self.instance.id is not None:
+            self.initial['mitglied'] = self.fields['mitglied'].value_for_form(self.instance.mitglied)
+
+    def clean(self):
+        super(SchwimmerForm, self).clean()
+        for name in ('mitglied',):
+            mitglied = self.cleaned_data.get(name)
+            self.data[name] = self.fields[name].value_for_form(mitglied)
+        return self.cleaned_data
+
+class SchwimmerUpdateForm(ModelForm):
+    mitglied = MitgliedSearchField(queryset=Mitglied.objects.all())
+    zeit = ZeitInSekundenField()
+
+    class Meta:
+        model = Schwimmer
+
+    def __init__(self, *args, **kwargs):
+        super(SchwimmerUpdateForm, self).__init__(*args, **kwargs)
+        self.fields['startnummer'].widget.attrs['size'] = 3
+        self.fields['disziplin'].widget = HiddenInput()
+        self.initial['mitglied'] = self.fields['mitglied'].value_for_form(self.instance.mitglied)
+
+    def clean(self):
+        super(SchwimmerUpdateForm, self).clean()
+        for name in ('mitglied',):
+            mitglied = self.cleaned_data.get(name)
+            self.data[name] = self.fields[name].value_for_form(mitglied)
+        return self.cleaned_data
+
+class EinzelschnuererForm(ModelForm):
+    mitglied = MitgliedSearchField(queryset=Mitglied.objects.all())
+    parcourszeit = ZeitInSekundenField()
+
+    class Meta:
+        model = Einzelschnuerer
+        exclude = ('zeit',)
+
+    def __init__(self, disziplin, *args, **kwargs):
+        super(EinzelschnuererForm, self).__init__(*args, **kwargs)
+        self.data['disziplin'] = disziplin.id
+        self.fields['startnummer'].widget.attrs['size'] = 3
+        self.fields['zuschlaege'].widget.attrs['size'] = 3
+        self.fields['kategorie'].required = False
+        if self.instance.id is not None:
+            self.initial['mitglied'] = self.fields['mitglied'].value_for_form(self.instance.mitglied)
+
+    def clean(self):
+        super(EinzelschnuererForm, self).clean()
+        for name in ('mitglied',):
+            mitglied = self.cleaned_data.get(name)
+            self.data[name] = self.fields[name].value_for_form(mitglied)
+        return self.cleaned_data
+
+class EinzelschnuererUpdateForm(ModelForm):
+    mitglied = MitgliedSearchField(queryset=Mitglied.objects.all())
+    parcourszeit = ZeitInSekundenField()
+
+    class Meta:
+        model = Einzelschnuerer
+        exclude = ('zeit',)
+
+    def __init__(self, *args, **kwargs):
+        super(EinzelschnuererUpdateForm, self).__init__(*args, **kwargs)
+        self.fields['startnummer'].widget.attrs['size'] = 3
+        self.fields['zuschlaege'].widget.attrs['size'] = 3
+        self.fields['disziplin'].widget = HiddenInput()
+        self.initial['mitglied'] = self.fields['mitglied'].value_for_form(self.instance.mitglied)
+
+    def clean(self):
+        super(EinzelschnuererUpdateForm, self).clean()
+        for name in ('mitglied',):
+            mitglied = self.cleaned_data.get(name)
+            self.data[name] = self.fields[name].value_for_form(mitglied)
+        return self.cleaned_data
+
+class SchnuergruppeForm(ModelForm):
+    name = UnicodeSlugField()
+    aufbauzeit = ZeitInSekundenField()
+    abbauzeit = ZeitInSekundenField()
+
+    class Meta:
+        model = Schnuergruppe
+        exclude = ('zeit',)
+
+    def __init__(self, disziplin, *args, **kwargs):
+        super(SchnuergruppeForm, self).__init__(*args, **kwargs)
+        self.data['disziplin'] = disziplin.id
+        self.fields['startnummer'].widget.attrs['size'] = 3
+        self.fields['zuschlaege'].widget.attrs['size'] = 3
+        self.fields['name'].required = False
+
+    def clean(self):
+        super(SchnuergruppeForm, self).clean()
+        sektion = self.cleaned_data.get('sektion')
+        if self.instance.id is None and sektion:
+            disziplin = self.cleaned_data['disziplin']
+            # Calculate name
+            sektion_name = sektion.name
+            sektion_name = sektion_name.replace(" ", "-")
+            count = 0
+            for gruppe in Schnuergruppe.objects.filter(disziplin=disziplin, sektion=sektion):
+                count += 1
+                gruppe.name = u"%s-%d" % (sektion_name, count)
+                gruppe.save()
+            if count > 0:
+                name = u"%s-%d" % (sektion_name, count + 1)
+            else:
+                name = sektion_name
+            self.cleaned_data['name'] = name
+        return self.cleaned_data
+
+class SchnuergruppeUpdateForm(ModelForm):
+    name = UnicodeSlugField()
+    aufbauzeit = ZeitInSekundenField()
+    abbauzeit = ZeitInSekundenField()
+
+    class Meta:
+        model = Schnuergruppe
+        exclude = ('zeit',)
+
+    def __init__(self, *args, **kwargs):
+        super(SchnuergruppeUpdateForm, self).__init__(*args, **kwargs)
+        self.fields['startnummer'].widget.attrs['size'] = 3
+        self.fields['zuschlaege'].widget.attrs['size'] = 3
+        self.fields['disziplin'].widget = HiddenInput()
+
+class BootfaehrengruppeForm(ModelForm):
+    name = UnicodeSlugField()
+    einbauzeit = ZeitInSekundenField()
+    ausbauzeit = ZeitInSekundenField()
+
+    class Meta:
+        model = Bootfaehrengruppe
+        exclude = ('zeit', 'kategorie')
+
+    def __init__(self, disziplin, *args, **kwargs):
+        super(BootfaehrengruppeForm, self).__init__(*args, **kwargs)
+        self.data['disziplin'] = disziplin.id
+        self.fields['startnummer'].widget.attrs['size'] = 3
+        self.fields['zuschlaege'].widget.attrs['size'] = 3
+        self.fields['name'].required = False
+
+    def clean(self):
+        super(BootfaehrengruppeForm, self).clean()
+        sektion = self.cleaned_data.get('sektion')
+        if self.instance.id is None and sektion:
+            disziplin = self.cleaned_data['disziplin']
+            # Calculate name
+            sektion_name = sektion.name
+            sektion_name = sektion_name.replace(" ", "-")
+            count = 0
+            for gruppe in Bootfaehrengruppe.objects.filter(disziplin=disziplin, sektion=sektion):
+                count += 1
+                gruppe.name = u"%s-%d" % (sektion_name, count)
+                gruppe.save()
+            if count > 0:
+                name = u"%s-%d" % (sektion_name, count + 1)
+            else:
+                name = sektion_name
+            self.cleaned_data['name'] = name
+        return self.cleaned_data
+
+class BootfaehrengruppeUpdateForm(ModelForm):
+    name = UnicodeSlugField()
+    einbauzeit = ZeitInSekundenField()
+    ausbauzeit = ZeitInSekundenField()
+
+    class Meta:
+        model = Bootfaehrengruppe
+        exclude = ('zeit', 'kategorie')
+
+    def __init__(self, *args, **kwargs):
+        super(BootfaehrengruppeUpdateForm, self).__init__(*args, **kwargs)
+        self.fields['startnummer'].widget.attrs['size'] = 3
+        self.fields['zuschlaege'].widget.attrs['size'] = 3
+        self.fields['disziplin'].widget = HiddenInput()
