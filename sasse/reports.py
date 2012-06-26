@@ -542,7 +542,7 @@ def create_gruppenschnueren_rangliste_flowables(rangliste, kategorie, kranzlimit
     data = [['Rang', 'Gruppe', 'Aufbauzeit', 'Abbauzeit', 'Zuschläge', 'Totalzeit']]
     col_widths = (30, 110, 60, 60, 50, 60)
     anzahl_ohne_kranz = 0
-    ss = _create_style_sheet()
+    ss = _create_style_sheet(10)
     for row in rangliste:
         if not row.kranz: anzahl_ohne_kranz += 1
         record = []
@@ -555,8 +555,8 @@ def create_gruppenschnueren_rangliste_flowables(rangliste, kategorie, kranzlimit
         data.append(record)
     table_props = [
         ('LINEBELOW', (0,0), (-1,0), 1, colors.black),
-        ('FONT', (0,0), (-1,0), 'Helvetica-Bold', 8),
-        ('FONT', (0,1), (-1,-1), 'Helvetica', 8),
+        ('FONT', (0,0), (-1,0), 'Helvetica-Bold', 10),
+        ('FONT', (0,1), (-1,-1), 'Helvetica', 10),
         ('TOPPADDING', (0,0), (-1,-1), 1),
         ('BOTTOMPADDING', (0,0), (-1,-1), 0),
         ('ALIGN', (1,0), (2,-1), 'LEFT'),
@@ -587,7 +587,7 @@ def create_bootfaehrenbau_rangliste_flowables(rangliste, kategorie, kranzlimite)
     data = [['Rang', 'Gruppe', 'Einbauzeit', 'Ausbauzeit', 'Zuschläge', 'Totalzeit']]
     col_widths = (30, 110, 60, 60, 50, 60)
     anzahl_ohne_kranz = 0
-    ss = _create_style_sheet()
+    ss = _create_style_sheet(10)
     for row in rangliste:
         if not row.kranz: anzahl_ohne_kranz += 1
         record = []
@@ -600,8 +600,8 @@ def create_bootfaehrenbau_rangliste_flowables(rangliste, kategorie, kranzlimite)
         data.append(record)
     table_props = [
         ('LINEBELOW', (0,0), (-1,0), 1, colors.black),
-        ('FONT', (0,0), (-1,0), 'Helvetica-Bold', 8),
-        ('FONT', (0,1), (-1,-1), 'Helvetica', 8),
+        ('FONT', (0,0), (-1,0), 'Helvetica-Bold', 10),
+        ('FONT', (0,1), (-1,-1), 'Helvetica', 10),
         ('TOPPADDING', (0,0), (-1,-1), 1),
         ('BOTTOMPADDING', (0,0), (-1,-1), 0),
         ('ALIGN', (1,0), (2,-1), 'LEFT'),
