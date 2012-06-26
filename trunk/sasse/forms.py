@@ -708,12 +708,12 @@ class SchwimmerForm(ModelForm):
 
     class Meta:
         model = Schwimmer
+        exclude = ('kategorie',)
 
     def __init__(self, disziplin, *args, **kwargs):
         super(SchwimmerForm, self).__init__(*args, **kwargs)
         self.data['disziplin'] = disziplin.id
         self.fields['startnummer'].widget.attrs['size'] = 3
-        self.fields['kategorie'].required = False
         if self.instance.id is not None:
             self.initial['mitglied'] = self.fields['mitglied'].value_for_form(self.instance.mitglied)
 
@@ -730,6 +730,7 @@ class SchwimmerUpdateForm(ModelForm):
 
     class Meta:
         model = Schwimmer
+        exclude = ('kategorie',)
 
     def __init__(self, *args, **kwargs):
         super(SchwimmerUpdateForm, self).__init__(*args, **kwargs)
@@ -750,14 +751,13 @@ class EinzelschnuererForm(ModelForm):
 
     class Meta:
         model = Einzelschnuerer
-        exclude = ('zeit',)
+        exclude = ('zeit', 'kategorie')
 
     def __init__(self, disziplin, *args, **kwargs):
         super(EinzelschnuererForm, self).__init__(*args, **kwargs)
         self.data['disziplin'] = disziplin.id
         self.fields['startnummer'].widget.attrs['size'] = 3
         self.fields['zuschlaege'].widget.attrs['size'] = 3
-        self.fields['kategorie'].required = False
         if self.instance.id is not None:
             self.initial['mitglied'] = self.fields['mitglied'].value_for_form(self.instance.mitglied)
 
@@ -774,7 +774,7 @@ class EinzelschnuererUpdateForm(ModelForm):
 
     class Meta:
         model = Einzelschnuerer
-        exclude = ('zeit',)
+        exclude = ('zeit', 'kategorie')
 
     def __init__(self, *args, **kwargs):
         super(EinzelschnuererUpdateForm, self).__init__(*args, **kwargs)

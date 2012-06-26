@@ -314,8 +314,7 @@ class Schwimmer(Teilnehmer):
     creation_date = models.DateTimeField(auto_now_add=True)
 
     def save(self):
-        if not self.kategorie:
-            self.kategorie = self._get_kategorie()
+        self.kategorie = self._get_kategorie()
         super(Schwimmer, self).save()
 
     def _get_kategorie(self):
@@ -342,8 +341,7 @@ class Einzelschnuerer(Teilnehmer):
     creation_date = models.DateTimeField(auto_now_add=True)
 
     def save(self):
-        if not self.kategorie:
-            self.kategorie = self._get_kategorie()
+        self.kategorie = self._get_kategorie()
         self.zeit = self.parcourszeit + self.zuschlaege
         super(Einzelschnuerer, self).save()
 
