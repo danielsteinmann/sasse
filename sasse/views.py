@@ -30,6 +30,11 @@ from models import Kranzlimite
 from models import Mitglied
 from models import Schiffsektion
 from models import SektionsfahrenKranzlimiten
+from models import SpezialwettkaempfeKranzlimite
+from models import Schwimmer
+from models import Einzelschnuerer
+from models import Schnuergruppe
+from models import Bootfaehrengruppe
 
 from forms import DisziplinForm
 from forms import PostenEditForm
@@ -49,6 +54,15 @@ from forms import GruppeFilterForm
 from forms import SchiffsektionForm
 from forms import SektionsfahrenGruppeAbzugForm
 from forms import SektionsfahrenKranzlimitenForm
+from forms import SpezialwettkaempfeKranzlimiteForm
+from forms import SchwimmerForm
+from forms import SchwimmerUpdateForm
+from forms import EinzelschnuererForm
+from forms import EinzelschnuererUpdateForm
+from forms import SchnuergruppeForm
+from forms import SchnuergruppeUpdateForm
+from forms import BootfaehrengruppeForm
+from forms import BootfaehrengruppeUpdateForm
 
 from queries import read_topzeiten
 from queries import read_notenliste
@@ -66,6 +80,10 @@ from queries import read_sektionsfahren_rangliste_gruppe
 from queries import read_sektionsfahren_rangliste_schiff
 from queries import read_sektionsfahren_notenblatt_gruppe
 from queries import read_sektionsfahren_topzeiten
+from queries import read_schwimmen_gestartete_kategorien
+from queries import read_einzelschnueren_gestartete_kategorien
+from queries import read_gruppenschnueren_gestartete_kategorien
+from queries import read_bootfaehrenbau_gestartete_kategorien
 
 from reports import create_rangliste_doctemplate
 from reports import create_rangliste_flowables
@@ -80,6 +98,10 @@ from reports import create_notenliste_doctemplate
 from reports import create_notenliste_flowables
 from reports import create_sektionsfahren_rangliste_doctemplate
 from reports import create_sektionsfahren_rangliste_flowables
+from reports import create_schwimmen_rangliste_flowables
+from reports import create_einzelschnueren_rangliste_flowables
+from reports import create_gruppenschnueren_rangliste_flowables
+from reports import create_bootfaehrenbau_rangliste_flowables
 
 import eai_startliste
 
@@ -1232,3 +1254,394 @@ def sektionsfahren_notenblatt_gruppe(request, jahr, wettkampf, gruppe):
     notenliste = read_sektionsfahren_notenblatt_gruppe(g)
     return direct_to_template(request, 'sektionsfahren_notenblatt_gruppe.html', {
         'wettkampf': w, 'disziplin': d, 'gruppe': g, 'notenliste': notenliste})
+
+
+#
+# Spezialwettkaempfe
+#
+
+def _get_spezialwettkampf(jahr, wettkampf, disziplinart):
+    return Disziplin.objects.select_related().get(
+            disziplinart__name=disziplinart,
+            wettkampf__name=wettkampf,
+            wettkampf__von__year=jahr)
+
+def _get_spezialwettkampf_kat(gestartete_kategorien, kategorie):
+    if kategorie:
+        aktuelle_kategorie = kategorie
+    elif len(gestartete_kategorien) > 0:
+        aktuelle_kategorie = gestartete_kategorien[0]
+    else:
+        raise Http404(u"Es sind noch keine Daten vorhanden")
+    return aktuelle_kategorie
+
+def _get_spezialwettkampf_limite(disziplin, aktuelle_kategorie):
+    kranzlimite = None
+    q = SpezialwettkaempfeKranzlimite.objects.filter(
+            disziplin=disziplin, kategorie=aktuelle_kategorie)
+    if q.count() > 0:
+        kranzlimite = q[0].zeit
+    print "Kranzlimite", kranzlimite
+    return kranzlimite
+
+def _create_spezialwettkampf_rangliste(rangliste, kranzlimite):
+    result = []
+    anz_mit_kranz = 0
+    previous_row = None
+    for i, row in enumerate(rangliste, 1):
+        if previous_row is not None and row.zeit == previous_row.zeit:
+            row.rang = previous_row.rang
+        else:
+            row.rang = i
+        if row.zeit <= kranzlimite:
+            row.kranz = True
+            anz_mit_kranz += 1
+        else:
+            row.kranz = False
+        previous_row = row
+        result.append(row)
+    kranz_prozent = round(((anz_mit_kranz * 1.0) / len(rangliste)) * 100, 1)
+    return result, kranz_prozent
+
+def _do_spezialwettkampf_get(request, jahr, wettkampf, disziplinart):
+    d = _get_spezialwettkampf(jahr, wettkampf, disziplinart)
+    return direct_to_template(request, "spezialwettkaempfe.html",
+            {'wettkampf': d.wettkampf, 'disziplin': d})
+
+def _do_kranzlimite_update(request, jahr, wettkampf, disziplin, kategorie, redirect_view):
+    limite, created = SpezialwettkaempfeKranzlimite.objects.get_or_create(
+            disziplin=disziplin, kategorie=kategorie, defaults={'zeit': 0})
+    if request.method == 'POST':
+        form = SpezialwettkaempfeKranzlimiteForm(request.POST, instance=limite)
+        if form.is_valid():
+            obj = form.save()
+            url = reverse(redirect_view, args=[jahr, wettkampf, kategorie])
+            return HttpResponseRedirect(url)
+    else:
+        form = SpezialwettkaempfeKranzlimiteForm(instance=limite)
+    return direct_to_template(request, 'spezialwettkaempfe_kranzlimite_update.html', {
+        'wettkampf': disziplin.wettkampf, 'disziplin': disziplin, 'form': form})
+
+#
+# Schwimmen
+#
+
+def schwimmen_get(request, jahr, wettkampf):
+    return _do_spezialwettkampf_get(request, jahr, wettkampf, "Schwimmen")
+
+@permission_required('sasse.change_gruppe')
+def schwimmen_eingabe(request, jahr, wettkampf):
+    d = _get_spezialwettkampf(jahr, wettkampf, "Schwimmen")
+    if request.method == 'POST':
+        form = SchwimmerForm(d, request.POST.copy())
+        if form.is_valid():
+            form.save()
+            url = reverse(schwimmen_eingabe, args=[jahr, wettkampf])
+            return HttpResponseRedirect(url)
+    else:
+        form = SchwimmerForm(d)
+    startliste = Schwimmer.objects.select_related().filter(disziplin=d).order_by('-creation_date')
+    return direct_to_template(request, "schwimmen_eingabe.html",
+            {'wettkampf': d.wettkampf, 'disziplin': d, 'form': form, 'startliste': startliste})
+
+@permission_required('sasse.change_gruppe')
+def schwimmen_update(request, jahr, wettkampf, startnummer):
+    d = _get_spezialwettkampf(jahr, wettkampf, "Schwimmen")
+    schwimmer = Schwimmer.objects.get(disziplin=d, startnummer=startnummer)
+    if request.method == 'POST':
+        form = SchwimmerUpdateForm(request.POST.copy(), instance=schwimmer)
+        if form.is_valid():
+            form.save()
+            url = reverse(schwimmen_eingabe, args=[jahr, wettkampf])
+            return HttpResponseRedirect(url)
+    else:
+        form = SchwimmerUpdateForm(instance=schwimmer)
+    return direct_to_template(request, "schwimmen_update.html",
+            {'wettkampf': d.wettkampf, 'disziplin': d, 'form': form})
+
+@permission_required('sasse.change_gruppe')
+def schwimmen_delete(request, jahr, wettkampf, startnummer):
+    d = _get_spezialwettkampf(jahr, wettkampf, "Schwimmen")
+    schwimmer = Schwimmer.objects.get(disziplin=d, startnummer=startnummer)
+    if request.method == 'POST':
+        schwimmer.delete()
+        url = reverse(schwimmen_eingabe, args=[jahr, wettkampf])
+        return HttpResponseRedirect(url)
+    return direct_to_template(request, "schwimmen_delete.html",
+            {'wettkampf': d.wettkampf, 'disziplin': d, 'obj': schwimmer})
+
+def schwimmen_rangliste(request, jahr, wettkampf, kategorie=None):
+    assert request.method == 'GET'
+    d = _get_spezialwettkampf(jahr, wettkampf, "Schwimmen")
+    gestartete_kategorien = list(read_schwimmen_gestartete_kategorien(d))
+    aktuelle_kategorie = _get_spezialwettkampf_kat(gestartete_kategorien, kategorie)
+    kranzlimite = _get_spezialwettkampf_limite(d, aktuelle_kategorie)
+    rangliste = Schwimmer.objects.filter(disziplin=d, kategorie=aktuelle_kategorie).order_by('zeit')
+    rangliste, kranz_prozent = _create_spezialwettkampf_rangliste(rangliste, kranzlimite)
+    return direct_to_template(request, 'schwimmen_rangliste.html',
+            {'wettkampf': d.wettkampf, 'disziplin': d, 'kategorie': aktuelle_kategorie, 'kategorien':
+                gestartete_kategorien, 'rangliste': rangliste, 'kranzlimite':
+                kranzlimite, 'kranzlimite_in_prozent': kranz_prozent})
+
+def schwimmen_rangliste_pdf(request, jahr, wettkampf, kategorie):
+    assert request.method == 'GET'
+    d = _get_spezialwettkampf(jahr, wettkampf, "Schwimmen")
+    aktuelle_kategorie = kategorie
+    kranzlimite = _get_spezialwettkampf_limite(d, aktuelle_kategorie)
+    rangliste = Schwimmer.objects.filter(disziplin=d, kategorie=aktuelle_kategorie).order_by('zeit')
+    rangliste, kranz_prozent = _create_spezialwettkampf_rangliste(rangliste, kranzlimite)
+    w = d.wettkampf
+    doc = create_rangliste_doctemplate(w, d)
+    flowables = create_schwimmen_rangliste_flowables(rangliste, aktuelle_kategorie, kranzlimite)
+    response = HttpResponse(mimetype='application/pdf')
+    response['Content-Disposition'] = smart_str(u'filename=rangliste-%s-kat-%s' % (w.name, aktuelle_kategorie))
+    doc.build(flowables, filename=response)
+    return response
+
+@permission_required('sasse.change_gruppe')
+def schwimmen_kranzlimite_update(request, jahr, wettkampf, kategorie):
+    d = _get_spezialwettkampf(jahr, wettkampf, "Schwimmen")
+    return _do_kranzlimite_update(request, jahr, wettkampf, d, kategorie, schwimmen_rangliste)
+
+#
+# Einzelschnüren
+#
+
+def einzelschnueren_get(request, jahr, wettkampf):
+    return _do_spezialwettkampf_get(request, jahr, wettkampf, u"Einzelschnüren")
+
+@permission_required('sasse.change_gruppe')
+def einzelschnueren_eingabe(request, jahr, wettkampf):
+    d = _get_spezialwettkampf(jahr, wettkampf, u"Einzelschnüren")
+    if request.method == 'POST':
+        form = EinzelschnuererForm(d, request.POST.copy())
+        if form.is_valid():
+            form.save()
+            url = reverse(einzelschnueren_eingabe, args=[jahr, wettkampf])
+            return HttpResponseRedirect(url)
+    else:
+        form = EinzelschnuererForm(d, initial={'zuschlaege': 0})
+    startliste = Einzelschnuerer.objects.select_related().filter(disziplin=d).order_by('-creation_date')
+    return direct_to_template(request, "einzelschnueren_eingabe.html",
+            {'wettkampf': d.wettkampf, 'disziplin': d, 'form': form, 'startliste': startliste})
+
+@permission_required('sasse.change_gruppe')
+def einzelschnueren_update(request, jahr, wettkampf, startnummer):
+    d = _get_spezialwettkampf(jahr, wettkampf, u"Einzelschnüren")
+    schnuerer = Einzelschnuerer.objects.get(disziplin=d, startnummer=startnummer)
+    if request.method == 'POST':
+        form = EinzelschnuererUpdateForm(request.POST.copy(), instance=schnuerer)
+        if form.is_valid():
+            form.save()
+            url = reverse(einzelschnueren_eingabe, args=[jahr, wettkampf])
+            return HttpResponseRedirect(url)
+    else:
+        form = EinzelschnuererUpdateForm(instance=schnuerer)
+    return direct_to_template(request, "einzelschnueren_update.html",
+            {'wettkampf': d.wettkampf, 'disziplin': d, 'form': form})
+
+@permission_required('sasse.change_gruppe')
+def einzelschnueren_delete(request, jahr, wettkampf, startnummer):
+    d = _get_spezialwettkampf(jahr, wettkampf, u"Einzelschnüren")
+    schnuerer = Einzelschnuerer.objects.get(disziplin=d, startnummer=startnummer)
+    if request.method == 'POST':
+        schnuerer.delete()
+        url = reverse(einzelschnueren_eingabe, args=[jahr, wettkampf])
+        return HttpResponseRedirect(url)
+    return direct_to_template(request, "einzelschnueren_delete.html",
+            {'wettkampf': d.wettkampf, 'disziplin': d, 'obj': schnuerer})
+
+def einzelschnueren_rangliste(request, jahr, wettkampf, kategorie=None):
+    assert request.method == 'GET'
+    d = _get_spezialwettkampf(jahr, wettkampf, u"Einzelschnüren")
+    gestartete_kategorien = list(read_einzelschnueren_gestartete_kategorien(d))
+    aktuelle_kategorie = _get_spezialwettkampf_kat(gestartete_kategorien, kategorie)
+    kranzlimite = _get_spezialwettkampf_limite(d, aktuelle_kategorie)
+    rangliste = Einzelschnuerer.objects.filter(disziplin=d, kategorie=aktuelle_kategorie).order_by('zeit')
+    rangliste, kranz_prozent = _create_spezialwettkampf_rangliste(rangliste, kranzlimite)
+    return direct_to_template(request, 'einzelschnueren_rangliste.html',
+            {'wettkampf': d.wettkampf, 'disziplin': d, 'kategorie': aktuelle_kategorie, 'kategorien':
+                gestartete_kategorien, 'rangliste': rangliste, 'kranzlimite':
+                kranzlimite, 'kranzlimite_in_prozent': kranz_prozent})
+
+def einzelschnueren_rangliste_pdf(request, jahr, wettkampf, kategorie):
+    assert request.method == 'GET'
+    d = _get_spezialwettkampf(jahr, wettkampf, u"Einzelschnüren")
+    aktuelle_kategorie = kategorie
+    kranzlimite = _get_spezialwettkampf_limite(d, aktuelle_kategorie)
+    rangliste = Einzelschnuerer.objects.filter(disziplin=d, kategorie=aktuelle_kategorie).order_by('zeit')
+    rangliste, kranz_prozent = _create_spezialwettkampf_rangliste(rangliste, kranzlimite)
+    w = d.wettkampf
+    doc = create_rangliste_doctemplate(w, d)
+    flowables = create_einzelschnueren_rangliste_flowables(rangliste, aktuelle_kategorie, kranzlimite)
+    response = HttpResponse(mimetype='application/pdf')
+    response['Content-Disposition'] = smart_str(u'filename=rangliste-%s-kat-%s' % (w.name, aktuelle_kategorie))
+    doc.build(flowables, filename=response)
+    return response
+
+@permission_required('sasse.change_gruppe')
+def einzelschnueren_kranzlimite_update(request, jahr, wettkampf, kategorie):
+    d = _get_spezialwettkampf(jahr, wettkampf, u"Einzelschnüren")
+    return _do_kranzlimite_update(request, jahr, wettkampf, d, kategorie, einzelschnueren_rangliste)
+
+#
+# Gruppenschnüren
+#
+
+def gruppenschnueren_get(request, jahr, wettkampf):
+    return _do_spezialwettkampf_get(request, jahr, wettkampf, u"Gruppenschnüren")
+
+@permission_required('sasse.change_gruppe')
+def gruppenschnueren_eingabe(request, jahr, wettkampf):
+    d = _get_spezialwettkampf(jahr, wettkampf, u"Gruppenschnüren")
+    if request.method == 'POST':
+        form = SchnuergruppeForm(d, request.POST.copy())
+        if form.is_valid():
+            form.save()
+            url = reverse(gruppenschnueren_eingabe, args=[jahr, wettkampf])
+            return HttpResponseRedirect(url)
+    else:
+        form = SchnuergruppeForm(d, initial={'zuschlaege': 0})
+    startliste = Schnuergruppe.objects.select_related().filter(disziplin=d).order_by('-creation_date')
+    return direct_to_template(request, "gruppenschnueren_eingabe.html",
+            {'wettkampf': d.wettkampf, 'disziplin': d, 'form': form, 'startliste': startliste})
+
+@permission_required('sasse.change_gruppe')
+def gruppenschnueren_update(request, jahr, wettkampf, startnummer):
+    d = _get_spezialwettkampf(jahr, wettkampf, u"Gruppenschnüren")
+    gruppe = Schnuergruppe.objects.get(disziplin=d, startnummer=startnummer)
+    if request.method == 'POST':
+        form = SchnuergruppeUpdateForm(request.POST.copy(), instance=gruppe)
+        if form.is_valid():
+            form.save()
+            url = reverse(gruppenschnueren_eingabe, args=[jahr, wettkampf])
+            return HttpResponseRedirect(url)
+    else:
+        form = SchnuergruppeUpdateForm(instance=gruppe)
+    return direct_to_template(request, "gruppenschnueren_update.html",
+            {'wettkampf': d.wettkampf, 'disziplin': d, 'form': form})
+
+@permission_required('sasse.change_gruppe')
+def gruppenschnueren_delete(request, jahr, wettkampf, startnummer):
+    d = _get_spezialwettkampf(jahr, wettkampf, u"Gruppenschnüren")
+    gruppe = Schnuergruppe.objects.get(disziplin=d, startnummer=startnummer)
+    if request.method == 'POST':
+        gruppe.delete()
+        url = reverse(gruppenschnueren_eingabe, args=[jahr, wettkampf])
+        return HttpResponseRedirect(url)
+    return direct_to_template(request, "gruppenschnueren_delete.html",
+            {'wettkampf': d.wettkampf, 'disziplin': d, 'obj': gruppe})
+
+def gruppenschnueren_rangliste(request, jahr, wettkampf, kategorie=None):
+    assert request.method == 'GET'
+    d = _get_spezialwettkampf(jahr, wettkampf, u"Gruppenschnüren")
+    gestartete_kategorien = list(read_gruppenschnueren_gestartete_kategorien(d))
+    aktuelle_kategorie = _get_spezialwettkampf_kat(gestartete_kategorien, kategorie)
+    kranzlimite = _get_spezialwettkampf_limite(d, aktuelle_kategorie)
+    rangliste = Schnuergruppe.objects.filter(disziplin=d, kategorie=aktuelle_kategorie).order_by('zeit')
+    rangliste, kranz_prozent = _create_spezialwettkampf_rangliste(rangliste, kranzlimite)
+    return direct_to_template(request, 'gruppenschnueren_rangliste.html',
+            {'wettkampf': d.wettkampf, 'disziplin': d, 'kategorie': aktuelle_kategorie, 'kategorien':
+                gestartete_kategorien, 'rangliste': rangliste, 'kranzlimite':
+                kranzlimite, 'kranzlimite_in_prozent': kranz_prozent})
+
+def gruppenschnueren_rangliste_pdf(request, jahr, wettkampf, kategorie):
+    assert request.method == 'GET'
+    d = _get_spezialwettkampf(jahr, wettkampf, u"Gruppenschnüren")
+    aktuelle_kategorie = kategorie
+    kranzlimite = _get_spezialwettkampf_limite(d, aktuelle_kategorie)
+    rangliste = Schnuergruppe.objects.filter(disziplin=d, kategorie=aktuelle_kategorie).order_by('zeit')
+    rangliste, kranz_prozent = _create_spezialwettkampf_rangliste(rangliste, kranzlimite)
+    w = d.wettkampf
+    doc = create_rangliste_doctemplate(w, d)
+    flowables = create_gruppenschnueren_rangliste_flowables(rangliste, aktuelle_kategorie, kranzlimite)
+    response = HttpResponse(mimetype='application/pdf')
+    response['Content-Disposition'] = smart_str(u'filename=rangliste-%s-kat-%s' % (w.name, aktuelle_kategorie))
+    doc.build(flowables, filename=response)
+    return response
+
+@permission_required('sasse.change_gruppe')
+def gruppenschnueren_kranzlimite_update(request, jahr, wettkampf, kategorie):
+    d = _get_spezialwettkampf(jahr, wettkampf, u"Gruppenschnüren")
+    return _do_kranzlimite_update(request, jahr, wettkampf, d, kategorie, gruppenschnueren_rangliste)
+
+#
+# Bootfaehrengruppe
+#
+
+def bootfaehrenbau_get(request, jahr, wettkampf):
+    return _do_spezialwettkampf_get(request, jahr, wettkampf, u"Bootsfährenbau")
+
+@permission_required('sasse.change_gruppe')
+def bootfaehrenbau_eingabe(request, jahr, wettkampf):
+    d = _get_spezialwettkampf(jahr, wettkampf, u"Bootsfährenbau")
+    if request.method == 'POST':
+        form = BootfaehrengruppeForm(d, request.POST.copy())
+        if form.is_valid():
+            form.save()
+            url = reverse(bootfaehrenbau_eingabe, args=[jahr, wettkampf])
+            return HttpResponseRedirect(url)
+    else:
+        form = BootfaehrengruppeForm(d, initial={'zuschlaege': 0})
+    startliste = Bootfaehrengruppe.objects.select_related().filter(disziplin=d).order_by('-creation_date')
+    return direct_to_template(request, "bootfaehrenbau_eingabe.html",
+            {'wettkampf': d.wettkampf, 'disziplin': d, 'form': form, 'startliste': startliste})
+
+@permission_required('sasse.change_gruppe')
+def bootfaehrenbau_update(request, jahr, wettkampf, startnummer):
+    d = _get_spezialwettkampf(jahr, wettkampf, u"Bootsfährenbau")
+    gruppe = Bootfaehrengruppe.objects.get(disziplin=d, startnummer=startnummer)
+    if request.method == 'POST':
+        form = BootfaehrengruppeUpdateForm(request.POST.copy(), instance=gruppe)
+        if form.is_valid():
+            form.save()
+            url = reverse(bootfaehrenbau_eingabe, args=[jahr, wettkampf])
+            return HttpResponseRedirect(url)
+    else:
+        form = BootfaehrengruppeUpdateForm(instance=gruppe)
+    return direct_to_template(request, "bootfaehrenbau_update.html",
+            {'wettkampf': d.wettkampf, 'disziplin': d, 'form': form})
+
+@permission_required('sasse.change_gruppe')
+def bootfaehrenbau_delete(request, jahr, wettkampf, startnummer):
+    d = _get_spezialwettkampf(jahr, wettkampf, u"Bootsfährenbau")
+    gruppe = Bootfaehrengruppe.objects.get(disziplin=d, startnummer=startnummer)
+    if request.method == 'POST':
+        gruppe.delete()
+        url = reverse(bootfaehrenbau_eingabe, args=[jahr, wettkampf])
+        return HttpResponseRedirect(url)
+    return direct_to_template(request, "bootfaehrenbau_delete.html",
+            {'wettkampf': d.wettkampf, 'disziplin': d, 'obj': gruppe})
+
+def bootfaehrenbau_rangliste(request, jahr, wettkampf, kategorie=None):
+    assert request.method == 'GET'
+    d = _get_spezialwettkampf(jahr, wettkampf, u"Bootsfährenbau")
+    gestartete_kategorien = list(read_bootfaehrenbau_gestartete_kategorien(d))
+    aktuelle_kategorie = _get_spezialwettkampf_kat(gestartete_kategorien, kategorie)
+    kranzlimite = _get_spezialwettkampf_limite(d, aktuelle_kategorie)
+    rangliste = Bootfaehrengruppe.objects.filter(disziplin=d, kategorie=aktuelle_kategorie).order_by('zeit')
+    rangliste, kranz_prozent = _create_spezialwettkampf_rangliste(rangliste, kranzlimite)
+    return direct_to_template(request, 'bootfaehrenbau_rangliste.html',
+            {'wettkampf': d.wettkampf, 'disziplin': d, 'kategorie': aktuelle_kategorie, 'kategorien':
+                gestartete_kategorien, 'rangliste': rangliste, 'kranzlimite':
+                kranzlimite, 'kranzlimite_in_prozent': kranz_prozent})
+
+def bootfaehrenbau_rangliste_pdf(request, jahr, wettkampf, kategorie):
+    assert request.method == 'GET'
+    d = _get_spezialwettkampf(jahr, wettkampf, u"Bootsfährenbau")
+    aktuelle_kategorie = kategorie
+    kranzlimite = _get_spezialwettkampf_limite(d, aktuelle_kategorie)
+    rangliste = Bootfaehrengruppe.objects.filter(disziplin=d, kategorie=aktuelle_kategorie).order_by('zeit')
+    rangliste, kranz_prozent = _create_spezialwettkampf_rangliste(rangliste, kranzlimite)
+    w = d.wettkampf
+    doc = create_rangliste_doctemplate(w, d)
+    flowables = create_bootfaehrenbau_rangliste_flowables(rangliste, aktuelle_kategorie, kranzlimite)
+    response = HttpResponse(mimetype='application/pdf')
+    response['Content-Disposition'] = smart_str(u'filename=rangliste-%s-kat-%s' % (w.name, aktuelle_kategorie))
+    doc.build(flowables, filename=response)
+    return response
+
+@permission_required('sasse.change_gruppe')
+def bootfaehrenbau_kranzlimite_update(request, jahr, wettkampf, kategorie):
+    d = _get_spezialwettkampf(jahr, wettkampf, u"Bootsfährenbau")
+    return _do_kranzlimite_update(request, jahr, wettkampf, d, kategorie, bootfaehrenbau_rangliste)

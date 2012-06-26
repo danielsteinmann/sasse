@@ -210,6 +210,14 @@ class Disziplin(models.Model):
     def get_absolute_url(self):
         if self.disziplinart.name == "Sektionsfahren":
             return ('sektionsfahren_get', [str(self.wettkampf.jahr()), self.wettkampf.name])
+        elif self.disziplinart.name == "Schwimmen":
+            return ('schwimmen_get', [str(self.wettkampf.jahr()), self.wettkampf.name])
+        elif self.disziplinart.name == u"Einzelschnüren":
+            return ('einzelschnueren_get', [str(self.wettkampf.jahr()), self.wettkampf.name])
+        elif self.disziplinart.name == u"Gruppenschnüren":
+            return ('gruppenschnueren_get', [str(self.wettkampf.jahr()), self.wettkampf.name])
+        elif self.disziplinart.name == u"Bootsfährenbau":
+            return ('bootfaehrenbau_get', [str(self.wettkampf.jahr()), self.wettkampf.name])
         else:
             return ('disziplin_get', [str(self.wettkampf.jahr()), self.wettkampf.name, self.name])
 
@@ -219,6 +227,14 @@ class Disziplin(models.Model):
             return "base_disziplin.html"
         elif art == "Sektionsfahren":
             return "base_sektionsfahren.html"
+        elif art == "Schwimmen":
+            return "base_schwimmen.html"
+        elif art == u"Einzelschnüren":
+            return "base_einzelschnueren.html"
+        elif art == u"Gruppenschnüren":
+            return "base_gruppenschnueren.html"
+        elif art == u"Bootsfährenbau":
+            return "base_bootfaehrenbau.html"
         else:
             return None
 
@@ -290,6 +306,93 @@ class Person(Teilnehmer):
     sektion = models.ForeignKey('Sektion')
     kategorie = models.ForeignKey('Kategorie')
 
+
+class Schwimmer(Teilnehmer):
+    mitglied = models.ForeignKey('Mitglied', unique=True)
+    kategorie = models.CharField(max_length=10)
+    zeit = models.DecimalField(max_digits=6, decimal_places=2)
+    creation_date = models.DateTimeField(auto_now_add=True)
+
+    def save(self):
+        if not self.kategorie:
+            self.kategorie = self._get_kategorie()
+        super(Schwimmer, self).save()
+
+    def _get_kategorie(self):
+        aktuelles_jahr = self.disziplin.wettkampf.jahr()
+        geburts_jahr = self.mitglied.geburtsdatum.year
+        alter = aktuelles_jahr - geburts_jahr
+        if alter <= 14:
+            return "I"
+        elif alter <= 17:
+            return "II"
+        elif alter <= 20:
+            return "III"
+        elif alter <= 42:
+            return "C"
+        else:
+            return "D"
+
+class Einzelschnuerer(Teilnehmer):
+    mitglied = models.ForeignKey('Mitglied', unique=True)
+    kategorie = models.CharField(max_length=10)
+    parcourszeit = models.DecimalField(max_digits=6, decimal_places=2)
+    zuschlaege = models.DecimalField(max_digits=6, decimal_places=2)
+    zeit = models.DecimalField(max_digits=6, decimal_places=2)
+    creation_date = models.DateTimeField(auto_now_add=True)
+
+    def save(self):
+        if not self.kategorie:
+            self.kategorie = self._get_kategorie()
+        self.zeit = self.parcourszeit + self.zuschlaege
+        super(Einzelschnuerer, self).save()
+
+    def _get_kategorie(self):
+        aktuelles_jahr = self.disziplin.wettkampf.jahr()
+        geburts_jahr = self.mitglied.geburtsdatum.year
+        alter = aktuelles_jahr - geburts_jahr
+        if alter <= 14:
+            return "I"
+        elif alter <= 17:
+            return "II"
+        elif alter <= 20:
+            return "III"
+        elif alter <= 42:
+            return "C"
+        else:
+            return "D"
+
+class Schnuergruppe(Teilnehmer):
+    KATEGORIE = (
+            ('JP', 'JP'),
+            ('Aktive', 'Aktive'),
+            )
+    sektion = models.ForeignKey('Sektion')
+    name = models.CharField(max_length=20) # z.B. Bremgarten I
+    kategorie = models.CharField(max_length=10, choices=KATEGORIE, default="Aktive")
+    aufbauzeit = models.DecimalField(max_digits=6, decimal_places=2)
+    abbauzeit = models.DecimalField(max_digits=6, decimal_places=2)
+    zuschlaege = models.DecimalField(max_digits=6, decimal_places=1)
+    zeit = models.DecimalField(max_digits=6, decimal_places=2)
+    creation_date = models.DateTimeField(auto_now_add=True)
+
+    def save(self):
+        self.zeit = self.aufbauzeit + self.abbauzeit + self.zuschlaege
+        super(Schnuergruppe, self).save()
+
+class Bootfaehrengruppe(Teilnehmer):
+    sektion = models.ForeignKey('Sektion')
+    name = models.CharField(max_length=20) # z.B. Bremgarten I
+    kategorie = models.CharField(max_length=10, default="Aktive")
+    zuschlaege = models.DecimalField(max_digits=6, decimal_places=1)
+    einbauzeit = models.DecimalField(max_digits=6, decimal_places=2)
+    ausbauzeit = models.DecimalField(max_digits=6, decimal_places=2)
+    zeit = models.DecimalField(max_digits=6, decimal_places=2)
+    creation_date = models.DateTimeField(auto_now_add=True)
+
+    def save(self):
+        self.zeit = self.einbauzeit + self.ausbauzeit + self.zuschlaege
+        super(Bootfaehrengruppe, self).save()
 
 class SektionsfahrenGruppeManager(models.Manager):
     def with_counts(self, disziplin):
@@ -488,6 +591,15 @@ class Kranzlimite(models.Model):
 
     def __unicode__(self):
         return u'%s, %s, %d' % (self.disziplin, self.kategorie, self.wert)
+
+
+class SpezialwettkaempfeKranzlimite(models.Model):
+    disziplin = models.ForeignKey('Disziplin')
+    kategorie = models.CharField(max_length=10)
+    zeit = models.DecimalField(max_digits=6, decimal_places=2)
+
+    def __unicode__(self):
+        return u'%s, %s, %d' % (self.disziplin, self.kategorie, self.zeit)
 
 
 class SektionsfahrenKranzlimiten(models.Model):
