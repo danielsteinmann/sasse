@@ -1,6 +1,9 @@
 Version 2.1 (26. Juni 2012)
 https://sasse.googlecode.com/svn/tags/2.1
 
+- Kategorie ist für Schwimmen und Einzelschnüren nie editierbar; sie wird
+  immer vom Mitglied abgeleitet.
+
 - Disqualifiziert und Ausgeschieden für Ranglisten der Spezialwettkämpfe
   implementiert.
 
