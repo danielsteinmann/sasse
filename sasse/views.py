@@ -84,6 +84,7 @@ from queries import read_schwimmen_gestartete_kategorien
 from queries import read_einzelschnueren_gestartete_kategorien
 from queries import read_gruppenschnueren_gestartete_kategorien
 from queries import read_bootfaehrenbau_gestartete_kategorien
+from queries import read_beste_fahrerpaare
 
 from reports import create_rangliste_doctemplate
 from reports import create_rangliste_flowables
@@ -805,6 +806,21 @@ def rangliste_pdf_all(request, jahr, wettkampf, disziplin):
     doc.build(flowables, filename=response)
     return response
 
+def beste_schiffe(request, jahr, wettkampf, disziplin):
+    assert request.method == 'GET'
+    w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
+    d = Disziplin.objects.get(wettkampf=w, name=disziplin)
+    typ = request.GET.get('typ', 'Amerikaner')
+    if typ == 'Amerikaner':
+        rangliste = read_beste_fahrerpaare(d, ['C','D'], 6)
+    elif typ == 'Lichtensteiner':
+        rangliste = read_beste_fahrerpaare(d, ['II','III'], 2)
+    else:
+        raise Http404(u"Query für Typ %s existiert nicht" % typ)
+    return direct_to_template(request, 'beste_schiffe.html', {
+        'wettkampf': w, 'disziplin': d, 'typ': typ, 'rangliste': rangliste},
+        context_instance=RequestContext(request))
+
 def notenblatt(request, jahr, wettkampf, disziplin, startnummer=None):
     assert request.method == 'GET'
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
@@ -1252,9 +1268,60 @@ def sektionsfahren_notenblatt_gruppe(request, jahr, wettkampf, gruppe):
             g = item
             break
     notenliste = read_sektionsfahren_notenblatt_gruppe(g)
+    notenliste = regroup_notenliste(notenliste, g.anz_schiffe())
     return direct_to_template(request, 'sektionsfahren_notenblatt_gruppe.html', {
-        'wettkampf': w, 'disziplin': d, 'gruppe': g, 'notenliste': notenliste})
+        'wettkampf': w, 'disziplin': d, 'gruppe': g, 'notenliste': notenliste,
+        'schiff_range': range(1, g.anz_schiffe() + 1)})
 
+def regroup_notenliste(notenliste, anzahl_schiffe):
+    """
+    input = [{
+        'gruppe': 'Schmerikon',
+        'postenart': 'Anmeldung (Sektionsfahren)',
+        'posten': 'A',
+        'schiff_1': 10.0, 'schiff_2': 10.0, 'schiff_3': 10.0, 'schiff_4': 7.8,
+        }, {
+        'gruppe': 'Schmerikon',
+        'postenart': 'Gemeinsame Stachelfahrt',
+        'posten': 'B-C1',
+        'schiff_1': 10.0, 'schiff_2': 9.0, 'schiff_3': 8.0, 'schiff_4': 10.0,
+        }, {
+        'gruppe': 'Schmerikon',
+        'postenart': 'Gemeinsame Stachelfahrt',
+        'posten': 'B-C2',
+        'schiff_1': 7.0, 'schiff_2': 9.0, 'schiff_3': 10.0, 'schiff_4': 10.0,
+        }, ]
+
+    output = [{
+        'gruppe': 'Schmerikon',
+        'postenart': 'Anmeldung (Sektionsfahren)',
+        'posten': 'A',
+        'colspan': '2',
+        'noten': (10.0, 10.0, 10.0, 10.0)
+        }, {
+        'gruppe': 'Schmerikon',
+        'postenart': 'Gemeinsame Stachelfahrt',
+        'posten': 'B-C',
+        'colspan': '1',
+        'noten': (9.0, 8.0, 10.0, 10.0, 10.0, 9.0, 10.0, 7.0, 10.0, 10.0),
+        }, ]
+    """
+
+    from itertools import groupby
+    def extract_posten(row):
+        posten = row.get('posten')
+        postenart = row.get('postenart')
+        if posten and posten[-1] in ('1','2'):
+            posten = posten[:-1]
+        return posten, postenart
+    for (posten, postenart), group in groupby(notenliste, extract_posten):
+        noten = []
+        for row in group:
+            for i in range(1, anzahl_schiffe + 1):
+                note = row['schiff_%d' % i]
+                noten.append(str(note).replace(".0",""))
+        colspan = 3 - len(noten) / anzahl_schiffe
+        yield {'posten': posten, 'postenart': postenart, 'colspan': colspan, 'noten': noten}
 
 #
 # Spezialwettkaempfe
