@@ -31,47 +31,36 @@
 {% endif %}
 </table>
 <p></p>
-<table class="list">
+<table class="list" border="1">
   <tr>
     <th class="startnummer">Posten</th>
     <th>Übungsteil</th>
-    <th class="note">1</th>
-    <th class="note">2</th>
-    <th class="note">3</th>
-    {% if gruppe.anz_schiffe > 3 %}
-    <th class="note">4</th>
-    {% endif %}
-    {% if gruppe.anz_schiffe > 4 %}
-    <th class="note">5</th>
-    {% endif %}
+    {% for i in schiff_range %}
+        <th colspan="2"  class="rang">{{i}}. Schiff</th>
+    {% endfor %}
   </tr>
-{% for note in notenliste %}
+  <tr>
+    <th colspan="2"></th>
+    {% for i in schiff_range %}
+        <th class="rang"><small>1.DG</small></th>
+        <th class="rang"><small>2.DG</small></th>
+    {% endfor %}
+  </tr>
+{% for posten in notenliste %}
 {% if not forloop.last %}
   <tr class="{% cycle "odd" "even" %}">
-    <td class="startnummer">{{ note.posten }}</td>
-    <td>{{ note.postenart }}</td>
-    <td class="note">{{ note.schiff_1 }}</td>
-    <td class="note">{{ note.schiff_2 }}</td>
-    <td class="note">{{ note.schiff_3 }}</td>
-    {% if gruppe.anz_schiffe > 3 %}
-    <td class="note">{{ note.schiff_4 }}</td>
-    {% endif %}
-    {% if gruppe.anz_schiffe > 4 %}
-    <td class="note">{{ note.schiff_5 }}</td>
-    {% endif %}
+    <td class="startnummer">{{ posten.posten }}</td>
+    <td>{{ posten.postenart }}</td>
+    {% for note in posten.noten %}
+        <td colspan="{{ posten.colspan }}" class="rang">{{ note }}</td>
+    {% endfor %}
   </tr>
   {% else %}
   <tr style="font-weight: bold;">
-    <td colspan="2" align="center">Total</td>
-    <td class="note">{{ note.schiff_1 }}</td>
-    <td class="note">{{ note.schiff_2 }}</td>
-    <td class="note">{{ note.schiff_3 }}</td>
-    {% if gruppe.anz_schiffe > 3 %}
-    <td class="note">{{ note.schiff_4 }}</td>
-    {% endif %}
-    {% if gruppe.anz_schiffe > 4 %}
-    <td class="note">{{ note.schiff_5 }}</td>
-    {% endif %}
+    <td colspan="2"></td>
+    {% for note in posten.noten %}
+        <td colspan="{{ posten.colspan }}" class="rang">{{ note }}</td>
+    {% endfor %}
   </tr>
 {% endif %}
 {% endfor %}

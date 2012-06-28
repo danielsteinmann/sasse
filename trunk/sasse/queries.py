@@ -136,6 +136,57 @@ def sort_rangliste(dict):
         return 5
     return 6
 
+def read_beste_fahrerpaare(disziplin, kategorie_namen=['C', 'D'], anzahl_schiffe=6):
+    cursor = connection.cursor()
+    sql = """
+with topn as (
+   select sektion.name as Sektion
+        , tn.startnummer as Startnummer
+        , max(hinten.name || ' / ' || vorne.name) as Fahrerpaar
+        , max(kat.name) as Kategorie
+        , sum(b.zeit) as Zeit
+        , sum(b.note) as Punkte
+        , count(tn.startnummer) over (partition by sektion.name) anz
+        , row_number() over (partition by sektion.name
+                                 order by sum(b.note) desc) as rk
+     from sasse_teilnehmer tn
+     join sasse_schiffeinzel schiff on (schiff.teilnehmer_ptr_id = tn.id)
+     join bewertung_calc b on (b.teilnehmer_id = tn.id)
+     join sasse_kategorie kat on (kat.id = schiff.kategorie_id)
+     join sasse_sektion sektion on (sektion.id = schiff.sektion_id)
+     join sasse_mitglied vorne on (vorne.id = schiff.vorderfahrer_id)
+     join sasse_mitglied hinten on (hinten.id = schiff.steuermann_id)
+    where tn.disziplin_id = %(disziplin_id)s
+      and kat.name in (%(kategorien)s)
+      and not tn.ausgeschieden and not tn.disqualifiziert
+      and not schiff.steuermann_ist_ds and not schiff.vorderfahrer_ist_ds
+    group by tn.startnummer, sektion.name
+    )
+select topn.sektion
+     , topn.startnummer
+     , topn.fahrerpaar
+     , topn.kategorie
+     , topn.punkte
+     , sum(topn.punkte) over (partition by topn.sektion) as total
+  from topn
+ where topn.rk <= %(anzahl)d
+   and topn.anz >= %(anzahl)d
+ order by total desc, topn.sektion, topn.rk
+     """ % {
+             'disziplin_id': disziplin.id,
+             'kategorien': ",".join([ "'%s'" % k for k in kategorie_namen]),
+             'anzahl': anzahl_schiffe}
+    cursor.execute(sql)
+    for row in cursor:
+        yield {
+                'sektion': row[0],
+                'startnummer': row[1],
+                'fahrerpaar': row[2],
+                'kategorie': row[3],
+                'punkte': row[4],
+                'total': row[5],
+                }
+
 def read_notenblatt(disziplin, teilnehmer=None, sektion=None):
     sql = render_to_string('notenblatt.sql',
             {"teilnehmer": teilnehmer, "sektion": sektion})
