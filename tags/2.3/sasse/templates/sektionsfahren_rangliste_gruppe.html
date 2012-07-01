@@ -1,0 +1,37 @@
+{% extends "base_sektionsfahren.html" %}
+{% block nav_rangliste %}selected{% endblock %}
+{% block content %}
+<p>
+<a href="{% url sektionsfahren_rangliste wettkampf.jahr, wettkampf.name %}">Beste Sektion</a>
+| <b>Beste Gruppe</b>
+| <a href="{% url sektionsfahren_rangliste_schiff wettkampf.jahr, wettkampf.name %}">Bestes Schiff</a>
+</p>
+<table class="list">
+  <tr>
+    <th>Rang</th>
+    <th>Gruppe</th>
+    <th class="rang">Schiffe</th>
+    <th class="rang">JP</th>
+    <th class="rang">Fr.</th>
+    <th class="rang">Sen.</th>
+    <th class="note">Gefahren</th>
+    <th class="note">Zuschlag</th>
+    <th class="note">Abzug</th>
+    <th class="note">Total</th>
+  </tr>
+  {% for gruppe in rangliste %}
+  <tr class="{% cycle 'odd' 'even' %}">
+    <td class="rang">{{ gruppe.rang }}.</td>
+    <td><a href="{% url sektionsfahren_gruppe_get wettkampf.jahr, wettkampf.name, gruppe.name %}">{{ gruppe.name }}</a></td>
+    <td class="rang">{{ gruppe.anz_schiffe }}</td>
+    <td class="rang">{{ gruppe.anz_jps|default:"-" }}</td>
+    <td class="rang">{{ gruppe.anz_frauen|default:"-" }}</td>
+    <td class="rang">{{ gruppe.anz_senioren|default:"-" }}</td>
+    <td class="note">{{ gruppe.gefahren }}</td>
+    <td class="note">{{ gruppe.zuschlag|default:"" }}</td>
+    <td class="note">{{ gruppe.abzug_gruppe }}</td>
+    <td class="note"><a href="{% url sektionsfahren_notenblatt_gruppe wettkampf.jahr, wettkampf.name, gruppe.name %}">{{ gruppe.total }}</a></td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

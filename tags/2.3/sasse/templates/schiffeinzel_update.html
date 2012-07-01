@@ -1,0 +1,49 @@
+{% extends "base_teilnehmer.html" %}
+
+{% block content %}
+<form action="" method="POST">
+  <table class="form">
+    {% if form.non_field_errors %}
+    <tr><td colspan="2">{{ form.non_field_errors }}</td></tr>
+    {% endif %}
+    <tr>
+      <th>{{ form.startnummer.label }}:</th>
+      <td>{{ form.startnummer.errors }}{{ form.startnummer }}</td>
+    </tr>
+    <tr>
+      <th>Steuermann:</th>
+      <td>
+        {{ form.steuermann.errors }}{{ form.steuermann }}
+        <br>{{form.steuermann_ist_ds}} Doppelstarter
+      </td>
+    </tr>
+    <tr>
+      <th>Vorderfahrer:</th>
+      <td>
+        {{ form.vorderfahrer.errors }}{{ form.vorderfahrer }}
+        <br>{{form.vorderfahrer_ist_ds}} Doppelstarter
+      </td>
+    </tr>
+    <tr>
+      <th>{{ form.sektion.label }}:</th>
+      <td>{{ form.sektion.errors }}{{ form.sektion }}</td>
+    </tr>
+    <tr>
+      <th>{{ form.kategorie.label }}:</th>
+      <td>{{ form.kategorie.errors }}{{ form.kategorie }}</td>
+    </tr>
+    <tr>
+      <th>{{ form.disqualifiziert.label }}:</th>
+      <td>{{ form.disqualifiziert.errors }}{{ form.disqualifiziert }}</td>
+    </tr>
+    <tr>
+      <th>{{ form.ausgeschieden.label }}:</th>
+      <td>{{ form.ausgeschieden.errors }}{{ form.ausgeschieden }}</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td><input type="submit" value="Änderungen speichern"/></td>
+    </tr>
+  </table>
+</form>
+{% endblock %}

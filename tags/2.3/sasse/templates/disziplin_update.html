@@ -1,0 +1,13 @@
+{% extends "base_disziplin.html" %}
+{% block nav_ueberblick %}selected{% endblock %}
+{% block content %}
+<form action="" method="POST">
+  <table class="form">
+    {{ form.as_table }}
+    <tr>
+      <td></td>
+      <td><input type="submit" value="Änderungen speichern"/></td>
+    </tr>
+  </table>
+</form>
+{% endblock %}

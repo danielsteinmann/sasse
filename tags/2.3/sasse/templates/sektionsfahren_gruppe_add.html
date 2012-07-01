@@ -1,0 +1,26 @@
+{% extends "base_startliste.html" %}
+{% block content %}
+<form action="" method="POST">
+  <table class="form">
+    {% if form.non_field_errors %}
+    <tr><td colspan="2">{{ form.non_field_errors }}</td></tr>
+    {% endif %}
+    <tr>
+      <th>{{ form.startnummer.label }}:</th>
+      <td>{{ form.startnummer.errors }}{{ form.startnummer }}</td>
+    </tr>
+    <tr>
+      <th>{{ form.sektion.label }}:</th>
+      <td>{{ form.sektion.errors }}{{ form.sektion }}</td>
+    </tr>
+    <tr>
+      <th>Fahrchef:</th>
+      <td>{{ form.chef.errors }}{{ form.chef }}</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td><input type="submit" value="Gruppe hinzufügen"/></td>
+    </tr>
+  </table>
+</form>
+{% endblock %}

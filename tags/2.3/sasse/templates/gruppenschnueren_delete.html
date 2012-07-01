@@ -1,0 +1,8 @@
+{% extends disziplin.get_base_template %}
+{% block nav_eingabe %}selected{% endblock %}
+{% block content %}
+<form action="" method="POST">
+  <p>Die Schnürgruppe <b>{{ obj.name }}</b> wirklich löschen?</p>
+  <input type="submit" value="Ja" />
+</form>
+{% endblock %}
