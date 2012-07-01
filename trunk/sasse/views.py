@@ -1320,7 +1320,14 @@ def regroup_notenliste(notenliste, anzahl_schiffe):
             for i in range(1, anzahl_schiffe + 1):
                 note = row['schiff_%d' % i]
                 noten.append(str(note).replace(".0",""))
-        colspan = 3 - len(noten) / anzahl_schiffe
+        anz_durchgaenge = len(noten) / anzahl_schiffe
+        if anz_durchgaenge == 2:
+            x = []
+            for i, note in enumerate(noten[:anzahl_schiffe]):
+                x.append(note)
+                x.append(noten[i+anzahl_schiffe])
+            noten = x
+        colspan = 3 - anz_durchgaenge
         yield {'posten': posten, 'postenart': postenart, 'colspan': colspan, 'noten': noten}
 
 #
