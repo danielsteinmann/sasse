@@ -1,3 +1,10 @@
+Version 2.3 (30. Juni 2012)
+https://sasse.googlecode.com/svn/tags/2.3
+
+- Fehler bei der Darstellung für das Notenblatt im Sektionsfahren behoben.
+  Es werden die Noten in den richtigen Spalten (1.DG/2.DG) dargestellt.
+
+
 Version 2.2 (28. Juni 2012)
 https://sasse.googlecode.com/svn/tags/2.2
 
