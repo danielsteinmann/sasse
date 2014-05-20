@@ -1,3 +1,7 @@
+Django 1.6
+PostgreSQL 9.x
+--
+
 Amerikanerbecher: 6 beste Fahrerpaare im Einzelfahren C und D
 Becher der Regierung von Liechtenstein: 2 beste Fahrerpaare im Einzelfahren II und III
 
