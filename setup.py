@@ -32,8 +32,8 @@ setup(
     packages = find_packages(exclude=['example_project']),
     include_package_data = True,
     install_requires = """
-        django >= 1.3
-        reportlab >= 2.5
+        django == 1.3
+        reportlab == 2.5
         xlrd >= 0.7.1
         South >= 0.7.3
         django-pagination >= 1.0.7

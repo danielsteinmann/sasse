@@ -1,3 +1,19 @@
+- PDFs für beste Gruppe/Schiff/Zeit und Notenblatt (Sektion + einzelne Gruppen)
+
+- Upgrade Django 1.6
+
+- Richtzeiten auf Notenblatt ausgeben
+
+- Datenprobleme:
+    Apawan Jeremeah (99086): Existiert mehr als einmal (99079)
+    Zurbuchen Sacha (99089): Existiert mehr als einmal (99080)
+    Herzog Robin (99085): Existiert mehr als einmal (99078) .
+    Brem Sven (99025): Existiert mehr als einmal (99024)
+    Brem Sven (99026): Existiert mehr als einmal (99024)
+    Brem Sven (99027): Existiert mehr als einmal (99024)
+    Brem Sven (99029): Existiert mehr als einmal (99024)
+    Schwab Annina (99092): Existiert mehr als einmal (99091) fertig.
+
 - Doppeltstarter optional machen. Wird beim Wettfahren 7-er Club gebraucht.
   Dort kann einer zweimal mit einem aus einer anderen Sektion starten und wird
   genau gleich gewertet.

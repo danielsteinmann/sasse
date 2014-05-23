@@ -17,9 +17,11 @@ DATABASES = {
         'default': {
 #            'ENGINE': 'django.db.backends.sqlite3',
 #            'NAME': 'db.sqlite',
+            'HOST': 'localhost',
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
             'NAME': 'spsv',
             'USER': 'postgres',
+            'PASSWORD': 'spsv',
             }
         }
 
