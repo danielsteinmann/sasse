@@ -1,0 +1,73 @@
+{% extends "base_startliste.html" %}
+{% block content %}
+<table class="form">
+    <tr>
+      <th>Startnummer:</th>
+      <td>{{ gruppe.startnummer }}</td>
+    </tr>
+    <tr>
+      <th>Gruppe:</th>
+      <td>{{ gruppe.name }}</td>
+    </tr>
+    <tr>
+      <th>Fahrchef:</th>
+      <td>{{ gruppe.chef.name }}&nbsp;{{ gruppe.chef.vorname }}<font size="-2"> {{ gruppe.chef.geburtsdatum.year }}</font></td>
+    </tr>
+    <tr>
+      <th>Zuschläge:</th>
+      <td>
+          JPs: {{ gruppe.anz_jps }},
+          Frauen: {{ gruppe.anz_frauen }},
+          Senioren: {{ gruppe.anz_senioren }}
+      </td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>
+        <a href="{% url sektionsfahren_gruppe_update wettkampf.jahr, wettkampf.name, gruppe.name %}">Ändern</a>
+        | <a href="{% url sektionsfahren_gruppe_delete wettkampf.jahr, wettkampf.name, gruppe.name %}">Löschen</a>
+      </td>
+    </tr>
+</table>
+<form action="{% url sektionsfahren_schiff_post wettkampf.jahr, wettkampf.name, gruppe.name %}" method="POST">
+<table class="list">
+    <tr>
+        <th>Schiff</th>
+        <th>Steuermann</th>
+        <th>Vorderfahrer</th>
+    </tr>
+    {% for schiff in gruppe.schiffe %}
+    <tr class="{% cycle 'odd' 'even' %}">
+        <td align="middle" rowspan="2"><a href="{% url sektionsfahren_schiff_update wettkampf.jahr, wettkampf.name, gruppe.name, schiff.position %}">{{ schiff.position }}</a></td>
+        <td>{{ schiff.ft1_steuermann.name }}&nbsp;{{ schiff.ft1_steuermann.vorname }}<font size="-2"> {{ schiff.ft1_steuermann.geburtsdatum.year }}</font></td>
+        <td>{{ schiff.ft1_vorderfahrer.name }}&nbsp;{{ schiff.ft1_vorderfahrer.vorname }}<font size="-2"> {{ schiff.ft1_vorderfahrer.geburtsdatum.year }}</font></td>
+    </tr>
+    <tr class="{% cycle 'odd' 'even' %}">
+        <td>{{ schiff.ft2_steuermann.name }}&nbsp;{{ schiff.ft2_steuermann.vorname }}<font size="-2"> {{ schiff.ft2_steuermann.geburtsdatum.year }}</font></td>
+        <td>{{ schiff.ft2_vorderfahrer.name }}&nbsp;{{ schiff.ft2_vorderfahrer.vorname }}<font size="-2"> {{ schiff.ft2_vorderfahrer.geburtsdatum.year }}</font></td>
+    </tr>
+    {% endfor %}
+    {% if gruppe.anz_schiffe < 5 %}
+    <tr>
+        <td rowspan="2"></td>
+        <td>{{ form.ft1_steuermann.errors }}{{ form.ft1_steuermann }}</td>
+        <td>{{ form.ft1_vorderfahrer.errors }}{{ form.ft1_vorderfahrer }}</td>
+    </tr>
+    <tr>
+        <td>{{ form.ft2_steuermann.errors }}{{ form.ft2_steuermann }}</td>
+        <td>{{ form.ft2_vorderfahrer.errors }}{{ form.ft2_vorderfahrer }}
+            <input type="submit" value="Schiff hinzufügen"/></td>
+    </tr>
+    {% endif %}
+    {% if form.non_field_errors %}
+    <tr>
+        <td colspan="3">{{ form.non_field_errors }}</td>
+    </tr>
+    {% endif %}
+</table>
+</form>
+<p>
+<a href="{% url sektionsfahren_gruppe_add wettkampf.jahr, wettkampf.name %}">Weitere Gruppe hinzufügen</a>
+| <a href="{% url sektionsfahren_startliste wettkampf.jahr, wettkampf.name %}">Zurück zur Startliste</a></li>
+</p>
+{% endblock %}

@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>{% block title %}SPSV Wettkampfprogramm{% endblock %}</title>
+<link href="/media/style.css" type="text/css" rel="stylesheet" />
+</head>
+<body>
+<script src="/media/jquery.js"></script>
+<script src="/media/jquery.maskedinput.js"></script>
+<div align=right><font size="-2">
+{% if user.is_authenticated %}
+{{user.username}}
+{% if user.is_superuser %}
+| <a href="/admin/">Einstellungen</a>
+{% endif %}
+| <a href="{% url django.contrib.auth.views.logout %}?next={{ request.get_full_path }}">Logout</a>
+{% else %}
+Nicht eingeloggt | <a href="{% url django.contrib.auth.views.login %}?next={{ request.get_full_path }}">Login</a>
+{% endif %}
+</font></div>
+<table width="100%" cellpadding="0" bgcolor="#E0ECF8"><tr>
+<td valign="middle" align="center" height="70" width="80">
+<a href="{% url wettkaempfe_get %}">
+<img src="/media/spsv-logo.png" title="SPSV Wettkämpfe" alt="SPSV Logo" width="60" height="60"></a></td>
+<td valign="top">
+{% block nav %}
+<ul class="tabnav">
+  <li class="{% block nav_wettkaempfe %}{% endblock %}">
+    <a href="{% url wettkaempfe_get %}">Wettkämpfe</a></li>
+</ul>
+{% endblock %}
+</td>
+</tr>
+</table>
+<p></p>
+{% block content %}{% endblock %}
+<script type="text/javascript">
+$('form:first :input:visible:first').focus().select();
+</script>
+</body>
+</html>
