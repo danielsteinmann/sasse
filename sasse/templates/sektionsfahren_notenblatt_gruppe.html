@@ -1,7 +1,9 @@
 {% extends "base_sektionsfahren.html" %}
 {% block nav_rangliste %}selected{% endblock %}
 {% block content %}
-<p>Notenblatt Gruppe <b>{{ gruppe.name }}</b></p>
+<p>Notenblatt Gruppe <b>{{ gruppe.name }}</b>
+(<a target="_blank" href="{% url sektionsfahren_notenblatt_gruppe_pdf wettkampf.jahr, wettkampf.name, gruppe.name %}">PDF</a>)
+</p>
 <table class="display">
   <tr>
     <td>Durchschnitt Punkte:</td>

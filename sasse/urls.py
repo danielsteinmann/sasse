@@ -117,8 +117,12 @@ sektionsfahren_patterns = patterns('',
         views.sektionsfahren_kranzlimiten_update, {}, "sektionsfahren_kranzlimiten_update"),
     (r'^notenblatt/(?P<sektion_name>[-\w\s]+)/$',
         views.sektionsfahren_notenblatt, {}, "sektionsfahren_notenblatt"),
+    (r'^notenblatt/(?P<sektion_name>[-\w\s]+)/pdf$',
+        views.sektionsfahren_notenblatt_pdf, {}, "sektionsfahren_notenblatt_pdf"),
     (r'^notenblatt-gruppe/(?P<gruppe>[-\w]+)/$',
         views.sektionsfahren_notenblatt_gruppe, {}, "sektionsfahren_notenblatt_gruppe"),
+    (r'^notenblatt-gruppe/(?P<gruppe>[-\w]+)/pdf$',
+        views.sektionsfahren_notenblatt_gruppe_pdf, {}, "sektionsfahren_notenblatt_gruppe_pdf"),
 )
 
 urlpatterns = patterns('',
