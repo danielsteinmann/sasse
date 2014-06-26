@@ -333,7 +333,7 @@ class Schwimmer(Teilnehmer):
             return "D"
 
 class Einzelschnuerer(Teilnehmer):
-    mitglied = models.ForeignKey('Mitglied', unique=True)
+    mitglied = models.ForeignKey('Mitglied')
     kategorie = models.CharField(max_length=10)
     parcourszeit = models.DecimalField(max_digits=6, decimal_places=2)
     zuschlaege = models.DecimalField(max_digits=6, decimal_places=2)
