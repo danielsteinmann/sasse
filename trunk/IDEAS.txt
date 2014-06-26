@@ -1,5 +1,3 @@
-- PDFs für beste Gruppe/Schiff/Zeit und Notenblatt (Sektion + einzelne Gruppen)
-
 - Upgrade Django 1.6
 
 - Richtzeiten auf Notenblatt ausgeben

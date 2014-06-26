@@ -99,6 +99,10 @@ from reports import create_notenliste_doctemplate
 from reports import create_notenliste_flowables
 from reports import create_sektionsfahren_rangliste_doctemplate
 from reports import create_sektionsfahren_rangliste_flowables
+from reports import create_sektionsfahren_notenblatt_doctemplate
+from reports import create_sektionsfahren_notenblatt_flowables
+from reports import create_sektionsfahren_notenblatt_gruppe_doctemplate
+from reports import create_sektionsfahren_notenblatt_gruppe_flowables
 from reports import create_schwimmen_rangliste_flowables
 from reports import create_einzelschnueren_rangliste_flowables
 from reports import create_gruppenschnueren_rangliste_flowables
@@ -1254,6 +1258,30 @@ def sektionsfahren_notenblatt(request, jahr, wettkampf, sektion_name):
     return direct_to_template(request, 'sektionsfahren_notenblatt.html', {
         'wettkampf': w, 'disziplin': d, 'sektion': result})
 
+def sektionsfahren_notenblatt_pdf(request, jahr, wettkampf, sektion_name):
+    assert request.method == 'GET'
+    d = Disziplin.objects.select_related().get(
+            disziplinart__name="Sektionsfahren",
+            wettkampf__name=wettkampf,
+            wettkampf__von__year=jahr)
+    w = d.wettkampf
+    sektion = {}
+    rangliste = read_sektionsfahren_rangliste(d)
+    for item in rangliste:
+        if item['name'] == sektion_name:
+            sektion = item
+            break
+    doc = create_sektionsfahren_notenblatt_doctemplate(w, d)
+    flowables = create_sektionsfahren_notenblatt_flowables(sektion)
+    for gruppe in sektion['gruppen']:
+        notenliste = read_sektionsfahren_notenblatt_gruppe(gruppe)
+        notenliste = regroup_notenliste(notenliste, gruppe.anz_schiffe())
+        flowables += create_sektionsfahren_notenblatt_gruppe_flowables(gruppe, notenliste)
+    response = HttpResponse(mimetype='application/pdf')
+    response['Content-Disposition'] = smart_str(u'filename=notenblatt-%s' % sektion_name)
+    doc.build(flowables, filename=response)
+    return response
+
 def sektionsfahren_notenblatt_gruppe(request, jahr, wettkampf, gruppe):
     assert request.method == 'GET'
     d = Disziplin.objects.select_related().get(
@@ -1329,6 +1357,28 @@ def regroup_notenliste(notenliste, anzahl_schiffe):
             noten = x
         colspan = 3 - anz_durchgaenge
         yield {'posten': posten, 'postenart': postenart, 'colspan': colspan, 'noten': noten}
+
+def sektionsfahren_notenblatt_gruppe_pdf(request, jahr, wettkampf, gruppe):
+    assert request.method == 'GET'
+    d = Disziplin.objects.select_related().get(
+            disziplinart__name="Sektionsfahren",
+            wettkampf__name=wettkampf,
+            wettkampf__von__year=jahr)
+    w = d.wettkampf
+    # Muss Rangliste lesen wegen den berechneten Werte der Gruppe
+    rangliste = read_sektionsfahren_rangliste_gruppe(d)
+    for item in rangliste:
+        if item.name == gruppe:
+            g = item
+            break
+    notenliste = read_sektionsfahren_notenblatt_gruppe(g)
+    notenliste = regroup_notenliste(notenliste, g.anz_schiffe())
+    doc = create_sektionsfahren_notenblatt_gruppe_doctemplate(w, d)
+    flowables = create_sektionsfahren_notenblatt_gruppe_flowables(g, notenliste)
+    response = HttpResponse(mimetype='application/pdf')
+    response['Content-Disposition'] = smart_str(u'filename=notenblatt-%s' % g.name)
+    doc.build(flowables, filename=response)
+    return response
 
 #
 # Spezialwettkaempfe

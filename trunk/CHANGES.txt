@@ -1,3 +1,12 @@
+Version 2.4 (26. Juni 2014)
+https://sasse.googlecode.com/svn/tags/2.4
+
+- Sektionsfahren: PDFs für das Notenblatt erstellt.
+
+- Einzelschnüren: Fehler bei der Eingabe von einem Teilnehmer behoben,
+  der bereits in einem anderen Wettkampf schon mal gestartet ist.
+
+
 Version 2.3 (30. Juni 2012)
 https://sasse.googlecode.com/svn/tags/2.3
 

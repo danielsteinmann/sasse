@@ -382,6 +382,189 @@ def create_notenliste_flowables(posten, notenliste, sektion=None):
     return result
 
 #
+# Notenblatt Sektionsfahren
+#
+
+def create_sektionsfahren_notenblatt_doctemplate(wettkampf, disziplin):
+    f = Frame(1*cm, 1*cm, PAGE_WIDTH-2*cm, PAGE_HEIGHT-3.5*cm, id='normal')
+    pt = PageTemplate(id="Notenblatt", frames=f, onPageEnd=write_sektionsfahren_notenblatt_header_footer)
+    doc = BaseDocTemplate(None, pageTemplates=[pt], pagesize=A4)
+    doc.wettkampf = wettkampf
+    doc.disziplin = disziplin
+    return doc
+
+def write_sektionsfahren_notenblatt_header_footer(canvas, doc):
+    canvas.saveState()
+    canvas.drawImage(settings.MEDIA_ROOT + '/spsv-logo.jpg', 1.2*cm, PAGE_HEIGHT-2*cm, width=1.5*cm, height=1.5*cm)
+    canvas.line(3*cm, PAGE_HEIGHT-1.3*cm, PAGE_WIDTH-2*cm, PAGE_HEIGHT-1.3*cm)
+    canvas.setFont('Helvetica', 8)
+    canvas.drawString(3*cm, PAGE_HEIGHT-1.1*cm, "Notenblatt %s" % (doc.disziplin.disziplinart))
+    canvas.drawRightString(PAGE_WIDTH-2*cm, PAGE_HEIGHT-1.1*cm, "%s %d" % (doc.wettkampf.name, doc.wettkampf.jahr()))
+    canvas.restoreState()
+
+def create_sektionsfahren_notenblatt_flowables(sektion):
+    result = []
+    ss = _create_style_sheet(baseFontSize=10)
+    gewichtet_text = "(%s / %d)" % (sektion['gewichtet'], sektion['anz_schiffe'])
+    data = [
+            [sektion['name'], " "],
+            ["Durchschnitt gewichtet:", sektion['gewichtet_avg'], gewichtet_text],
+            ["Abzüge Sektionstotal:", sektion['abzug']],
+            ["Sektionstotal:", sektion['total']],
+            ]
+    col_widths = (120, 60, 300)
+    table_props = [
+        ('FONT', (0,0), (-1,-1), 'Helvetica', 10),
+        ('LINEBELOW', (0,0), (1,0), 1, colors.grey),
+        ('FONT', (0,0), (0,0), 'Helvetica-Bold', 10),
+        ('FONT', (1,3), (1,3), 'Helvetica-Bold', 10),
+        ('FONT', (-1,0), (-1,-1), 'Helvetica', 8),
+        ('ALIGN', (1,0), (1,-1), 'RIGHT'),
+        ('TOPPADDING', (0,0), (-1,-1), 1),
+        ('BOTTOMPADDING', (0,0), (-1,-1), 1),
+        ]
+    result.append(Platypus_Table(data, hAlign="LEFT", colWidths=col_widths, style=TableStyle(table_props)))
+    result.append(Spacer(1, 20))
+    # ----
+    data = [['Gruppe', 'Schiffe', 'Punkte', 'Gewichtet', 'Abzug', 'Bemerkung']]
+    col_widths = (120, 50, 60, 60, 40, 150)
+    ss = _create_style_sheet(10)
+    table_props = [
+        ('LINEBELOW', (0,0), (-1,0), 1, colors.black),
+        ('LINEABOVE', (0,-1), (-1,-1), 1, colors.black),
+        ('FONT', (0,0), (-1,-1), 'Helvetica', 10),
+        ('FONT', (0,0), (-1,0), 'Helvetica-Bold', 10),
+        ('FONT', (0,-1), (-1,-1), 'Helvetica-Bold', 10),
+        ('TOPPADDING', (0,0), (-1,-1), 1),
+        ('BOTTOMPADDING', (0,0), (-1,-1), 1),
+        ('ALIGN', (1,0), (4,-1), 'RIGHT'),
+        ]
+    for gruppe in sektion['gruppen']:
+        record = []
+        record.append(gruppe.name)
+        record.append(gruppe.anz_schiffe())
+        record.append(gruppe.total)
+        record.append(gruppe.gewichtet)
+        record.append(gruppe.abzug_sektion)
+        record.append(gruppe.abzug_sektion_comment)
+        data.append(record)
+    summary = []
+    summary.append("")
+    summary.append(sektion['anz_schiffe'])
+    summary.append("")
+    summary.append(sektion['gewichtet'])
+    summary.append(sektion['abzug'])
+    data.append(summary)
+    result.append(Platypus_Table(data, hAlign="LEFT", colWidths=col_widths, style=TableStyle(table_props)))
+    result.append(Spacer(1, 30))
+    return result
+
+#
+# Notenblatt Gruppe Sektionsfahren
+#
+
+def create_sektionsfahren_notenblatt_gruppe_doctemplate(wettkampf, disziplin):
+    f = Frame(1*cm, 1*cm, PAGE_WIDTH-2*cm, PAGE_HEIGHT-3.5*cm, id='normal')
+    pt = PageTemplate(id="Notenblatt", frames=f, onPageEnd=write_sektionsfahren_notenblatt_gruppe_header_footer)
+    doc = BaseDocTemplate(None, pageTemplates=[pt], pagesize=A4)
+    doc.wettkampf = wettkampf
+    doc.disziplin = disziplin
+    return doc
+
+def write_sektionsfahren_notenblatt_gruppe_header_footer(canvas, doc):
+    canvas.saveState()
+    canvas.drawImage(settings.MEDIA_ROOT + '/spsv-logo.jpg', 1.2*cm, PAGE_HEIGHT-2*cm, width=1.5*cm, height=1.5*cm)
+    canvas.line(3*cm, PAGE_HEIGHT-1.3*cm, PAGE_WIDTH-2*cm, PAGE_HEIGHT-1.3*cm)
+    canvas.setFont('Helvetica', 8)
+    canvas.drawString(3*cm, PAGE_HEIGHT-1.1*cm, "Notenblatt %s" % (doc.disziplin.disziplinart))
+    canvas.drawRightString(PAGE_WIDTH-2*cm, PAGE_HEIGHT-1.1*cm, "%s %d" % (doc.wettkampf.name, doc.wettkampf.jahr()))
+    canvas.restoreState()
+
+def create_sektionsfahren_notenblatt_gruppe_flowables(gruppe, notenliste):
+    result = []
+    ss = _create_style_sheet(baseFontSize=10)
+    # --------
+    zuschlag_text = "2 * (%d JP + %d Frauen + %d Senioren) / Anzahl Schiffe" % (gruppe.anz_jps(), gruppe.anz_frauen(), gruppe.anz_senioren())
+    data = [
+            [gruppe.name, " "],
+            ["Durchschnitt Punkte:", gruppe.gefahren],
+            ["Durchschnitt Zuschläge:", gruppe.zuschlag, zuschlag_text],
+            ["Abzüge Gruppentotal:", gruppe.abzug_gruppe, gruppe.abzug_gruppe_comment],
+            ["Total:", gruppe.total],
+            ]
+    if gruppe.abzug_sektion:
+        data.append(["Abzüge Sektionstotal:", gruppe.abzug_sektion, gruppe.abzug_sektion_comment])
+    col_widths = (120, 60, 300)
+    table_props = [
+        ('FONT', (0,0), (-1,-1), 'Helvetica', 10),
+        ('LINEBELOW', (0,0), (1,0), 1, colors.grey),
+        ('FONT', (0,0), (0,0), 'Helvetica-Bold', 10),
+        ('FONT', (1,4), (1,4), 'Helvetica-Bold', 10),
+        ('FONT', (-1,0), (-1,-1), 'Helvetica', 8),
+        ('ALIGN', (1,0), (1,-1), 'RIGHT'),
+        ('TOPPADDING', (0,0), (-1,-1), 1),
+        ('BOTTOMPADDING', (0,0), (-1,-1), 1),
+        ]
+    result.append(Platypus_Table(data, hAlign="LEFT", colWidths=col_widths, style=TableStyle(table_props)))
+    result.append(Spacer(1, 10))
+    # ------
+    data = []
+    headers = ['', '']
+    schiff_range = range(1, gruppe.anz_schiffe() + 1)
+    for i in schiff_range:
+        headers.append("%d. Schiff" % i)
+        headers.append("")
+    data.append(headers)
+    headers = ["", ""]
+    for i in schiff_range:
+        headers.append("1.DG")
+        headers.append("2.DG")
+    data.append(headers)
+    col_widths = [30, 210]
+    for i in schiff_range:
+        col_widths.append(30)
+        col_widths.append(30)
+    rows_with_spans = {}
+    for n, row in enumerate(notenliste):
+        record = []
+        if row.get('posten'):
+            record.append(Paragraph(row['posten'], ss['center']))
+            record.append(Paragraph(row['postenart'], ss['left']))
+        else:
+            record.append("")
+            record.append("")
+        colspan = row.get('colspan')
+        if colspan > 1:
+            rows_with_spans[n] = colspan
+        for note in row['noten']:
+            record.append(unicode(note))
+            for i in range(1, colspan):
+                record.append("")
+        data.append(record)
+    table_props = [
+        ('GRID', (0,2), (-1,-2), 0.5, colors.grey),
+        ('GRID', (2,0), (-1,-1), 0.5, colors.grey),
+        ('FONT', (0,0), (-1,-1), 'Helvetica', 10),
+        ('FONT', (0,0), (-1,0), 'Helvetica-Bold', 10),
+        ('FONT', (0,-1), (-1,-1), 'Helvetica-Bold', 10),
+        ('FONT', (0,1), (-1,1), 'Helvetica', 8),
+        ('ALIGN', (2,0), (-1,-1), 'CENTER'),
+        ('LINEBELOW', (0,1), (-1,1), 1, colors.black),
+        ('LINEABOVE', (0,-1), (-1,-1), 1, colors.black),
+        ('ROWBACKGROUNDS', (0,1), (-1,-2), (None, colors.HexColor(0xf0f0f0))),
+        ]
+    for i in schiff_range:
+        # Header row
+        table_props.extend([('SPAN', (i*2,0), ((i*2)+1,0))])
+    for row, span in rows_with_spans.iteritems():
+        # Body rows (offset by 2 because of 2 header rows)
+        for i in schiff_range:
+            table_props.extend([('SPAN', (i*2,row+2), ((i*2)+span-1,row+2))])
+    result.append(Platypus_Table(data, hAlign="LEFT", colWidths=col_widths, style=TableStyle(table_props)))
+    result.append(PageBreak())
+    return result
+
+#
 # Rangliste Sektionsfahren
 #
 def create_sektionsfahren_rangliste_doctemplate(wettkampf, disziplin):
