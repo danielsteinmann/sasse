@@ -1,0 +1,33 @@
+{% extends disziplin.get_base_template %}
+{% block nav_postenblatt %}selected{% endblock %}
+{% block content %}
+<form action="" method="POST">
+  <table class="form">
+    {% if form.non_field_errors %}
+    <tr><td colspan="2">{{ form.non_field_errors }}</td></tr>
+    {% endif %}
+    <tr>
+      <th>Gruppe:</th>
+      <td colspan="2">{{ form.instance.name }}</td>
+    </tr>
+    <tr valign="top">
+      <th>Abzug Gruppe:</th>
+      <td>{{ form.abzug_gruppe.errors }}{{ form.abzug_gruppe }}</td>
+      <td>{{ form.abzug_gruppe_comment.errors }}{{ form.abzug_gruppe_comment }}</td>
+    </tr>
+    <tr valign="top">
+      <th>Abzug Sektion:</th>
+      <td>{{ form.abzug_sektion.errors }}{{ form.abzug_sektion }}</td>
+      <td>{{ form.abzug_sektion_comment.errors }}{{ form.abzug_sektion_comment }}</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td colspan="2">
+        <input type="submit" value="Speichern und zurück"/>
+        {{ form.referrer }}
+        <small><a href="{{ form.initial.referrer }}">Zurück</a></small>
+      </td>
+    </tr>
+  </table>
+</form>
+{% endblock %}
