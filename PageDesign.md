@@ -1,0 +1,346 @@
+Aktueller Stand des Denkens, wie die Webseiten aussehen werden.
+
+
+
+# URLs #
+
+```
+pontonier.ch/wettkaempfe/<jahr>/<wettkampf>/<disziplin>/
+pontonier.ch/wettkaempfe/2008/wallbach/
+pontonier.ch/wettkaempfe/2008/glanzenburgcup/
+pontonier.ch/wettkaempfe/2008/faellbaumcup/
+pontonier.ch/wettkaempfe/2007/faellbaumcup/<disziplin>/posten/<posten>
+pontonier.ch/wettkaempfe/2007/faellbaumcup/<disziplin>/posten/A0
+pontonier.ch/wettkaempfe/2007/faellbaumcup/<disziplin>/startliste/?sektion=bremgarten
+pontonier.ch/wettkaempfe/2007/faellbaumcup/<disziplin>/startliste/?startnr=1-20
+pontonier.ch/wettkaempfe/2007/faellbaumcup/<disziplin>/teilnehmer/<startnr>/
+pontonier.ch/wettkaempfe/2007/faellbaumcup/<disziplin>/bewertung/
+pontonier.ch/wettkaempfe/2007/faellbaumcup/<disziplin>/postenblatt/<posten>/?startnr=<range>
+pontonier.ch/wettkaempfe/2007/faellbaumcup/<disziplin>/postenblatt/E-F/?startnr=5-40
+pontonier.ch/wettkaempfe/2007/faellbaumcup/<disziplin>/notenblatt/<startnr>/
+pontonier.ch/wettkaempfe/2007/faellbaumcup/<disziplin>/notenblatt/?sektion=bremgarten
+pontonier.ch/wettkaempfe/2007/faellbaumcup/<disziplin>/rangliste/
+pontonier.ch/wettkaempfe/2007/faellbaumcup/<disziplin>/rangliste/<kategorie>/
+pontonier.ch/wettkaempfe/2007/faellbaumcup/<disziplin>/rangliste/<kategorie>/kranzlimite/
+pontonier.ch/wettkaempfe/2007/faellbaumcup/<disziplin>/amerikabecher/
+pontonier.ch/wettkaempfe/2007/faellbaumcup/<disziplin>/bestzeiten/?top=10
+pontonier.ch/wettkaempfe/2007/faellbaumcup/<disziplin>/richtzeit/<posten>/
+pontonier.ch/wettkaempfe/sektion/<name>/
+pontonier.ch/wettkaempfe/mitglied/<nr>/
+pontonier.ch/wettkaempfe/kategorie/<name>/
+pontonier.ch/wettkaempfe/disziplinart/<name>/
+pontonier.ch/wettkaempfe/postenart/<name>/
+```
+
+# Wettkampf #
+
+```
+Wettkampfprogramm                                        (Admin)Daniel | Logout
+-------------------------------------------------------------------------------
+
+Jahr  Name           Disziplinen
+----  -------------  -------------------------------
+2008  <Wallbach>     Einzelfahren, 28. - 29. Juni
+2008  <Oldie Cup>    Brugg
+2007  <Fällbaumcup>  Bremgarten, 25. Mai 2007
+
+<Wettkampf hinzufügen>
+
+
+Stammdaten:
+- <Sektionen>
+- <Mitglieder>
+- <Kategorien>
+- <Disziplinarten>
+- <Postenarten>
+```
+
+## Wettkampf hinzufügen ##
+```
+Wettkampfprogramm                                        (Admin)Daniel | Logout
+-------------------------------------------------------------------------------
+<Home> / Wettkampf hinzufügen
+
+Wettkampf:
+
+       Jahr: [2007]
+       Name: [Fällbaumcup]
+     Zusatz: [Bremgarten, 25.5.2007]
+
+Disziplinen: 
+
+        Art: [Einzelfahren][v]
+ Kategorien: [ ] I   [x] II   [x] III   [x] C   [x] D   [x] F
+
+             [Disziplin hinzufügen]
+
+
+             [Wettkampf speichern]
+```
+Nach eine Klick auf Disziplin hinzufügen:
+```
+Wettkampfprogramm                                        (Admin)Daniel | Logout
+-------------------------------------------------------------------------------
+<Home> / Wettkampf hinzufügen
+
+Wettkampf:
+
+       Jahr: [2007]
+       Name: [Fällbaumcup]
+     Zusatz: [Bremgarten, 25.5.2007]
+
+Disziplinen: 
+
+        Art: [Einzelfahren][v]
+ Kategorien: [ ] I   [x] II   [x] III   [x] C   [x] D   [x] F
+             [Disziplin löschen]
+
+        Art: [Einzelfahren][v]
+ Kategorien: [X] I   [ ] II   [ ] III   [ ] C   [ ] D   [ ] F
+             [Disziplin löschen]
+
+             [Disziplin hinzufügen]
+
+
+             [Wettkampf speichern]
+```
+Nach einem Klick auf Wettkampf speichern:
+```
+Wettkampfprogramm                                        (Admin)Daniel | Logout
+-------------------------------------------------------------------------------
+<Home> / <Fällbaumcup>
+
+       Jahr: 2007
+       Name: Fällbaumcup
+     Zusatz: Bremgarten, 25.5.2007
+Disziplinen: <Einzelfahren I>
+             <Einzelfahren II,III,C,D,F>
+
+             <ändern> | <löschen>
+```
+
+## Wettkampf ändern ##
+```
+Wettkampfprogramm                                        (Admin)Daniel | Logout
+-------------------------------------------------------------------------------
+<Home> / <Fällbaumcup> / ändern
+
+Wettkampf:
+
+       Jahr: [2007]
+       Name: [Fällbaumcup]
+     Zusatz: [Bremgarten, 25.5.2007]
+
+Disziplinen: 
+
+        Art: [Einzelfahren][v]
+ Kategorien: [ ] I   [x] II   [x] III   [x] C   [x] D   [x] F
+       Name: [Einzelfahren II,III,C,D,F]
+             [Disziplin löschen]
+
+        Art: [Einzelfahren][v]
+ Kategorien: [X] I   [ ] II   [ ] III   [ ] C   [ ] D   [ ] F
+       Name: [Einzelfahren I]
+             [Disziplin löschen]
+ 
+             [Disziplin hinzufügen]
+
+
+             [Wettkampf speichern]
+```
+
+# Disziplin #
+```
+Wettkampfprogramm                                        (Admin)Daniel | Logout
+-------------------------------------------------------------------------------
+<Fällbaumcup> / <Einzelfahren II,III,C,D,F>
+
+Tabs: Info | <Posten> | <Startliste> | <Bewertung> | <Rangliste>
+
+Disziplinart: Einzelfahren
+        Name: Einzelfahren II,III,C,D,F
+  Kategorien: [ ] I   [X] II   [X] III   [X] C   [X] D   [X] F
+
+             <ändern> | <löschen>
+```
+
+## Posten ##
+```
+Wettkampfprogramm                                        (Admin)Daniel | Logout
+-------------------------------------------------------------------------------
+<Fällbaumcup> / <Einzelfahren II,III,C,D,F> / Posten
+
+Tabs: <Info> | Posten | <Startliste> | <Bewertung> | <Rangliste>
+
+Posten  Art          Punkte
+------  -----------  ------
+<A0>    Anmeldung        10  <löschen> (Posten ist Link zum Editieren dieses Posten)
+<B>     Abfahrt          20  <löschen>
+<E-F>   Zeit             10  <löschen>
+[____]  [________]v  hinzufügen
+
+Total: 30 Punkte
+```
+Reihenfolge änderbar in der Edit Sicht
+
+
+## Startliste ##
+```
+Wettkampfprogramm                                        (Admin)Daniel | Logout
+-------------------------------------------------------------------------------
+<Fällbaumcup> / <Einzelfahren II,III,C,D,F> / Startliste
+
+Tabs: <Info> | <Posten> | Startliste | <Bewertung> | <Rangliste>
+
+Sektion [_________]v  und/oder Startnummern [_________] (z.B. "1-15") [anzeigen]
+
+Startnr  Steuermann   Vorderfahrer  Sektion     Kat
+-------  -----------  ------------  ----------  ---
+    <1>  Wendel       Wendel        Bremgarten  C    (Startnr ist Link auf Teilnehmer)
+    <2>  Steinmann    Kohler        Bremgarten  C 
+        [_________]  [____________] [hinzufügen] 
+Export: CSV, Drucken: PDF
+
+Startliste importieren: [________] [File Suchen]
+```
+Mann kann entweder die Mitgliedernummer oder den Namen für Steuermann oder Vorderfahrer eingeben. Wird nichts gefunden, erhält man die Möglichkeit, gleich das Mitglied zu suchen oder ein neues Mitglied zu erfassen
+
+## Teilnehmer ##
+```
+Wettkampfprogramm                                        (Admin)Daniel | Logout
+-------------------------------------------------------------------------------
+<Fällbaumcup> / <Einzelfahren II,III,C,D,F> / Teilnehmer 1
+
+Tabs: <Info> | <Posten> | <Startliste> | <Bewertung> | <Rangliste>
+
+    Startnummer: 1
+     Steuermann: Steinmann Daniel, 1967, Bremgarten, Kat C
+   Vorderfahrer: Kohler Bernhard, 1978, Bremgarten, Kat C
+        Sektion: Bremgarten
+      Kategorie: C
+  ausgeschieden: nein
+disqualifiziert: nein
+
+                 ändern | löschen
+
+<Notenblatt>
+```
+
+## Postenblatt ##
+```
+Wettkampfprogramm                                        (Admin)Daniel | Logout
+-------------------------------------------------------------------------------
+<Fällbaumcup> / <Einzelfahren II,III,C,D,F> / Postenblatt A0
+
+Tabs: <Info> | <Posten> | <Startliste> | Bewertung | <Rangliste>
+Tabs: Postenblatt | <Notenliste>
+Tabs: A0 | <B> | <C> | <F> | <D> | <C-F> | <F-D>
+
+Startnummern [1-4,6-7] (z.B. "1-15" oder "23-27,29-32") [anzeigen]
+
+Posten A0 - Allgemeines Antreten
+
+Startnr:    1     2      3      4     6     7
+   Note: [9.5] [8.5] [10.0] [10.0] [___] [___]
+  Abzug: [  0] [  0] [ 1.0] [   0] [___] [___]
+
+         <ändern>
+```
+Falls noch keine Werte in der Datenbank existieren, wird die Zelle in Rot dargestellt.
+
+Vielleicht könnte man auch noch einen Filter 'Blatt [_]v' einführen. Dort würde der Name der Sektion stehen. Falls eine Sektion mehr als 15 Startnummern, steht im DropDown "Bremgarten-I" und "Bremgarten-II". Es müssten dann aber auch ein Blatt "Doppelstarter-I" oder "Nachzügler-I" geben._
+
+Um die richtigen Startnummern für ein Blatt zu erkennen, müsste z.B. in den Stammdaten hinterlegt sein, dass die Nachzügler Startnummern von 900-999 haben und die Doppelstarter von 800-899. Das würde nicht nur bei der Erfassung des Postenblatt helfen, sondern auch bei der Validierung der Startlisteneingabe.
+
+## Notenliste ##
+```
+Wettkampfprogramm                                        (Admin)Daniel | Logout
+-------------------------------------------------------------------------------
+<Fällbaumcup> / <Einzelfahren II,III,C,D,F> / Notenliste
+
+Tabs: <Info> | <Posten> | <Startliste> | Bewertung | <Rangliste>
+Tabs: <Postenblatt> | Notenliste
+
+Sektion [_________]v  oder Startnummern [_________] [anzeigen]
+
+Startnr  Fahrerpaar         Sektion     Kat     A     B     E-F     Zeit   Total
+-------  -----------------  ----------  ----  ---  ----  ------  -------  ------
+      1  Wendel/Wendel      Bremgarten  C      10   9.5     9.8  3:33:12   132.5
+      2  Steinmann/Kohler   Bremgarten  C     9.5   
+
+Export: CSV, Drucken: PDF
+
+Richtzeiten:
+E-F: 1:10
+C-D: 2:30
+```
+
+Fehlende Noten werden in Rot dargestellt.
+
+## Rangliste ##
+```
+Wettkampfprogramm                                        (Admin)Daniel | Logout
+-------------------------------------------------------------------------------
+<Fällbaumcup> / <Einzelfahren II,III,C,D,F>	
+
+Tabs: <Info> | <Posten> | <Startliste> | <Postenblatt> | Rangliste
+
+<Alle> | <II> | <III> | C | <D> | <F> | <Bestzeiten>
+
+Rangliste Kategorie C
+
+Rang  Startnr  Fahrerpaar         Sektion        Zeit  Punkte
+----  -------  -----------------  ----------  -------  ------
+   1       43  Foo/Bar            Muster      3:33:12   132.5  (Punkte ist Link auf Notenblatt)
+   2      234  Foo/Bar            Muster      3:33:12   132.5
+   3      124  Foo/Bar            Muster      3:33:12   132.5
+   4        6  Foo/Bar            Muster      3:33:12   132.5
+   5       34  Foo/Bar            Muster      3:33:12   132.5
+   6       64  Foo/Bar            Muster      3:33:12   132.5
+  DS       74  Foo/*Bar           Basel       3:33:12   132.5
+  DS       54  *Foo/Bar           Zürich      3:33:12   132.5
+---------- Kranzlimite 131.5 Punkte (25.3%) -----------------
+   7      345  Foo/Bar            Muster      3:33:12   132.5
+   8       56  Foo/Bar            Muster      3:33:12   132.5
+   9       75  Foo/Bar            Muster      3:33:12   132.5
+  10       32  Foo/Bar            Muster      3:33:12   132.5
+  11       71  Foo/Bar            Muster      3:33:12   132.5
+  DS       96  *Foo/Bar           Bremgarten  3:33:12   132.5
+  DS       55  Foo/*Bar           Bremgarten  3:33:12   132.5  
+   -       83  Foo/Bar            Muster      ausgeschieden
+   -       28  Hans/Wurst         Muster      disqualifiziert
+
+Export: CSV, Drucken: PDF
+
+Kranzlimite: 131.5 Punkte (25.3%) <ändern>
+Fahrerpaare: 235
+```
+
+## Bestzeiten ##
+```
+Wettkampfprogramm                                        (Admin)Daniel | Logout
+-------------------------------------------------------------------------------
+<Fällbaumcup> / <Einzelfahren II,III,C,D,F>	
+
+Tabs: <Info> | <Posten> | <Startliste> | <Postenblatt> | Rangliste
+
+<II> | <III> | <C> | <D> | <F> | Bestzeiten
+
+Anzahl Topzeiten pro Posten: [3] [anzeigen]
+
+Posten B-D, Richtzeit [00:56:00] [Aendern]
+Rang  Startnr  Fahrerpaar         Sektion     Kat      Zeit  Punkte
+----  -------  -----------------  ----------  ---  --------  ------
+   1       32  Foo/Bar            Muster        C  00:55:10    10.2
+   2       23  Humbel/Baschnagel  Ottenbach   III  00:56:05    10.2
+   3       34  Muster/Kuster      Basel         C  00:57:06    10.1
+
+Posten E-J, Richtzeit [01:35:00] [Aendern]
+Rang  Startnr  Fahrerpaar         Sektion     Kat      Zeit  Punkte
+----  -------  -----------------  ----------  ---  --------  ------
+   1       32  Foo/Bar            Muster        C  01:32:10    10.2
+   2       23  Humbel/Baschnagel  Ottenbach   III  01:33:05    10.2
+   3       34  Muster/Kuster      Basel         C  01:36:06    10.1
+
+Export: CSV, Drucken: PDF
+```
