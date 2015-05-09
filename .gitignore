@@ -1,1 +1,5 @@
 *.py[cod]
+pyenv/
+dist
+build
+MANIFEST

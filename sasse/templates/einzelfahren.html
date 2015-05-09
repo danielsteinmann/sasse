@@ -27,7 +27,8 @@
         <a href="{% url posten_get wettkampf.jahr, wettkampf.name, disziplin.name, posten.name %}">{{ posten.name }}</a> -
         {{ posten.postenart }}
         {% if posten.postenart.name == 'Zeitnote' %}
-        <a href="{% url richtzeit wettkampf.jahr, wettkampf.name, disziplin.name, posten.name %}">(Richtzeit)</a>
+        (<a href="{% url richtzeit wettkampf.jahr, wettkampf.name, disziplin.name, posten.name %}">Richtzeit</a>,
+        <a href="{% url zeiten_einzelfahren_import wettkampf.jahr, wettkampf.name, disziplin.name, posten.name %}">Import</a>)
         {% endif %}<br>
       {% empty %}
         Noch keine Posten erfasst.

@@ -1,0 +1,33 @@
+{% extends "base_posten.html" %}
+
+{% block content %}
+<p>
+<strong>Import Posten {{ posten.name }}</strong>
+</p>
+{% if form.is_bound %}
+<p>Anzahl erfolgreich importierter Zeiten: <strong>{{ success }}</strong></p>
+{% if failed|length > 0 %}
+Startnummern mit Problemen beim Import:
+<table class="list">
+  {% for f in failed %}
+  <tr><td>{{ f.0 }}</td><td>{{ f.1 }}</td></tr>
+  {% endfor %}
+</table>
+<p></p>
+{% endif %}
+{% endif %}
+<form action="" method="POST" enctype="multipart/form-data">
+<table class="form">
+  {{ form.as_table }}
+  <tr>
+    <td></td>
+    <td>
+      <input type="submit" value="{{ posten.name }} importieren"/>
+      <font size="-1">
+      <a href="{% url disziplin_get wettkampf.jahr, wettkampf.name, disziplin.name %}">Abbrechen</a>
+      </font>
+    </td>
+  </tr>
+</table>
+</form>
+{% endblock %}

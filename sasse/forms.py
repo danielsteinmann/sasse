@@ -891,3 +891,8 @@ class BootfaehrengruppeUpdateForm(ModelForm):
         self.fields['startnummer'].widget.attrs['size'] = 3
         self.fields['zuschlaege'].widget.attrs['size'] = 3
         self.fields['disziplin'].widget = HiddenInput()
+
+class EinzelfahrenZeitUploadFileForm(Form):
+    zeiten = FileField()
+
+
