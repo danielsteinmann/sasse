@@ -1,5 +1,6 @@
 Version 2.6 (10. Mai 2015)
 
+- Einzelfahren: Null-Zeiten kann man abfragen.
 - Einzelfahren: Importieren von Zeiten ermöglicht.
 - Migration Source Code von Google nach GitHub.
 
