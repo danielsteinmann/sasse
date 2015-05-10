@@ -86,6 +86,7 @@ from queries import read_einzelschnueren_gestartete_kategorien
 from queries import read_gruppenschnueren_gestartete_kategorien
 from queries import read_bootfaehrenbau_gestartete_kategorien
 from queries import read_beste_fahrerpaare
+from queries import read_einzelfahren_null_zeiten
 
 from reports import create_rangliste_doctemplate
 from reports import create_rangliste_flowables
@@ -1000,9 +1001,19 @@ def zeiten_einzelfahren_import(request, jahr, wettkampf, disziplin, posten):
             success, failed = eai_zeiten.load_einzelfahren(w, d, p, request.FILES['zeiten'])
     else:
         form = EinzelfahrenZeitUploadFileForm()
+    total = success + len(failed)
     return direct_to_template(request, 'zeiten_einzelfahren_upload.html',
             {'wettkampf': w, 'disziplin': d, 'posten': p, 'form': form,
-                'success': success, 'failed': failed})
+                'success': success, 'failed': failed, 'total': total})
+
+def einzelfahren_null_zeiten(request, jahr, wettkampf, disziplin):
+    assert request.method == 'GET'
+    w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
+    d = Disziplin.objects.get(wettkampf=w, name=disziplin)
+    null_zeiten = list(read_einzelfahren_null_zeiten(d))
+    return direct_to_template(request, 'einzelfahren_null_zeiten.html',
+            {'wettkampf': d.wettkampf, 'disziplin': d, 'null_zeiten':
+                null_zeiten})
 
 #
 # Sektionsfahren

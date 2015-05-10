@@ -42,6 +42,7 @@
       <a href="{% url disziplin_update wettkampf.jahr, wettkampf.name, disziplin.name %}">Ändern</a>
       | <a href="{% url disziplin_delete_confirm wettkampf.jahr, wettkampf.name, disziplin.name %}">Löschen</a>
       | <a href="{% url posten_list wettkampf.jahr, wettkampf.name, disziplin.name %}">Posten hinzufügen</a></li>
+      | <a href="{% url einzelfahren_null_zeiten wettkampf.jahr, wettkampf.name, disziplin.name %}">Nullzeiten</a></li>
     </td>
   </tr>
 </table>

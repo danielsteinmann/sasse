@@ -2,15 +2,22 @@
 
 {% block content %}
 <p>
-<strong>Import Posten {{ posten.name }}</strong>
+Zeitimport Posten <strong>{{ posten.name }}</strong>
 </p>
 {% if form.is_bound %}
-<p>Anzahl erfolgreich importierter Zeiten: <strong>{{ success }}</strong></p>
+<p>Erfolgreich importierte Zeiten: <strong>{{ success }} von {{ total }}</strong></p>
 {% if failed|length > 0 %}
-Startnummern mit Problemen beim Import:
+Nicht importierte Zeiten:
 <table class="list">
+  <tr>
+    <th class="startnummer">Stnr</th>
+    <th>Problem</th>
+  </tr>
   {% for f in failed %}
-  <tr><td>{{ f.0 }}</td><td>{{ f.1 }}</td></tr>
+  <tr class="{% cycle 'odd' 'even' %}">
+    <td class="startnummer">{{ f.0 }}</td>
+    <td>{{ f.1 }}</td>
+  </tr>
   {% endfor %}
 </table>
 <p></p>

@@ -779,3 +779,37 @@ def read_bootfaehrenbau_gestartete_kategorien(disziplin):
     for row in cursor:
         yield row[0]
 
+def read_einzelfahren_null_zeiten(disziplin):
+    sql = """
+select p.name as posten
+     , tn.startnummer as startnummer
+     , sektion.name as sektion
+     , hinten.name as steuermann
+     , vorne.name as vorderfahrer
+  from sasse_teilnehmer tn
+  join sasse_schiffeinzel schiff on (schiff.teilnehmer_ptr_id = tn.id)
+  join bewertung_calc b on (b.teilnehmer_id = tn.id)
+  join sasse_kategorie kat on (kat.id = schiff.kategorie_id)
+  join sasse_sektion sektion on (sektion.id = schiff.sektion_id)
+  join sasse_mitglied vorne on (vorne.id = schiff.vorderfahrer_id)
+  join sasse_mitglied hinten on (hinten.id = schiff.steuermann_id)
+  join sasse_disziplin d on (d.id = tn.disziplin_id)
+  join sasse_posten p on (p.id = b.posten_id)
+ where tn.disziplin_id = %s
+   and b.zeit is null
+   and b.note is null
+   and b.bewertungsart_id = 16  -- Zeit
+   and not tn.ausgeschieden and not tn.disqualifiziert
+ order by p.name, tn.startnummer
+    """
+    args = [disziplin.id]
+    cursor = connection.cursor()
+    cursor.execute(sql, args)
+    for row in cursor:
+        result = {}
+        result['posten'] = row[0]
+        result['startnummer'] = row[1]
+        result['sektion'] = row[2]
+        result['steuermann'] = row[3]
+        result['vorderfahrer'] = row[4]
+        yield result
