@@ -813,3 +813,32 @@ select p.name as posten
         result['steuermann'] = row[3]
         result['vorderfahrer'] = row[4]
         yield result
+
+def read_sektionsfahren_null_zeiten(disziplin):
+    sql = """
+select p.name as posten
+     , grp.name as gruppe
+     , schiff.position as schiff
+  from sasse_schiffsektion schiff
+  join sasse_teilnehmer tn on (tn.id = schiff.teilnehmer_ptr_id)
+  join sasse_gruppe grp on (grp.teilnehmer_ptr_id = schiff.gruppe_id)
+  join bewertung_calc b on (b.teilnehmer_id = tn.id)
+  join sasse_posten p on (p.id = b.posten_id)
+ where 1=1
+   and tn.disziplin_id = %s
+   and b.zeit is null
+   and b.note is null
+   and b.bewertungsart_id = 16  -- Zeit
+   and not tn.ausgeschieden and not tn.disqualifiziert
+ order by p.name, tn.startnummer
+    """
+    args = [disziplin.id]
+    cursor = connection.cursor()
+    cursor.execute(sql, args)
+    for row in cursor:
+        result = {}; i = 0
+        result['posten'] = row[i]; i += 1
+        result['gruppe'] = row[i]; i += 1
+        result['schiff'] = row[i]; i += 1
+        yield result
+

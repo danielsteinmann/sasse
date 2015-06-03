@@ -1,0 +1,57 @@
+{% extends "base_posten.html" %}
+
+{% block content %}
+<p>
+Zeitimport Posten <strong>{{ posten1.name }} / {{ posten2.name }}</strong>
+</p>
+{% if formset.is_bound %}
+<p>Erfolgreich importierte Zeiten: <strong>{{ success }} von {{ total }}</strong></p>
+{% if failed|length > 0 %}
+<font color="red">Probleme beim Import des File:</font>
+<table class="list">
+  <tr>
+    <th class="startnummer">Stnr</th>
+    <th>Problem</th>
+  </tr>
+  {% for f in failed %}
+  <tr class="{% cycle 'odd' 'even' %}">
+    <td class="startnummer">{{ f.0 }}</td>
+    <td>{{ f.1 }}</td>
+  </tr>
+  {% endfor %}
+</table>
+<p></p>
+{% endif %}
+{% endif %}
+<form action="" method="POST" enctype="multipart/form-data">
+<table class="form">
+  {{ form.as_table }}
+</table>
+<p></p>
+Erste Startnummer pro Posten:
+{{ formset.management_form }}
+{{ formset.non_field_errors }}
+<table class="list">
+  <tr>
+    <th></th>
+    <th class="note">{{ posten1.name }}</th>
+    <th class="note">{{ posten2.name }}</th>
+  </tr>
+  {% for f in formset %}
+  {% if f.non_field_errors %}
+  <tr><td colspan="3">{{ f.non_field_errors }}</td></tr>
+  {% endif %}
+  <tr>
+    <td>{{ f.gruppe_name.value }}{{ f.gruppe_id }}{{ f.gruppe_name }}</td>
+    <td class="note">{{ f.erste_startnr_durchgang_1 }}{{ f.erste_startnr_durchgang_1.errors }}</td>
+    <td class="note">{{ f.erste_startnr_durchgang_2 }}{{ f.erste_startnr_durchgang_2.errors }}</td>
+  </tr>
+  {% endfor %}
+</table>
+<p>
+<input type="submit" value="Zeiten importieren"/>
+<font size="-1">
+<a href="{% url disziplin_get wettkampf.jahr, wettkampf.name, disziplin.name %}">Abbrechen</a>
+</font>
+</form>
+{% endblock %}

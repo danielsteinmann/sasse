@@ -28,7 +28,11 @@
         {{ posten.postenart }}
         {% if posten.postenart.name == 'Zeitnote' %}
         (<a href="{% url richtzeit wettkampf.jahr, wettkampf.name, disziplin.name, posten.name %}">Richtzeit</a>,
-        <a href="{% url zeiten_einzelfahren_import wettkampf.jahr, wettkampf.name, disziplin.name, posten.name %}">Import</a>)
+        {% if disziplin.disziplinart.name == 'Sektionsfahren' %}
+          <a href="{% url zeiten_sektionsfahren_import wettkampf.jahr, wettkampf.name, disziplin.name, posten.name %}">Import</a>)
+        {% else %}
+          <a href="{% url zeiten_einzelfahren_import wettkampf.jahr, wettkampf.name, disziplin.name, posten.name %}">Import</a>)
+        {% endif %}
         {% endif %}<br>
       {% empty %}
         Noch keine Posten erfasst.
@@ -42,7 +46,11 @@
       <a href="{% url disziplin_update wettkampf.jahr, wettkampf.name, disziplin.name %}">Ändern</a>
       | <a href="{% url disziplin_delete_confirm wettkampf.jahr, wettkampf.name, disziplin.name %}">Löschen</a>
       | <a href="{% url posten_list wettkampf.jahr, wettkampf.name, disziplin.name %}">Posten hinzufügen</a></li>
-      | <a href="{% url einzelfahren_null_zeiten wettkampf.jahr, wettkampf.name, disziplin.name %}">Nullzeiten</a></li>
+      | {% if disziplin.disziplinart.name == 'Sektionsfahren' %}
+        <a href="{% url sektionsfahren_null_zeiten wettkampf.jahr, wettkampf.name, disziplin.name %}">Nullzeiten</a></li>
+        {% else %}
+        <a href="{% url einzelfahren_null_zeiten wettkampf.jahr, wettkampf.name, disziplin.name %}">Nullzeiten</a></li>
+        {% endif %}
     </td>
   </tr>
 </table>

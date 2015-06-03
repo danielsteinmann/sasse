@@ -1,0 +1,25 @@
+{% extends disziplin.get_base_template %}
+{% block nav_ueberblick %}selected{% endblock %}
+{% load sasse %}
+{% block content %}
+{% if null_zeiten %}
+Fehlende Zeiten:
+<table class="list">
+  <tr>
+    <th>Posten</th>
+    <th>Gruppe</th>
+    <th>Schiff</th>
+  </tr>
+{% for row in null_zeiten %}
+  <tr class="{% cycle 'odd' 'even' %}">
+    <td>{{row.posten}}</td>
+    <td>{{row.gruppe}}</td>
+    <td>{{row.schiff}}</td>
+  </tr>
+{% endfor %}
+</table>
+<p></p>
+{% else %}
+Keine Null-Zeiten gefunden.
+{% endif %}
+{% endblock %}

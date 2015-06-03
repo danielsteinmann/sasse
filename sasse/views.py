@@ -64,6 +64,7 @@ from forms import SchnuergruppeUpdateForm
 from forms import BootfaehrengruppeForm
 from forms import BootfaehrengruppeUpdateForm
 from forms import EinzelfahrenZeitUploadFileForm
+from forms import SektionsfahrenZeitUploadForm
 
 from queries import read_topzeiten
 from queries import read_notenliste
@@ -87,6 +88,7 @@ from queries import read_gruppenschnueren_gestartete_kategorien
 from queries import read_bootfaehrenbau_gestartete_kategorien
 from queries import read_beste_fahrerpaare
 from queries import read_einzelfahren_null_zeiten
+from queries import read_sektionsfahren_null_zeiten
 
 from reports import create_rangliste_doctemplate
 from reports import create_rangliste_flowables
@@ -1410,6 +1412,43 @@ def sektionsfahren_notenblatt_gruppe_pdf(request, jahr, wettkampf, gruppe):
     response['Content-Disposition'] = smart_str(u'filename=notenblatt-%s' % g.name)
     doc.build(flowables, filename=response)
     return response
+
+@permission_required('sasse.change_gruppe')
+@transaction.commit_on_success
+def zeiten_sektionsfahren_import(request, jahr, wettkampf, disziplin, posten):
+    w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
+    d = Disziplin.objects.get(wettkampf=w, name=disziplin)
+    p1 = Posten.objects.get(disziplin=d, name=posten[:-1] + "1")
+    p2 = Posten.objects.get(disziplin=d, name=posten[:-1] + "2")
+    success = 0
+    failed = []
+    SektionsfahrenZeitUploadFormSet = formset_factory(SektionsfahrenZeitUploadForm, extra=0)
+    if request.method == 'POST':
+        form = EinzelfahrenZeitUploadFileForm(request.POST, request.FILES)
+        formset = SektionsfahrenZeitUploadFormSet(request.POST)
+        if form.is_valid() and formset.is_valid():
+            csvfile = request.FILES['zeiten']
+            success, failed = eai_zeiten.load_sektionsfahren(p1, p2, formset, csvfile)
+    else:
+        form = EinzelfahrenZeitUploadFileForm()
+        initial = []
+        for g in Gruppe.objects.with_counts(d):
+            initial.append({'gruppe_id': g.id, 'gruppe_name': g.name})
+        formset = SektionsfahrenZeitUploadFormSet(initial=initial)
+    total = success + len(failed)
+    return direct_to_template(request, 'zeiten_sektionsfahren_upload.html',
+            {'wettkampf': w, 'disziplin': d, 'posten1': p1, 'posten2': p2,
+                'form': form, 'formset': formset, 'success': success, 'failed':
+                failed, 'total': total})
+
+def sektionsfahren_null_zeiten(request, jahr, wettkampf, disziplin):
+    assert request.method == 'GET'
+    w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
+    d = Disziplin.objects.get(wettkampf=w, name=disziplin)
+    null_zeiten = list(read_sektionsfahren_null_zeiten(d))
+    return direct_to_template(request, 'sektionsfahren_null_zeiten.html',
+            {'wettkampf': d.wettkampf, 'disziplin': d, 'null_zeiten':
+                null_zeiten})
 
 #
 # Spezialwettkaempfe

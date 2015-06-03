@@ -895,4 +895,8 @@ class BootfaehrengruppeUpdateForm(ModelForm):
 class EinzelfahrenZeitUploadFileForm(Form):
     zeiten = FileField()
 
-
+class SektionsfahrenZeitUploadForm(Form):
+    gruppe_id = IntegerField(widget=HiddenInput())
+    gruppe_name = CharField(widget=HiddenInput())
+    erste_startnr_durchgang_1 = IntegerField(required=False, widget=TextInput(attrs={'size':'4'}))
+    erste_startnr_durchgang_2 = IntegerField(required=False, widget=TextInput(attrs={'size':'4'}))
