@@ -695,6 +695,7 @@ select grp.name as gruppe
      , b.zeit as Zeit
      , b.note as Note
      , b.richtzeit as Richtzeit
+     , zi.startnummer_calc as startnummer_calc
   from sasse_schiffsektion schiff
   join sasse_teilnehmer tn on (tn.id = schiff.teilnehmer_ptr_id)
   join sasse_gruppe grp on (grp.teilnehmer_ptr_id = schiff.gruppe_id)
@@ -703,6 +704,7 @@ select grp.name as gruppe
   join sasse_mitglied s2 on (s2.id = schiff.ft2_steuermann_id)
   join sasse_mitglied v1 on (v1.id = schiff.ft1_vorderfahrer_id)
   join sasse_mitglied v2 on (v2.id = schiff.ft2_vorderfahrer_id)
+  left outer join sasse_sektionsfahrenzeitimport zi on (zi.schiffsektion_id = tn.id and zi.posten_id = b.posten_id)
  where 1=1
    and b.posten_id = %s
    and b.zeit > 0
@@ -724,6 +726,7 @@ select grp.name as gruppe
         result['zeit'] = new_bew(row[i], ZEIT); i += 1
         result['note'] = new_bew(row[i], PUNKT); i += 1
         result['richtzeit'] = new_bew(row[i], ZEIT); i += 1
+        result['startnummer_calc'] = row[i]; i += 1
         yield result
 
 def read_schwimmen_gestartete_kategorien(disziplin):

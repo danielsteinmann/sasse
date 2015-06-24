@@ -9,6 +9,7 @@ from sasse.models import Teilnehmer
 from sasse.models import Bewertung
 from sasse.models import Bewertungsart
 from sasse.models import Schiffsektion
+from sasse.models import SektionsfahrenZeitimport
 from sasse.forms import BewertungForm
 
 def load_einzelfahren(wettkampf, disziplin, posten, csvfile):
@@ -82,6 +83,8 @@ def load_sektionsfahren(p1, p2, formset, csvfile):
                         **kwargs)
                 if created:
                     success.add(startnr)
+                    SektionsfahrenZeitimport.objects.create(schiffsektion=s,
+                            posten=posten, startnummer_calc=startnr)
                 else:
                     failed[startnr] = u"Bereits eine Zeit vorhanden: {0}".format(b)
 

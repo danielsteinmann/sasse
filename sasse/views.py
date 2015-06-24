@@ -689,6 +689,8 @@ def richtzeit(request, jahr, wettkampf, disziplin, posten, template='richtzeit.h
     zeitposten = d.posten_set.filter(postenart__name='Zeitnote')
     read_topzeiten, topn_template = get_richtzeit_topn(d)
     rangliste = list(read_topzeiten(p, topn=None))
+    if request.GET.has_key('orderByStnr'):
+        rangliste = sorted(rangliste, key=lambda k: k['startnummer_calc'])
     return direct_to_template(request, template, {'wettkampf': w, 'disziplin':
         d, 'posten': p, 'zeitposten': zeitposten, 'rangliste': rangliste,
         'form': form, 'topn_template': topn_template})

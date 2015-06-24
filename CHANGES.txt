@@ -1,8 +1,13 @@
 Version 2.8 (24. Juni 2015)
 
+- Sektionsfahren: Beim Zeitimport die Startnummer vom Zeitmesssystem in eine
+  neue Tabelle abspeichern. Diese Startnummer bei der Darstellung der
+  Bestzeiten anzeigen und optional danach sortieren.
+
 - Postenblatt: Bei Eingabe im Sektionsfahren anzeigen, welche Gruppe gewählt
   ist. Da es im Sektionsfahren keine Startnummern gibt, weiss man ohne diese
   Angabe nicht, für welches Schiff man Noten eingibt.
+
 - Sektionsfahren: Bei Eingabe einer Gruppe mit Enter nicht Form abschicken,
   sondern zum nächsten Eingabefeld wechseln.
 

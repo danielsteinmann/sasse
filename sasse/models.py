@@ -609,3 +609,15 @@ class SektionsfahrenKranzlimiten(models.Model):
 
     def __unicode__(self):
         return u'%s' % (self.disziplin)
+
+
+class SektionsfahrenZeitimport(models.Model):
+    schiffsektion = models.ForeignKey('Schiffsektion')
+    posten = models.ForeignKey('Posten')
+    startnummer_calc = models.PositiveIntegerField()
+
+    def __unicode__(self):
+        return u'%s' % (self.startnummer_calc)
+
+    class Meta:
+        unique_together = ['schiffsektion', 'startnummer_calc']
