@@ -70,4 +70,22 @@
 <a href="{% url sektionsfahren_gruppe_add wettkampf.jahr, wettkampf.name %}">Weitere Gruppe hinzufügen</a>
 | <a href="{% url sektionsfahren_startliste wettkampf.jahr, wettkampf.name %}">Zurück zur Startliste</a></li>
 </p>
+<script type="text/javascript">
+$(document).ready(function(){
+        textboxes = $("form:not(.filter) :input:visible:[type=text]");
+        $(textboxes).keydown(checkForEnter);
+});
+function checkForEnter(event) {
+    if (event.keyCode == 13) {
+        currentBoxNumber = textboxes.index(this);
+        nextBox = textboxes[currentBoxNumber + 1]
+        if (nextBox != null) {
+            nextBox.focus();
+            nextBox.select();
+            event.preventDefault();
+            return false;
+        }
+    }
+} 
+</script>
 {% endblock %}

@@ -1,3 +1,9 @@
+Version 2.8 (24. Juni 2015)
+
+- Sektionsfahren: Bei Eingabe einer Gruppe mit Enter nicht Form abschicken,
+  sondern zum nächsten Eingabefeld wechseln.
+
+
 Version 2.7 (4. Juni 2015)
 
 - Sektionsfahren: Null-Zeiten kann man abfragen.
