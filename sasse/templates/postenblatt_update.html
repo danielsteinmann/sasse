@@ -1,7 +1,12 @@
 {% extends disziplin.get_base_template %}
 {% block nav_postenblatt %}selected{% endblock %}
 {% block content %}
-<b>Posten {{ posten.name }}: {{ posten.postenart.name }}</b>
+{% if filter_identifier %}
+<p>
+<b>{{ filter_identifier }}</b>
+</p>
+{% endif %}
+Posten <b>{{ posten.name }}: {{ posten.postenart.name }}</b>
 <form id="postenblattform" name="postenblattform" action="" method="POST">
   {{ teilnehmer_formset }}
   {% for set in formset %}{{ set.management_form }}{% endfor %}
@@ -24,6 +29,9 @@
     {% endfor %}
   </table>
 <p>
+{% if filter_identifier %}
+<input type="hidden" name="filter_identifier" value="{{ filter_identifier }}">
+{% endif %}
 {% if posten_next_name %}
 <input type="submit" name="save_and_next" value="Speichern, weiter zu Posten {{ posten_next_name }}">
 <input type="hidden" name="posten_next_name" value="{{ posten_next_name }}">

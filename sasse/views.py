@@ -552,6 +552,7 @@ def postenblatt_update(request, jahr, wettkampf, disziplin, posten):
     teilnehmer_formset = []
     sets = []
     p_next_name = None
+    filter_identifier = None
     filter_form_class = get_postenblatt_filter_form(d)
     filterform = filter_form_class(d, request.GET)
     if filterform.is_valid():
@@ -563,13 +564,17 @@ def postenblatt_update(request, jahr, wettkampf, disziplin, posten):
         sets = create_postenblatt_formsets(p, teilnehmer_ids)
         orientation = get_orientation(p, request)
         header_row, data_rows = create_postenblatt_table(startnummern, sets, orientation)
+        if filterform.cleaned_data.get('gruppe'):
+            filter_identifier = filterform.instance.name
+        if filterform.cleaned_data.get('sektion'):
+            filter_identifier = filterform.cleaned_data.get('sektion')
         p_next_list = list(d.posten_set.filter(reihenfolge__gt=p.reihenfolge))
         if p_next_list:
             p_next_name = p_next_list[0].name
     return direct_to_template(request, "postenblatt_update.html", {'wettkampf': w,
         'disziplin': d, 'posten': p, 'teilnehmer_formset': teilnehmer_formset,
         'formset': sets, 'header_row': header_row, 'data_rows': data_rows,
-        'posten_next_name': p_next_name})
+        'posten_next_name': p_next_name, 'filter_identifier': filter_identifier})
 
 @permission_required('sasse.change_bewertung')
 @transaction.commit_on_success
@@ -582,6 +587,7 @@ def postenblatt_post(request, jahr, wettkampf, disziplin, posten):
             disziplin__wettkampf__von__year=jahr)
     d = p.disziplin
     w = d.wettkampf
+    filter_identifier = request.POST.get('filter_identifier')
     p_next_name = request.POST.get('posten_next_name')
     TeilnehmerFormSet = formset_factory(TeilnehmerForm)
     teilnehmer_formset = TeilnehmerFormSet(data=request.POST, prefix='stnr')
@@ -612,7 +618,7 @@ def postenblatt_post(request, jahr, wettkampf, disziplin, posten):
     return direct_to_template(request, 'postenblatt_update.html', {'wettkampf': w,
         'disziplin': d, 'posten': p, 'teilnehmer_formset': teilnehmer_formset,
         'formset': sets, 'header_row': header_row, 'data_rows': data_rows,
-        'posten_next_name': p_next_name})
+        'posten_next_name': p_next_name, 'filter_identifier': filter_identifier})
 
 def get_orientation(posten, request):
     orientation = 'HORIZONTAL'
