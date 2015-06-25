@@ -1,3 +1,10 @@
+- Sektions Startliste Ausdruckbar machen (wie Einzelfahren), damit der Speaker
+  ein sauberes Blatt hat.
+
+- Toleranzwert für die Zeitnoten Richtzeit, Minimumzeit und Höchstzeit die
+  Minimum und Höchstzeit werden zum Aufzeigen von Fehlern beim Zeitimport
+  verwendet
+
 - Upgrade Django 1.6
 
 - Richtzeiten auf Notenblatt ausgeben

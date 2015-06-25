@@ -620,4 +620,4 @@ class SektionsfahrenZeitimport(models.Model):
         return u'%s' % (self.startnummer_calc)
 
     class Meta:
-        unique_together = ['schiffsektion', 'startnummer_calc']
+        unique_together = ['posten', 'schiffsektion', 'startnummer_calc']
