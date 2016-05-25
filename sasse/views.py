@@ -65,6 +65,7 @@ from forms import BootfaehrengruppeForm
 from forms import BootfaehrengruppeUpdateForm
 from forms import EinzelfahrenZeitUploadFileForm
 from forms import SektionsfahrenZeitUploadForm
+from forms import EinzelfahrenNotenUploadFileForm
 
 from queries import read_topzeiten
 from queries import read_notenliste
@@ -114,6 +115,7 @@ from reports import create_bootfaehrenbau_rangliste_flowables
 
 import eai_startliste
 import eai_zeiten
+import eai_noten
 
 def wettkaempfe_get(request):
     assert request.method == 'GET'
@@ -1024,6 +1026,26 @@ def einzelfahren_null_zeiten(request, jahr, wettkampf, disziplin):
     return direct_to_template(request, 'einzelfahren_null_zeiten.html',
             {'wettkampf': d.wettkampf, 'disziplin': d, 'null_zeiten':
                 null_zeiten})
+
+@permission_required("sasse.change_schiffeinzel")
+@transaction.commit_on_success
+def noten_einzelfahren_import(request, jahr, wettkampf, disziplin, posten):
+    w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
+    d = Disziplin.objects.get(wettkampf=w, name=disziplin)
+    p = Posten.objects.get(disziplin=d, name=posten)
+    success = 0
+    failed = []
+    if request.method == 'POST':
+        form = EinzelfahrenNotenUploadFileForm(request.POST, request.FILES)
+        if form.is_valid():
+            success, failed = eai_noten.load_pfeiler(w, d, p,
+                    request.FILES['noten'])
+    else:
+        form = EinzelfahrenNotenUploadFileForm()
+    total = success + len(failed)
+    return direct_to_template(request, 'noten_einzelfahren_upload.html',
+            {'wettkampf': w, 'disziplin': d, 'posten': p, 'form': form,
+                'success': success, 'failed': failed, 'total': total})
 
 #
 # Sektionsfahren

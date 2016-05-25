@@ -33,6 +33,9 @@
         {% else %}
           <a href="{% url zeiten_einzelfahren_import wettkampf.jahr, wettkampf.name, disziplin.name, posten.name %}">Import</a>)
         {% endif %}
+        {% else %}{% if 'Felsen' in posten.postenart.name %}
+        (<a href="{% url noten_einzelfahren_import wettkampf.jahr, wettkampf.name, disziplin.name, posten.name %}">Import</a>)
+        {% endif %}
         {% endif %}<br>
       {% empty %}
         Noch keine Posten erfasst.

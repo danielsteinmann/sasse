@@ -900,3 +900,7 @@ class SektionsfahrenZeitUploadForm(Form):
     gruppe_name = CharField(widget=HiddenInput())
     erste_startnr_durchgang_1 = IntegerField(required=False, widget=TextInput(attrs={'size':'4'}))
     erste_startnr_durchgang_2 = IntegerField(required=False, widget=TextInput(attrs={'size':'4'}))
+
+class EinzelfahrenNotenUploadFileForm(Form):
+    noten = FileField()
+
