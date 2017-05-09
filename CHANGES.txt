@@ -1,6 +1,16 @@
+Version 2.11 (9. Mai 2017)
+
+- Schwimmen, Einzelschnüren: Kategorie 'F' eingeführt.
+- Schwimmen: Unique Constraint auf Schwimmer entfernt, damit ein Schwimmer
+  nun in mehrere Wettkämpfen starten kann:
+     alter table sasse_schwimmer drop constraint sasse_schwimmer_mitglied_id_key;
+- Website: favicon.ico nach media/ kopiert
+
+
 Version 2.10 (25. Mai 2016)
 
 - Einzelfahren: Importieren von Noten des Felsens ermöglicht.
+
 
 Version 2.9 (25. Juni 2015)
 

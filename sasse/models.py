@@ -308,7 +308,7 @@ class Person(Teilnehmer):
 
 
 class Schwimmer(Teilnehmer):
-    mitglied = models.ForeignKey('Mitglied', unique=True)
+    mitglied = models.ForeignKey('Mitglied')
     kategorie = models.CharField(max_length=10)
     zeit = models.DecimalField(max_digits=6, decimal_places=2)
     creation_date = models.DateTimeField(auto_now_add=True)
@@ -323,6 +323,8 @@ class Schwimmer(Teilnehmer):
         alter = aktuelles_jahr - geburts_jahr
         if alter <= 14:
             return "I"
+        elif self.mitglied.geschlecht == "f":
+            return "F"
         elif alter <= 17:
             return "II"
         elif alter <= 20:
@@ -351,6 +353,8 @@ class Einzelschnuerer(Teilnehmer):
         alter = aktuelles_jahr - geburts_jahr
         if alter <= 14:
             return "I"
+        elif self.mitglied.geschlecht == "f":
+            return "F"
         elif alter <= 17:
             return "II"
         elif alter <= 20:
