@@ -1,6 +1,8 @@
 Version 2.12 (????)
 - Sektionsfahren: Beim Erfassen einer Gruppe mit Enter zum nächsten
   Eingabefeld, statt Formular abschicken.
+- Bootfährenbau: Beim Erfassen einer Gruppe mit Enter wird die Auswahlliste der
+  Sektion nicht mehr übersprungen.
 
 
 Version 2.11 (9. Mai 2017)

@@ -62,7 +62,7 @@
 {% paginate %}
 <script type="text/javascript">
 $(document).ready(function(){
-        textboxes = $("form:not(.filter) :input:visible:[type=text]");
+        textboxes = $("form:not(.filter) :input:visible:[type=text], select");
         $(textboxes).keydown(checkForEnter);
         $("input[id=id_einbauzeit]").mask("99:99.99");
         $("input[id=id_ausbauzeit]").mask("99:99.99");
@@ -73,7 +73,9 @@ function checkForEnter(event) {
         nextBox = textboxes[currentBoxNumber + 1]
         if (nextBox != null) {
             nextBox.focus();
-            nextBox.select();
+            if (nextBox.select) {
+                nextBox.select();
+            }
             event.preventDefault();
             return false;
         }
