@@ -23,4 +23,24 @@
     </tr>
   </table>
 </form>
+<script type="text/javascript">
+$(document).ready(function(){
+        textboxes = $("form:not(.filter) :input:visible:[type=text], select");
+        $(textboxes).keydown(checkForEnter);
+});
+function checkForEnter(event) {
+    if (event.keyCode == 13) {
+        currentBoxNumber = textboxes.index(this);
+        nextBox = textboxes[currentBoxNumber + 1]
+        if (nextBox != null) {
+            nextBox.focus();
+            if (nextBox.select) {
+                nextBox.select();
+            }
+            event.preventDefault();
+            return false;
+        }
+    }
+}
+</script>
 {% endblock %}

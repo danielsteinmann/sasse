@@ -1,3 +1,8 @@
+Version 2.12 (????)
+- Sektionsfahren: Beim Erfassen einer Gruppe mit Enter zum nächsten
+  Eingabefeld, statt Formular abschicken.
+
+
 Version 2.11 (9. Mai 2017)
 
 - Schwimmen, Einzelschnüren: Kategorie 'F' eingeführt.
