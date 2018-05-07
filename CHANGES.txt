@@ -3,6 +3,9 @@ Version 2.12 (????)
   Eingabefeld, statt Formular abschicken.
 - Bootfährenbau: Beim Erfassen einer Gruppe mit Enter wird die Auswahlliste der
   Sektion nicht mehr übersprungen.
+- Schwimmen, Einzelschnüren, Gruppenschnüren: Bei den Ranglisten erscheinen die
+  Kategorien nun richtig sortiert: 'I | II | III | F | D | C' beim Schwimmen
+  und Einzelschnüren, 'JP | Aktive' beim Gruppenschnüren.
 
 
 Version 2.11 (9. Mai 2017)

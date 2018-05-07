@@ -732,10 +732,15 @@ select grp.name as gruppe
 def read_schwimmen_gestartete_kategorien(disziplin):
     cursor = connection.cursor()
     sql = """
-    select distinct kategorie
-      from sasse_teilnehmer tn
-      join sasse_schwimmer sw on (sw.teilnehmer_ptr_id = tn.id)
-     where tn.disziplin_id = %s
+    select kat.name
+      from sasse_kategorie kat
+     where kat.name in (
+            select distinct sw.kategorie
+              from sasse_teilnehmer tn
+              join sasse_schwimmer sw on (sw.teilnehmer_ptr_id = tn.id)
+             where tn.disziplin_id = %s
+           )
+     order by kat.reihenfolge
     """
     args = [disziplin.id]
     cursor.execute(sql, args)
@@ -745,10 +750,15 @@ def read_schwimmen_gestartete_kategorien(disziplin):
 def read_einzelschnueren_gestartete_kategorien(disziplin):
     cursor = connection.cursor()
     sql = """
-    select distinct kategorie
-      from sasse_teilnehmer tn
-      join sasse_einzelschnuerer sw on (sw.teilnehmer_ptr_id = tn.id)
-     where tn.disziplin_id = %s
+    select kat.name
+      from sasse_kategorie kat
+     where kat.name in (
+            select distinct sw.kategorie
+              from sasse_teilnehmer tn
+              join sasse_einzelschnuerer sw on (sw.teilnehmer_ptr_id = tn.id)
+             where tn.disziplin_id = %s
+           )
+     order by kat.reihenfolge
     """
     args = [disziplin.id]
     cursor.execute(sql, args)
@@ -756,6 +766,11 @@ def read_einzelschnueren_gestartete_kategorien(disziplin):
         yield row[0]
 
 def read_gruppenschnueren_gestartete_kategorien(disziplin):
+    def sort_by_kategorie_name(kategorie_name):
+        if kategorie_name == 'JP':
+            return 1
+        else:
+            return 2
     cursor = connection.cursor()
     sql = """
     select distinct kategorie
@@ -765,9 +780,10 @@ def read_gruppenschnueren_gestartete_kategorien(disziplin):
     """
     args = [disziplin.id]
     cursor.execute(sql, args)
+    kategories = []
     for row in cursor:
-        yield row[0]
-
+        kategories.append(row[0])
+    return sorted(kategories, key=sort_by_kategorie_name)
 
 def read_bootfaehrenbau_gestartete_kategorien(disziplin):
     cursor = connection.cursor()
