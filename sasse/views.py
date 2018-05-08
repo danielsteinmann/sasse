@@ -93,8 +93,7 @@ from queries import read_sektionsfahren_null_zeiten
 
 from reports import create_rangliste_doctemplate
 from reports import create_rangliste_flowables
-from reports import start_bestzeiten_page
-from reports import create_bestzeiten_doctemplate
+from reports import create_rangliste_header
 from reports import create_bestzeiten_flowables
 from reports import create_notenblatt_doctemplate
 from reports import create_notenblatt_flowables
@@ -102,7 +101,6 @@ from reports import create_startliste_doctemplate
 from reports import create_startliste_flowables
 from reports import create_notenliste_doctemplate
 from reports import create_notenliste_flowables
-from reports import create_sektionsfahren_rangliste_doctemplate
 from reports import create_sektionsfahren_rangliste_flowables
 from reports import create_sektionsfahren_notenblatt_doctemplate
 from reports import create_sektionsfahren_notenblatt_flowables
@@ -671,14 +669,10 @@ def richtzeiten_pdf(request, jahr, wettkampf, disziplin):
     assert request.method == 'GET'
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
+    flowables = _create_pdf_bestzeiten(d)
     response = HttpResponse(mimetype='application/pdf')
     response['Content-Disposition'] = smart_str(u'filename=richtzeiten-%s' % w.name)
-    doc = create_bestzeiten_doctemplate(w, d)
-    flowables = []
-    zeitposten = d.posten_set.filter(postenart__name='Zeitnote')
-    for p in zeitposten:
-        zeitrangliste = read_topzeiten(p, 10)
-        flowables += create_bestzeiten_flowables(p.name, zeitrangliste)
+    doc = create_rangliste_doctemplate(w)
     doc.build(flowables, filename=response)
     return response
 
@@ -793,35 +787,23 @@ def rangliste_pdf(request, jahr, wettkampf, disziplin, kategorie):
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
     k = d.kategorien.get(name=kategorie)
-    kranzlimite = read_kranzlimite(d, k)
-    rangliste = read_rangliste(d, k)
-    rangliste_sorted = sorted(rangliste, key=sort_rangliste)
-    doc = create_rangliste_doctemplate(w, d)
-    flowables = create_rangliste_flowables(rangliste_sorted, k, kranzlimite)
+    flowables = _create_pdf_einzelfahren(d, k)
     response = HttpResponse(mimetype='application/pdf')
     response['Content-Disposition'] = smart_str(u'filename=rangliste-%s-kat-%s' % (w.name, k.name))
+    doc = create_rangliste_doctemplate(w)
     doc.build(flowables, filename=response)
     return response
 
 def rangliste_pdf_all(request, jahr, wettkampf, disziplin):
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
-    response = HttpResponse(mimetype='application/pdf')
-    response['Content-Disposition'] = smart_str(u'filename=rangliste-%s' % w.name)
-    doc = create_rangliste_doctemplate(w, d)
     flowables = []
     for k in read_startende_kategorien(d):
-        kranzlimite = read_kranzlimite(d, k)
-        rangliste = read_rangliste(d, k)
-        rangliste_sorted = sorted(rangliste, key=sort_rangliste)
-        flowables += create_rangliste_flowables(rangliste_sorted, k, kranzlimite)
-    # ---
-    start_bestzeiten_page(doc, flowables)
-    zeitposten = d.posten_set.filter(postenart__name='Zeitnote')
-    for p in zeitposten:
-        zeitrangliste = read_topzeiten(p, 10)
-        flowables += create_bestzeiten_flowables(p.name, zeitrangliste)
-    # ---
+        flowables.extend(_create_pdf_einzelfahren(d, k))
+    flowables.extend(_create_pdf_bestzeiten(d))
+    response = HttpResponse(mimetype='application/pdf')
+    response['Content-Disposition'] = smart_str(u'filename=rangliste-%s' % w.name)
+    doc = create_rangliste_doctemplate(w)
     doc.build(flowables, filename=response)
     return response
 
@@ -1245,11 +1227,10 @@ def sektionsfahren_rangliste_pdf(request, jahr, wettkampf):
             wettkampf__name=wettkampf,
             wettkampf__von__year=jahr)
     w = d.wettkampf
-    rangliste = read_sektionsfahren_rangliste(d)
-    doc = create_sektionsfahren_rangliste_doctemplate(w, d)
-    flowables = create_sektionsfahren_rangliste_flowables(rangliste)
+    flowables = _create_pdf_sektionsfahren(d)
     response = HttpResponse(mimetype='application/pdf')
     response['Content-Disposition'] = smart_str(u'filename=rangliste-%s-%s' % (w.name, d.name))
+    doc = create_rangliste_doctemplate(w)
     doc.build(flowables, filename=response)
     return response
 
@@ -1624,15 +1605,11 @@ def schwimmen_rangliste(request, jahr, wettkampf, kategorie=None):
 def schwimmen_rangliste_pdf(request, jahr, wettkampf, kategorie):
     assert request.method == 'GET'
     d = _get_spezialwettkampf(jahr, wettkampf, "Schwimmen")
-    aktuelle_kategorie = kategorie
-    kranzlimite = _get_spezialwettkampf_limite(d, aktuelle_kategorie)
-    rangliste = Schwimmer.objects.filter(disziplin=d, kategorie=aktuelle_kategorie).order_by('zeit')
-    rangliste, kranz_prozent = _create_spezialwettkampf_rangliste(rangliste, kranzlimite)
     w = d.wettkampf
-    doc = create_rangliste_doctemplate(w, d)
-    flowables = create_schwimmen_rangliste_flowables(rangliste, aktuelle_kategorie, kranzlimite)
+    flowables = _create_pdf_schwimmen(d, kategorie)
     response = HttpResponse(mimetype='application/pdf')
-    response['Content-Disposition'] = smart_str(u'filename=rangliste-%s-kat-%s' % (w.name, aktuelle_kategorie))
+    response['Content-Disposition'] = smart_str(u'filename=rangliste-%s-kat-%s' % (w.name, kategorie))
+    doc = create_rangliste_doctemplate(w)
     doc.build(flowables, filename=response)
     return response
 
@@ -1705,15 +1682,11 @@ def einzelschnueren_rangliste(request, jahr, wettkampf, kategorie=None):
 def einzelschnueren_rangliste_pdf(request, jahr, wettkampf, kategorie):
     assert request.method == 'GET'
     d = _get_spezialwettkampf(jahr, wettkampf, u"Einzelschnüren")
-    aktuelle_kategorie = kategorie
-    kranzlimite = _get_spezialwettkampf_limite(d, aktuelle_kategorie)
-    rangliste = Einzelschnuerer.objects.filter(disziplin=d, kategorie=aktuelle_kategorie).order_by('zeit')
-    rangliste, kranz_prozent = _create_spezialwettkampf_rangliste(rangliste, kranzlimite)
     w = d.wettkampf
-    doc = create_rangliste_doctemplate(w, d)
-    flowables = create_einzelschnueren_rangliste_flowables(rangliste, aktuelle_kategorie, kranzlimite)
+    flowables = _create_pdf_einzelschnueren(d, kategorie)
     response = HttpResponse(mimetype='application/pdf')
-    response['Content-Disposition'] = smart_str(u'filename=rangliste-%s-kat-%s' % (w.name, aktuelle_kategorie))
+    response['Content-Disposition'] = smart_str(u'filename=rangliste-%s-kat-%s' % (w.name, kategorie))
+    doc = create_rangliste_doctemplate(w)
     doc.build(flowables, filename=response)
     return response
 
@@ -1786,15 +1759,11 @@ def gruppenschnueren_rangliste(request, jahr, wettkampf, kategorie=None):
 def gruppenschnueren_rangliste_pdf(request, jahr, wettkampf, kategorie):
     assert request.method == 'GET'
     d = _get_spezialwettkampf(jahr, wettkampf, u"Gruppenschnüren")
-    aktuelle_kategorie = kategorie
-    kranzlimite = _get_spezialwettkampf_limite(d, aktuelle_kategorie)
-    rangliste = Schnuergruppe.objects.filter(disziplin=d, kategorie=aktuelle_kategorie).order_by('zeit')
-    rangliste, kranz_prozent = _create_spezialwettkampf_rangliste(rangliste, kranzlimite)
     w = d.wettkampf
-    doc = create_rangliste_doctemplate(w, d)
-    flowables = create_gruppenschnueren_rangliste_flowables(rangliste, aktuelle_kategorie, kranzlimite)
+    flowables = _create_pdf_gruppenschnueren(d, kategorie)
     response = HttpResponse(mimetype='application/pdf')
-    response['Content-Disposition'] = smart_str(u'filename=rangliste-%s-kat-%s' % (w.name, aktuelle_kategorie))
+    response['Content-Disposition'] = smart_str(u'filename=rangliste-%s-kat-%s' % (w.name, kategorie))
+    doc = create_rangliste_doctemplate(w)
     doc.build(flowables, filename=response)
     return response
 
@@ -1867,15 +1836,11 @@ def bootfaehrenbau_rangliste(request, jahr, wettkampf, kategorie=None):
 def bootfaehrenbau_rangliste_pdf(request, jahr, wettkampf, kategorie):
     assert request.method == 'GET'
     d = _get_spezialwettkampf(jahr, wettkampf, u"Bootsfährenbau")
-    aktuelle_kategorie = kategorie
-    kranzlimite = _get_spezialwettkampf_limite(d, aktuelle_kategorie)
-    rangliste = Bootfaehrengruppe.objects.filter(disziplin=d, kategorie=aktuelle_kategorie).order_by('zeit')
-    rangliste, kranz_prozent = _create_spezialwettkampf_rangliste(rangliste, kranzlimite)
     w = d.wettkampf
-    doc = create_rangliste_doctemplate(w, d)
-    flowables = create_bootfaehrenbau_rangliste_flowables(rangliste, aktuelle_kategorie, kranzlimite)
+    flowables = _create_pdf_bootfaehrenbau(d, kategorie)
     response = HttpResponse(mimetype='application/pdf')
-    response['Content-Disposition'] = smart_str(u'filename=rangliste-%s-kat-%s' % (w.name, aktuelle_kategorie))
+    response['Content-Disposition'] = smart_str(u'filename=rangliste-%s-kat-%s' % (w.name, kategorie))
+    doc = create_rangliste_doctemplate(w)
     doc.build(flowables, filename=response)
     return response
 
@@ -1883,3 +1848,104 @@ def bootfaehrenbau_rangliste_pdf(request, jahr, wettkampf, kategorie):
 def bootfaehrenbau_kranzlimite_update(request, jahr, wettkampf, kategorie):
     d = _get_spezialwettkampf(jahr, wettkampf, u"Bootsfährenbau")
     return _do_kranzlimite_update(request, jahr, wettkampf, d, kategorie, bootfaehrenbau_rangliste)
+
+
+
+#
+# Hilfsfunktion fuer Ranglisten PDF
+#
+
+def _create_pdf_einzelfahren(disziplin, kategorie):
+    kranzlimite = read_kranzlimite(disziplin, kategorie)
+    rangliste = read_rangliste(disziplin, kategorie)
+    rangliste_sorted = sorted(rangliste, key=sort_rangliste)
+    return create_rangliste_flowables(rangliste_sorted, kranzlimite, disziplin, kategorie)
+
+def _create_pdf_bestzeiten(disziplin):
+    all_ranglisten = []
+    zeitposten = disziplin.posten_set.filter(postenart__name='Zeitnote')
+    for p in zeitposten:
+        zeitrangliste = read_topzeiten(p, 10)
+        all_ranglisten.append((p.name, zeitrangliste))
+    return create_bestzeiten_flowables(all_ranglisten, disziplin)
+
+def _create_pdf_sektionsfahren(disziplin):
+    rangliste = read_sektionsfahren_rangliste(disziplin)
+    return create_sektionsfahren_rangliste_flowables(rangliste, disziplin)
+
+def _create_pdf_einzelschnueren(disziplin, kategorie):
+    kranzlimite = _get_spezialwettkampf_limite(disziplin, kategorie)
+    rangliste = Einzelschnuerer.objects.filter(disziplin=disziplin, kategorie=kategorie).order_by('zeit')
+    rangliste, kranz_prozent = _create_spezialwettkampf_rangliste(rangliste, kranzlimite)
+    return create_einzelschnueren_rangliste_flowables(rangliste, kranzlimite, disziplin, kategorie)
+
+def _create_pdf_gruppenschnueren(disziplin, kategorie):
+    kranzlimite = _get_spezialwettkampf_limite(disziplin, kategorie)
+    rangliste = Schnuergruppe.objects.filter(disziplin=disziplin, kategorie=kategorie).order_by('zeit')
+    rangliste, kranz_prozent = _create_spezialwettkampf_rangliste(rangliste, kranzlimite)
+    return create_gruppenschnueren_rangliste_flowables(rangliste, kranzlimite, disziplin, kategorie)
+
+def _create_pdf_bootfaehrenbau(disziplin, kategorie):
+    kranzlimite = _get_spezialwettkampf_limite(disziplin, kategorie)
+    rangliste = Bootfaehrengruppe.objects.filter(disziplin=disziplin, kategorie=kategorie).order_by('zeit')
+    rangliste, kranz_prozent = _create_spezialwettkampf_rangliste(rangliste, kranzlimite)
+    return create_bootfaehrenbau_rangliste_flowables(rangliste, kranzlimite, disziplin)
+
+def _create_pdf_schwimmen(disziplin, kategorie):
+    kranzlimite = _get_spezialwettkampf_limite(disziplin, kategorie)
+    rangliste = Schwimmer.objects.filter(disziplin=disziplin, kategorie=kategorie).order_by('zeit')
+    rangliste, kranz_prozent = _create_spezialwettkampf_rangliste(rangliste, kranzlimite)
+    return create_schwimmen_rangliste_flowables(rangliste, kranzlimite, disziplin, kategorie)
+
+
+#
+# Rangliste über ganzen Wettkampf
+#
+
+def rangliste_komplett_pdf(request, jahr, wettkampf):
+
+    def sort_by_disziplinart(d):
+        if d.disziplinart.name == u"Sektionsfahren":
+            return 1
+        elif d.disziplinart.name == u"Einzelfahren":
+            if d.kategorien.filter(name = "I").exists():
+                return 2
+            else:
+                return 3
+        elif d.disziplinart.name == u"Einzelschnüren":
+            return 4
+        elif d.disziplinart.name == u"Gruppenschnüren":
+            return 5
+        elif d.disziplinart.name == u"Bootsfährenbau":
+            return 6
+        elif d.disziplinart.name == u"Schwimmen":
+            return 7
+        else:
+            return 8
+
+    w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
+    doc = create_rangliste_doctemplate(w)
+    flowables = []
+    for d in sorted(w.disziplin_set.all(), key = sort_by_disziplinart):
+        if d.disziplinart.name == u"Sektionsfahren":
+            flowables.extend(_create_pdf_sektionsfahren(d))
+        elif d.disziplinart.name == u"Einzelfahren":
+            for k in read_startende_kategorien(d):
+                flowables.extend(_create_pdf_einzelfahren(d, k))
+            flowables.extend(_create_pdf_bestzeiten(d))
+        elif d.disziplinart.name == u"Einzelschnüren":
+            for k in read_einzelschnueren_gestartete_kategorien(d):
+                flowables.extend(_create_pdf_einzelschnueren(d, k))
+        elif d.disziplinart.name == u"Gruppenschnüren":
+            for k in read_gruppenschnueren_gestartete_kategorien(d):
+                flowables.extend(_create_pdf_gruppenschnueren(d, k))
+        elif d.disziplinart.name == u"Bootsfährenbau":
+            flowables.extend(_create_pdf_bootfaehrenbau(d, 'Aktive'))
+        elif d.disziplinart.name == u"Schwimmen":
+            for k in read_schwimmen_gestartete_kategorien(d):
+                flowables.extend(_create_pdf_schwimmen(d, k))
+    response = HttpResponse(mimetype='application/pdf')
+    response['Content-Disposition'] = smart_str(u'filename=rangliste-komplett-%s' % w.name)
+    doc.build(flowables, filename=response)
+    return response
+

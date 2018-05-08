@@ -33,12 +33,11 @@ def _create_style_sheet(baseFontSize=8):
 def _extract_jahrgang(geburtstag):
     return ' <font size=-2>' + geburtstag.strftime('%Y') + "</font>"
 
-def create_rangliste_doctemplate(wettkampf, disziplin):
+def create_rangliste_doctemplate(wettkampf):
     f = Frame(1*cm, 1*cm, PAGE_WIDTH-2*cm, PAGE_HEIGHT-3*cm, id='normal')
     pt = PageTemplate(id="Rangliste", frames=f, onPageEnd=write_rangliste_header_footer)
     doc = BaseDocTemplate(None, pageTemplates=[pt], pagesize=A4)
     doc.wettkampf = wettkampf
-    doc.disziplin = disziplin
     return doc
 
 def write_rangliste_header_footer(canvas, doc):
@@ -46,13 +45,15 @@ def write_rangliste_header_footer(canvas, doc):
     canvas.setFont('Helvetica', 8)
     canvas.drawImage(settings.MEDIA_ROOT + '/spsv-logo.jpg', 2*cm, PAGE_HEIGHT-2*cm, width=1.5*cm, height=1.5*cm)
     canvas.line(4*cm, PAGE_HEIGHT-1.2*cm, PAGE_WIDTH-2*cm, PAGE_HEIGHT-1.2*cm)
-    canvas.drawString(4*cm, PAGE_HEIGHT-1*cm, "Rangliste %s" % (doc.disziplin.disziplinart))
-    canvas.drawCentredString(PAGE_WIDTH/2+1*cm, PAGE_HEIGHT-1*cm, "Kategorie %s" % (doc.docEval("kategorie_name")))
+    canvas.drawString(4*cm, PAGE_HEIGHT-1*cm, doc.docEval("header_line"))
     canvas.drawRightString(PAGE_WIDTH-2*cm, PAGE_HEIGHT-1*cm, "%s %d" % (doc.wettkampf.name, doc.wettkampf.jahr()))
     canvas.drawCentredString(PAGE_WIDTH/2, 1*cm, "Seite %d" % (doc.page,))
     canvas.restoreState()
 
-def create_rangliste_flowables(rangliste, kategorie, kranzlimite):
+def create_rangliste_header(text):
+    return DocExec("header_line = '%s'" % (text,))
+
+def create_rangliste_flowables(rangliste, kranzlimite, disziplin, kategorie):
     data = [['Rang', 'Steuermann', 'Vorderfahrer', 'Sektion', 'Stnr', 'Zeit', 'Punkte']]
     col_widths = (30, 140, 140, 80, 30, 40, 30)
     anzahl_ohne_kranz = 0
@@ -92,8 +93,9 @@ def create_rangliste_flowables(rangliste, kategorie, kranzlimite):
             ('SPAN', (0,kranzlimite_row), (-1,kranzlimite_row)),
             ('BACKGROUND', (0,kranzlimite_row), (-1,kranzlimite_row), colors.lightgrey),
             ])
+    header = "Rangliste %s, Kategorie %s" % (disziplin.disziplinart.name, kategorie.name)
     result = []
-    result.append(DocExec("kategorie_name = '%s'" % kategorie.name))
+    result.append(create_rangliste_header(header))
     result.append(Platypus_Table(data, repeatRows=1, colWidths=col_widths, style=TableStyle(table_props)))
     result.append(PageBreak())
     return result
@@ -243,33 +245,17 @@ def create_startliste_flowables(schiffe):
 # Bestzeiten
 #
 
-def create_bestzeiten_doctemplate(wettkampf, disziplin):
-    f = Frame(1*cm, 1*cm, PAGE_WIDTH-2*cm, PAGE_HEIGHT-3.3*cm, id='normal')
-    pt = PageTemplate(id="Bestzeiten", frames=f, onPageEnd=write_bestzeiten_header_footer)
-    doc = BaseDocTemplate(None, pageTemplates=[pt], pagesize=A4)
-    doc.wettkampf = wettkampf
-    doc.disziplin = disziplin
-    return doc
+def create_bestzeiten_flowables(all_ranglisten, disziplin):
+    header = "Bestzeiten %s" % (disziplin.name)
+    result = []
+    result.append(create_rangliste_header(header))
+    for posten_name, zeitrangliste in all_ranglisten:
+        flowables = _create_bestzeiten_flowables_posten(posten_name, zeitrangliste)
+        result.extend(flowables)
+    result.append(PageBreak())
+    return result
 
-def start_bestzeiten_page(doc, flowables):
-    f = Frame(1*cm, 1*cm, PAGE_WIDTH-2*cm, PAGE_HEIGHT-3.3*cm, id='normal')
-    pt = PageTemplate(id="Bestzeiten", frames=f, onPageEnd=write_bestzeiten_header_footer)
-    doc.addPageTemplates(pt)
-    flowables.pop() # Remove last PageBreak
-    flowables.append(NextPageTemplate('Bestzeiten'))
-    flowables.append(PageBreak())
-
-def write_bestzeiten_header_footer(canvas, doc):
-    canvas.saveState()
-    canvas.setFont('Helvetica', 8)
-    canvas.drawImage(settings.MEDIA_ROOT + '/spsv-logo.jpg', 2*cm, PAGE_HEIGHT-2*cm, width=1.5*cm, height=1.5*cm)
-    canvas.line(4*cm, PAGE_HEIGHT-1.2*cm, PAGE_WIDTH-2*cm, PAGE_HEIGHT-1.2*cm)
-    canvas.drawString(4*cm, PAGE_HEIGHT-1*cm, "Bestzeiten %s" % (doc.disziplin.disziplinart))
-    canvas.drawRightString(PAGE_WIDTH-2*cm, PAGE_HEIGHT-1*cm, "%s %d" % (doc.wettkampf.name, doc.wettkampf.jahr()))
-    canvas.drawCentredString(PAGE_WIDTH/2, 1*cm, "Seite %d" % (doc.page,))
-    canvas.restoreState()
-
-def create_bestzeiten_flowables(posten_name, zeitrangliste):
+def _create_bestzeiten_flowables_posten(posten_name, zeitrangliste):
     data = []
     header = ['Posten', 'Richtzeit', 'Stnr', 'Fahrerpaar', 'Sektion', 'Kat', 'Zeit', 'Note']
     data.append(header)
@@ -567,25 +553,8 @@ def create_sektionsfahren_notenblatt_gruppe_flowables(gruppe, notenliste):
 #
 # Rangliste Sektionsfahren
 #
-def create_sektionsfahren_rangliste_doctemplate(wettkampf, disziplin):
-    f = Frame(1*cm, 1*cm, PAGE_WIDTH-2*cm, PAGE_HEIGHT-3*cm, id='normal')
-    pt = PageTemplate(id="Rangliste", frames=f, onPageEnd=write_sektionsfahren_rangliste_header_footer)
-    doc = BaseDocTemplate(None, pageTemplates=[pt], pagesize=A4)
-    doc.wettkampf = wettkampf
-    doc.disziplin = disziplin
-    return doc
 
-def write_sektionsfahren_rangliste_header_footer(canvas, doc):
-    canvas.saveState()
-    canvas.setFont('Helvetica', 8)
-    canvas.drawImage(settings.MEDIA_ROOT + '/spsv-logo.jpg', 2*cm, PAGE_HEIGHT-2*cm, width=1.5*cm, height=1.5*cm)
-    canvas.line(4*cm, PAGE_HEIGHT-1.2*cm, PAGE_WIDTH-2*cm, PAGE_HEIGHT-1.2*cm)
-    canvas.drawString(4*cm, PAGE_HEIGHT-1*cm, "Rangliste %s" % (doc.disziplin.disziplinart))
-    canvas.drawRightString(PAGE_WIDTH-2*cm, PAGE_HEIGHT-1*cm, "%s %d" % (doc.wettkampf.name, doc.wettkampf.jahr()))
-    canvas.drawCentredString(PAGE_WIDTH/2, 1*cm, "Seite %d" % (doc.page,))
-    canvas.restoreState()
-
-def create_sektionsfahren_rangliste_flowables(rangliste):
+def create_sektionsfahren_rangliste_flowables(rangliste, disziplin):
     data = [['Kranz', 'Rang', 'Sektion', 'Gruppen', 'Schiffe', 'JP', 'Fr.', 'Sen.', 'Total']]
     col_widths = (50, 40, 110, 50, 40, 30, 30, 30, 70)
     ss = _create_style_sheet(10)
@@ -621,7 +590,9 @@ def create_sektionsfahren_rangliste_flowables(rangliste):
         record.append(Paragraph(unicode(row['anz_senioren']), ss['center']))
         record.append(Paragraph(unicode(row['total']), ss['center']))
         data.append(record)
+    header = "Rangliste %s" % disziplin.disziplinart.name
     result = []
+    result.append(create_rangliste_header(header))
     result.append(Platypus_Table(data, repeatRows=1, colWidths=col_widths, style=TableStyle(table_props)))
     result.append(PageBreak())
     return result
@@ -631,7 +602,7 @@ def create_sektionsfahren_rangliste_flowables(rangliste):
 # Schwimmen
 #
 
-def create_schwimmen_rangliste_flowables(rangliste, kategorie, kranzlimite):
+def create_schwimmen_rangliste_flowables(rangliste, kranzlimite, disziplin, kategorie):
     data = [['Rang', 'Schwimmer', 'Sektion', 'Zeit']]
     col_widths = (30, 140, 80, 40)
     anzahl_ohne_kranz = 0
@@ -664,8 +635,9 @@ def create_schwimmen_rangliste_flowables(rangliste, kategorie, kranzlimite):
             ('SPAN', (0,kranzlimite_row), (-1,kranzlimite_row)),
             ('BACKGROUND', (0,kranzlimite_row), (-1,kranzlimite_row), colors.lightgrey),
             ])
+    header = "Rangliste %s, Kategorie %s" % (disziplin.disziplinart.name, kategorie)
     result = []
-    result.append(DocExec("kategorie_name = '%s'" % kategorie))
+    result.append(create_rangliste_header(header))
     result.append(Platypus_Table(data, repeatRows=1, colWidths=col_widths, style=TableStyle(table_props)))
     result.append(PageBreak())
     return result
@@ -675,7 +647,7 @@ def create_schwimmen_rangliste_flowables(rangliste, kategorie, kranzlimite):
 # Einzelschnüren
 #
 
-def create_einzelschnueren_rangliste_flowables(rangliste, kategorie, kranzlimite):
+def create_einzelschnueren_rangliste_flowables(rangliste, kranzlimite, disziplin, kategorie):
     data = [['Rang', 'Schnürer', 'Sektion', 'Parcourszeit', 'Zuschläge', 'Totalzeit']]
     col_widths = (30, 140, 80, 60, 50, 60)
     anzahl_ohne_kranz = 0
@@ -710,8 +682,9 @@ def create_einzelschnueren_rangliste_flowables(rangliste, kategorie, kranzlimite
             ('SPAN', (0,kranzlimite_row), (-1,kranzlimite_row)),
             ('BACKGROUND', (0,kranzlimite_row), (-1,kranzlimite_row), colors.lightgrey),
             ])
+    header = "Rangliste %s, Kategorie %s" % (disziplin.disziplinart.name, kategorie)
     result = []
-    result.append(DocExec("kategorie_name = '%s'" % kategorie))
+    result.append(create_rangliste_header(header))
     result.append(Platypus_Table(data, repeatRows=1, colWidths=col_widths, style=TableStyle(table_props)))
     result.append(PageBreak())
     return result
@@ -721,7 +694,7 @@ def create_einzelschnueren_rangliste_flowables(rangliste, kategorie, kranzlimite
 # Gruppenschnüren
 #
 
-def create_gruppenschnueren_rangliste_flowables(rangliste, kategorie, kranzlimite):
+def create_gruppenschnueren_rangliste_flowables(rangliste, kranzlimite, disziplin, kategorie):
     data = [['Rang', 'Gruppe', 'Aufbauzeit', 'Abbauzeit', 'Zuschläge', 'Totalzeit']]
     col_widths = (30, 110, 60, 60, 50, 60)
     anzahl_ohne_kranz = 0
@@ -755,8 +728,9 @@ def create_gruppenschnueren_rangliste_flowables(rangliste, kategorie, kranzlimit
             ('SPAN', (0,kranzlimite_row), (-1,kranzlimite_row)),
             ('BACKGROUND', (0,kranzlimite_row), (-1,kranzlimite_row), colors.lightgrey),
             ])
+    header = "Rangliste %s, Kategorie %s" % (disziplin.disziplinart.name, kategorie)
     result = []
-    result.append(DocExec("kategorie_name = '%s'" % kategorie))
+    result.append(create_rangliste_header(header))
     result.append(Platypus_Table(data, repeatRows=1, colWidths=col_widths, style=TableStyle(table_props)))
     result.append(PageBreak())
     return result
@@ -766,7 +740,7 @@ def create_gruppenschnueren_rangliste_flowables(rangliste, kategorie, kranzlimit
 # Bootfährenbau
 #
 
-def create_bootfaehrenbau_rangliste_flowables(rangliste, kategorie, kranzlimite):
+def create_bootfaehrenbau_rangliste_flowables(rangliste, kranzlimite, disziplin):
     data = [['Rang', 'Gruppe', 'Einbauzeit', 'Ausbauzeit', 'Zuschläge', 'Totalzeit']]
     col_widths = (30, 110, 60, 60, 50, 60)
     anzahl_ohne_kranz = 0
@@ -800,8 +774,10 @@ def create_bootfaehrenbau_rangliste_flowables(rangliste, kategorie, kranzlimite)
             ('SPAN', (0,kranzlimite_row), (-1,kranzlimite_row)),
             ('BACKGROUND', (0,kranzlimite_row), (-1,kranzlimite_row), colors.lightgrey),
             ])
+    header = "Rangliste %s" % (disziplin.disziplinart.name)
     result = []
-    result.append(DocExec("kategorie_name = '%s'" % kategorie))
+    result.append(create_rangliste_header(header))
     result.append(Platypus_Table(data, repeatRows=1, colWidths=col_widths, style=TableStyle(table_props)))
     result.append(PageBreak())
     return result
+

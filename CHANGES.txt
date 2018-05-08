@@ -1,11 +1,29 @@
-Version 2.12 (????)
+Version 2.12 (10. Mai 2018)
+
 - Sektionsfahren: Beim Erfassen einer Gruppe mit Enter zum nächsten
   Eingabefeld, statt Formular abschicken.
+
 - Bootfährenbau: Beim Erfassen einer Gruppe mit Enter wird die Auswahlliste der
   Sektion nicht mehr übersprungen.
-- Schwimmen, Einzelschnüren, Gruppenschnüren: Bei den Ranglisten erscheinen die
-  Kategorien nun richtig sortiert: 'I | II | III | F | D | C' beim Schwimmen
-  und Einzelschnüren, 'JP | Aktive' beim Gruppenschnüren.
+
+- Schwimmen, Einzelschnüren, Gruppenschnüren: Bei den Ranglisten Tabs
+  erscheinen die Kategorien nun richtig sortiert: 'I | II | III | F | D | C'
+  beim Schwimmen und Einzelschnüren, 'JP | Aktive' beim Gruppenschnüren.
+
+- PDF Rangliste über ganzen Wettkampf in folgender Reihenfolge:
+   - Sektionsfahren
+   - Einzelfahren I
+   - Bestzeiten Kleiner Parcours
+   - Einzelfahren II/III/F/D/C
+   - Bestzeiten Grosser Parcours
+   - Einzelschnüren I/II/III/F/D/C
+   - Gruppenschnüren JP/Aktive
+   - Bootsfährenbau
+   - Schwimmen I/II/III/F/D/C
+
+  Der Link auf der Wettkampf Seite ist nur aktiv, wenn man eingeloggt ist.
+  Somit kann man das in der Version im Internet nicht anwählen (diese PDF
+  Rangliste erzeugt viel CPU Last).
 
 
 Version 2.11 (9. Mai 2017)

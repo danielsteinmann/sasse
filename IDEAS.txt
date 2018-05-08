@@ -1,3 +1,38 @@
+
+2. 80% Regel, basierend auf Startliste Sektionsfahren (inkl. Reservefahrer)
+   - Anzahl Reservefahrer zwischen Fahrchef und Zuschlägen eingeben
+     (sind damit auch überzählige Fahrer, Kampfrichter, VL-Mitglieder gemeint?)
+   - Import der Pflichtzahlen aus SPSV Datenbank; pro Wettkampf speichern
+   - Auf Startliste Gruppen rot markieren, wo die 80% Regel verletzt ist
+
+   => Was ist mit WKR Kapitel 2.2.1 "Alle Teilnehmer im Einzel auch in Sektion"?
+      Soll das auch automatisch geprüft werden?
+
+3. Rayonwettfahren
+   - Unter Einzwelwettfahren ein Menupunkt "Sektionsrangliste" einfügen. Nur
+     sichtbar, falls die Pflichtzahlen für diesen Wettkampf vorhanden sind.
+     (Siehe 80% Regel)
+
+4. Generationenpreis automatisieren
+   - Zwei Personen als Teilnehmer eingeben
+
+5. Eingabemaske für Spezialwettkämpfe
+
+===
+cat remove.txt | while read old new name; do sed -e "s,_OLD_,$old," -e "s,_NEW_,$new," dups_template.sql; done > delete_dups.sql
+===
+- WICHTIG: Check, ob es keine Noten gibt.
+- Die Kat. I, II, III, F, D und C müssen in allen Wettkampfdisziplinen verfügbar sein
+- Alles auf eigene Richtzeiten I, II, III, F, D und C damit man dies mal Testen kann bzw dies bereits möglich ist
+
+- Kategorie C/D Einzelfahren CSV Export
+   echo "\copy ($(paste -s x.sql)) to stdout with delimiter ';' csv header encoding 'latin1'" | psql -U postgres -d spsv
+
+
+http://stackoverflow.com/questions/1406025/no-pg-hba-conf-entry-for-host
+http://stackoverflow.com/questions/10454002/can-postgresql-copy-read-csv-from-a-remote-location
+===
+
 - Sektions Startliste Ausdruckbar machen (wie Einzelfahren), damit der Speaker
   ein sauberes Blatt hat.
 
