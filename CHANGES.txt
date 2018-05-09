@@ -3,8 +3,8 @@ Version 2.12 (10. Mai 2018)
 - Sektionsfahren: Beim Erfassen einer Gruppe mit Enter zum nächsten
   Eingabefeld, statt Formular abschicken.
 
-- Bootfährenbau: Beim Erfassen einer Gruppe mit Enter wird die Auswahlliste der
-  Sektion nicht mehr übersprungen.
+- Bootfährenbau, Gruppenschnüren: Beim Erfassen einer Gruppe mit Enter werden
+  die Dropdown Auswahllisten nicht mehr übersprungen.
 
 - Schwimmen, Einzelschnüren, Gruppenschnüren: Bei den Ranglisten Tabs
   erscheinen die Kategorien nun richtig sortiert: 'I | II | III | F | D | C'
