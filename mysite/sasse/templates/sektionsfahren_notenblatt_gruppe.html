@@ -1,0 +1,69 @@
+{% extends "base_sektionsfahren.html" %}
+{% block nav_rangliste %}selected{% endblock %}
+{% block content %}
+<p>Notenblatt Gruppe <b>{{ gruppe.name }}</b>
+(<a target="_blank" href="{% url 'sektionsfahren_notenblatt_gruppe_pdf' wettkampf.jahr wettkampf.name gruppe.name %}">PDF</a>)
+</p>
+<table class="display">
+  <tr>
+    <td>Durchschnitt Punkte:</td>
+    <td align="right">{{ gruppe.gefahren }}</td>
+    <td>(Summe aller Schiffe) / {{ gruppe.anz_schiffe }}</td>
+  </tr>
+  <tr>
+    <td>Durchschnitt Zuschläge:</td>
+    <td align="right">{{ gruppe.zuschlag }}</td>
+    <td>(2 * ({{ gruppe.anz_jps }}JP + {{ gruppe.anz_frauen }}Fr. + {{ gruppe.anz_senioren }}Sen.)) / {{ gruppe.anz_schiffe }}</td>
+  </tr>
+  <tr>
+    <td>Abzüge Gruppentotal:</td>
+    <td align="right">{{ gruppe.abzug_gruppe }}</td>
+    <td>{{ gruppe.abzug_gruppe_comment|default:""|linebreaksbr }}</td>
+  </tr>
+  <tr>
+    <td>Total:</td>
+    <th align="right">{{ gruppe.total }}</th>
+  </tr>
+{% if gruppe.abzug_sektion %}
+  <tr>
+    <td>Abzüge Sektionstotal:</td>
+    <td align="right">{{ gruppe.abzug_sektion }}</td>
+    <td>{{ gruppe.abzug_sektion_comment|default:""|linebreaksbr }}</td>
+  </tr>
+{% endif %}
+</table>
+<p></p>
+<table class="list" border="1">
+  <tr>
+    <th class="startnummer">Posten</th>
+    <th>Übungsteil</th>
+    {% for i in schiff_range %}
+        <th colspan="2"  class="rang">{{i}}. Schiff</th>
+    {% endfor %}
+  </tr>
+  <tr>
+    <th colspan="2"></th>
+    {% for i in schiff_range %}
+        <th class="rang"><small>1.DG</small></th>
+        <th class="rang"><small>2.DG</small></th>
+    {% endfor %}
+  </tr>
+{% for posten in notenliste %}
+{% if not forloop.last %}
+  <tr class="{% cycle "odd" "even" %}">
+    <td class="startnummer">{{ posten.posten }}</td>
+    <td>{{ posten.postenart }}</td>
+    {% for note in posten.noten %}
+        <td colspan="{{ posten.colspan }}" class="rang">{{ note }}</td>
+    {% endfor %}
+  </tr>
+  {% else %}
+  <tr style="font-weight: bold;">
+    <td colspan="2"></td>
+    {% for note in posten.noten %}
+        <td colspan="{{ posten.colspan }}" class="rang">{{ note }}</td>
+    {% endfor %}
+  </tr>
+{% endif %}
+{% endfor %}
+{% endblock %}

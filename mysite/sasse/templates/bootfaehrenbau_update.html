@@ -1,0 +1,16 @@
+{% extends disziplin.get_base_template %}
+{% block nav_eingabe %}selected{% endblock %}
+{% block content %}
+<form action="" method="POST">
+  <table class="form">
+    {{ form.as_table }}
+    <tr>
+      <td></td>
+      <td>
+        <input type="submit" value="Ändern"/>
+        <a href="{% url 'bootfaehrenbau_delete' wettkampf.jahr wettkampf.name form.instance.startnummer %}">Löschen</a>
+      </td>
+    </tr>
+  </table>
+</form>
+{% endblock %}

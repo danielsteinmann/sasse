@@ -1,0 +1,80 @@
+{% extends "base_einzelschnueren.html" %}
+{% block nav_eingabe %}selected{% endblock %}
+{% block content %}
+{% load pagination_tags %}
+{% load sasse %}
+{% autopaginate startliste 40 %}
+<p><p/>
+<form id="myform" name="myform" action="" method="POST">
+<table class="form">
+  {% if form.non_field_errors %}
+  <tr>
+    <td colspan="2">{{ form.non_field_errors }}</td>
+  </tr>
+  {% endif %}
+  <tr>
+    <th>Startnummer:</th>
+    <td>{{ form.startnummer.errors }}{{ form.startnummer }}</td>
+  </tr>
+  <tr>
+    <th>Schnürer:</th>
+    <td>{{ form.mitglied.errors }}{{ form.mitglied }}</td>
+  </tr>
+  <tr>
+    <th>Parcourszeit:</th>
+    <td>{{ form.parcourszeit.errors }}{{ form.parcourszeit }}</td>
+  </tr>
+  <tr>
+    <th>Zuschläge:</th>
+    <td>{{ form.zuschlaege.errors }}{{ form.zuschlaege }}</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><input type="submit" value="Einzelschnürer hinzufügen"/></td>
+  </tr>
+</table>
+</form>
+<table class="list">
+  <tr>
+    <th class="startnummer">Stnr</th>
+    <th>Schnürer</th>
+    <th>Sektion</th>
+    <th class="kategorie">Kat</th>
+    <th class="zeit">Parcourszeit</th>
+    <th class="zeit">Zuschläge</th>
+    <th class="zeit">Totalzeit</th>
+  </tr>
+  {% for row in startliste %}
+  <tr class="{% cycle 'odd' 'even' %}">
+    <td class="startnummer"><a href="{% url 'einzelschnueren_update' wettkampf.jahr wettkampf.name row.startnummer %}">{{ row.startnummer }}</a></td>
+    <td>{{ row.mitglied.name }}&nbsp;{{ row.mitglied.vorname }}<font size="-2"> {{ row.mitglied.geburtsdatum.year }}</font></td>
+    <td>{{ row.mitglied.sektion }}</td>
+    <td class="zeit">{{ row.kategorie }}</td>
+    <td class="zeit">{{ row.parcourszeit|bewertung:'ZEIT' }}</td>
+    <td class="zeit">{{ row.zuschlaege }}</td>
+    <td class="zeit">{{ row.zeit|bewertung:'ZEIT' }}</td>
+  </tr>
+  {% endfor %}
+</table>
+<p></p>
+{% paginate %}
+<script type="text/javascript">
+$(document).ready(function(){
+        textboxes = $("form:not(.filter) :input:visible:[type=text]");
+        $(textboxes).keydown(checkForEnter);
+        $("input[id=id_parcourszeit]").mask("9:99.99");
+});
+function checkForEnter(event) {
+    if (event.keyCode == 13) {
+        currentBoxNumber = textboxes.index(this);
+        nextBox = textboxes[currentBoxNumber + 1]
+        if (nextBox != null) {
+            nextBox.focus();
+            nextBox.select();
+            event.preventDefault();
+            return false;
+        }
+    }
+} 
+</script>
+{% endblock %}

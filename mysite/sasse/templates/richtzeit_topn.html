@@ -1,0 +1,42 @@
+<p></p>
+Die besten Zeiten für Posten {{ posten.name }}:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a target="_blank" href="{% url 'richtzeiten_pdf' wettkampf.jahr wettkampf.name disziplin.name %}">Alle Posten als PDF</a>
+<table class="list">
+  <tr>
+    <th class="startnummer">Stnr</th>
+    <th>Fahrerpaar</th>
+    <th>Sektion</th>
+    <th class="kategorie">Kat</th>
+    <th class="zeit">Zeit</th>
+    <th class="note">Note</th>
+  </tr>
+{% for row in page_obj %}
+  <tr class="{% cycle 'odd' 'even' %}">
+    <td class="startnummer"><a href="{% url 'teilnehmer_get' wettkampf.jahr wettkampf.name disziplin.name row.startnummer %}">{{row.startnummer}}</a></td>
+    <td>{{row.steuermann}} / {{row.vorderfahrer}}</td>
+    <td>{{row.sektion}}</td>
+    <td class="kategorie">{{row.kategorie}}</td>
+    <td class="zeit">{{row.zeit}}</td>
+    <td class="note">{{row.note}}</td>
+  </tr>
+{% endfor %}
+</table>
+<p></p>
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; erste</a>
+            <a href="?page={{ page_obj.previous_page_number }}">vorherige</a>
+        {% endif %}
+
+        <span class="current">
+            Seite {{ page_obj.number }} von {{ page_obj.paginator.num_pages }}
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">nächste</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">letzte &raquo;</a>
+        {% endif %}
+    </span>
+</div>

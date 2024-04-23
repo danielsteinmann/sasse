@@ -1,0 +1,48 @@
+{% extends "base_teilnehmer.html" %}
+
+{% block content %}
+<table class="display">
+  <tr>
+    <th>Startnummer:</th>
+    <td>{{ teilnehmer.startnummer }}</td>
+  </tr>
+  <tr>
+    <th>Steuermann:</th>
+    <td><a href="/admin/sasse/mitglied/{{ teilnehmer.steuermann.id }}">{{ teilnehmer.steuermann.name }}&nbsp;{{ teilnehmer.steuermann.vorname }}</a>
+        <br><font size="-1">
+        {% if teilnehmer.steuermann_ist_ds %}Doppelstarter, {% endif %}
+        Nummer {{teilnehmer.steuermann.nummer }}, Sektion {{ teilnehmer.steuermann.sektion }}, Jahrgang {{ teilnehmer.steuermann.geburtsdatum.year }}, Kategorie {{ teilnehmer.steuermann_kat }}, {{teilnehmer.steuermann.get_geschlecht_display}}</font></td>
+  </tr>
+  <tr>
+    <th>Vorderfahrer:</th>
+    <td><a href="/admin/sasse/mitglied/{{ teilnehmer.vorderfahrer.id }}">{{ teilnehmer.vorderfahrer.name }}&nbsp;{{ teilnehmer.vorderfahrer.vorname }}</a>
+        <br><font size="-1">
+        {% if teilnehmer.vorderfahrer_ist_ds %}Doppelstarter, {% endif %}
+        Nummer {{teilnehmer.vorderfahrer.nummer }}, Sektion {{ teilnehmer.vorderfahrer.sektion }}, Jahrgang {{ teilnehmer.vorderfahrer.geburtsdatum.year }}, Kategorie {{ teilnehmer.vorderfahrer_kat }}, {{teilnehmer.vorderfahrer.get_geschlecht_display}}</font></td>
+  </tr>
+  <tr>
+    <th>Sektion:</th>
+    <td>{{ teilnehmer.sektion }}</td>
+  </tr>
+  <tr>
+    <th>Kategorie:</th>
+    <td>{{ teilnehmer.kategorie }}</td>
+  </tr>
+  <tr>
+    <th>Disqualifiziert:</th>
+    <td>{{ teilnehmer.disqualifiziert|yesno:"ja,nein" }}</td>
+  </tr>
+  <tr>
+    <th>Ausgeschieden:</th>
+    <td>{{ teilnehmer.ausgeschieden|yesno:"ja,nein" }}</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>
+      <br />
+      <a href="{% url 'teilnehmer_update' wettkampf.jahr wettkampf.name disziplin.name teilnehmer.startnummer %}">Ändern</a>
+      | <a href="{% url 'teilnehmer_delete_confirm' wettkampf.jahr wettkampf.name disziplin.name teilnehmer.startnummer %}">Löschen</a>
+    </td>
+  </tr>
+</table>
+{% endblock %}

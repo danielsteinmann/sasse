@@ -1,0 +1,39 @@
+{% extends "base_startliste.html" %}
+{% block content %}
+<form action="" method="POST">
+  <table class="form">
+    {% if form.non_field_errors %}
+    <tr><td colspan="2">{{ form.non_field_errors }}</td></tr>
+    {% endif %}
+    <tr>
+      <th>Gruppe:</th>
+      <td>{{ form.instance.gruppe }}</td>
+    </tr>
+    <tr>
+      <th>Schiffnr:</th>
+      <td>{{ form.position.errors }}{{ form.position }}</td>
+    </tr>
+    <tr>
+      <th>1. Ablösung:</th>
+      <td>{{ form.ft1_steuermann.errors }}{{ form.ft1_steuermann }}</td>
+      <td>{{ form.ft1_vorderfahrer.errors }}{{ form.ft1_vorderfahrer }}</td>
+    </tr>
+    <tr>
+      <th>2. Ablösung:</th>
+      <td>{{ form.ft2_steuermann.errors }}{{ form.ft2_steuermann }}</td>
+      <td>{{ form.ft2_vorderfahrer.errors }}{{ form.ft2_vorderfahrer }}</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td colspan="2">
+        <input type="hidden" name="startnummer" value="{{ form.instance.startnummer }}"/>
+        <input type="submit" name="save" value="Änderungen speichern"/>
+        <input type="submit" name="delete" value="Schiff löschen"/>
+        <small>
+          <a href="{% url 'sektionsfahren_gruppe_get' wettkampf.jahr wettkampf.name form.instance.gruppe %}">Abbrechen</a>
+        </small>
+      </td>
+    </tr>
+  </table>
+</form>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "base_wettkaempfe.html" %}
+{% block nav_wettkampf %}selected{% endblock %}
+
+{% block content %}
+<form action="{% url 'wettkaempfe_add' %}" method="POST">
+  <table class="form">
+    {% if form.non_field_errors %}
+    <tr><td colspan="2">{{ form.non_field_errors }}</td></tr>
+    {% endif %}
+    {% for field in form %}
+    <tr>
+      <th>{{ field.label_tag }}:</th>
+      <td>{{ field.errors }} {{ field }}<br />
+        <font size="-1"> {{ field.help_text }}</font>
+      </td>
+    </tr>
+    {% endfor %}
+    <tr>
+      <td></td>
+      <td><input type="submit" value="Wettkampf hinzufügen"/></td>
+    </tr>
+  </table>
+</form>
+{% endblock %}

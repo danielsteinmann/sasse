@@ -1,0 +1,19 @@
+{% extends disziplin.get_base_template %}
+{% block nav_rangliste %}selected{% endblock %}
+{% load sasse %}
+{% block content %}
+{% for p in zeitposten %}
+{% if p.id == posten.id %}<b>{{ p.name }}</b>
+{% else %}<a href="{% url 'richtzeit' wettkampf.jahr wettkampf.name disziplin.name p.name %}?{{ query }}">{{ p.name }}</a>
+{% endif %}{% if not forloop.last %}|{% endif %}
+{% endfor %}
+<p>
+{% if form.instance.zeit %}
+<b>Richtzeit: {{form.instance.zeit|bewertung:'ZEIT'}}</b>
+<a href="{% url 'richtzeit_update' wettkampf.jahr wettkampf.name disziplin.name posten.name %}">Ändern</a>
+{% else %}
+Noch keine Richtzeit vorhanden.
+<a href="{% url 'richtzeit_update' wettkampf.jahr wettkampf.name disziplin.name posten.name %}">Richtzeit eingeben</a>
+{% endif %}
+{% include topn_template %}
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "base_sektionsfahren.html" %}
+{% block nav_rangliste %}selected{% endblock %}
+{% block content %}
+<form action="" method="POST">
+  <table class="form">
+    {{ form.as_table }}
+    <tr>
+      <td></td>
+      <td>
+        <input type="submit" value="Änderungen speichern"/>
+        <small>
+        <a href="{% url 'sektionsfahren_rangliste' wettkampf.jahr wettkampf.name %}">Abbrechen</a>
+        </small>
+      </td>
+    </tr>
+  </table>
+</form>
+{% endblock %}

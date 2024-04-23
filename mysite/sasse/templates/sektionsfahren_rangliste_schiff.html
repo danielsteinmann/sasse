@@ -1,0 +1,36 @@
+{% extends "base_sektionsfahren.html" %}
+{% block nav_rangliste %}selected{% endblock %}
+{% block content %}
+<p>
+  <a href="{% url 'sektionsfahren_rangliste' wettkampf.jahr wettkampf.name %}">Beste Sektion</a>
+| <a href="{% url 'sektionsfahren_rangliste_gruppe' wettkampf.jahr wettkampf.name %}">Beste Gruppe</a>
+| <b>Bestes Schiff</b>
+</p>
+{% load pagination_tags %}
+{% autopaginate rangliste 10 %}
+<table class="list">
+  <tr>
+    <th class="rang">Rang</th>
+    <th>Gruppe</th>
+    <th class="note">Schiff</th>
+    <th>Fahrtrupp</th>
+    <th class="zeit">Zeit</th>
+    <th class="note">Punkte</th>
+  </tr>
+{% for row in rangliste %}
+  <tr class="{% cycle 'odd' 'even' %}">
+    <td class="rang">{{ row.rang }}.</td>
+    <td><a href="{% url 'sektionsfahren_gruppe_get' wettkampf.jahr wettkampf.name row.gruppe %}">{{ row.gruppe }}</a></td>
+    <td class="rang">{{ row.schiff }}</td>
+    <td>
+        {{ row.ft1_steuermann }} / {{ row.ft1_vorderfahrer }}<br/>
+        {{ row.ft2_steuermann }} / {{ row.ft2_vorderfahrer }}
+    </td>
+    <td class="zeit">{{ row.zeit }}</td>
+    <td class="note"><a href="{% url 'sektionsfahren_notenblatt_gruppe' wettkampf.jahr wettkampf.name row.gruppe %}">{{ row.note }}</a></td>
+  </tr>
+{% endfor %}
+</table>
+<p></p>
+{% paginate %}
+{% endblock %}

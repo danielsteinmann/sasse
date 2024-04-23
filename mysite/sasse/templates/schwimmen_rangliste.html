@@ -1,0 +1,43 @@
+{% extends "base_schwimmen.html" %}
+{% block nav_rangliste %}selected{% endblock %}
+{% block content %}
+{% load pagination_tags %}
+{% load sasse %}
+{% autopaginate rangliste 40 %}
+{% for k in kategorien %}
+{% if k == kategorie %}<b>{{ k }}</b>
+{% else %}<a href="{% url 'schwimmen_rangliste' wettkampf.jahr wettkampf.name k %}">{{ k }}</a>
+{% endif %}{% if not forloop.last %}|{% endif %}
+{% endfor %}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a target="_blank" href="{% url 'schwimmen_rangliste_pdf' wettkampf.jahr wettkampf.name kategorie %}">PDF</a>
+|
+{% if kranzlimite %}
+Kranzlimite:
+<a href="{% url 'schwimmen_kranzlimite_update' wettkampf.jahr wettkampf.name kategorie %}">{{ kranzlimite|bewertung:'ZEIT' }}</a>
+{% else %}
+<a href="{% url 'schwimmen_kranzlimite_update' wettkampf.jahr wettkampf.name kategorie %}">Kranzlimite setzen</a>
+{% endif %}
+<p></p>
+<table class="list">
+  <tr>
+    <th class="rang">Rang</th>
+    <th>Schwimmer</th>
+    <th>Sektion</th>
+    <th class="zeit">Zeit</th>
+  </tr>
+{% for row in rangliste %}
+  {% ifchanged row.kranz %}{% if not forloop.first %}
+  <tr><td colspan="4">Kranzlimite: {{ kranzlimite|bewertung:'ZEIT' }} ({{ kranzlimite_in_prozent }}%)</td></tr>
+  {% endif %}{% endifchanged %}
+  <tr class="{% cycle "odd" "even" %}">
+    <td class="rang">{{row.rang}}</td>
+    <td>{{ row.mitglied.name }}&nbsp;{{ row.mitglied.vorname }}<font size="-2"> {{ row.mitglied.geburtsdatum.year }}</font></td>
+    <td>{{ row.mitglied.sektion }}</td>
+    <td class="zeit">{{ row.zeit|bewertung:'ZEIT' }}</td>
+  </tr>
+{% endfor %}
+</table>
+<p></p>
+{% paginate %}
+{% endblock %}

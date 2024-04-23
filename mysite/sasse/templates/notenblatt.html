@@ -1,0 +1,62 @@
+{% extends "base_disziplin.html" %}
+{% block nav_notenliste %}selected{% endblock %}
+{% block content %}
+<table class="display">
+  <tr>
+    <th>Startnummer:</th>
+    <td><a href="{% url 'teilnehmer_get' wettkampf.jahr wettkampf.name disziplin.name schiff.startnummer %}">{{schiff.startnummer}}</a></td>
+  </tr>
+  <tr>
+    <th>Steuermann:</th>
+    <td>{{schiff.steuermann.name}} {{schiff.steuermann.vorname}}</td>
+  </tr>
+  <tr>
+    <th>Vorderfahrer:</th>
+    <td>{{schiff.vorderfahrer.name}} {{schiff.vorderfahrer.vorname}}</td>
+  </tr>
+  <tr>
+    <th>Sektion:</th>
+    <td>{{schiff.sektion.name}}</td>
+  </tr>
+  <tr>
+    <th>Startkategorie:</th>
+    <td>{{schiff.kategorie.name}}</td>
+  </tr>
+</table>
+{% if schiff.ausgeschieden %}<p>Ausgeschieden</p>{% endif %}
+{% if schiff.disqualifiziert %}<p>Disqualifiziert!</p>{% endif %}
+<p></p>
+<table class="list">
+  <tr>
+    <th class="posten">Posten</th>
+    <th>Übungsteil</th>
+    <th class="note">Abzug</th>
+    <th class="note">Note</th>
+    <th class="zeit">Zeit</th>
+    <th class="note">Punkte</th>
+  </tr>
+  {% for row in posten_werte %}
+  {% if not forloop.last %}
+  <tr class="{% cycle "odd" "even" %}">
+    <td class="posten">{{row.posten}}</td>
+    <td>{{row.posten_art}}</td>
+    <td class="note">{{row.abzug}}</td>
+    <td class="note">{{row.note}}</td>
+    <td class="zeit">{{row.zeit}}</td>
+    <td class="note">{{row.punkte}}</td>
+  </tr>
+  {% else %}
+  <tr style="font-weight: bold;">
+    <td colspan="4" align="center">Total</td>
+    <td class="note">{{row.zeit}}</td>
+    <td class="note">{{row.punkte}}</td>
+  </tr>
+  {% endif %}
+  {% endfor %}
+</table>
+<p>
+<a target="_blank" href="{% url 'notenblatt_pdf' wettkampf.jahr wettkampf.name disziplin.name schiff.startnummer %}">PDF</a>
+{% if next %}
+| <a href="{% url 'notenblatt' wettkampf.jahr wettkampf.name disziplin.name next %}">Weiter</a>
+{% endif %}
+{% endblock %}

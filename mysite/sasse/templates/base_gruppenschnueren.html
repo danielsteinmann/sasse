@@ -1,0 +1,12 @@
+{% extends "base_wettkampf.html" %}
+{% block title %}{{ block.super }} - {{ disziplin.name }}{% endblock %}
+{% block nav_disziplin %}selected{% endblock %}
+{% block subnav %}
+<ul class="subnav">
+  <li class="{% block nav_ueberblick %}{% endblock %}">
+    <a href="{% url 'gruppenschnueren_get' wettkampf.jahr wettkampf.name %}">Überblick</a></li>
+  <li class="{% block nav_eingabe %}{% endblock %}">
+  | <a href="{% url 'gruppenschnueren_eingabe' wettkampf.jahr wettkampf.name %}">Eingabe</a></li>
+  <li class="{% block nav_rangliste %}{% endblock %}">
+  | <a href="{% url 'gruppenschnueren_rangliste' wettkampf.jahr wettkampf.name %}">Ranglisten</a></li>
+{% endblock %}

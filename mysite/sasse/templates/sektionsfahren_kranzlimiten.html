@@ -1,0 +1,29 @@
+{% extends "base_sektionsfahren.html" %}
+{% block nav_rangliste %}selected{% endblock %}
+{% block content %}
+<table class="display">
+  <tr>
+    <th>Gold:</th>
+    <td>{{ limiten.gold }}</td>
+  </tr>
+  <tr>
+    <th>Silber:</th>
+    <td>{{ limiten.silber }}</td>
+  </tr>
+  <tr>
+    <th>Lorbeer:</th>
+    <td>{{ limiten.lorbeer }}</td>
+  </tr>
+  <tr>
+    <th>Ausser Konkurrenz:</th>
+    <td>{{ limiten.ausser_konkurrenz|default:"-" }}</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>
+      <br />
+      <a href="{% url 'sektionsfahren_kranzlimiten_update' wettkampf.jahr wettkampf.name %}">Ändern</a>
+    </td>
+  </tr>
+</table>
+{% endblock %}

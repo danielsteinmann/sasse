@@ -1,0 +1,11 @@
+{% extends "base_wettkampf.html" %}
+{% block nav_wettkampf %}selected{% endblock %}
+
+{% block content %}
+<form action="{% url 'wettkampf_delete_confirm' wettkampf.jahr wettkampf.name %}" method="POST">
+  <p>Den gesamten Wettkampf <b>{{ wettkampf.name }}</b>
+  des Jahres <b>{{wettkampf.jahr}}</b>, inklusive seinen Disziplinen und den
+  erfassten Noten löschen?</p>
+  <input type="submit" value="Ja" />
+</form>
+{% endblock %}

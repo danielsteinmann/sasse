@@ -1,0 +1,60 @@
+{% extends disziplin.get_base_template %}
+{% block nav_ueberblick %}selected{% endblock %}
+{% block content %}
+<table class="display">
+  <tr>
+    <th>Name:</th>
+    <td>{{ disziplin.name }}</td>
+  </tr>
+  <tr>
+    <th>Disziplinart:</th>
+    <td>{{ disziplin.disziplinart }}</td>
+  </tr>
+  {% if disziplin.kategorien.all %}
+  <tr>
+    <th>Kategorien:</th>
+    <td>
+      {% for kategorie in disziplin.kategorien.all %}
+      {{ kategorie }}{% if not forloop.last %},{% endif %}
+      {% endfor %}
+    </td>
+  </tr>
+  {% endif %}
+  <tr>
+    <th>Posten:</th>
+    <td>
+      {% for posten in disziplin.posten_set.select_related.all %}
+        <a href="{% url 'posten_get' wettkampf.jahr wettkampf.name disziplin.name posten.name %}">{{ posten.name }}</a> -
+        {{ posten.postenart }}
+        {% if posten.postenart.name == 'Zeitnote' %}
+        (<a href="{% url 'richtzeit' wettkampf.jahr wettkampf.name disziplin.name posten.name %}">Richtzeit</a>,
+        {% if disziplin.disziplinart.name == 'Sektionsfahren' %}
+          <a href="{% url 'zeiten_sektionsfahren_import' wettkampf.jahr wettkampf.name disziplin.name posten.name %}">Import</a>)
+        {% else %}
+          <a href="{% url 'zeiten_einzelfahren_import' wettkampf.jahr wettkampf.name disziplin.name posten.name %}">Import</a>)
+        {% endif %}
+        {% else %}{% if 'Felsen' in posten.postenart.name %}
+        (<a href="{% url 'noten_einzelfahren_import' wettkampf.jahr wettkampf.name disziplin.name posten.name %}">Import</a>)
+        {% endif %}
+        {% endif %}<br>
+      {% empty %}
+        Noch keine Posten erfasst.
+      {% endfor %}
+    </td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>
+      <br />
+      <a href="{% url 'disziplin_update' wettkampf.jahr wettkampf.name disziplin.name %}">Ändern</a>
+      | <a href="{% url 'disziplin_delete_confirm' wettkampf.jahr wettkampf.name disziplin.name %}">Löschen</a>
+      | <a href="{% url 'posten_list' wettkampf.jahr wettkampf.name disziplin.name %}">Posten hinzufügen</a></li>
+      | {% if disziplin.disziplinart.name == 'Sektionsfahren' %}
+        <a href="{% url 'sektionsfahren_null_zeiten' wettkampf.jahr wettkampf.name disziplin.name %}">Nullzeiten</a></li>
+        {% else %}
+        <a href="{% url 'einzelfahren_null_zeiten' wettkampf.jahr wettkampf.name disziplin.name %}">Nullzeiten</a></li>
+        {% endif %}
+    </td>
+  </tr>
+</table>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "base_wettkaempfe.html" %}
+{% block content %}
+{% if wettkaempfe %}
+<table class="list">
+  <tr>
+    <th>Jahr</th>
+    <th>Name</th>
+    <th>Zusatzinfo</th>
+  </tr>
+  {% for wettkampf in wettkaempfe %}
+  <tr>
+    <td><a href="{% url 'wettkaempfe_by_year' wettkampf.jahr %}">{{ wettkampf.jahr}}</a></td>
+    <td><a href="{% url 'wettkampf_get' wettkampf.jahr wettkampf.name %}">{{ wettkampf.name }}</a></td>
+    <td>{{ wettkampf.zusatz }}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% else %}
+<p>Es sind noch keine Wettkämpfe vorhanden.</p>
+{% endif %}
+<p><a href="{% url 'wettkaempfe_add' %}">Wettkampf hinzufügen</a>
+{% endblock %}

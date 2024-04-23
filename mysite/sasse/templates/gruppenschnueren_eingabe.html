@@ -1,0 +1,91 @@
+{% extends "base_gruppenschnueren.html" %}
+{% block nav_eingabe %}selected{% endblock %}
+{% block content %}
+{% load pagination_tags %}
+{% load sasse %}
+{% autopaginate startliste 40 %}
+<p><p/>
+<form id="myform" name="myform" action="" method="POST">
+<table class="form">
+  {% if form.non_field_errors %}
+  <tr>
+    <td colspan="2">{{ form.non_field_errors }}</td>
+  </tr>
+  {% endif %}
+  <tr>
+    <th>Startnummer:</th>
+    <td>{{ form.startnummer.errors }}{{ form.startnummer }}</td>
+  </tr>
+  <tr>
+    <th>Sektion:</th>
+    <td>{{ form.sektion.errors }}{{ form.sektion }}</td>
+  </tr>
+  <tr>
+    <th>Kategorie:</th>
+    <td>{{ form.kategorie.errors }}{{ form.kategorie }}</td>
+  </tr>
+  <tr>
+    <th>Aufbauzeit:</th>
+    <td>{{ form.aufbauzeit.errors }}{{ form.aufbauzeit }}</td>
+  </tr>
+  <tr>
+    <th>Abbauzeit:</th>
+    <td>{{ form.abbauzeit.errors }}{{ form.abbauzeit }}</td>
+  </tr>
+  <tr>
+    <th>Zuschläge:</th>
+    <td>{{ form.zuschlaege.errors }}{{ form.zuschlaege }}</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><input type="submit" value="Schnürgruppe hinzufügen"/></td>
+  </tr>
+</table>
+</form>
+<table class="list">
+  <tr>
+    <th class="startnummer">Stnr</th>
+    <th>Gruppe</th>
+    <th class="kategorie">Kat</th>
+    <th class="zeit">Aufbauzeit</th>
+    <th class="zeit">Abbauzeit</th>
+    <th class="zeit">Zuschläge</th>
+    <th class="zeit">Totalzeit</th>
+  </tr>
+  {% for row in startliste %}
+  <tr class="{% cycle 'odd' 'even' %}">
+    <td class="startnummer"><a href="{% url 'gruppenschnueren_update' wettkampf.jahr wettkampf.name row.startnummer %}">{{ row.startnummer }}</a></td>
+    <td>{{ row.name }}</td>
+    <td class="kategorie">{{ row.get_kategorie_display }}</td>
+    <td class="zeit">{{ row.aufbauzeit|bewertung:'ZEIT' }}</td>
+    <td class="zeit">{{ row.abbauzeit|bewertung:'ZEIT' }}</td>
+    <td class="zeit">{{ row.zuschlaege }}</td>
+    <td class="zeit">{{ row.zeit|bewertung:'ZEIT' }}</td>
+  </tr>
+  {% endfor %}
+</table>
+<p></p>
+{% paginate %}
+<script type="text/javascript">
+$(document).ready(function(){
+        textboxes = $("form:not(.filter) :input:visible:[type=text], select");
+        $(textboxes).keydown(checkForEnter);
+        $("input[id=id_aufbauzeit]").mask("99:99.99");
+        $("input[id=id_abbauzeit]").mask("99:99.99");
+});
+function checkForEnter(event) {
+    if (event.keyCode == 13) {
+        currentBoxNumber = textboxes.index(this);
+        nextBox = textboxes[currentBoxNumber + 1]
+        if (nextBox != null) {
+            nextBox.focus();
+            if (nextBox.select) {
+                nextBox.select();
+            }
+            event.preventDefault();
+            return false;
+        }
+    }
+} 
+</script>
+{% endblock %}
