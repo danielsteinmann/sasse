@@ -15,7 +15,6 @@
 {% if user.is_superuser %}
 | <a href="/admin/">Einstellungen</a>
 {% endif %}
-| <a href="{% url 'logout' %}?next={{ request.get_full_path }}">Logout</a>
 {% else %}
 Nicht eingeloggt | <a href="{% url 'login' %}?next={{ request.get_full_path }}">Login</a>
 {% endif %}

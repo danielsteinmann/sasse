@@ -387,7 +387,7 @@ def startliste_einzelfahren(request, jahr, wettkampf, disziplin):
         entryform = SchiffeinzelListForm(d, initial=initial, filter_sektion=sektion)
         steuermann_neu_form = entryform.steuermann_neu_form()
         vorderfahrer_neu_form = entryform.vorderfahrer_neu_form()
-    paginator = Paginator(s, 15)
+    paginator = Paginator(s, 25)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
     return render(request, 'startliste_einzelfahren.html', { 'wettkampf': w,
@@ -405,7 +405,7 @@ def startliste_einzelfahren_pdf(request, jahr, wettkampf, disziplin):
     schiffe = searchform.schiffe.select_related()
     doc = create_startliste_doctemplate(w, d)
     flowables = create_startliste_flowables(schiffe)
-    response = HttpResponse(mimetype='application/pdf')
+    response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = smart_str('filename=startliste')
     doc.build(flowables, filename=response)
     return response
@@ -429,9 +429,12 @@ def startliste_einzelfahren_post(request, jahr, wettkampf, disziplin):
         if query:
             url = "%s?%s" % (url, query)
         return HttpResponseRedirect(url)
+    paginator = Paginator(searchform.schiffe, 25)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
     return render(request, 'startliste_einzelfahren.html', {
         'wettkampf': w, 'disziplin': d, 'searchform': searchform,
-        'startliste': searchform.schiffe, 'form': entryform,
+        'page_obj': page_obj, 'form': entryform,
         'steuermann_neu_form': steuermann_neu_form,
         'vorderfahrer_neu_form': vorderfahrer_neu_form})
 
@@ -667,7 +670,7 @@ def richtzeiten_pdf(request, jahr, wettkampf, disziplin):
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
     flowables = _create_pdf_bestzeiten(d)
-    response = HttpResponse(mimetype='application/pdf')
+    response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = smart_str('filename=richtzeiten-%s' % w.name)
     doc = create_rangliste_doctemplate(w)
     doc.build(flowables, filename=response)
@@ -744,7 +747,7 @@ def notenliste_pdf(request, jahr, wettkampf, disziplin):
     notenliste = read_notenliste(d, posten, sektion, startnummern)
     doc = create_notenliste_doctemplate(w, d)
     flowables = create_notenliste_flowables(posten, notenliste, sektion)
-    response = HttpResponse(mimetype='application/pdf')
+    response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = smart_str('filename=notenliste')
     doc.build(flowables, filename=response)
     return response
@@ -754,7 +757,7 @@ def notenliste_pdf_all(request, jahr, wettkampf, disziplin):
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
     posten = d.posten_set.all().select_related()
-    response = HttpResponse(mimetype='application/pdf')
+    response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = smart_str('filename=notenliste')
     doc = create_notenliste_doctemplate(w, d)
     flowables = []
@@ -793,7 +796,7 @@ def rangliste_pdf(request, jahr, wettkampf, disziplin, kategorie):
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
     k = d.kategorien.get(name=kategorie)
     flowables = _create_pdf_einzelfahren(d, k)
-    response = HttpResponse(mimetype='application/pdf')
+    response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = smart_str('filename=rangliste-%s-kat-%s' % (w.name, k.name))
     doc = create_rangliste_doctemplate(w)
     doc.build(flowables, filename=response)
@@ -806,7 +809,7 @@ def rangliste_pdf_all(request, jahr, wettkampf, disziplin):
     for k in read_startende_kategorien(d):
         flowables.extend(_create_pdf_einzelfahren(d, k))
     flowables.extend(_create_pdf_bestzeiten(d))
-    response = HttpResponse(mimetype='application/pdf')
+    response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = smart_str('filename=rangliste-%s' % w.name)
     doc = create_rangliste_doctemplate(w)
     doc.build(flowables, filename=response)
@@ -853,7 +856,7 @@ def notenblatt_pdf(request, jahr, wettkampf, disziplin, startnummer):
     posten_werte = read_notenblatt(d, s)
     doc = create_notenblatt_doctemplate(w, d)
     flowables = create_notenblatt_flowables(posten_werte, s)
-    response = HttpResponse(mimetype='application/pdf')
+    response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = smart_str('filename=notenblatt-%s' % startnummer)
     doc.build(flowables, filename=response)
     return response
@@ -865,7 +868,7 @@ def notenblaetter_pdf(request, jahr, wettkampf, disziplin):
     searchform = SchiffeinzelFilterForm.create_with_sektion(d, request.GET)
     searchform.is_valid()
     schiffe = searchform.schiffe
-    response = HttpResponse(mimetype='application/pdf')
+    response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = smart_str('filename=notenblaetter')
     doc = create_notenblatt_doctemplate(w, d)
     flowables = []
@@ -960,7 +963,7 @@ def doppelstarter_einzelfahren(request, jahr, wettkampf):
 def startlisten_einzelfahren_export(request, jahr, wettkampf):
     assert request.method == 'GET'
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
-    response = HttpResponse(mimetype='text/csv')
+    response = HttpResponse(content_type='text/csv')
     now = datetime.datetime.now()
     filename = "startlisten-einzelfahren-%s.csv" % now.strftime("%Y%m%d%H%M")
     response['Content-Disposition'] = 'attachment; filename=%s' % filename
@@ -1229,7 +1232,7 @@ def sektionsfahren_rangliste_pdf(request, jahr, wettkampf):
             wettkampf__von__year=jahr)
     w = d.wettkampf
     flowables = _create_pdf_sektionsfahren(d)
-    response = HttpResponse(mimetype='application/pdf')
+    response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = smart_str('filename=rangliste-%s-%s' % (w.name, d.name))
     doc = create_rangliste_doctemplate(w)
     doc.build(flowables, filename=response)
@@ -1322,7 +1325,7 @@ def sektionsfahren_notenblatt_pdf(request, jahr, wettkampf, sektion_name):
         notenliste = read_sektionsfahren_notenblatt_gruppe(gruppe)
         notenliste = regroup_notenliste(notenliste, gruppe.anz_schiffe())
         flowables += create_sektionsfahren_notenblatt_gruppe_flowables(gruppe, notenliste)
-    response = HttpResponse(mimetype='application/pdf')
+    response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = smart_str('filename=notenblatt-%s' % sektion_name)
     doc.build(flowables, filename=response)
     return response
@@ -1420,7 +1423,7 @@ def sektionsfahren_notenblatt_gruppe_pdf(request, jahr, wettkampf, gruppe):
     notenliste = regroup_notenliste(notenliste, g.anz_schiffe())
     doc = create_sektionsfahren_notenblatt_gruppe_doctemplate(w, d)
     flowables = create_sektionsfahren_notenblatt_gruppe_flowables(g, notenliste)
-    response = HttpResponse(mimetype='application/pdf')
+    response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = smart_str('filename=notenblatt-%s' % g.name)
     doc.build(flowables, filename=response)
     return response
@@ -1608,7 +1611,7 @@ def schwimmen_rangliste_pdf(request, jahr, wettkampf, kategorie):
     d = _get_spezialwettkampf(jahr, wettkampf, "Schwimmen")
     w = d.wettkampf
     flowables = _create_pdf_schwimmen(d, kategorie)
-    response = HttpResponse(mimetype='application/pdf')
+    response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = smart_str('filename=rangliste-%s-kat-%s' % (w.name, kategorie))
     doc = create_rangliste_doctemplate(w)
     doc.build(flowables, filename=response)
@@ -1685,7 +1688,7 @@ def einzelschnueren_rangliste_pdf(request, jahr, wettkampf, kategorie):
     d = _get_spezialwettkampf(jahr, wettkampf, "Einzelschnüren")
     w = d.wettkampf
     flowables = _create_pdf_einzelschnueren(d, kategorie)
-    response = HttpResponse(mimetype='application/pdf')
+    response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = smart_str('filename=rangliste-%s-kat-%s' % (w.name, kategorie))
     doc = create_rangliste_doctemplate(w)
     doc.build(flowables, filename=response)
@@ -1762,7 +1765,7 @@ def gruppenschnueren_rangliste_pdf(request, jahr, wettkampf, kategorie):
     d = _get_spezialwettkampf(jahr, wettkampf, "Gruppenschnüren")
     w = d.wettkampf
     flowables = _create_pdf_gruppenschnueren(d, kategorie)
-    response = HttpResponse(mimetype='application/pdf')
+    response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = smart_str('filename=rangliste-%s-kat-%s' % (w.name, kategorie))
     doc = create_rangliste_doctemplate(w)
     doc.build(flowables, filename=response)
@@ -1839,7 +1842,7 @@ def bootfaehrenbau_rangliste_pdf(request, jahr, wettkampf, kategorie):
     d = _get_spezialwettkampf(jahr, wettkampf, "Bootsfährenbau")
     w = d.wettkampf
     flowables = _create_pdf_bootfaehrenbau(d, kategorie)
-    response = HttpResponse(mimetype='application/pdf')
+    response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = smart_str('filename=rangliste-%s-kat-%s' % (w.name, kategorie))
     doc = create_rangliste_doctemplate(w)
     doc.build(flowables, filename=response)
@@ -1945,7 +1948,7 @@ def rangliste_komplett_pdf(request, jahr, wettkampf):
         elif d.disziplinart.name == "Schwimmen":
             for k in read_schwimmen_gestartete_kategorien(d):
                 flowables.extend(_create_pdf_schwimmen(d, k))
-    response = HttpResponse(mimetype='application/pdf')
+    response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = smart_str('filename=rangliste-komplett-%s' % w.name)
     doc.build(flowables, filename=response)
     return response

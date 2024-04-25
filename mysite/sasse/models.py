@@ -203,7 +203,7 @@ class Disziplin(models.Model):
     wettkampf = models.ForeignKey('Wettkampf', on_delete=models.CASCADE)
     name = models.SlugField(max_length=50)
     disziplinart = models.ForeignKey('Disziplinart', on_delete=models.CASCADE, blank=False, default=1)
-    kategorien = models.ManyToManyField('Kategorie', null=True, blank=True)
+    kategorien = models.ManyToManyField('Kategorie', blank=True)
 
     def __str__(self):
         return self.name

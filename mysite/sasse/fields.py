@@ -42,7 +42,7 @@ class PunkteField(DecimalField):
         if self.gueltige_werte_str != 'ALL':
             for v in self.gueltige_werte_str.split(','):
                 value = Decimal(v.strip())
-                if value > max_value:
+                if max_value is None or value > max_value:
                     max_value = value
                 self.gueltige_werte.append(value)
         kwargs['max_digits'] = kwargs.pop('max_digits', 4)

@@ -13,6 +13,7 @@ Read-Write
 
 import datetime
 import csv
+from io import TextIOWrapper
 from django.forms.models import model_to_dict
 from sasse.models import *
 
@@ -213,7 +214,7 @@ def cru_schiffeinzel(wettkampf, row):
     return result
 
 def load(wettkampf, csvfile):
-    reader = csv.DictReader(csvfile)
+    reader = csv.DictReader(TextIOWrapper(csvfile))
     stats = {'insert': 0, 'update': 0, 'unchanged': 0}
     for row in reader:
         try:
@@ -225,7 +226,7 @@ def load(wettkampf, csvfile):
     return stats
 
 def dump(wettkampf, csvfile):
-    writer = csv.DictWriter(csvfile, COLUMNS)
+    writer = csv.DictWriter(TextIOWrapper(csvfile), COLUMNS)
     writer.writeheader()
     for schiff in Schiffeinzel.objects.select_related().filter(
             disziplin__wettkampf=wettkampf,

@@ -2,6 +2,7 @@
 
 import csv
 import operator
+from io import TextIOWrapper
 from decimal import Decimal
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import IntegrityError
@@ -14,7 +15,7 @@ from sasse.forms import BewertungForm
 
 def load_einzelfahren(wettkampf, disziplin, posten, csvfile):
     #fieldnames = ['Platz', 'Nr.', 'Name und Vorname', 'Kategorie', 'Ziel Zeit', 'Abstand']
-    zeiten = csv.reader(csvfile, delimiter='\t')
+    zeiten = csv.reader(TextIOWrapper(csvfile), delimiter='\t')
     bewertungsart = Bewertungsart.objects.get(postenart=posten.postenart)
     success = 0
     failed = {}
@@ -47,7 +48,7 @@ def load_einzelfahren(wettkampf, disziplin, posten, csvfile):
 
 def load_sektionsfahren(p1, p2, formset, csvfile):
     #fieldnames = ['Platz', 'Nr.', 'Name und Vorname', 'Kategorie', 'Ziel Zeit', 'Abstand']
-    zeiten = csv.reader(csvfile, delimiter='\t')
+    zeiten = csv.reader(TextIOWrapper(csvfile), delimiter='\t')
     zeit_by_startnr = {}
     for row in zeiten:
         if len(row) < 2 or not row[1].strip().isdigit():

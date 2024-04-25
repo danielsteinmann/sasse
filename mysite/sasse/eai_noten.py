@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import csv
+from io import TextIOWrapper
 import operator
 from decimal import Decimal
 from django.core.exceptions import ObjectDoesNotExist
@@ -13,7 +14,7 @@ def load_pfeiler(wettkampf, disziplin, posten, csvfile):
     # BootNr,Ziel,Lappen,Abzugstellung,Abzuganprallen
     # 0001,9.5,false,2,1
     # 0002,10.0,true,0,0
-    noten = csv.reader(csvfile, delimiter=',')
+    noten = csv.reader(TextIOWrapper(csvfile), delimiter=',')
     ziel_art = Bewertungsart.objects.get(postenart=posten.postenart,
             gruppe='ZIEL', editierbar=True)
     stil_art = Bewertungsart.objects.get(postenart=posten.postenart,

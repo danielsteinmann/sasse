@@ -269,8 +269,10 @@ class SchiffeinzelListForm(Form):
     vorderfahrer = MitgliedSearchField(queryset=Mitglied.objects.all())
     vorderfahrer_neu = BooleanField(required=False, label="Neues Mitglied erfassen")
     # Folgende Felder werden in clean() gesetzt, deshalb nicht required
-    sektion = ModelChoiceField(queryset=Sektion.objects.all(), widget=HiddenInput(), required=False)
-    kategorie = ModelChoiceField(queryset=Kategorie.objects.all(), widget=HiddenInput(), required=False)
+    #sektion = ModelChoiceField(queryset=Sektion.objects.all(), widget=HiddenInput(), required=False)
+    #kategorie = ModelChoiceField(queryset=Kategorie.objects.all(), widget=HiddenInput(), required=False)
+    sektion = ModelChoiceField(queryset=Sektion.objects.all(), required=False)
+    kategorie = ModelChoiceField(queryset=Kategorie.objects.all(), required=False)
 
     def __init__(self, disziplin, *args, **kwargs):
         self.disziplin = disziplin
@@ -343,7 +345,7 @@ class SchiffeinzelListForm(Form):
             if steuermann.sektion != vorderfahrer.sektion:
                 text = "Steuermann fährt für '%s', Vorderfahrer für '%s'. Bitte Vorschlag bestätigen oder andere Sektion wählen." % (steuermann.sektion, vorderfahrer.sektion)
                 self.data['sektion'] = steuermann.sektion.id
-                self.fields['sektion'] = ModelChoiceField(queryset=Sektion.objects.all(), empty_label=None)
+                #self.fields['sektion'] = ModelChoiceField(queryset=Sektion.objects.all(), empty_label=None)
                 raise ValidationError(text)
         if self.filter_sektion and self.filter_sektion != sektion:
             text = "Schiff soll für '%s' fahren, aber oben ist '%s' vorselektiert. Bitte vorgeschlagene Sektion bestätigen oder einen anderen Steuermann auswählen." % (sektion, self.filter_sektion)

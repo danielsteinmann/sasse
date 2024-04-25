@@ -25,9 +25,9 @@ PAGE_WIDTH, PAGE_HEIGHT = A4
 def _create_style_sheet(baseFontSize=8):
     stylesheet = StyleSheet1()
     stylesheet.add(ParagraphStyle(name='left', fontName='Helvetica',
-        fontSize=baseFontSize, alignment=TA_LEFT))
-    stylesheet.add(ParagraphStyle('center', parent=stylesheet['left'], alignment=TA_CENTER))
-    stylesheet.add(ParagraphStyle('right', parent=stylesheet['left'], alignment=TA_RIGHT))
+        fontSize=baseFontSize, alignment=TA_LEFT, splitLongWords=False))
+    stylesheet.add(ParagraphStyle('center', parent=stylesheet['left'], alignment=TA_CENTER, splitLongWords=False))
+    stylesheet.add(ParagraphStyle('right', parent=stylesheet['left'], alignment=TA_RIGHT, splitLongWords=False))
     return stylesheet
 
 def _extract_jahrgang(geburtstag):
@@ -43,7 +43,7 @@ def create_rangliste_doctemplate(wettkampf):
 def write_rangliste_header_footer(canvas, doc):
     canvas.saveState()
     canvas.setFont('Helvetica', 8)
-    canvas.drawImage(settings.MEDIA_ROOT + '/spsv-logo.jpg', 2*cm, PAGE_HEIGHT-2*cm, width=1.5*cm, height=1.5*cm)
+    canvas.drawImage(settings.STATIC_ROOT + '/spsv-logo.jpg', 2*cm, PAGE_HEIGHT-2*cm, width=1.5*cm, height=1.5*cm)
     canvas.line(4*cm, PAGE_HEIGHT-1.2*cm, PAGE_WIDTH-2*cm, PAGE_HEIGHT-1.2*cm)
     canvas.drawString(4*cm, PAGE_HEIGHT-1*cm, doc.docEval("header_line"))
     canvas.drawRightString(PAGE_WIDTH-2*cm, PAGE_HEIGHT-1*cm, "%s %d" % (doc.wettkampf.name, doc.wettkampf.jahr()))
@@ -115,7 +115,7 @@ def create_notenblatt_doctemplate(wettkampf, disziplin):
 
 def write_notenblatt_header_footer(canvas, doc):
     canvas.saveState()
-    canvas.drawImage(settings.MEDIA_ROOT + '/spsv-logo.jpg', 2.2*cm, PAGE_HEIGHT-2*cm, width=1.5*cm, height=1.5*cm)
+    canvas.drawImage(settings.STATIC_ROOT + '/spsv-logo.jpg', 2.2*cm, PAGE_HEIGHT-2*cm, width=1.5*cm, height=1.5*cm)
     canvas.line(4*cm, PAGE_HEIGHT-1.3*cm, PAGE_WIDTH-2*cm, PAGE_HEIGHT-1.3*cm)
     canvas.setFont('Helvetica', 8)
     canvas.drawString(4*cm, PAGE_HEIGHT-1.1*cm, "Notenblatt %s" % (doc.disziplin.disziplinart))
@@ -191,7 +191,7 @@ def create_notenblatt_flowables(posten_werte, schiffeinzel):
 #
 
 def create_startliste_doctemplate(wettkampf, disziplin):
-    f = Frame(1*cm, 1*cm, PAGE_WIDTH-2*cm, PAGE_HEIGHT-2.5*cm, id='normal')
+    f = Frame(1*cm, 1*cm, PAGE_WIDTH-2*cm, PAGE_HEIGHT-3.5*cm, id='normal')
     pt = PageTemplate(id="Startliste", frames=f, onPageEnd=write_startliste_header_footer)
     doc = BaseDocTemplate(None, pageTemplates=[pt], pagesize=A4)
     doc.wettkampf = wettkampf
@@ -200,9 +200,11 @@ def create_startliste_doctemplate(wettkampf, disziplin):
 
 def write_startliste_header_footer(canvas, doc):
     canvas.saveState()
+    canvas.drawImage(settings.STATIC_ROOT + '/spsv-logo.jpg', 1.2*cm, PAGE_HEIGHT-2*cm, width=1.5*cm, height=1.5*cm)
+    canvas.line(3*cm, PAGE_HEIGHT-1.3*cm, PAGE_WIDTH-1*cm, PAGE_HEIGHT-1.3*cm)
     canvas.setFont('Helvetica-Bold', 10)
-    canvas.drawString(1.3*cm, PAGE_HEIGHT-1*cm, "Startliste %s" % (doc.disziplin.disziplinart))
-    canvas.drawRightString(PAGE_WIDTH-1*cm, PAGE_HEIGHT-1*cm, "%s %d" % (doc.wettkampf.name, doc.wettkampf.jahr()))
+    canvas.drawString(3*cm, PAGE_HEIGHT-1.1*cm, "Startliste %s" % (doc.disziplin.disziplinart))
+    canvas.drawRightString(PAGE_WIDTH-1*cm, PAGE_HEIGHT-1.1*cm, "%s %d" % (doc.wettkampf.name, doc.wettkampf.jahr()))
     canvas.setFont('Helvetica', 8)
     canvas.drawCentredString(PAGE_WIDTH/2, 1*cm, "Seite %d" % (doc.page,))
     canvas.restoreState()
@@ -307,7 +309,7 @@ def create_notenliste_doctemplate(wettkampf, disziplin):
 def write_notenliste_header_footer(canvas, doc):
     canvas.saveState()
     canvas.setFont('Helvetica', 8)
-    canvas.drawImage(settings.MEDIA_ROOT + '/spsv-logo.jpg', 2*cm, PAGE_WIDTH-2*cm, width=1.5*cm, height=1.5*cm)
+    canvas.drawImage(settings.STATIC_ROOT + '/spsv-logo.jpg', 2*cm, PAGE_WIDTH-2*cm, width=1.5*cm, height=1.5*cm)
     canvas.line(4*cm, PAGE_WIDTH-1.2*cm, PAGE_HEIGHT-2*cm, PAGE_WIDTH-1.2*cm)
     canvas.drawString(4*cm, PAGE_WIDTH-1*cm, "Notenliste %s" % (doc.disziplin.disziplinart))
     canvas.drawCentredString(PAGE_HEIGHT/2, PAGE_WIDTH-1*cm, "Sektion %s" % (doc.docEval("sektion_name")))
@@ -381,7 +383,7 @@ def create_sektionsfahren_notenblatt_doctemplate(wettkampf, disziplin):
 
 def write_sektionsfahren_notenblatt_header_footer(canvas, doc):
     canvas.saveState()
-    canvas.drawImage(settings.MEDIA_ROOT + '/spsv-logo.jpg', 1.2*cm, PAGE_HEIGHT-2*cm, width=1.5*cm, height=1.5*cm)
+    canvas.drawImage(settings.STATIC_ROOT + '/spsv-logo.jpg', 1.2*cm, PAGE_HEIGHT-2*cm, width=1.5*cm, height=1.5*cm)
     canvas.line(3*cm, PAGE_HEIGHT-1.3*cm, PAGE_WIDTH-2*cm, PAGE_HEIGHT-1.3*cm)
     canvas.setFont('Helvetica', 8)
     canvas.drawString(3*cm, PAGE_HEIGHT-1.1*cm, "Notenblatt %s" % (doc.disziplin.disziplinart))
@@ -459,7 +461,7 @@ def create_sektionsfahren_notenblatt_gruppe_doctemplate(wettkampf, disziplin):
 
 def write_sektionsfahren_notenblatt_gruppe_header_footer(canvas, doc):
     canvas.saveState()
-    canvas.drawImage(settings.MEDIA_ROOT + '/spsv-logo.jpg', 1.2*cm, PAGE_HEIGHT-2*cm, width=1.5*cm, height=1.5*cm)
+    canvas.drawImage(settings.STATIC_ROOT + '/spsv-logo.jpg', 1.2*cm, PAGE_HEIGHT-2*cm, width=1.5*cm, height=1.5*cm)
     canvas.line(3*cm, PAGE_HEIGHT-1.3*cm, PAGE_WIDTH-2*cm, PAGE_HEIGHT-1.3*cm)
     canvas.setFont('Helvetica', 8)
     canvas.drawString(3*cm, PAGE_HEIGHT-1.1*cm, "Notenblatt %s" % (doc.disziplin.disziplinart))

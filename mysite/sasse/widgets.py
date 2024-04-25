@@ -8,7 +8,7 @@ from .templatetags.sasse import zeit2str
 class ZeitInSekundenWidget(Input):
     input_type = 'text'
 
-    def render(self, name, value, attrs=None):
+    def render(self, name, value, attrs=None, renderer=None):
         if value is None:
             value = ''
         elif isinstance(value, Decimal):
