@@ -269,10 +269,8 @@ class SchiffeinzelListForm(Form):
     vorderfahrer = MitgliedSearchField(queryset=Mitglied.objects.all())
     vorderfahrer_neu = BooleanField(required=False, label="Neues Mitglied erfassen")
     # Folgende Felder werden in clean() gesetzt, deshalb nicht required
-    #sektion = ModelChoiceField(queryset=Sektion.objects.all(), widget=HiddenInput(), required=False)
-    #kategorie = ModelChoiceField(queryset=Kategorie.objects.all(), widget=HiddenInput(), required=False)
-    sektion = ModelChoiceField(queryset=Sektion.objects.all(), required=False)
-    kategorie = ModelChoiceField(queryset=Kategorie.objects.all(), required=False)
+    sektion = ModelChoiceField(queryset=Sektion.objects.all(), required=False, empty_label='-')
+    kategorie = ModelChoiceField(queryset=Kategorie.objects.all(), required=False, empty_label='-')
 
     def __init__(self, disziplin, *args, **kwargs):
         self.disziplin = disziplin
@@ -282,6 +280,9 @@ class SchiffeinzelListForm(Form):
         # Damit für den Normalfall effizient mit Tab navigieren kann
         self.fields['steuermann_neu'].widget.attrs['tabindex'] = '-1'
         self.fields['vorderfahrer_neu'].widget.attrs['tabindex'] = '-1'
+        if self.initial:
+            self.fields['sektion'].widget = HiddenInput()
+            self.fields['kategorie'].widget = HiddenInput()
 
     def steuermann_neu_form(self):
         return self._mitglied_neu_form('steuermann', 'steuermann_neu')
@@ -345,12 +346,10 @@ class SchiffeinzelListForm(Form):
             if steuermann.sektion != vorderfahrer.sektion:
                 text = "Steuermann fährt für '%s', Vorderfahrer für '%s'. Bitte Vorschlag bestätigen oder andere Sektion wählen." % (steuermann.sektion, vorderfahrer.sektion)
                 self.data['sektion'] = steuermann.sektion.id
-                #self.fields['sektion'] = ModelChoiceField(queryset=Sektion.objects.all(), empty_label=None)
                 raise ValidationError(text)
         if self.filter_sektion and self.filter_sektion != sektion:
             text = "Schiff soll für '%s' fahren, aber oben ist '%s' vorselektiert. Bitte vorgeschlagene Sektion bestätigen oder einen anderen Steuermann auswählen." % (sektion, self.filter_sektion)
             self.data['sektion'] = self.filter_sektion.id
-            self.fields['sektion'] = ModelChoiceField(queryset=Sektion.objects.all(), empty_label=None)
             raise ValidationError(text)
         # Doppelstarter
         hinten_ds, vorne_ds = sind_doppelstarter(self.disziplin.wettkampf,
@@ -373,7 +372,6 @@ class SchiffeinzelListForm(Form):
             kategorie = self.instance.calc_startkategorie()
             if kategorie is None:
                 text = "Steuermann hat Kategorie '%s', Vorderfahrer Kategorie '%s'. Das ist eine unbekannte Kombination; bitte auswählen." % (self.instance.steuermann_kat(), self.instance.vorderfahrer_kat())
-                self.fields['kategorie'] = ModelChoiceField(queryset=Kategorie.objects.all(), empty_label=None)
                 raise ValidationError(text)
         self.instance.kategorie = kategorie
         # Unique Startnummer
