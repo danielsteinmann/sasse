@@ -402,12 +402,12 @@ class SektionsfahrenGruppeManager(models.Manager):
         from .queries import read_sektionsfahren_gruppen_counts
         counts = read_sektionsfahren_gruppen_counts(disziplin)
         result_list = []
-        for p in self.get_query_set().select_related(depth=1).filter(disziplin=disziplin).order_by('startnummer'):
+        for p in self.get_queryset().select_related().filter(disziplin=disziplin).order_by('startnummer'):
             p._set_counts(counts)
             result_list.append(p)
         return result_list
 
-class Gruppe(Teilnehmer):
+class Sektionsfahrengruppe(Teilnehmer):
     """
     Eine Schnürgruppe, eine Bootfährenbautrupp oder eine Sektion beim
     Sektionsfahren.
@@ -428,7 +428,7 @@ class Gruppe(Teilnehmer):
         return self.name
 
     def schiffe(self):
-        return Schiffsektion.objects.select_related(depth=1).filter(gruppe=self.id)
+        return Schiffsektion.objects.select_related().filter(gruppe=self.id)
 
     def _set_counts(self, counts=None):
         if counts is None:
@@ -469,7 +469,7 @@ class Schiffsektion(Teilnehmer):
     Position 1, 2, etc innerhalb der Gruppe ist bei der Noteneingabe wichtig.
     """
     #TODO
-    gruppex = models.ForeignKey('Gruppe', on_delete=models.CASCADE)
+    gruppe = models.ForeignKey('Sektionsfahrengruppe', on_delete=models.CASCADE)
     position = models.PositiveSmallIntegerField()
     ft1_steuermann = models.ForeignKey('Mitglied', on_delete=models.CASCADE, related_name='ft1_steuermann')
     ft1_vorderfahrer = models.ForeignKey('Mitglied', on_delete=models.CASCADE, related_name='ft1_vorderfahrer')
@@ -477,8 +477,8 @@ class Schiffsektion(Teilnehmer):
     ft2_vorderfahrer = models.ForeignKey('Mitglied', on_delete=models.CASCADE, related_name='ft2_vorderfahrer')
 
     class Meta:
-        unique_together = ['gruppex', 'position']
-        ordering = ['gruppex', 'position']
+        unique_together = ['gruppe', 'position']
+        ordering = ['gruppe', 'position']
 
 
 class Schiffeinzel(Teilnehmer):

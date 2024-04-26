@@ -18,7 +18,7 @@ select grp.name
          +  case when v1.geschlecht = 'm' and w.year - v1.year >= 60 then 1 else 0 end
          +  case when v2.geschlecht = 'm' and w.year - v2.year >= 60 then 1 else 0 end
        ) as anz_senioren
-  from sasse_gruppe grp
+  from sasse_sektionsfahrengruppe grp
        join sasse_teilnehmer grp_tn on (grp_tn.id = grp.teilnehmer_ptr_id)
        join sasse_disziplin d on (d.id = grp_tn.disziplin_id)
        join (select id, extract(year from von) as year from sasse_wettkampf) w on (w.id = d.wettkampf_id)

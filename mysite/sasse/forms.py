@@ -37,7 +37,7 @@ from .models import Posten
 from .models import Postenart
 from .models import Schiffeinzel
 from .models import Sektion
-from .models import Gruppe
+from .models import Sektionsfahrengruppe
 from .models import Teilnehmer
 from .models import Wettkampf
 from .models import Richtzeit
@@ -565,7 +565,7 @@ class GruppeForm(ModelForm):
     chef = MitgliedSearchField(queryset=Mitglied.objects.all())
 
     class Meta:
-        model = Gruppe
+        model = Sektionsfahrengruppe
         exclude = ('abzug_gruppe', 'abzug_sektion')
 
     def __init__(self, disziplin, *args, **kwargs):
@@ -586,7 +586,7 @@ class GruppeForm(ModelForm):
             sektion_name = sektion.name
             sektion_name = sektion_name.replace(" ", "-")
             count = 0
-            for gruppe in Gruppe.objects.filter(disziplin=disziplin, sektion=sektion):
+            for gruppe in Sektionsfahrengruppe.objects.filter(disziplin=disziplin, sektion=sektion):
                 count += 1
                 gruppe.name = "%s-%d" % (sektion_name, count)
                 gruppe.save()
@@ -597,7 +597,7 @@ class GruppeForm(ModelForm):
             self.cleaned_data['name'] = name
             # Calculate startnummer, if necessary
             if not self.cleaned_data['startnummer']:
-                q = Gruppe.objects.filter(disziplin=disziplin).aggregate(Max('startnummer'))
+                q = Sektionsfahrengruppe.objects.filter(disziplin=disziplin).aggregate(Max('startnummer'))
                 max_nummer = q['startnummer__max']
                 if max_nummer is None:
                     max_nummer = 0
@@ -613,7 +613,7 @@ class SektionsfahrenGruppeAbzugForm(ModelForm):
     abzug_sektion_comment = CharField(widget=Textarea(attrs={'rows':4, 'cols':50}))
 
     class Meta:
-        model = Gruppe
+        model = Sektionsfahrengruppe
         fields = ('abzug_gruppe', 'abzug_sektion',
                 'abzug_gruppe_comment', 'abzug_sektion_comment')
 
@@ -621,13 +621,13 @@ class SektionsfahrenGruppeAbzugForm(ModelForm):
 class GruppeFilterForm(Form):
     gruppe = ModelChoiceField(
             required=False,
-            queryset=Gruppe.objects.all(),
+            queryset=Sektionsfahrengruppe.objects.all(),
             )
     template = "sektionsfahren_gruppe_filter_form.html"
 
     def __init__(self, disziplin, *args, **kwargs):
         super(GruppeFilterForm, self).__init__(*args, **kwargs)
-        gruppe_query = Gruppe.objects.filter(disziplin=disziplin)
+        gruppe_query = Sektionsfahrengruppe.objects.filter(disziplin=disziplin)
         self.fields["gruppe"].queryset = gruppe_query
         self.fields["gruppe"].empty_label = None
         self.disziplin = disziplin
@@ -635,7 +635,7 @@ class GruppeFilterForm(Form):
     def clean(self):
         gruppe = self.cleaned_data['gruppe']
         if gruppe is None:
-            gruppe = Gruppe.objects.filter(disziplin=self.disziplin)[0]
+            gruppe = Sektionsfahrengruppe.objects.filter(disziplin=self.disziplin)[0]
         self.schiffe = Schiffsektion.objects.filter(gruppe=gruppe)
         self.instance = gruppe
         return self.cleaned_data

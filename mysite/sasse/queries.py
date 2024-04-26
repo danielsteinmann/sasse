@@ -9,7 +9,7 @@ from .models import Bewertung
 from .models import Schiffeinzel
 from .models import Kranzlimite
 from .models import Kategorie
-from .models import Gruppe
+from .models import Sektionsfahrengruppe
 from .models import SektionsfahrenKranzlimiten
 
 # Hilfskonstanten
@@ -495,7 +495,7 @@ select grp.name as Gruppe
      , sum(b.note) as Punkte
   from sasse_schiffsektion schiff
   join sasse_teilnehmer tn on (tn.id = schiff.teilnehmer_ptr_id)
-  join sasse_gruppe grp on (grp.teilnehmer_ptr_id = schiff.gruppe_id)
+  join sasse_sektionsfahrengruppe grp on (grp.teilnehmer_ptr_id = schiff.gruppe_id)
   join bewertung_calc b on (b.teilnehmer_id = tn.id)
  where 1=1
    and tn.disziplin_id = %s
@@ -513,7 +513,7 @@ select grp.name as Gruppe
 def read_sektionsfahren_rangliste_gruppe(disziplin):
     punkte = read_sektionsfahren_gruppe_punkte(disziplin)
     result = []
-    for g in Gruppe.objects.with_counts(disziplin):
+    for g in Sektionsfahrengruppe.objects.with_counts(disziplin):
         if g.anz_schiffe() > 0:
             g.gefahren = (punkte[g.name] / g.anz_schiffe()).quantize(Decimal("0.001"))
             g.zuschlag = (((g.anz_jps() + g.anz_frauen() + g.anz_senioren()) * Decimal("2")) / g.anz_schiffe()).quantize(Decimal("0.001"))
@@ -605,7 +605,7 @@ select grp.name as "Gruppe"
      , sum(case when schiff.position = 5 then b.note end) as "5"
   from sasse_teilnehmer tn
   join sasse_schiffsektion schiff on (schiff.teilnehmer_ptr_id = tn.id)
-  join sasse_gruppe grp on (grp.teilnehmer_ptr_id = schiff.gruppe_id)
+  join sasse_sektionsfahrengruppe grp on (grp.teilnehmer_ptr_id = schiff.gruppe_id)
   join bewertung_calc b on (b.teilnehmer_id = tn.id)
   join sasse_posten p on (p.id = b.posten_id)
   join sasse_postenart pa on (pa.id = p.postenart_id)
@@ -657,7 +657,7 @@ select grp.name as gruppe
      , sum(b.note) as punkte
   from sasse_schiffsektion schiff
   join sasse_teilnehmer tn on (tn.id = schiff.teilnehmer_ptr_id)
-  join sasse_gruppe grp on (grp.teilnehmer_ptr_id = schiff.gruppe_id)
+  join sasse_sektionsfahrengruppe grp on (grp.teilnehmer_ptr_id = schiff.gruppe_id)
   join bewertung_calc b on (b.teilnehmer_id = tn.id)
   join sasse_mitglied s1 on (s1.id = schiff.ft1_steuermann_id)
   join sasse_mitglied s2 on (s2.id = schiff.ft2_steuermann_id)
@@ -698,7 +698,7 @@ select grp.name as gruppe
      , zi.startnummer_calc as startnummer_calc
   from sasse_schiffsektion schiff
   join sasse_teilnehmer tn on (tn.id = schiff.teilnehmer_ptr_id)
-  join sasse_gruppe grp on (grp.teilnehmer_ptr_id = schiff.gruppe_id)
+  join sasse_sektionsfahrengruppe grp on (grp.teilnehmer_ptr_id = schiff.gruppe_id)
   join bewertung_calc b on (b.teilnehmer_id = tn.id)
   join sasse_mitglied s1 on (s1.id = schiff.ft1_steuermann_id)
   join sasse_mitglied s2 on (s2.id = schiff.ft2_steuermann_id)
@@ -840,7 +840,7 @@ select p.name as posten
      , schiff.position as schiff
   from sasse_schiffsektion schiff
   join sasse_teilnehmer tn on (tn.id = schiff.teilnehmer_ptr_id)
-  join sasse_gruppe grp on (grp.teilnehmer_ptr_id = schiff.gruppe_id)
+  join sasse_sektionsfahrengruppe grp on (grp.teilnehmer_ptr_id = schiff.gruppe_id)
   join bewertung_calc b on (b.teilnehmer_id = tn.id)
   join sasse_posten p on (p.id = b.posten_id)
  where 1=1

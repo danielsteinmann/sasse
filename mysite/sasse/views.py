@@ -22,7 +22,7 @@ from .models import Teilnehmer
 from .models import Schiffeinzel
 from .models import Richtzeit
 from .models import Sektion
-from .models import Gruppe
+from .models import Sektionsfahrengruppe
 from .models import Kranzlimite
 from .models import Mitglied
 from .models import Schiffsektion
@@ -1051,7 +1051,7 @@ def sektionsfahren_startliste(request, jahr, wettkampf):
             wettkampf__name=wettkampf,
             wettkampf__von__year=jahr)
     w = d.wettkampf
-    startliste = Gruppe.objects.with_counts(d)
+    startliste = Sektionsfahrengruppe.objects.with_counts(d)
     return render(request, 'sektionsfahren_startliste.html', {
         'wettkampf': w, 'disziplin': d, 'startliste': startliste})
 
@@ -1086,7 +1086,7 @@ def sektionsfahren_gruppe_post(request, jahr, wettkampf):
 
 @permission_required('sasse.delete_gruppe')
 def sektionsfahren_gruppe_delete(request, jahr, wettkampf, gruppe):
-    g = Gruppe.objects.select_related().get(
+    g = Sektionsfahrengruppe.objects.select_related().get(
             name=gruppe,
             disziplin__disziplinart__name="Sektionsfahren",
             disziplin__wettkampf__name=wettkampf,
@@ -1102,7 +1102,7 @@ def sektionsfahren_gruppe_delete(request, jahr, wettkampf, gruppe):
 
 def sektionsfahren_gruppe_get(request, jahr, wettkampf, gruppe):
     assert request.method == 'GET'
-    g = Gruppe.objects.select_related().get(
+    g = Sektionsfahrengruppe.objects.select_related().get(
             name=gruppe,
             disziplin__disziplinart__name="Sektionsfahren",
             disziplin__wettkampf__name=wettkampf,
@@ -1115,7 +1115,7 @@ def sektionsfahren_gruppe_get(request, jahr, wettkampf, gruppe):
 
 @permission_required('sasse.change_gruppe')
 def sektionsfahren_gruppe_update(request, jahr, wettkampf, gruppe):
-    g = Gruppe.objects.select_related().get(
+    g = Sektionsfahrengruppe.objects.select_related().get(
             name=gruppe,
             disziplin__disziplinart__name="Sektionsfahren",
             disziplin__wettkampf__name=wettkampf,
@@ -1136,7 +1136,7 @@ def sektionsfahren_gruppe_update(request, jahr, wettkampf, gruppe):
 @permission_required('sasse.add_schiffsektion')
 def sektionsfahren_schiff_post(request, jahr, wettkampf, gruppe):
     assert request.method == 'POST'
-    g = Gruppe.objects.select_related().get(
+    g = Sektionsfahrengruppe.objects.select_related().get(
             name=gruppe,
             disziplin__disziplinart__name="Sektionsfahren",
             disziplin__wettkampf__name=wettkampf,
@@ -1153,7 +1153,7 @@ def sektionsfahren_schiff_post(request, jahr, wettkampf, gruppe):
 
 @permission_required('sasse.change_schiffsektion')
 def sektionsfahren_schiff_update(request, jahr, wettkampf, gruppe, position):
-    schiff = Schiffsektion.objects.select_related(depth=1).get(
+    schiff = Schiffsektion.objects.select_related().get(
             position=position,
             gruppe__name=gruppe,
             disziplin__disziplinart__name="Sektionsfahren",
@@ -1178,7 +1178,7 @@ def sektionsfahren_schiff_update(request, jahr, wettkampf, gruppe, position):
 
 @permission_required('sasse.change_gruppe')
 def sektionsfahren_gruppe_abzug(request, jahr, wettkampf, gruppe):
-    g = Gruppe.objects.select_related().get(
+    g = Sektionsfahrengruppe.objects.select_related().get(
             name=gruppe,
             disziplin__disziplinart__name="Sektionsfahren",
             disziplin__wettkampf__name=wettkampf,
@@ -1447,7 +1447,7 @@ def zeiten_sektionsfahren_import(request, jahr, wettkampf, disziplin, posten):
     else:
         form = EinzelfahrenZeitUploadFileForm()
         initial = []
-        for g in Gruppe.objects.with_counts(d):
+        for g in Sektionsfahrengruppe.objects.with_counts(d):
             initial.append({'gruppe_id': g.id, 'gruppe_name': g.name})
         formset = SektionsfahrenZeitUploadFormSet(initial=initial)
     total = success + len(failed)
