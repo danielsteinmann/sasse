@@ -1,8 +1,12 @@
 Frische Installation
 --------------------
-- sasse-setup.zip
+- sasse-setup-2023.zip
   Enthält die nachfolgend referenzierten Software Packages. Kann man z.B. auf
   dem Desktop auspacken.
+
+- vcredist_x64.exe
+  Microsft Visual C++ 2010 x64 Redistributable Setup installieren, damit alter
+  Apache24 inklusive mod_wsgi noch läuft
 
 - httpd-2.4.9-win64.zip
   Ordner 'Apache24' nach 'c:/' auspacken
@@ -11,10 +15,10 @@ Frische Installation
 - mod_wsgi-3.4.ap24.win-amd64-py2.7.zip
   File 'mod_wsgi.so' nach c:/Apache24/modules auspacken
 
-- python-2.7.6.amd64.msi
+- python-2.7.16.amd64.msi
   Alle Defaults wählen. Python wird in das Verzeichnis c:/python27 installiert.
 
-- postgresql-9.3.4-3-windows-x64.exe
+- postgresql-14.7-2-windows-x64.exe
   Alle Defaults wählen. Das Passwort 'spsv' vergeben. Falls ein anderes gewählt wird,
   unbedingt gut merken. Den Stack Builder muss nicht gestartet werden.
 
@@ -24,22 +28,21 @@ Frische Installation
   - Auf Tab 'Erweiterungen' wechseln und Knopf 'Umgebungsvariablen' drücken
   - Im Bereich 'Systemvariablen' die Variable 'Path' auswählen
   - Knopf 'Bearbeiten' drücken und an Ende von 'Wert der Variablen' navigieren
-  - Dort ';c:\Python27;C:\Programme\PostgreSQL\9.3\bin' eingeben und OK drücken
+  - Dort ';c:\Python27;C:\Programme\PostgreSQL\14\bin' eingeben und OK drücken
 
 - Python Environment
   Es wird ein Virtuelles Environment für Sasse eingerichtet, das die DLLs von
   ReportLab und PostgreSQL installiert sowie Sasse mit ihren Dependencies
   (automatisch vom Internet runtergeladen). Dafür eine Console starten und
   folgendes eingeben:
-    cd <DESKTOP>/sasse-setup
-    python ./get-pip.py
-    python -m pip install -U pip
+    cd <DESKTOP>/sasse-setup-2023
+    python -m pip install --upgrade pip
     python -m pip install virtualenv
     python -m virtualenv c:\pythonenv\sasse
     c:\pythonenv\sasse\Scripts\activate.bat
     easy_install ./reportlab-2.5.win-amd64-py2.7.exe
-    easy_install ./psycopg2-2.5.3.win32-py2.7-pg9.3.4-release.exe
-    pip install ./sasse-2.3.tar.gz
+    pip install psycopg2-binary  (installs 2.8.6)
+    pip install ./sasse-2.12.tar.gz
 
 - Django Website
   Die Website ist mit Hilfe des Django Framework erzeugt worden. Folgendes
@@ -71,7 +74,7 @@ Frische Installation
     python manage.py migrate
     python manage.py import_mitglieder_spsv EXCEL-FILE
 
-  (Excel File mit 'qryExportWetkämpferfürDaniSteinmannNachAlt' erzeugen)
+  (Excel mit 'qryExportWetkämpferfürDaniSteinmannNachAlt' als '.xls' erzeugen)
 
 
 Upgrade

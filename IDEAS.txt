@@ -1,3 +1,18 @@
+- Kontrollvisum im UI machen
+   => Und check
+
+- Eidgenössisches Spezialpreise
+
+====
+
+1. Sektions- und Gruppenabzüge (summiert) auf Rangliste darstellen. Etwa so:
+
+    Kranz|Rang|Sektion|Gruppen|Schiffe|JP|Frauen|Senioren|Abzüge Sektion|Abzüge Gruppen|Total
+
+Somit sieht man sofort, wer Abzüge hat und dann passiert der Fehler nicht mehr
+wie bei Wynau in Bremgarten, wo versehentlich 10 Punkte bei einer Gruppe (statt
+1 Punkt) abgezogen wurde.
+
 
 2. 80% Regel, basierend auf Startliste Sektionsfahren (inkl. Reservefahrer)
    - Anzahl Reservefahrer zwischen Fahrchef und Zuschlägen eingeben
@@ -16,13 +31,13 @@
 4. Generationenpreis automatisieren
    - Zwei Personen als Teilnehmer eingeben
 
-5. Eingabemaske für Spezialwettkämpfe
+5. Ältestes Fahrerpaar automatisieren
+
 
 ===
 cat remove.txt | while read old new name; do sed -e "s,_OLD_,$old," -e "s,_NEW_,$new," dups_template.sql; done > delete_dups.sql
 ===
-- WICHTIG: Check, ob es keine Noten gibt.
-- Die Kat. I, II, III, F, D und C müssen in allen Wettkampfdisziplinen verfügbar sein
+- Check, ob es keine Noten gibt.
 - Alles auf eigene Richtzeiten I, II, III, F, D und C damit man dies mal Testen kann bzw dies bereits möglich ist
 
 - Kategorie C/D Einzelfahren CSV Export
@@ -43,16 +58,6 @@ http://stackoverflow.com/questions/10454002/can-postgresql-copy-read-csv-from-a-
 - Upgrade Django 1.6
 
 - Richtzeiten auf Notenblatt ausgeben
-
-- Datenprobleme:
-    Apawan Jeremeah (99086): Existiert mehr als einmal (99079)
-    Zurbuchen Sacha (99089): Existiert mehr als einmal (99080)
-    Herzog Robin (99085): Existiert mehr als einmal (99078) .
-    Brem Sven (99025): Existiert mehr als einmal (99024)
-    Brem Sven (99026): Existiert mehr als einmal (99024)
-    Brem Sven (99027): Existiert mehr als einmal (99024)
-    Brem Sven (99029): Existiert mehr als einmal (99024)
-    Schwab Annina (99092): Existiert mehr als einmal (99091) fertig.
 
 - Doppeltstarter optional machen. Wird beim Wettfahren 7-er Club gebraucht.
   Dort kann einer zweimal mit einem aus einer anderen Sektion starten und wird
