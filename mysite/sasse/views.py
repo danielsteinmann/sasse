@@ -728,7 +728,7 @@ def notenliste(request, jahr, wettkampf, disziplin):
         sektion = searchform.cleaned_data['sektion']
         startnummern = [schiff.startnummer for schiff in searchform.schiffe]
         notenliste = read_notenliste(d, posten, sektion, startnummern)
-    paginator = Paginator(list(notenliste), 15)
+    paginator = Paginator(list(notenliste), 15, orphans=3)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
     return render(request, 'notenliste.html', {'wettkampf': w, 'disziplin':
@@ -784,7 +784,7 @@ def rangliste(request, jahr, wettkampf, disziplin, kategorie=None):
     kranzlimite = read_kranzlimite(d, k)
     rangliste = read_rangliste(d, k)
     rangliste_sorted = sorted(rangliste, key=sort_rangliste)
-    paginator = Paginator(rangliste_sorted, 25)
+    paginator = Paginator(rangliste_sorted, 25, orphans=3)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
     return render(request, 'rangliste.html', {'wettkampf': w, 'disziplin':
@@ -1287,7 +1287,7 @@ def sektionsfahren_rangliste_schiff(request, jahr, wettkampf):
             wettkampf__von__year=jahr)
     w = d.wettkampf
     rangliste = list(read_sektionsfahren_rangliste_schiff(d))
-    paginator = Paginator(rangliste, 10)
+    paginator = Paginator(rangliste, 10, orphans=3)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
     return render(request, 'sektionsfahren_rangliste_schiff.html', {
@@ -1607,7 +1607,7 @@ def schwimmen_rangliste(request, jahr, wettkampf, kategorie=None):
     kranzlimite = _get_spezialwettkampf_limite(d, aktuelle_kategorie)
     rangliste = Schwimmer.objects.filter(disziplin=d, kategorie=aktuelle_kategorie).order_by('zeit')
     rangliste, kranz_prozent = _create_spezialwettkampf_rangliste(rangliste, kranzlimite)
-    paginator = Paginator(rangliste, 25)
+    paginator = Paginator(rangliste, 25, orphans=3)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
     return render(request, 'schwimmen_rangliste.html',
@@ -1690,7 +1690,7 @@ def einzelschnueren_rangliste(request, jahr, wettkampf, kategorie=None):
     kranzlimite = _get_spezialwettkampf_limite(d, aktuelle_kategorie)
     rangliste = Einzelschnuerer.objects.filter(disziplin=d, kategorie=aktuelle_kategorie).order_by('zeit')
     rangliste, kranz_prozent = _create_spezialwettkampf_rangliste(rangliste, kranzlimite)
-    paginator = Paginator(rangliste, 25)
+    paginator = Paginator(rangliste, 25, orphans=3)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
     return render(request, 'einzelschnueren_rangliste.html',
