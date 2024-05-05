@@ -1,9 +1,7 @@
 {% extends "base_schwimmen.html" %}
 {% block nav_rangliste %}selected{% endblock %}
 {% block content %}
-{% load pagination_tags %}
 {% load sasse %}
-{% autopaginate rangliste 40 %}
 {% for k in kategorien %}
 {% if k == kategorie %}<b>{{ k }}</b>
 {% else %}<a href="{% url 'schwimmen_rangliste' wettkampf.jahr wettkampf.name k %}">{{ k }}</a>
@@ -26,7 +24,7 @@ Kranzlimite:
     <th>Sektion</th>
     <th class="zeit">Zeit</th>
   </tr>
-{% for row in rangliste %}
+{% for row in page_obj %}
   {% ifchanged row.kranz %}{% if not forloop.first %}
   <tr><td colspan="4">Kranzlimite: {{ kranzlimite|bewertung:'ZEIT' }} ({{ kranzlimite_in_prozent }}%)</td></tr>
   {% endif %}{% endifchanged %}
@@ -39,5 +37,5 @@ Kranzlimite:
 {% endfor %}
 </table>
 <p></p>
-{% paginate %}
+{% include "pagination.html" %}
 {% endblock %}

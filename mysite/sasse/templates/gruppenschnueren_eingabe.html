@@ -1,9 +1,7 @@
 {% extends "base_gruppenschnueren.html" %}
 {% block nav_eingabe %}selected{% endblock %}
 {% block content %}
-{% load pagination_tags %}
 {% load sasse %}
-{% autopaginate startliste 40 %}
 <p><p/>
 <form id="myform" name="myform" action="" method="POST">
 <table class="form">
@@ -65,7 +63,6 @@
   {% endfor %}
 </table>
 <p></p>
-{% paginate %}
 <script type="text/javascript">
 $(document).ready(function(){
         textboxes = $("form:not(.filter) :input:visible:[type=text], select");

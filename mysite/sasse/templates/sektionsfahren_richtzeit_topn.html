@@ -1,5 +1,3 @@
-{% load pagination_tags %}
-{% autopaginate rangliste 15 %}
 <p></p>
 Die besten Zeiten für Posten {{ posten.name }}:
 <table class="list">
@@ -17,7 +15,7 @@ Die besten Zeiten für Posten {{ posten.name }}:
     <th class="zeit">Zeit</th>
     <th class="note">Note</th>
   </tr>
-{% for row in rangliste %}
+{% for row in page_obj %}
   <tr class="{% cycle 'odd' 'even' %}">
     <td><a href="{% url 'sektionsfahren_gruppe_get' wettkampf.jahr wettkampf.name row.gruppe %}">{{ row.gruppe }}</a></td>
     <td class="rang">{{ row.schiff }}</td>
@@ -32,4 +30,4 @@ Die besten Zeiten für Posten {{ posten.name }}:
 {% endfor %}
 </table>
 <p></p>
-{% paginate %}
+{% include "pagination.html" %}

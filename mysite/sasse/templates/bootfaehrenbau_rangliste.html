@@ -1,9 +1,7 @@
 {% extends "base_bootfaehrenbau.html" %}
 {% block nav_rangliste %}selected{% endblock %}
 {% block content %}
-{% load pagination_tags %}
 {% load sasse %}
-{% autopaginate rangliste 40 %}
 {% for k in kategorien %}
 {% if k == kategorie %}<b>{{ k }}</b>
 {% else %}<a href="{% url 'bootfaehrenbau_rangliste' wettkampf.jahr wettkampf.name k %}">{{ k }}</a>
@@ -43,5 +41,4 @@ Kranzlimite:
 {% endfor %}
 </table>
 <p></p>
-{% paginate %}
 {% endblock %}

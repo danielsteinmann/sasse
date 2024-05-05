@@ -57,23 +57,7 @@
   {% endif %}
 </table>
 <p></p>
-<div class="pagination">
-    <span class="step-links">
-        {% if page_obj.has_previous %}
-            <a href="?page=1">&laquo; erste</a>
-            <a href="?page={{ page_obj.previous_page_number }}">vorherige</a>
-        {% endif %}
-
-        <span class="current">
-            Seite {{ page_obj.number }} von {{ page_obj.paginator.num_pages }}
-        </span>
-
-        {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}">nächste</a>
-            <a href="?page={{ page_obj.paginator.num_pages }}">letzte &raquo;</a>
-        {% endif %}
-    </span>
-</div>
+{% include "pagination.html" %}
 <script type="text/javascript">
 $(document).ready(function(){
         $('form:not(.filter) :input:visible:eq(1)').focus().select();

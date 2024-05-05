@@ -1287,8 +1287,11 @@ def sektionsfahren_rangliste_schiff(request, jahr, wettkampf):
             wettkampf__von__year=jahr)
     w = d.wettkampf
     rangliste = list(read_sektionsfahren_rangliste_schiff(d))
+    paginator = Paginator(rangliste, 10)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
     return render(request, 'sektionsfahren_rangliste_schiff.html', {
-        'wettkampf': w, 'disziplin': d, 'rangliste': rangliste})
+        'wettkampf': w, 'disziplin': d, 'page_obj': page_obj})
 
 def sektionsfahren_notenblatt(request, jahr, wettkampf, sektion_name):
     assert request.method == 'GET'
@@ -1512,7 +1515,7 @@ def _create_spezialwettkampf_rangliste(rangliste, kranzlimite):
             else:
                 row.rang = rang
             rang += 1
-            if row.zeit <= kranzlimite:
+            if kranzlimite is not None and row.zeit <= kranzlimite:
                 row.kranz = True
                 anz_mit_kranz += 1
         previous_row = row
@@ -1564,8 +1567,11 @@ def schwimmen_eingabe(request, jahr, wettkampf):
     else:
         form = SchwimmerForm(d)
     startliste = Schwimmer.objects.select_related().filter(disziplin=d).order_by('-creation_date')
+    paginator = Paginator(startliste, 25)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
     return render(request, "schwimmen_eingabe.html",
-            {'wettkampf': d.wettkampf, 'disziplin': d, 'form': form, 'startliste': startliste})
+            {'wettkampf': d.wettkampf, 'disziplin': d, 'form': form, 'page_obj': page_obj})
 
 @permission_required('sasse.change_gruppe')
 def schwimmen_update(request, jahr, wettkampf, startnummer):
@@ -1601,9 +1607,12 @@ def schwimmen_rangliste(request, jahr, wettkampf, kategorie=None):
     kranzlimite = _get_spezialwettkampf_limite(d, aktuelle_kategorie)
     rangliste = Schwimmer.objects.filter(disziplin=d, kategorie=aktuelle_kategorie).order_by('zeit')
     rangliste, kranz_prozent = _create_spezialwettkampf_rangliste(rangliste, kranzlimite)
+    paginator = Paginator(rangliste, 25)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
     return render(request, 'schwimmen_rangliste.html',
             {'wettkampf': d.wettkampf, 'disziplin': d, 'kategorie': aktuelle_kategorie, 'kategorien':
-                gestartete_kategorien, 'rangliste': rangliste, 'kranzlimite':
+                gestartete_kategorien, 'page_obj': page_obj, 'kranzlimite':
                 kranzlimite, 'kranzlimite_in_prozent': kranz_prozent})
 
 def schwimmen_rangliste_pdf(request, jahr, wettkampf, kategorie):
@@ -1641,8 +1650,11 @@ def einzelschnueren_eingabe(request, jahr, wettkampf):
     else:
         form = EinzelschnuererForm(d, initial={'zuschlaege': 0})
     startliste = Einzelschnuerer.objects.select_related().filter(disziplin=d).order_by('-creation_date')
+    paginator = Paginator(startliste, 25)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
     return render(request, "einzelschnueren_eingabe.html",
-            {'wettkampf': d.wettkampf, 'disziplin': d, 'form': form, 'startliste': startliste})
+            {'wettkampf': d.wettkampf, 'disziplin': d, 'form': form, 'page_obj': page_obj})
 
 @permission_required('sasse.change_gruppe')
 def einzelschnueren_update(request, jahr, wettkampf, startnummer):
@@ -1678,9 +1690,12 @@ def einzelschnueren_rangliste(request, jahr, wettkampf, kategorie=None):
     kranzlimite = _get_spezialwettkampf_limite(d, aktuelle_kategorie)
     rangliste = Einzelschnuerer.objects.filter(disziplin=d, kategorie=aktuelle_kategorie).order_by('zeit')
     rangliste, kranz_prozent = _create_spezialwettkampf_rangliste(rangliste, kranzlimite)
+    paginator = Paginator(rangliste, 25)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
     return render(request, 'einzelschnueren_rangliste.html',
             {'wettkampf': d.wettkampf, 'disziplin': d, 'kategorie': aktuelle_kategorie, 'kategorien':
-                gestartete_kategorien, 'rangliste': rangliste, 'kranzlimite':
+                gestartete_kategorien, 'page_obj': page_obj, 'kranzlimite':
                 kranzlimite, 'kranzlimite_in_prozent': kranz_prozent})
 
 def einzelschnueren_rangliste_pdf(request, jahr, wettkampf, kategorie):
