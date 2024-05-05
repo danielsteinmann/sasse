@@ -6,20 +6,6 @@ from django.conf import settings
 from django.urls import reverse
 from .templatetags.sasse import zeit2str
 
-# Die Permissions werden erst in einem post_sync Schritt von Django gemacht.
-# Das passiert erst, *nachdem* die South-Migrations installiert werden. Wenn
-# nun eine Migration auf solche Permissions zugreifen möchte, dann müssen diese
-# vorhanden sein.
-# Siehe http://south.aeracode.org/ticket/211
-# TODO
-#if 'django.contrib.auth' in settings.INSTALLED_APPS:
-#    from south.signals import pre_migrate
-#    def create_permissions_compat(app, **kwargs):
-#        from django.db.models import get_app
-#        from django.contrib.auth.management import create_permissions
-#        create_permissions(get_app(app), (), 0)
-#    pre_migrate.connect(create_permissions_compat)
-
 SCHIFFS_ART = (
         ('b', 'Boot'),
         ('w', 'Weidling'),
@@ -468,7 +454,6 @@ class Schiffsektion(Teilnehmer):
     
     Position 1, 2, etc innerhalb der Gruppe ist bei der Noteneingabe wichtig.
     """
-    #TODO
     gruppe = models.ForeignKey('Sektionsfahrengruppe', on_delete=models.CASCADE)
     position = models.PositiveSmallIntegerField()
     ft1_steuermann = models.ForeignKey('Mitglied', on_delete=models.CASCADE, related_name='ft1_steuermann')
