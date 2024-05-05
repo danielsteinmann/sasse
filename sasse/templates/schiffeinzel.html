@@ -40,8 +40,10 @@
     <td></td>
     <td>
       <br />
+      {% if user.is_authenticated %}
       <a href="{% url 'teilnehmer_update' wettkampf.jahr wettkampf.name disziplin.name teilnehmer.startnummer %}">Ändern</a>
       | <a href="{% url 'teilnehmer_delete_confirm' wettkampf.jahr wettkampf.name disziplin.name teilnehmer.startnummer %}">Löschen</a>
+      {% endif %}
     </td>
   </tr>
 </table>

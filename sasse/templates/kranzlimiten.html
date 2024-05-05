@@ -44,5 +44,7 @@
 {% endfor %}
 </table>
 <p></p>
+{% if user.is_authenticated %}
 <a href="{% url 'kranzlimiten_update' wettkampf.jahr wettkampf.name disziplin.name %}">Ändern</a>
+{% endif %}
 {% endblock %}

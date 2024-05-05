@@ -1,7 +1,8 @@
-<p></p>
-Die besten Zeiten für Posten {{ posten.name }}:
+<p>
+Die besten Zeiten für Posten <b>{{ posten.name }}</b>:
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <a target="_blank" href="{% url 'richtzeiten_pdf' wettkampf.jahr wettkampf.name disziplin.name %}">Alle Posten als PDF</a>
+</p>
 <table class="list">
   <tr>
     <th class="startnummer">Stnr</th>

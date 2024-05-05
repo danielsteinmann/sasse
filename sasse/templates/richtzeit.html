@@ -10,7 +10,9 @@
 <p>
 {% if form.instance.zeit %}
 <b>Richtzeit: {{form.instance.zeit|bewertung:'ZEIT'}}</b>
+{% if user.is_authenticated %}
 <a href="{% url 'richtzeit_update' wettkampf.jahr wettkampf.name disziplin.name posten.name %}">Ändern</a>
+{% endif %}
 {% else %}
 Noch keine Richtzeit vorhanden.
 <a href="{% url 'richtzeit_update' wettkampf.jahr wettkampf.name disziplin.name posten.name %}">Richtzeit eingeben</a>
