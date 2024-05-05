@@ -1,5 +1,6 @@
 {% extends "base_disziplin.html" %}
 {% block nav_rangliste %}selected{% endblock %}
+{% load sasse %}
 {% block content %}
   <a href="{% url 'beste_schiffe' wettkampf.jahr wettkampf.name disziplin.name %}?typ=Amerikaner">Amerikanerbecher</a>
 | <a href="{% url 'beste_schiffe' wettkampf.jahr wettkampf.name disziplin.name %}?typ=Lichtensteiner">Lichtensteinerbecher</a>
@@ -22,8 +23,8 @@
     <td class="startnummer"><a href="{% url 'teilnehmer_get' wettkampf.jahr wettkampf.name disziplin.name row.startnummer %}">{{row.startnummer}}</a></td>
     <td>{{ row.fahrerpaar }}</td>
     <td class="kategorie">{{ row.kategorie }}</td>
-    <td class="note"><a title="Notenblatt" href="{% url 'notenblatt' wettkampf.jahr wettkampf.name disziplin.name row.startnummer %}">{{row.punkte}}</a></td>
-    <td class="note">{% ifchanged row.total %}{{ row.total }}{% endifchanged %}</td>
+    <td class="note"><a title="Notenblatt" href="{% url 'notenblatt' wettkampf.jahr wettkampf.name disziplin.name row.startnummer %}">{{row.punkte|bewertung:'PUNKTE'}}</a></td>
+    <td class="note">{% ifchanged row.total %}{{ row.total|bewertung:'PUNKTE' }}{% endifchanged %}</td>
   </tr>
 {% endfor %}
 </table>
