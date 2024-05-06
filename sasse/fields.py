@@ -174,6 +174,7 @@ class StartnummernSelectionField(RegexField):
         self.widget.attrs['size'] = 7
         self.required = False
 
+    #
     # Vorschlag für andere Implementation:
     #
     #   input = '1,3,5,1-20,30-50,-100,500-'
@@ -195,12 +196,6 @@ class StartnummernSelectionField(RegexField):
     #
     # Ein Bereich kann mehrfach vorkommen
     #  (Beispiel: '5-10,13-15' => [('range', [5,10]), ('range', [13,15])])
-    #
-    # TODO: Reihenfolge beibehalten. 
-    #  (Beispiel: '1,3,2,5' => [('range', [1,3,2,5]))
-    #  Wichtig ist hier, dass die Datenbank die Startnummern in zufälliger
-    #  Reihenfolge sendet, aber der Benutzer die Nummern in spezifischer
-    #  Reihenfolge haben möchte.
     #
     def clean(self, value):
         super(StartnummernSelectionField, self).clean(value)

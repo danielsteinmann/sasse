@@ -309,25 +309,6 @@ class SchiffeinzelListForm(Form):
                 self.data[flag_field] = False
         return form
 
-    #
-    # TODO Doppelstarter Info darstellen, falls gleicher Fahrer mit frühere
-    # Startnr existiert
-    #
-    # TODO Doppelstarter Warnung darstellen, falls gleicher Fahrer mit
-    # *späterer* Startnr existiert => Eventuell Hilfstabelle führen, welche
-    # Startnummernblöcke definiert
-    #
-    # TODO Was passiert, wenn ein Doppelstarter in einer anderen Kategorie
-    # passiert. Beispiel:
-    #      Steinmann     Kohler   C
-    #      Steinmann*    Dux      D
-    # 
-    # TODO Doppelstarter gelten Parcours-übergreifend: Wenn einer in Kat II
-    # startet, darf er in der Kat I nur noch als Doppelstarter starten.
-    # 
-    # TODO Es gibt der Fall, wo Name/Vorname innerhalb der Sektion zweimal
-    # vorkommt (z.B. Schenker Michael). Dropdown Liste mit Jahrgang ergänzen
-    #
     def clean(self):
         for name in ('steuermann', 'vorderfahrer'):
             mitglied = self.cleaned_data.get(name)
