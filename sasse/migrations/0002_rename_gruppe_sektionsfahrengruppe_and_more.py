@@ -19,4 +19,17 @@ class Migration(migrations.Migration):
             name='kategorien',
             field=models.ManyToManyField(blank=True, to='sasse.kategorie'),
         ),
+        migrations.RenameField(
+            model_name='schiffsektion',
+            old_name='gruppex',
+            new_name='gruppe',
+        ),
+        migrations.AlterModelOptions(
+            name='schiffsektion',
+            options={'ordering': ['gruppe', 'position']},
+        ),
+        migrations.AlterUniqueTogether(
+            name='schiffsektion',
+            unique_together={('gruppe', 'position')},
+        ),
     ]
