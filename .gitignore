@@ -1,5 +1,7 @@
 *.py[cod]
 pyenv/
+staticfiles/
+sasse.egg-info
 dist
 build
 MANIFEST

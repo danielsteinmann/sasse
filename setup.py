@@ -15,29 +15,28 @@ class website_sdist(sdist):
             for f in (
                     '__init__.py',
                     'settings.py',
-                    'manage.py',
-                    'urls.py'
+                    'urls.py',
+                    'asgi.py',
+                    'wsgi.py',
                     ):
-                src = "example_project/%s" % f
+                src = "mysite/%s" % f
                 dst = "djangosites/wettkaempfe/%s" % f
                 myzip.write(src, dst)
 
 setup(
     name = "sasse",
-    version = "2.12",
+    version = "3.0.0",
     author = "Daniel Steinmann",
     author_email = "dsteinmann@acm.org",
     description = "Unterstützt das Rechnungsbüro der Pontoniere bei der Durchführung eines Wettkampfes.",
-    url = "http://code.google.com/p/sasse/",
-    packages = find_packages(exclude=['example_project']),
+    url = "https://github.com/danielsteinmann/sasse",
+    packages = find_packages(exclude=['mysite']),
     include_package_data = True,
     install_requires = """
-        django == 1.3
-        reportlab == 2.5
+        Django >= 5
+        reportlab >= 4
         xlrd >= 0.7.1
-        South >= 0.7.3
-        django-pagination >= 1.0.7
-        psycopg2 >= 2.4.1
+        psycopg2-binary >= 2.9
         """,
     cmdclass = {
         'sdist': website_sdist,

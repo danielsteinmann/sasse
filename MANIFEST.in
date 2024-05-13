@@ -1,4 +1,4 @@
 # In Python 2.7 ist 'sdist' geflickt, somit ist folgendes nicht mehr nötig:
 recursive-include sasse/fixtures *
-recursive-include sasse/media *
+recursive-include sasse/static *
 recursive-include sasse/templates *
