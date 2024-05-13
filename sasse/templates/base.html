@@ -5,6 +5,7 @@
 <title>{% block title %}SPSV Wettkampfprogramm{% endblock %}</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 {% load static %}
+<link rel="icon" type="image/x-icon" href="{% static 'sasse/favicon.ico' %}">
 <link href="{% static 'sasse/style.css' %}" type="text/css" rel="stylesheet" />
 </head>
 <body>
@@ -16,6 +17,8 @@
 {% if user.is_superuser %}
 | <a href="/admin/">Einstellungen</a>
 {% endif %}
+<!-- Logout is a form POST now; therefore just go to Admin home page where there is a logout 'link' -->
+| <a href="{% url 'admin:index' %}?next={{ request.get_full_path }}">Logout</a>
 {% else %}
 Nicht eingeloggt | <a href="{% url 'login' %}?next={{ request.get_full_path }}">Login</a>
 {% endif %}
