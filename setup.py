@@ -35,7 +35,7 @@ setup(
     install_requires = """
         Django >= 5
         reportlab >= 4
-        xlrd >= 0.7.1
+        openpyxl >= 3.1
         psycopg2-binary >= 2.9
         """,
     cmdclass = {

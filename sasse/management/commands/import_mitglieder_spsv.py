@@ -2,16 +2,18 @@
 
 import os
 from django.core.management.base import BaseCommand, CommandError
-from sasse.eai import handle_file_upload
+from sasse.eai_mitglieder import handle_file_upload
 
 class Command(BaseCommand):
-    args = 'excel_file'
     help = 'Importiert SPSV Mitglieder Daten aus dem Excel File.'
 
+    def add_arguments(self, parser):
+        parser.add_argument("EXCEL-FILE", type=str)
+
     def handle(self, *args, **options):
-        if len(args) == 0 or len(args) > 1:
+        if 'EXCEL-FILE' not in options:
             raise CommandError('Ein Excel File mit Mitgliederdaten als Input erwartet.')
-        path = args[0]
+        path = options['EXCEL-FILE']
         if not os.path.isfile(path):
             raise CommandError('%s: Ist kein File.' % path)
         handle_file_upload(path)

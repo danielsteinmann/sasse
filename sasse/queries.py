@@ -312,14 +312,14 @@ def read_anzahl_wettkaempfer(disziplin, kategorie):
 
 def create_mitglieder_nummer():
     cursor = connection.cursor()
-    sql = "select max(nummer) from sasse_mitglied where nummer >= '99000'"
+    sql = "select max(substr(nummer,5)) from sasse_mitglied where starts_with(nummer, 'TMP-')"
     cursor.execute(sql)
     row = cursor.fetchone()
     nummer = row[0]
     if not nummer:
-        nummer = "99000"
+        nummer = "TMP-1"
     else:
-        nummer = "%d" % (int(nummer)+1,)
+        nummer = "TMP-%d" % (int(nummer)+1,)
     return str(nummer)
 
 def sind_doppelstarter(wettkampf, disziplinart, steuermann, vorderfahrer):

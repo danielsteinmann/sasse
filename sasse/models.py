@@ -19,7 +19,7 @@ GESCHLECHT_ART = [
 # Stammdaten (importiert)
 
 class Sektion(models.Model):
-    nummer = models.CharField(max_length=2, unique=True)
+    nummer = models.CharField(max_length=12, unique=True)
     name = models.CharField(max_length=50)
 
     class Meta:
@@ -30,7 +30,7 @@ class Sektion(models.Model):
 
 
 class Mitglied(models.Model):
-    nummer = models.CharField(max_length=5, unique=True)
+    nummer = models.CharField(max_length=12, unique=True)
     name = models.CharField(max_length=50)
     vorname = models.CharField(max_length=50)
     geburtsdatum = models.DateField()
