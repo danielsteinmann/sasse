@@ -23,6 +23,8 @@ class KategorieTestCase(TestCase):
         self.kat_III = Kategorie.objects.get(name='III')
         self.kat_C = Kategorie.objects.get(name='C')
         self.kat_D = Kategorie.objects.get(name='D')
+        self.kat_FII = Kategorie.objects.get(name='FII')
+        self.kat_FIII = Kategorie.objects.get(name='FIII')
         self.kat_F = Kategorie.objects.get(name='F')
         self.sektion = Sektion.objects.create(name="Wurstlikon")
 
@@ -111,8 +113,6 @@ class StartkategorieTestCase(TestCase):
         self._assert_kat(expected, self.mann_II, self.mann_I)
         self._assert_kat(expected, self.mann_II, self.frau_II)
         self._assert_kat(expected, self.mann_II, self.frau_I)
-        self._assert_kat(expected, self.frau_II, self.frau_II, jpsm=True)
-        self._assert_kat(expected, self.frau_II, self.frau_I, jpsm=True)
 
     def testIII(self):
         expected = self.kat['III']
@@ -122,9 +122,6 @@ class StartkategorieTestCase(TestCase):
         self._assert_kat(expected, self.mann_III, self.frau_III)
         self._assert_kat(expected, self.mann_III, self.frau_II)
         self._assert_kat(expected, self.mann_III, self.frau_I)
-        self._assert_kat(expected, self.frau_III, self.frau_III, jpsm=True)
-        self._assert_kat(expected, self.frau_III, self.frau_II, jpsm=True)
-        self._assert_kat(expected, self.frau_III, self.frau_I, jpsm=True)
 
     def testC(self):
         expected = self.kat['C']
@@ -146,9 +143,25 @@ class StartkategorieTestCase(TestCase):
         self._assert_kat(expected, self.mann_D, self.mann_D)
         self._assert_kat(expected, self.mann_D, self.frau_D)
 
+    def testFII(self):
+        expected = self.kat['FII']
+        self._assert_kat(expected, self.frau_II, self.frau_II)
+        self._assert_kat(expected, self.frau_II, self.frau_I)
+        self._assert_kat(expected, self.frau_II, self.frau_II, jpsm=True)
+        self._assert_kat(expected, self.frau_II, self.frau_I, jpsm=True)
+
+    def testFIII(self):
+        expected = self.kat['FIII']
+        self._assert_kat(expected, self.frau_III, self.frau_III)
+        self._assert_kat(expected, self.frau_III, self.frau_II)
+        self._assert_kat(expected, self.frau_III, self.frau_I)
+        self._assert_kat(expected, self.frau_III, self.frau_III, jpsm=True)
+        self._assert_kat(expected, self.frau_III, self.frau_II, jpsm=True)
+        self._assert_kat(expected, self.frau_III, self.frau_I, jpsm=True)
+
     def testF(self):
         expected = self.kat['F']
-        for f in [self.frau_II, self.frau_III, self.frau_C, self.frau_D]:
+        for f in [self.frau_C, self.frau_D]:
             self._assert_kat(expected, f, self.frau_II)
             self._assert_kat(expected, f, self.frau_III)
             self._assert_kat(expected, f, self.frau_C)

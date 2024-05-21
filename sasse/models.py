@@ -492,7 +492,7 @@ class Schiffeinzel(Teilnehmer):
 
     def calc_kategorie(self, aktuelles_jahr, mitglied):
         alter = aktuelles_jahr - mitglied.geburtsdatum.year
-        return Kategorie.objects.exclude(name="F").filter(
+        return Kategorie.objects.exclude(name__in=["FII","FIII","F"]).filter(
                 Q(alter_von__lte=alter),
                 Q(alter_bis__gte=alter)
                 )[0]
@@ -506,8 +506,8 @@ class Schiffeinzel(Teilnehmer):
         - Frau-23 mit Mann-45 => Kat C
 
         Zudem gibt es an den JP Schweizermeisterschafen keine Kategorie F:
-        - Frau-15 mit Frau-16 => Kat II
-        - Frau-19 mit Frau-18 => Kat III
+        - Frau-15 mit Frau-16 => Kat FII
+        - Frau-19 mit Frau-18 => Kat FIII
         - Frau-23 => Darf nicht starten
         """
         jpsm = self.disziplin.wettkampf.JPSM
@@ -521,9 +521,11 @@ class Schiffeinzel(Teilnehmer):
         kat_III = kat["III"]
         kat_C = kat["C"]
         kat_D = kat["D"]
+        kat_FII = kat["FII"]
+        kat_FIII = kat["FIII"]
         kat_F = kat["F"]
         if jpsm:
-            # An der JP SM duerfen nur Kat I, II und III starten
+            # An der JP SM duerfen nur JPs (max 20. Altersjahr) starten
             for k in [hinten_kat, vorne_kat]:
                 if k not in [kat_I, kat_II, kat_III]:
                     return None
@@ -531,11 +533,13 @@ class Schiffeinzel(Teilnehmer):
             # Reines Frauenpaar
             if hinten_kat == kat_I and vorne_kat == kat_I:
                 return kat_I
-            elif jpsm:
-                # An einer JP SM gibt es keine Kat F
-                pass
-            else:
+            if hinten_kat in (kat_I, kat_II) and vorne_kat in (kat_I, kat_II):
+                return kat_FII
+            if hinten_kat in (kat_I, kat_II, kat_III) and vorne_kat in (kat_I, kat_II, kat_III):
+                return kat_FIII
+            if hinten_kat in (kat_II, kat_III, kat_C, kat_D) and vorne_kat in (kat_II, kat_III, kat_C, kat_D):
                 return kat_F
+            return None
         if hinten_kat == vorne_kat:
             return hinten_kat
         if hinten_kat in (kat_I, kat_II) and vorne_kat in (kat_I, kat_II):
