@@ -5,11 +5,15 @@
 <ul class="subnav">
   <li class="{% block nav_ueberblick %}{% endblock %}">
     <a href="{{ disziplin.get_absolute_url }}">Überblick</a></li>
+{% if user.is_authenticated %}
   <li class="{% block nav_startliste %}{% endblock %}">
   | <a href="{% url 'startliste' wettkampf.jahr wettkampf.name disziplin.name %}">Startliste</a></li>
+{% endif %}
 {% if disziplin.posten_set.count %}
+{% if user.is_authenticated %}
   <li class="{% block nav_postenblatt %}{% endblock %}">
   | <a href="{% url 'bewertungen' wettkampf.jahr wettkampf.name disziplin.name %}">Beurteilungsblätter</a></li>
+{% endif %}
   <li class="{% block nav_rangliste %}{% endblock %}">
   | <a href="{% url 'rangliste' wettkampf.jahr wettkampf.name disziplin.name %}">Ranglisten</a></li>
   <li class="{% block nav_notenliste %}{% endblock %}">
