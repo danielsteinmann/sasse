@@ -452,7 +452,7 @@ def _sort_doppelstarter_nummer(row):
     else:
         # Passiert durch Falscheingabe, wenn ein Mitglied mehrfach startet,
         # aber nicht als Doppelstarter markiert ist.
-        return None
+        return 0
 
 def _mark_double_trouble(sorted_ds):
     """

@@ -10,8 +10,10 @@ from sasse.queries import read_doppelstarter
 
 
 class DoppelstarterEinzelTest(TestCase):
+    fixtures = ["disziplinarten.json", "kategorien.json"]
+
     def setUp(self):
-        self.bremgarten = Sektion.objects.get(name="Bremgarten")
+        self.bremgarten = Sektion.objects.create(name="Bremgarten")
         self.steinmann = Mitglied.objects.create(
                 name="Steinmann", vorname="Daniel", geschlecht="m",
                 geburtsdatum=datetime.date(1967, 4, 30),

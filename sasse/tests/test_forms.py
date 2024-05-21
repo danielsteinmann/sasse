@@ -78,6 +78,8 @@ class WettkampfFormTest(TestCase):
 
 
 class DisziplinFormTest(TestCase):
+    fixtures = ["disziplinarten.json", "kategorien.json"]
+
     def setUp(self):
         wettkampf = Wettkampf.objects.create(
                 name="Test-Cup",
@@ -112,9 +114,9 @@ class DisziplinFormTest(TestCase):
         saved_disziplin = self.sut.save()
         newform = DisziplinForm(saved_disziplin.wettkampf, data={
             'name': saved_disziplin.name,
-            'disziplinart': saved_disziplin.id,
+            'disziplinart': saved_disziplin.disziplinart.id,
             })
-        expected = "Disziplin with this Wettkampf and Name already exists."
+        expected = "Disziplin mit diesem Wettkampf und Name existiert bereits."
         errors = newform.non_field_errors()
         self.assertTrue(expected in errors, errors)
 
@@ -122,13 +124,13 @@ class DisziplinFormTest(TestCase):
         saved_disziplin = self.sut.save()
         new_disziplin = DisziplinForm(saved_disziplin.wettkampf, data={
             'name': 'neuer-name',
-            'disziplinart': saved_disziplin.id,
+            'disziplinart': saved_disziplin.disziplinart.id,
             }).save()
         newform = DisziplinForm(saved_disziplin.wettkampf, data={
             'name': saved_disziplin.name,
-            'disziplinart': saved_disziplin.id,
+            'disziplinart': saved_disziplin.disziplinart.id,
             }, instance=new_disziplin)
-        expected = "Disziplin with this Wettkampf and Name already exists."
+        expected = "Disziplin mit diesem Wettkampf und Name existiert bereits."
         errors = newform.non_field_errors()
         self.assertTrue(expected in errors, errors)
 
@@ -136,15 +138,17 @@ class DisziplinFormTest(TestCase):
         saved_disziplin = self.sut.save()
         newform = DisziplinForm(saved_disziplin.wettkampf, data={
             'name': 'some-new-name',
-            'disziplinart': saved_disziplin.id,
+            'disziplinart': saved_disziplin.disziplinart.id,
             }, instance=saved_disziplin)
         self.assertTrue(self.sut.is_valid(), self.sut.errors)
 
 
 class BewertungFormTest(TestCase):
+    fixtures = ["disziplinarten.json", "postenarten.json", "kategorien.json"]
+
     def setUp(self):
         # Stammdaten
-        bremgarten = Sektion.objects.get(name="Bremgarten")
+        bremgarten = Sektion.objects.create(name="Bremgarten")
         steinmann = Mitglied.objects.create(
                 name="Steinmann", vorname="Daniel", geschlecht="m",
                 geburtsdatum=datetime.date(1967, 4, 30),
@@ -204,11 +208,21 @@ class BewertungFormTest(TestCase):
 
 
 class SchiffeinzelFilterFormTest(TestCase):
+    fixtures = ["disziplinarten.json", "kategorien.json"]
+
     def setUp(self):
-        d = Disziplin.objects.create(wettkampf_id=1, name="Test")
+        s = Sektion.objects.create(name="Bremgarten")
+        hinten = Mitglied.objects.create(nummer="101",
+                name="Steinmann", vorname="Daniel", geschlecht="m",
+                geburtsdatum=datetime.date(1967, 4, 30), sektion=s)
+        vorne = Mitglied.objects.create(nummer="103",
+                name="Kohler", vorname="Bernhard", geschlecht="m",
+                geburtsdatum=datetime.date(1978, 1, 1), sektion=s)
+        w = Wettkampf.objects.create(name="Test-Cup", von="2003-04-04")
+        d = Disziplin.objects.create(wettkampf=w, name="Test")
         for startnr in range(1, 10):
             Schiffeinzel.objects.create(startnummer=startnr, disziplin=d,
-                    steuermann_id=1, vorderfahrer_id=2, sektion_id=1,
+                    steuermann=hinten, vorderfahrer=vorne, sektion=s,
                     kategorie_id=1)
         self.sut = SchiffeinzelFilterForm(d, data={})
 
@@ -240,16 +254,25 @@ class SchiffeinzelFilterFormTest(TestCase):
 
 
 class NachsteStartnummerTest(TestCase):
+    fixtures = ["disziplinarten.json", "kategorien.json"]
+
     def setUp(self):
-        d = Disziplin.objects.create(wettkampf_id=1, name="Test")
-        self.bremgarten = Sektion.objects.get(name="Bremgarten")
-        self.dietikon = Sektion.objects.get(name="Dietikon")
+        w = Wettkampf.objects.create(name="Test-Cup", von="2003-04-04")
+        d = Disziplin.objects.create(wettkampf=w, name="Test")
+        self.bremgarten = Sektion.objects.create(name="Bremgarten", nummer="1")
+        self.dietikon = Sektion.objects.create(name="Dietikon", nummer="2")
+        self.hinten = Mitglied.objects.create(nummer="101",
+                name="Steinmann", vorname="Daniel", geschlecht="m",
+                geburtsdatum=datetime.date(1967, 4, 30), sektion=self.bremgarten)
+        self.vorne = Mitglied.objects.create(nummer="103",
+                name="Kohler", vorname="Bernhard", geschlecht="m",
+                geburtsdatum=datetime.date(1978, 1, 1), sektion=self.bremgarten)
         self.sut = SchiffeinzelFilterForm(d, data={}, sektion_check=False)
 
     def _insert_schiff(self, startnummer, sektion):
         schiff = Schiffeinzel.objects.create(startnummer=startnummer,
-                disziplin=self.sut.disziplin, steuermann_id=1,
-                vorderfahrer_id=2, sektion=sektion, kategorie_id=1)
+                disziplin=self.sut.disziplin, steuermann=self.hinten,
+                vorderfahrer=self.vorne, sektion=sektion, kategorie_id=1)
         return schiff
 
     def test_allererstes_schiff(self):
@@ -293,9 +316,11 @@ class NachsteStartnummerTest(TestCase):
 
 
 class SchiffeinzelListFormTest(TestCase):
+    fixtures = ["disziplinarten.json", "kategorien.json"]
+
     def setUp(self):
-        bremgarten = Sektion.objects.get(name="Bremgarten")
-        dietikon = Sektion.objects.get(name="Dietikon")
+        bremgarten = Sektion.objects.create(name="Bremgarten", nummer="1")
+        dietikon = Sektion.objects.create(name="Dietikon", nummer="2")
         self.steinmann = Mitglied.objects.create(
                 name="Steinmann", vorname="Daniel", geschlecht="m",
                 geburtsdatum=datetime.date(1967, 4, 30),
@@ -377,7 +402,7 @@ class SchiffeinzelListFormTest(TestCase):
         self.sut.data['steuermann'] = self.steinmann.nummer
         self.sut.data['vorderfahrer'] = self.kohler.nummer
         self.assertFalse(self.sut.is_valid(), self.sut.errors)
-        expected = "Teilnehmer with this Disziplin and Startnummer already exists."
+        expected = "Teilnehmer mit diesem Disziplin und Startnummer existiert bereits."
         errors = self.sut.non_field_errors()
         self.assertTrue(expected in errors, errors)
 

@@ -17,8 +17,10 @@ from sasse.eai_startliste import serialize_schiffeinzel
 
 
 class MitgliedImportTest(TestCase):
+    fixtures = ["disziplinarten.json", "kategorien.json"]
+
     def setUp(self):
-        self.bremgarten = Sektion.objects.get(name="Bremgarten")
+        self.bremgarten = Sektion.objects.create(name="Bremgarten")
         self.steinmann = Mitglied.objects.create(
                 nummer="10043",
                 name="Steinmann",
@@ -69,10 +71,12 @@ class MitgliedImportTest(TestCase):
 
 
 class SchiffeinzelImportTest(TestCase):
+    fixtures = ["disziplinarten.json", "kategorien.json"]
+
     def setUp(self):
         cache.clear()
         self.kat_D = Kategorie.objects.get(name="D")
-        self.bremgarten = Sektion.objects.get(name="Bremgarten")
+        self.bremgarten = Sektion.objects.create(name="Bremgarten")
         self.testcup = Wettkampf.objects.create(
                 name="Fallbaumcup",
                 zusatz="Bremgarten",

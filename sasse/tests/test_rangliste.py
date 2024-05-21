@@ -12,13 +12,16 @@ from sasse.models import Postenart
 from sasse.models import Kategorie
 from sasse.models import Schiffeinzel
 from sasse.models import Kranzlimite
-from sasse.views import read_rangliste, sort_rangliste
+from sasse.queries import read_rangliste, sort_rangliste
 
 
 class ZeitInPunkteTest(TestCase):
     """
     Testet die Konversion von der Zeit in Punkte.
     """
+
+    fixtures = ["disziplinarten.json", "postenarten.json", "kategorien.json", "bewertungsarten.json"]
+
     def test_gleich_wie_richtzeit(self):
         richtzeit = Decimal("60.0")
         zeitwert = richtzeit
@@ -90,7 +93,7 @@ class RanglisteTest(TestCase):
     DS Hans/Doppel
     -  Foo/Bar      disqualifiziert
     """
-    fixtures = ['test_rangliste.json']
+    fixtures = ['test_rangliste.json', "disziplinarten.json", "postenarten.json", "kategorien.json"]
 
     def test_rangliste(self):
         disziplin = Disziplin.objects.get(

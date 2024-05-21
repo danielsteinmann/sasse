@@ -13,6 +13,7 @@ from sasse.fields import MitgliedSearchField
 from sasse.fields import PunkteField
 from sasse.fields import ZeitInSekundenField
 from sasse.fields import StartnummernSelectionField
+from sasse.models import Wettkampf
 from sasse.models import Disziplin
 from sasse.models import Schiffeinzel
 from sasse.models import Sektion
@@ -37,7 +38,7 @@ class UnicodeSlugFieldTest(TestCase):
 
 class MitgliedSearchFieldTest(TestCase):
     def setUp(self):
-        bremgarten = Sektion.objects.get(name="Bremgarten")
+        bremgarten = Sektion.objects.create(name="Bremgarten")
         self.steinmann_daniel = Mitglied.objects.create(nummer="101",
                 name="Steinmann", vorname="Daniel", geschlecht="m",
                 geburtsdatum=datetime.date(1967, 4, 30), sektion=bremgarten)
@@ -88,18 +89,28 @@ class MitgliedSearchFieldTest(TestCase):
 
 
 class StartnummernSelectionFieldTest(TestCase):
+    fixtures = ["disziplinarten.json", "postenarten.json", "kategorien.json"]
+
     def setUp(self):
         # Rauschen einfügen, um die vollständige where clause zu prüfen
-        d = Disziplin.objects.create(wettkampf_id=1, name="Eine-Disziplin")
+        s = Sektion.objects.create(name="Bremgarten")
+        hinten = Mitglied.objects.create(nummer="101",
+                name="Steinmann", vorname="Daniel", geschlecht="m",
+                geburtsdatum=datetime.date(1967, 4, 30), sektion=s)
+        vorne = Mitglied.objects.create(nummer="103",
+                name="Kohler", vorname="Bernhard", geschlecht="m",
+                geburtsdatum=datetime.date(1978, 1, 1), sektion=s)
+        w = Wettkampf.objects.create(name="Test-Cup", von="2003-04-04")
+        d = Disziplin.objects.create(wettkampf=w, name="Eine-Disziplin")
         for startnr in range(1,51):
             Schiffeinzel.objects.create(startnummer=startnr, disziplin=d,
-                    steuermann_id=1, vorderfahrer_id=2, sektion_id=1,
+                    steuermann=hinten, vorderfahrer=vorne, sektion=s,
                     kategorie_id=1)
         # Eine Grundmenge Teilnehmer einfügen
-        d = Disziplin.objects.create(wettkampf_id=1, name="Test")
+        d = Disziplin.objects.create(wettkampf=w, name="Test")
         for startnr in range(1,51):
             Schiffeinzel.objects.create(startnummer=startnr, disziplin=d,
-                    steuermann_id=1, vorderfahrer_id=2, sektion_id=1,
+                    steuermann=hinten, vorderfahrer=vorne, sektion=s,
                     kategorie_id=1)
         self.sut = StartnummernSelectionField(d)
 
@@ -143,6 +154,8 @@ class StartnummernSelectionFieldTest(TestCase):
 
 
 class PunkteFieldTest(TestCase):
+    fixtures = ["disziplinarten.json", "postenarten.json"]
+
     def setUp(self):
         art = Bewertungsart.objects.create(postenart_id=1,
                 name="Abzug", signum=-1, einheit="PUNKT",

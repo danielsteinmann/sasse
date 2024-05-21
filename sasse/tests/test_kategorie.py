@@ -10,7 +10,9 @@ from sasse.models import Sektion
 from sasse.models import Wettkampf
 from sasse.models import Schiffeinzel
 
-class get_kategorie_Test(TestCase):
+class KategorieTestCase(TestCase):
+    fixtures = ["disziplinarten.json", "kategorien.json"]
+
     def setUp(self):
         self.jahr = 2009
         testcup = Wettkampf.objects.create(name="Test-Cup",
@@ -58,7 +60,9 @@ class get_kategorie_Test(TestCase):
             self._assert_kat(eine_frau)
 
 
-class get_startkategorie_Test(TestCase):
+class StartkategorieTestCase(TestCase):
+    fixtures = ["disziplinarten.json", "kategorien.json"]
+
     def setUp(self):
         jahr = 2009
         testcup = Wettkampf.objects.create(name="Test-Cup",

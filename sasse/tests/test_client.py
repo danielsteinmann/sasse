@@ -33,6 +33,7 @@ def login(test_case, username, password, perm_codes=[], superuser=False):
     test_case.assertTrue(result, "Failed to login")
 
 class WettkampfPageTest(TestCase):
+    fixtures = ["disziplinarten.json", "postenarten.json", "kategorien.json", "bewertungsarten.json"]
 
     def setUp(self):
         login(self, 'admin', 'admin', superuser=True)
@@ -108,6 +109,7 @@ class WettkampfPageTest(TestCase):
 
 
 class DisziplinPageTest(TestCase):
+    fixtures = ["disziplinarten.json", "postenarten.json", "kategorien.json", "bewertungsarten.json"]
 
     def setUp(self):
         login(self, 'admin', 'admin', superuser=True)
@@ -170,6 +172,7 @@ class DisziplinPageTest(TestCase):
 
 
 class PostenPageTest(TestCase):
+    fixtures = ["disziplinarten.json", "postenarten.json", "kategorien.json", "bewertungsarten.json"]
 
     def setUp(self):
         login(self, 'admin', 'admin', superuser=True)
@@ -225,6 +228,7 @@ class PostenPageTest(TestCase):
 
 
 class EinzelfahrenStartlistePageTest(TestCase):
+    fixtures = ["disziplinarten.json", "postenarten.json", "kategorien.json", "bewertungsarten.json"]
 
     def setUp(self):
         login(self, 'noten', 'secret', ['add_schiffeinzel', 'change_schiffeinzel', 'delete_schiffeinzel'])
@@ -335,6 +339,8 @@ class EinzelfahrenStartlistePageTest(TestCase):
 
 
 class PostenblattPageTest(TestCase):
+    fixtures = ["disziplinarten.json", "postenarten.json", "kategorien.json", "bewertungsarten.json"]
+
     def setUp(self):
         login(self, 'noten', 'secret', ['change_bewertung'])
         einzel = Disziplinart.objects.get(name="Einzelfahren")
@@ -592,6 +598,8 @@ class PostenblattPageTest(TestCase):
 
 
 class RichtzeitPageTest(TestCase):
+    fixtures = ["disziplinarten.json", "postenarten.json", "kategorien.json", "bewertungsarten.json"]
+
     def setUp(self):
         login(self, 'admin', 'admin', superuser=True)
         w = Wettkampf.objects.create(name="Test-Cup", von="2009-04-04")
@@ -676,6 +684,8 @@ class RichtzeitPageTest(TestCase):
 
 
 class NotenPageTest(TestCase):
+    fixtures = ["disziplinarten.json", "postenarten.json", "kategorien.json", "bewertungsarten.json"]
+
     def setUp(self):
         w = Wettkampf.objects.create(name="Test-Cup", von="2009-04-04")
         d = w.disziplin_set.create(name="einzel")
@@ -740,7 +750,7 @@ class NotenPageTest(TestCase):
 
 
 class RanglistePageTest(TestCase):
-    fixtures = ['test_rangliste.json']
+    fixtures = ['test_rangliste.json', "disziplinarten.json", "postenarten.json", "kategorien.json"]
 
     def test_rangliste(self):
         rangliste = '/2010/F%C3%A4llbaum-Cup/Einzelfahren-II-III-C-D-F/rangliste/'
