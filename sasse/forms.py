@@ -192,6 +192,12 @@ class SchiffeinzelFilterForm(Form):
         super(SchiffeinzelFilterForm, self).__init__(*args, **kwargs)
         self.fields['startnummern'] = StartnummernSelectionField(disziplin)
         self.disziplin = disziplin
+        if self.sektion_check:
+            # Zeigt dem Benutzer nur Sektionen, für die auch Schiffe gestartet
+            # sind. Das verbessert die Usability, speziell auf Mobile.
+            id_list = Schiffeinzel.objects.values_list('sektion_id').filter(disziplin=disziplin).distinct()
+            entries = Sektion.objects.filter(id__in=id_list)
+            self.fields["sektion"].queryset = entries
 
     def clean(self):
         schiffe = self.cleaned_data.get('startnummern')
