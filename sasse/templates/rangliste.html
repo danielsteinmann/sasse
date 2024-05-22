@@ -1,6 +1,7 @@
 {% extends "base_disziplin.html" %}
 {% block nav_rangliste %}selected{% endblock %}
 {% block content %}
+{% load sasse %}
 {% for k in kategorien %}
 {% if k.id == kategorie.id %}<b>{{ k.name }}</b>
 {% else %}<a href="{% url 'rangliste' wettkampf.jahr wettkampf.name disziplin.name k.name %}">{{ k.name }}</a>
@@ -25,7 +26,7 @@
   </tr>
 {% for row in page_obj %}
   {% ifchanged row.kranz %}{% if not forloop.first %}
-  <tr><td colspan="7"><a href="{% url 'kranzlimiten' wettkampf.jahr wettkampf.name disziplin.name %}">Kranzlimite:</a> {{kranzlimite}} Punkte</td></tr>
+  <tr><td colspan="7"><a href="{% url 'kranzlimiten' wettkampf.jahr wettkampf.name disziplin.name %}">Kranzlimite:</a> {{kranzlimite|bewertung:'PUNKTE'}} Punkte</td></tr>
   {% endif %}{% endifchanged %}
   <tr class="{% cycle "odd" "even" %}">
     <td class="rang">{{row.rang}}</td>

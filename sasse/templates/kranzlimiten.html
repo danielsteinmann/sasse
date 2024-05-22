@@ -1,5 +1,6 @@
 {% extends "base_disziplin.html" %}
 {% block nav_rangliste %}selected{% endblock %}
+{% load sasse %}
 {% block content %}
 <table class="list">
   <tr>
@@ -22,13 +23,13 @@
   {% if not forloop.last %}
   <tr class="{% cycle "odd" "even" %}">
     <td class="kategorie"><a href="{% url 'rangliste' wettkampf.jahr wettkampf.name disziplin.name row.kategorie %}">{{row.kategorie}}</a></td>
-    <td class="note">{{row.limite_in_punkte}}</td>
+    <td class="note">{{row.limite_in_punkte|bewertung:'PUNKTE'}}</td>
     <td class="note">{{row.wettkaempfer}}</td>
     <td class="note">{{row.wettkaempfer_ueber_limite}}</td>
-    <td class="note">{{row.wettkaempfer_mit_kranz_in_prozent}}</td>
+    <td class="note">{{row.wettkaempfer_mit_kranz_in_prozent|bewertung:'PUNKTE'}}</td>
     <td class="note">{{row.schiffe}}</td>
     <td class="note">{{row.schiffe_ueber_limite}}</td>
-    <td class="note">{{row.schiffe_ueber_limite_in_prozent}}</td>
+    <td class="note">{{row.schiffe_ueber_limite_in_prozent|bewertung:'PUNKTE'}}</td>
   </tr>
   {% else %}
   <tr style="font-weight: bold;">
