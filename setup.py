@@ -12,15 +12,15 @@ class website_sdist(sdist):
     def wrap_django_site(self):
         from zipfile import ZipFile
         with ZipFile("dist/djangosites.zip", "w") as myzip:
-            for f in (
-                    '__init__.py',
-                    'settings.py',
-                    'urls.py',
-                    'asgi.py',
-                    'wsgi.py',
+            for src in (
+                    'manage.py',
+                    'mysite/__init__.py',
+                    'mysite/settings.py',
+                    'mysite/urls.py',
+                    'mysite/asgi.py',
+                    'mysite/wsgi.py',
                     ):
-                src = "mysite/%s" % f
-                dst = "djangosites/wettkaempfe/%s" % f
+                dst = "djangosites/wettkaempfe/%s" % src
                 myzip.write(src, dst)
 
 setup(

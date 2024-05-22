@@ -1,7 +1,6 @@
-- Kontrollvisum im UI machen
-   => Und check
+- Kontrollvisum im UI machen und einen Prüflink für Bewertungen ohne Visum
 
-- Eidgenössisches Spezialpreise
+- Alle Eidgenössisches Spezialpreise automatisieren
 
 ====
 
@@ -36,6 +35,7 @@ wie bei Wynau in Bremgarten, wo versehentlich 10 Punkte bei einer Gruppe (statt
 
 ===
 cat remove.txt | while read old new name; do sed -e "s,_OLD_,$old," -e "s,_NEW_,$new," dups_template.sql; done > delete_dups.sql
+
 ===
 - Check, ob es keine Noten gibt.
 - Alles auf eigene Richtzeiten I, II, III, F, D und C damit man dies mal Testen kann bzw dies bereits möglich ist
@@ -54,8 +54,6 @@ http://stackoverflow.com/questions/10454002/can-postgresql-copy-read-csv-from-a-
 - Toleranzwert für die Zeitnoten Richtzeit, Minimumzeit und Höchstzeit die
   Minimum und Höchstzeit werden zum Aufzeigen von Fehlern beim Zeitimport
   verwendet
-
-- Upgrade Django 1.6
 
 - Richtzeiten auf Notenblatt ausgeben
 
@@ -80,16 +78,6 @@ http://stackoverflow.com/questions/10454002/can-postgresql-copy-read-csv-from-a-
 
 - Zwei Tabellen nebeneinander:
   http://stackoverflow.com/questions/6548880/css-positioning-tables-next-to-each-other
-
-- No fixutres:
-  http://code.google.com/p/django-dynamic-fixture/
-  https://github.com/rbarrois/factory_boy
-
-- Bessere Acceptance Tests:
-  http://pypi.python.org/pypi/django-webtest
-
-- Reset south history:
-   https://groups.google.com/forum/#!msg/south-users/iIQT8ZWs2cI/GQ4kONoT5Q4J
 
 - Neues URL Schema:
   - 2011/Faellbaumcup/einzelfahren/I
@@ -124,7 +112,7 @@ http://stackoverflow.com/questions/10454002/can-postgresql-copy-read-csv-from-a-
 
   Wettkämpfe  Fällbaucup-2011  Einzelfahren
   Überblick  Kranzlimiten  Ranglisten  Doppelstarter
-  
+
    Parcours:  I
               II-III-F-D-C
 

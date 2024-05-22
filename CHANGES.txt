@@ -1,3 +1,12 @@
+Version 3.0.0 (23. Mai 2024)
+
+- Einführung Frauenkategorie
+- Neuer SWV Import für Reuss Cup
+- Neuer SPSV Import für Daten von SAT Admin
+- HTML ist auf dem Mobile besser lesbar
+- Upgrade Django 5.0
+
+
 Version 2.12 (10. Mai 2018)
 
 - Sektionsfahren: Beim Erfassen einer Gruppe mit Enter zum nächsten
