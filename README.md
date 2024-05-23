@@ -24,12 +24,14 @@ DB erzeugen:
 Web Applikation (djangosites.zip, sasse-3.0.0.tar.gz)
 ---------------
 Die Web Applikation ist mit Hilfe des Python Framework Django geschrieben.
-Folgende Schritte erzeugen ein dediziertes Python Environment dafür:
+
+Die Basiskonfiguration wird wie folgt erzeugt:
 
     unzip "c:/Users/admin/Downloads/djangosites.zip" to "C:\"
     cd c:/djangosites/wettkaempfe
 
-Das DB Passwort in mysite/settings.py entsprechend anpassen.
+Nun das DB Passwort in `mysite/settings.py` entsprechend anpassen und dann
+folgende Kommandi ausführen:
 
     python -m venv c:/pythonenv/sasse
     c:/pythonenv/sasse/Scripts/activate.bat
