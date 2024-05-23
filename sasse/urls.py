@@ -215,6 +215,8 @@ urlpatterns = [
         views.rangliste, {}, "rangliste"),
     re_path(r'^(?P<jahr>\d+)/(?P<wettkampf>[-\w]+)/(?P<disziplin>[-\w]+)/rangliste/pdf/$',
         views.rangliste_pdf_all, {}, "rangliste_pdf_all"),
+    re_path(r'^(?P<jahr>\d+)/(?P<wettkampf>[-\w]+)/(?P<disziplin>[-\w]+)/rangliste/xlsx/$',
+        views.rangliste_xlsx_all, {}, "rangliste_xlsx_all"),
     re_path(r'^(?P<jahr>\d+)/(?P<wettkampf>[-\w]+)/(?P<disziplin>[-\w]+)/rangliste/(?P<kategorie>[-\w]+)/$',
         views.rangliste, {}, "rangliste"),
     re_path(r'^(?P<jahr>\d+)/(?P<wettkampf>[-\w]+)/(?P<disziplin>[-\w]+)/rangliste/(?P<kategorie>[-\w]+)/pdf/$',

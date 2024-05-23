@@ -81,7 +81,9 @@ def read_notenliste(disziplin, posten, sektion=None, startnummern=[]):
 
 def read_rangliste(disziplin, kategorie, doppelstarter_mit_rang=False):
     sql = render_to_string('rangliste.sql', {"disziplin": disziplin, "kategorie": kategorie})
-    args = [disziplin.id, kategorie.id]
+    args = [disziplin.id]
+    if kategorie is not None:
+        args.append(kategorie.id)
     cursor = connection.cursor()
     cursor.execute(sql, args)
     rang = 1

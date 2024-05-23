@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import datetime
+from openpyxl import Workbook
 
 from django.core.paginator import Paginator
 from django.db import transaction
@@ -813,6 +814,34 @@ def rangliste_pdf_all(request, jahr, wettkampf, disziplin):
     response['Content-Disposition'] = smart_str('filename=rangliste-%s' % w.name)
     doc = create_rangliste_doctemplate(w)
     doc.build(flowables, filename=response)
+    return response
+
+def rangliste_xlsx_all(request, jahr, wettkampf, disziplin):
+    w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
+    d = Disziplin.objects.get(wettkampf=w, name=disziplin)
+    rangliste = read_rangliste(d, None)
+    def sort_rangliste_excel(row):
+        rang = row['rang']
+        if isinstance(rang, int):
+            return rang
+        else:
+            return 10000 # Doppelstarter, Ausgeschieden, ...
+    rangliste_sorted = sorted(rangliste, key=sort_rangliste_excel)
+    wb = Workbook()
+    sheet = wb.active
+    for i, row in enumerate(rangliste_sorted):
+        if i == 0:
+            headers = list(row.keys())
+            sheet.append(headers)
+        row['kranz'] = True if row['kranz'] == 1 else False
+        row['zeit_tot'] = row['zeit_tot'].zeit
+        row['punkt_tot'] = row['punkt_tot'].note
+        row['vorderfahrer_jg'] = row['vorderfahrer_jg'].year
+        row['steuermann_jg'] = row['steuermann_jg'].year
+        sheet.append(list(row.values()))
+    response = HttpResponse(content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+    response['Content-Disposition'] = smart_str('attachment; filename=rangliste-%s-%s-%s.xlsx' % (jahr, wettkampf, disziplin))
+    wb.save(response)
     return response
 
 def beste_schiffe(request, jahr, wettkampf, disziplin):
