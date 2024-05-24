@@ -51,7 +51,8 @@ def write_rangliste_header_footer(canvas, doc):
     canvas.line(4*cm, PAGE_HEIGHT-1.2*cm, PAGE_WIDTH-2*cm, PAGE_HEIGHT-1.2*cm)
     canvas.drawString(4*cm, PAGE_HEIGHT-1*cm, doc.docEval("header_line"))
     canvas.drawRightString(PAGE_WIDTH-2*cm, PAGE_HEIGHT-1*cm, "%s %d" % (doc.wettkampf.name, doc.wettkampf.jahr()))
-    canvas.drawCentredString(PAGE_WIDTH/2, 1*cm, "Seite %d" % (doc.page,))
+    canvas.drawString(2*cm, 1*cm, "https://ranglisten.pontonier.ch")
+    canvas.drawRightString(PAGE_WIDTH-2*cm, 1*cm, "Seite %d" % (doc.page,))
     canvas.restoreState()
 
 def create_rangliste_header(text):
