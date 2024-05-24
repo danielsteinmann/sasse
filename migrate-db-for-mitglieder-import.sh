@@ -1,7 +1,7 @@
 #/bin/bash
 #
 
-psql -U postgres -d spsv -f ../dumps/2024-05-14-rheinfelden-django-5.pgdump
+psql -U postgres -d spsv -f ../dumps/2024-05-20-dietikon-7er-cup-django-5.pgdump
 
 ./manage.py migrate
 
@@ -56,6 +56,6 @@ update sasse_sektion set nummer='W14', name='WSC Bern' where id=49;
 update sasse_sektion set nummer='W06' where id=50;
 EOF
 
-./manage.py import_mitglieder_spsv ../dumps/mitglieder-spsv-2024-05-01.xlsx
+./manage.py import_mitglieder_spsv ../dumps/mitglieder-spsv-2024-05-24.xlsx
 ./manage.py import_mitglieder_swv  ../dumps/mitglieder-swv-2024-05-01.json
 ./manage.py loaddata sasse/fixtures/kategorien.json

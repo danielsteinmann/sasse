@@ -5,7 +5,7 @@
 
 dropdb spsv
 createdb spsv
-psql -U postgres -d spsv -f ../dumps/2023-08-27-rheinfelden.pgdump
+psql -U postgres -d spsv -f ../dumps/2023-09-10-dietikon-7er-cup.pgdump
 
 psql -U postgres -d spsv <<EOF
 alter table sasse_gruppe rename to sasse_sektionsfahrengruppe;
