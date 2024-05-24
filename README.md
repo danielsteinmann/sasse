@@ -78,3 +78,22 @@ Datenbank Export/Import
 
     pg_dump --clean -U postgres -f spsv.pgdump spsv   # Export
     psql -U postgres -d spsv -f spsv.pgdump           # Import
+
+
+SAT Mitglieder Export
+=====================
+
+Mit folgenden Schritten das Excel erzeugen, welches mit
+`import_mitglieder_spsv` eingelesen werden kann:
+
+1. In https://www.sat.admin.ch auf Stufe SPSV einloggen
+2. Auswertungen => Personen => Mitgliedschaftsliste
+3. Im Excel folgende Spalten löschen:
+    - `Firma` bis `Webseite`
+    - `Verstorben` bis `Einteilung`
+    - `Bemerkung`
+4. Im Excel folgende Filter setzen:
+    - `Datum bis` auf `blanks`
+    - `Kategorie` auf `Aktiv`
+5. Daten in neues Excel kopieren (nur Werte).
+6. Für Spalte `Geburtsdatum` das Datum Format wählen
