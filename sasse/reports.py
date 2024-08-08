@@ -318,8 +318,8 @@ def write_notenliste_header_footer(canvas, doc):
     canvas.line(4*cm, PAGE_WIDTH-1.2*cm, PAGE_HEIGHT-2*cm, PAGE_WIDTH-1.2*cm)
     canvas.drawString(4*cm, PAGE_WIDTH-1*cm, "Notenliste %s" % (doc.disziplin.disziplinart))
     canvas.drawCentredString(PAGE_HEIGHT/2, PAGE_WIDTH-1*cm, "Sektion %s" % (doc.docEval("sektion_name")))
-    canvas.drawRightString(PAGE_HEIGHT-2*cm, PAGE_WIDTH-1*cm, "%s %d" % (doc.wettkampf.name, doc.wettkampf.jahr()))
-    canvas.drawCentredString(PAGE_HEIGHT/2, 1*cm, "Seite %d" % (doc.page,))
+    canvas.drawString(2*cm, 1*cm, "https://ranglisten.pontonier.ch")
+    canvas.drawRightString(PAGE_HEIGHT-2*cm, 1*cm, "Seite %d" % (doc.page,))
     canvas.restoreState()
 
 def create_notenliste_flowables(posten, notenliste, sektion=None):
@@ -526,7 +526,7 @@ def create_sektionsfahren_notenblatt_gruppe_flowables(gruppe, notenliste):
         else:
             record.append("")
             record.append("")
-        colspan = row.get('colspan')
+        colspan = int(row.get('colspan'))
         if colspan > 1:
             rows_with_spans[n] = colspan
         for note in row['noten']:
