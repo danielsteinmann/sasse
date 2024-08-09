@@ -223,6 +223,8 @@ urlpatterns = [
         views.rangliste_pdf, {}, "rangliste_pdf"),
     re_path(r'^(?P<jahr>\d+)/(?P<wettkampf>[-\w]+)/(?P<disziplin>[-\w]+)/beste-schiffe/$',
         views.beste_schiffe, {}, "beste_schiffe"),
+    re_path(r'^(?P<jahr>\d+)/(?P<wettkampf>[-\w]+)/(?P<disziplin>[-\w]+)/(?P<kategorie>[-\w]+)/beste-saisonpaare/$',
+        views.beste_saisonpaare, {}, "beste_saisonpaare"),
     re_path(r'^(?P<jahr>\d+)/(?P<wettkampf>[-\w]+)/(?P<disziplin>[-\w]+)/kranzlimiten/$',
         views.kranzlimiten, {}, "kranzlimiten"),
     re_path(r'^(?P<jahr>\d+)/(?P<wettkampf>[-\w]+)/(?P<disziplin>[-\w]+)/kranzlimiten/update$',

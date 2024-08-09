@@ -189,6 +189,98 @@ select topn.sektion
                 'total': row[5],
                 }
 
+def dictfetchall(cursor):
+    """
+    Return all rows from a cursor as a dict.
+    Assume the column names are unique.
+    """
+    columns = [col[0] for col in cursor.description]
+    return [dict(zip(columns, row)) for row in cursor.fetchall()]
+
+def read_beste_saisonpaare(wettkaempfe, kategorie_name):
+    cursor = connection.cursor()
+    wettkampf_ids = ",".join([ "%d" % w.id for w in wettkaempfe])
+    sql = f"""
+select dense_rank() over (partition by Kategorie order by Punkte_Total desc, Zeit_Total asc) as Rang
+      ,b.Steuermann || ' / ' || b.Vorderfahrer as Fahrerpaar
+      ,b.Sektion
+      ,b.Wettkampf
+      ,b.Disziplin
+      ,b.Startnummer
+      ,b.Punkte
+      ,b.Zeit
+      ,b.Punkte_Total
+      ,b.Zeit_Total
+  from (
+    select a.*
+         , sum(Zeit) over (partition by SteuermannID, VorderfahrerID) as Zeit_Total
+         , sum(Punkte) over (partition by SteuermannID, VorderfahrerID) as Punkte_Total
+      from (
+        select max(w.name) as Wettkampf
+             , max(d.name) as Disziplin
+             , tn.startnummer as Startnummer
+             , max(hinten.id) as SteuermannID
+             , max(hinten.name) as Steuermann
+             , max(vorne.id) as VorderfahrerID
+             , max(vorne.name) as Vorderfahrer
+             , max(sektion.name) as Sektion
+             , max(kat.name) as Kategorie
+             , sum(b.zeit) as Zeit
+             , sum(b.note) as Punkte
+          from sasse_teilnehmer tn
+          join sasse_schiffeinzel schiff on (schiff.teilnehmer_ptr_id = tn.id)
+          join bewertung_calc b on (b.teilnehmer_id = tn.id)
+          join sasse_kategorie kat on (kat.id = schiff.kategorie_id)
+          join sasse_sektion sektion on (sektion.id = schiff.sektion_id)
+          join sasse_mitglied vorne on (vorne.id = schiff.vorderfahrer_id)
+          join sasse_mitglied hinten on (hinten.id = schiff.steuermann_id)
+          join sasse_disziplin d on (d.id = tn.disziplin_id)
+          join sasse_wettkampf w on (w.id = d.wettkampf_id)
+         where w.id in ({wettkampf_ids})
+           and d.disziplinart_id = 1
+           and kat.name = '{kategorie_name}'
+           and not tn.ausgeschieden
+           and not tn.disqualifiziert
+           and not schiff.steuermann_ist_ds
+           and not schiff.vorderfahrer_ist_ds
+         group by d.id, tn.startnummer
+         order by Kategorie, Punkte desc, Zeit asc
+     ) as a
+     order by Kategorie, Punkte_Total desc, Zeit_Total asc
+  ) as b
+  order by Kategorie, Rang
+     """
+    cursor.execute(sql)
+    data = dictfetchall(cursor)
+    for key, group in groupby(data, lambda x: (x['rang'], x['fahrerpaar'],
+                                               x['zeit_total'],
+                                               x['punkte_total'])):
+        row = {}
+        row['rang'] = key[0]
+        row['fahrerpaar'] = key[1]
+        row['zeit_total'] = new_bew(key[2], ZEIT)
+        row['punkte_total'] = new_bew(key[3], PUNKT)
+        gefahrene_resultate = {}
+        # Nimm die Sektion des letzten Wettkampfes, weil z.B.
+        # Keller/Scherzinger für Dietikon und Aarau starten.
+        sektion = ''
+        for item in group:
+            sektion = item['sektion']
+            wettkampf = item['wettkampf']
+            gefahrene_resultate[wettkampf] = {
+                'wettkampf': wettkampf,
+                'disziplin': item['disziplin'],
+                'startnummer': item['startnummer'],
+                'zeit': new_bew(item['zeit'], ZEIT),
+                'punkte': new_bew(item['punkte'], PUNKT)
+            }
+        row['sektion'] = sektion
+        pivot_resultate = []
+        for w in wettkaempfe:
+            pivot_resultate.append(gefahrene_resultate.get(w.name))
+        row['resultate'] = pivot_resultate
+        yield row
+
 def read_notenblatt(disziplin, teilnehmer=None, sektion=None):
     sql = render_to_string('notenblatt.sql',
             {"teilnehmer": teilnehmer, "sektion": sektion})

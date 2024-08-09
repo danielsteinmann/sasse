@@ -1,0 +1,41 @@
+{% extends "base_disziplin.html" %}
+{% block nav_rangliste %}selected{% endblock %}
+{% block content %}
+{% load sasse %}
+<p>Beste Saisonfahrerpaare im Jahr <a href="{% url 'wettkaempfe_by_year' jahr %}">{{ jahr }}</p>
+{% for k in kategorien %}
+{% if k.id == kategorie.id %}<b>{{ k.name }}</b>
+{% else %}<a href="{% url 'beste_saisonpaare' wettkampf.jahr wettkampf.name disziplin.name k.name %}">{{ k.name }}</a>
+{% endif %}{% if not forloop.last %}|{% endif %}
+{% endfor %}
+<p></p>
+<table class="list">
+  <tr>
+    <th class="rang">Rang</th>
+    <th>Fahrerpaar</th>
+    <th>Sektion</th>
+    {% for w in wettkaempfe %}
+	<th class="note"><a title="{{ w.name }}" href="{% url 'wettkampf_get' w.jahr w.name %}">{{ w.von }}</a></th>
+    {% endfor %}
+    <th class="note">Total</th>
+  </tr>
+{% for row in rangliste  %}
+  <tr class="{% cycle "odd" "even" %}">
+    <td class="rang">{{row.rang}}</td>
+    <td>{{row.fahrerpaar}}</td>
+    <td>{{row.sektion}}</td>
+    {% for resultat in row.resultate %}
+    <td class="note">
+      {% if resultat.zeit %}
+	  <font size="-2">{{resultat.zeit}}</font>
+      <a title="Notenblatt" href="{% url 'notenblatt' jahr resultat.wettkampf resultat.disziplin resultat.startnummer %}">{{resultat.punkte}}</a></td>
+      {% endif %}
+	</td>
+    {% endfor %}
+    <td class="note"><font size="-2">{{row.zeit_total}}</font> {{row.punkte_total}}</td>
+  </tr>
+{% endfor %}
+</table>
+<p></p>
+{% endblock %}
+

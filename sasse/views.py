@@ -33,6 +33,7 @@ from .models import Schwimmer
 from .models import Einzelschnuerer
 from .models import Schnuergruppe
 from .models import Bootfaehrengruppe
+from .models import Kategorie
 
 from .forms import DisziplinForm
 from .forms import PostenEditForm
@@ -86,6 +87,7 @@ from .queries import read_einzelschnueren_gestartete_kategorien
 from .queries import read_gruppenschnueren_gestartete_kategorien
 from .queries import read_bootfaehrenbau_gestartete_kategorien
 from .queries import read_beste_fahrerpaare
+from .queries import read_beste_saisonpaare
 from .queries import read_einzelfahren_null_zeiten
 from .queries import read_sektionsfahren_null_zeiten
 
@@ -857,6 +859,28 @@ def beste_schiffe(request, jahr, wettkampf, disziplin):
         raise Http404("Query für Typ %s existiert nicht" % typ)
     return render(request, 'beste_schiffe.html', {
         'wettkampf': w, 'disziplin': d, 'typ': typ, 'rangliste': rangliste})
+
+def beste_saisonpaare(request, jahr, wettkampf, disziplin, kategorie=None):
+    assert request.method == 'GET'
+    w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
+    d = Disziplin.objects.get(wettkampf=w, name=disziplin)
+    wettkaempfe = []
+    for item in Disziplin.objects.select_related().filter(
+            disziplinart__name="Einzelfahren",
+            wettkampf__von__year=jahr).order_by('wettkampf__von'):
+        if item.wettkampf.name in ('7er-Club-Mix', '7er-Club-Endfahren', 'OldieCup'):
+            continue
+        if item.wettkampf not in wettkaempfe:
+            wettkaempfe.append(item.wettkampf)
+    kategorien = Kategorie.objects.filter(name__in=["I","II","III","FII","FIII","F","D","C"])
+    if kategorie:
+        k = Kategorie.objects.get(name=kategorie)
+    else:
+        k = kategorien[0]
+    rangliste = read_beste_saisonpaare(wettkaempfe, k.name)
+    return render(request, 'beste_saisonpaare.html', {
+        'wettkampf': w, 'disziplin': d, 'jahr': jahr, 'kategorien': kategorien,
+        'wettkaempfe': wettkaempfe, 'kategorie': k, 'rangliste': rangliste})
 
 def notenblatt(request, jahr, wettkampf, disziplin, startnummer=None):
     assert request.method == 'GET'
