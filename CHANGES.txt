@@ -1,3 +1,9 @@
+Version 3.1.0 (9. August 2024)
+
+- Einführung Auswertung "Bestes Saisonfahrerpaar"
+- Mache Werbung für https://ranglisten.pontonier.ch auf den PDF Reports.
+
+
 Version 3.0.0 (23. Mai 2024)
 
 - Einführung Frauenkategorie

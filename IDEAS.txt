@@ -1,6 +1,15 @@
+- Noteneingabe "Abbrechen und zurück" und "Speichern und zurück" (Denise)
+
+- Bei Ändern eines 'Schiffeinzel' auch alle Validierungen nochmals durchführen,
+  aber übersteuern zulassen, damit z.B. die Kategorie fälschlicherweise nicht
+  geändert wird oder das Doppelstart Flag nicht entfernt wird.
+
 - Kontrollvisum im UI machen und einen Prüflink für Bewertungen ohne Visum
 
 - Alle Eidgenössisches Spezialpreise automatisieren
+  - Generationenpreis: Zwei Personen als Teilnehmer eingeben
+  - Ältestes Fahrerpaar
+  - ...
 
 ====
 
@@ -26,12 +35,6 @@ wie bei Wynau in Bremgarten, wo versehentlich 10 Punkte bei einer Gruppe (statt
    - Unter Einzwelwettfahren ein Menupunkt "Sektionsrangliste" einfügen. Nur
      sichtbar, falls die Pflichtzahlen für diesen Wettkampf vorhanden sind.
      (Siehe 80% Regel)
-
-4. Generationenpreis automatisieren
-   - Zwei Personen als Teilnehmer eingeben
-
-5. Ältestes Fahrerpaar automatisieren
-
 
 ===
 cat remove.txt | while read old new name; do sed -e "s,_OLD_,$old," -e "s,_NEW_,$new," dups_template.sql; done > delete_dups.sql
