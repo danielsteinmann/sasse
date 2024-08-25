@@ -45,7 +45,7 @@ Posten <b>{{ posten.name }}: {{ posten.postenart.name }}</b>
 </form>
 <script type="text/javascript">
 $(document).ready(function(){
-    textboxes = $("input[type=text]");
+    textboxes = $("input[type=text], input[type=number]");
     $(textboxes).keydown(checkForEnter);
     if ('{{ posten.postenart.name }}' == 'Zeitnote') {
         $(textboxes).mask("9:99.99");
