@@ -756,7 +756,7 @@ class EinzelschnuererForm(ModelForm):
         self.data['disziplin'] = disziplin.id
         self.fields['startnummer'].widget.attrs['min'] = 1
         self.fields['startnummer'].widget.attrs['max'] = 999
-        self.fields['zuschlaege'].widget.attrs['min'] = 1
+        self.fields['zuschlaege'].widget.attrs['min'] = 0
         self.fields['zuschlaege'].widget.attrs['max'] = 999
         if self.instance.id is not None:
             self.initial['mitglied'] = self.fields['mitglied'].value_for_form(self.instance.mitglied)
@@ -780,7 +780,7 @@ class EinzelschnuererUpdateForm(ModelForm):
         super(EinzelschnuererUpdateForm, self).__init__(*args, **kwargs)
         self.fields['startnummer'].widget.attrs['min'] = 1
         self.fields['startnummer'].widget.attrs['max'] = 999
-        self.fields['zuschlaege'].widget.attrs['min'] = 1
+        self.fields['zuschlaege'].widget.attrs['min'] = 0
         self.fields['zuschlaege'].widget.attrs['max'] = 999
         self.fields['disziplin'].widget = HiddenInput()
         self.initial['mitglied'] = self.fields['mitglied'].value_for_form(self.instance.mitglied)
@@ -806,7 +806,7 @@ class SchnuergruppeForm(ModelForm):
         self.data['disziplin'] = disziplin.id
         self.fields['startnummer'].widget.attrs['min'] = 1
         self.fields['startnummer'].widget.attrs['max'] = 999
-        self.fields['zuschlaege'].widget.attrs['min'] = 1
+        self.fields['zuschlaege'].widget.attrs['min'] = 0
         self.fields['zuschlaege'].widget.attrs['max'] = 999
         self.fields['name'].required = False
 
@@ -843,7 +843,7 @@ class SchnuergruppeUpdateForm(ModelForm):
         super(SchnuergruppeUpdateForm, self).__init__(*args, **kwargs)
         self.fields['startnummer'].widget.attrs['min'] = 1
         self.fields['startnummer'].widget.attrs['max'] = 999
-        self.fields['zuschlaege'].widget.attrs['min'] = 1
+        self.fields['zuschlaege'].widget.attrs['min'] = 0
         self.fields['zuschlaege'].widget.attrs['max'] = 999
         self.fields['disziplin'].widget = HiddenInput()
 
@@ -861,7 +861,7 @@ class BootfaehrengruppeForm(ModelForm):
         self.data['disziplin'] = disziplin.id
         self.fields['startnummer'].widget.attrs['min'] = 1
         self.fields['startnummer'].widget.attrs['max'] = 999
-        self.fields['zuschlaege'].widget.attrs['min'] = 1
+        self.fields['zuschlaege'].widget.attrs['min'] = 0
         self.fields['zuschlaege'].widget.attrs['max'] = 999
         self.fields['name'].required = False
 
@@ -898,7 +898,7 @@ class BootfaehrengruppeUpdateForm(ModelForm):
         super(BootfaehrengruppeUpdateForm, self).__init__(*args, **kwargs)
         self.fields['startnummer'].widget.attrs['min'] = 1
         self.fields['startnummer'].widget.attrs['max'] = 999
-        self.fields['zuschlaege'].widget.attrs['min'] = 1
+        self.fields['zuschlaege'].widget.attrs['min'] = 0
         self.fields['zuschlaege'].widget.attrs['max'] = 999
         self.fields['disziplin'].widget = HiddenInput()
 
