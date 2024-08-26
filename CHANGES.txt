@@ -1,3 +1,11 @@
+Version 3.2.0 (26. August 2024)
+
+- Beste Saisonfahrerpaar nun auch als PDF
+- Fix: Zeitzuschläge 0 Sekunden sind wieder möglich, speziell beim Schnüren
+- Fix: Auf dem Notenblatt bei Punkten kann man wieder mit `Enter` zum nächsten
+  Feld; bei Zeiten hat es noch funktioniert.
+
+
 Version 3.1.0 (9. August 2024)
 
 - Einführung Auswertung "Bestes Saisonfahrerpaar"
