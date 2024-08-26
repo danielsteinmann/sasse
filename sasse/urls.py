@@ -225,6 +225,8 @@ urlpatterns = [
         views.beste_schiffe, {}, "beste_schiffe"),
     re_path(r'^(?P<jahr>\d+)/(?P<wettkampf>[-\w]+)/(?P<disziplin>[-\w]+)/(?P<kategorie>[-\w]+)/beste-saisonpaare/$',
         views.beste_saisonpaare, {}, "beste_saisonpaare"),
+    re_path(r'^(?P<jahr>\d+)/(?P<wettkampf>[-\w]+)/(?P<disziplin>[-\w]+)/beste-saisonpaare/pdf/$',
+        views.beste_saisonpaare_pdf, {}, "beste_saisonpaare_pdf"),
     re_path(r'^(?P<jahr>\d+)/(?P<wettkampf>[-\w]+)/(?P<disziplin>[-\w]+)/kranzlimiten/$',
         views.kranzlimiten, {}, "kranzlimiten"),
     re_path(r'^(?P<jahr>\d+)/(?P<wettkampf>[-\w]+)/(?P<disziplin>[-\w]+)/kranzlimiten/update$',

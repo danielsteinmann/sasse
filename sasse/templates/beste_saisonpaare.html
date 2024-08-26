@@ -8,6 +8,8 @@
 {% else %}<a href="{% url 'beste_saisonpaare' wettkampf.jahr wettkampf.name disziplin.name k.name %}">{{ k.name }}</a>
 {% endif %}{% if not forloop.last %}|{% endif %}
 {% endfor %}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a target="_blank" href="{% url 'beste_saisonpaare_pdf' wettkampf.jahr wettkampf.name disziplin.name %}">PDF</a>
 <p></p>
 <table class="list">
   <tr>

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import datetime
 from .templatetags.sasse import zeit2str
 from django.conf import settings
 
@@ -787,4 +788,85 @@ def create_bootfaehrenbau_rangliste_flowables(rangliste, kranzlimite, disziplin)
     result.append(Platypus_Table(data, repeatRows=1, colWidths=col_widths, style=TableStyle(table_props)))
     result.append(PageBreak())
     return result
+
+
+#
+# Beste Saisonpaare
+#
+
+def create_beste_saisonpaare_doctemplate(jahr, wettkaempfe):
+    f = Frame(1*cm, 1*cm, PAGE_HEIGHT-2*cm, PAGE_WIDTH-3.3*cm, id='normal')
+    pt = PageTemplate(id="BestesSaisonpaar", frames=f, onPageEnd=write_beste_saisonpaare_header_footer)
+    doc = BaseDocTemplate(None, pageTemplates=[pt], pagesize=landscape(A4))
+    doc.jahr = jahr
+    doc.wettkaempfe = wettkaempfe
+    return doc
+
+def write_beste_saisonpaare_header_footer(canvas, doc):
+    canvas.saveState()
+    canvas.setFont('Helvetica', 10)
+    canvas.drawImage(_get_spsv_logo(), 2*cm, PAGE_WIDTH-2*cm, width=1.5*cm, height=1.5*cm)
+    canvas.line(4*cm, PAGE_WIDTH-1.2*cm, PAGE_HEIGHT-2*cm, PAGE_WIDTH-1.2*cm)
+    canvas.drawString(4*cm, PAGE_WIDTH-1.1*cm,
+                      "Beste Saisonfahrerpaare im Jahr %s" % (doc.jahr))
+    canvas.drawRightString(PAGE_HEIGHT-2*cm, PAGE_WIDTH-1*cm,
+                           "Anzahl Wettkämpfe: %d" % (len(doc.wettkaempfe)))
+    canvas.drawString(2*cm, 1*cm, "https://ranglisten.pontonier.ch")
+    canvas.restoreState()
+
+def create_beste_saisonpaare_flowables(wettkaempfe, ranglisten):
+    ss = _create_style_sheet(10)
+    data = []
+    header = ['Kat', 'Rang', 'Fahrerpaar', 'Sektion']
+    col_widths = [25, 30, 140, 100]
+    for w in wettkaempfe:
+        wettkampf_date = datetime.datetime.strftime(w.von, '%-d.%-m')
+        header.append(wettkampf_date)
+        col_widths.append(40)
+    header.append('Zeit')
+    col_widths.append(70)
+    header.append('Punkte')
+    col_widths.append(40)
+    data.append(header)
+    # Leere Zeile nach Header
+    data.append("")
+    first_row_per_kategorie = []
+    for kategorie, rangliste in ranglisten:
+        if rangliste:
+            for row in rangliste:
+                record = []
+                rang = row['rang']
+                if rang == 1:
+                    first_row_per_kategorie.append(len(data))
+                    record.append(Paragraph(kategorie, ss['center']))
+                else:
+                    record.append("") # Kategorie weglassen
+                record.append(Paragraph(str(rang), ss['center']))
+                record.append(Paragraph(row['fahrerpaar'], ss['left']))
+                record.append(Paragraph(row['sektion'], ss['left']))
+                for resultat in row['resultate']:
+                    punkte = ""
+                    if resultat:
+                        punkte = str(resultat['punkte'])
+                    record.append(Paragraph(punkte, ss['right']))
+                record.append(Paragraph(str(row['zeit_total']), ss['right']))
+                record.append(Paragraph(str(row['punkte_total']), ss['right']))
+                data.append(record)
+            # Leere Zeile zwischen den Kategorien
+            data.append("")
+    table_props = [
+        ('LINEBELOW', (0,0), (-1,0), 1, colors.black),
+        ('FONT', (0,0), (-1,0), 'Helvetica-Bold', 10),
+        ('TOPPADDING', (0,0), (-1,-1), 1),
+        ('BOTTOMPADDING', (0,0), (-1,-1), 0),
+        ('ALIGN', (4,0), (-1,0), 'RIGHT'),
+        ]
+    for row in first_row_per_kategorie:
+        table_props.append(
+            ('BACKGROUND', (0,row), (-1,row), colors.lightgrey),
+        )
+    result = []
+    result.append(Platypus_Table(data, repeatRows=1, colWidths=col_widths, style=TableStyle(table_props)))
+    return result
+
 

@@ -110,6 +110,8 @@ from .reports import create_schwimmen_rangliste_flowables
 from .reports import create_einzelschnueren_rangliste_flowables
 from .reports import create_gruppenschnueren_rangliste_flowables
 from .reports import create_bootfaehrenbau_rangliste_flowables
+from .reports import create_beste_saisonpaare_doctemplate
+from .reports import create_beste_saisonpaare_flowables
 
 from . import eai_startliste
 from . import eai_zeiten
@@ -864,14 +866,7 @@ def beste_saisonpaare(request, jahr, wettkampf, disziplin, kategorie=None):
     assert request.method == 'GET'
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
     d = Disziplin.objects.get(wettkampf=w, name=disziplin)
-    wettkaempfe = []
-    for item in Disziplin.objects.select_related().filter(
-            disziplinart__name="Einzelfahren",
-            wettkampf__von__year=jahr).order_by('wettkampf__von'):
-        if item.wettkampf.name in ('7er-Club-Mix', '7er-Club-Endfahren', 'OldieCup'):
-            continue
-        if item.wettkampf not in wettkaempfe:
-            wettkaempfe.append(item.wettkampf)
+    wettkaempfe = _select_wettkaempfe_beste_saisonpaare(jahr)
     kategorien = Kategorie.objects.filter(name__in=["I","II","III","FII","FIII","F","D","C"])
     if kategorie:
         k = Kategorie.objects.get(name=kategorie)
@@ -881,6 +876,35 @@ def beste_saisonpaare(request, jahr, wettkampf, disziplin, kategorie=None):
     return render(request, 'beste_saisonpaare.html', {
         'wettkampf': w, 'disziplin': d, 'jahr': jahr, 'kategorien': kategorien,
         'wettkaempfe': wettkaempfe, 'kategorie': k, 'rangliste': rangliste})
+
+def beste_saisonpaare_pdf(request, jahr, wettkampf, disziplin):
+    assert request.method == 'GET'
+    w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
+    d = Disziplin.objects.get(wettkampf=w, name=disziplin)
+    wettkaempfe = _select_wettkaempfe_beste_saisonpaare(jahr)
+    kategorien = Kategorie.objects.filter(name__in=["I","II","III","FII","FIII","F","D","C"])
+    all_rangliste = []
+    for k in kategorien:
+        rangliste = read_beste_saisonpaare(wettkaempfe, k.name)
+        rangliste = list(rangliste)[:3]
+        all_rangliste.append((k.name, rangliste))
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = smart_str('filename=beste-saisonpaare-%s' % (jahr,))
+    flowables = create_beste_saisonpaare_flowables(wettkaempfe, all_rangliste)
+    doc = create_beste_saisonpaare_doctemplate(jahr, wettkaempfe)
+    doc.build(flowables, filename=response)
+    return response
+
+def _select_wettkaempfe_beste_saisonpaare(jahr):
+    wettkaempfe = []
+    for item in Disziplin.objects.select_related().filter(
+            disziplinart__name="Einzelfahren",
+            wettkampf__von__year=jahr).order_by('wettkampf__von'):
+        if item.wettkampf.name in ('7er-Club-Mix', '7er-Club-Endfahren', 'OldieCup'):
+            continue
+        if item.wettkampf not in wettkaempfe:
+            wettkaempfe.append(item.wettkampf)
+    return wettkaempfe
 
 def notenblatt(request, jahr, wettkampf, disziplin, startnummer=None):
     assert request.method == 'GET'
