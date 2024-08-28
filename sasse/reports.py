@@ -820,7 +820,9 @@ def create_beste_saisonpaare_flowables(wettkaempfe, ranglisten):
     header = ['Kat', 'Rang', 'Fahrerpaar', 'Sektion']
     col_widths = [25, 30, 140, 100]
     for w in wettkaempfe:
-        wettkampf_date = datetime.datetime.strftime(w.von, '%-d.%-m')
+        # ACHTUNG: Format "%-d" funktioniert auf Windows nicht, um führende
+        #          Nullen zu enfernen.
+        wettkampf_date = datetime.datetime.strftime(w.von, '%d.%m')
         header.append(wettkampf_date)
         col_widths.append(40)
     header.append('Zeit')

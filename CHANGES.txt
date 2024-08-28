@@ -1,3 +1,8 @@
+Version 3.2.1 (28. August 2024)
+
+- Fix: Beste Saisonfahrerpaar als PDF funktioniert nun auch auf Windows.
+
+
 Version 3.2.0 (26. August 2024)
 
 - Beste Saisonfahrerpaar nun auch als PDF
