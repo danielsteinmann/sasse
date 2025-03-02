@@ -808,7 +808,7 @@ def write_beste_saisonpaare_header_footer(canvas, doc):
     canvas.drawImage(_get_spsv_logo(), 2*cm, PAGE_WIDTH-2*cm, width=1.5*cm, height=1.5*cm)
     canvas.line(4*cm, PAGE_WIDTH-1.2*cm, PAGE_HEIGHT-2*cm, PAGE_WIDTH-1.2*cm)
     canvas.drawString(4*cm, PAGE_WIDTH-1.1*cm,
-                      "Beste Saisonfahrerpaare im Jahr %s" % (doc.jahr))
+                      "Beste Saisonpaare im Jahr %s" % (doc.jahr))
     canvas.drawRightString(PAGE_HEIGHT-2*cm, PAGE_WIDTH-1*cm,
                            "Anzahl Wettkämpfe: %d" % (len(doc.wettkaempfe)))
     canvas.drawString(2*cm, 1*cm, "https://ranglisten.pontonier.ch")

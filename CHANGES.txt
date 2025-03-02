@@ -1,3 +1,9 @@
+Version 3.2.2 (2. März 2025)
+
+- Transparentes Favicon, damit es besser im Browser aussieht.
+- Fix: Beste Saisonpaar heisst nun überall genau so.
+
+
 Version 3.2.1 (28. August 2024)
 
 - Fix: Beste Saisonfahrerpaar als PDF funktioniert nun auch auf Windows.

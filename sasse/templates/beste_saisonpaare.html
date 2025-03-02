@@ -2,7 +2,7 @@
 {% block nav_rangliste %}selected{% endblock %}
 {% block content %}
 {% load sasse %}
-<p>Beste Saisonfahrerpaare im Jahr <a href="{% url 'wettkaempfe_by_year' jahr %}">{{ jahr }}</p>
+<p>Beste Saisonpaare im Jahr <a href="{% url 'wettkaempfe_by_year' jahr %}">{{ jahr }}</p>
 {% for k in kategorien %}
 {% if k.id == kategorie.id %}<b>{{ k.name }}</b>
 {% else %}<a href="{% url 'beste_saisonpaare' wettkampf.jahr wettkampf.name disziplin.name k.name %}">{{ k.name }}</a>
