@@ -597,10 +597,10 @@ class GruppeForm(ModelForm):
 
 class SektionsfahrenGruppeAbzugForm(ModelForm):
     referrer = CharField(widget=HiddenInput())
-    abzug_gruppe = CharField(widget=TextInput(attrs={'size':'4'}))
-    abzug_sektion = CharField(widget=TextInput(attrs={'size':'4'}))
-    abzug_gruppe_comment = CharField(widget=Textarea(attrs={'rows':4, 'cols':50}))
-    abzug_sektion_comment = CharField(widget=Textarea(attrs={'rows':4, 'cols':50}))
+    abzug_gruppe = CharField(required=False, widget=TextInput(attrs={'size':'4'}))
+    abzug_sektion = CharField(required=False, widget=TextInput(attrs={'size':'4'}))
+    abzug_gruppe_comment = CharField(required=False, widget=Textarea(attrs={'rows':4, 'cols':50}))
+    abzug_sektion_comment = CharField(required=False, widget=Textarea(attrs={'rows':4, 'cols':50}))
 
     class Meta:
         model = Sektionsfahrengruppe

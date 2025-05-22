@@ -1,3 +1,9 @@
+Version 3.2.3 (22. Mai 2025)
+
+- Sektionsfahren: Punkte/Kommentar für Gruppen/Sektionsabzüge sind optional
+- Sektionsfahren: In HTML die Kommastellen als '.' und nicht ',' zeigen.
+
+
 Version 3.2.2 (2. März 2025)
 
 - Transparentes Favicon, damit es besser im Browser aussieht.

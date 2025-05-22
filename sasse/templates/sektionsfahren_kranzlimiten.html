@@ -1,18 +1,19 @@
 {% extends "base_sektionsfahren.html" %}
 {% block nav_rangliste %}selected{% endblock %}
+{% load sasse %}
 {% block content %}
 <table class="display">
   <tr>
     <th>Gold:</th>
-    <td>{{ limiten.gold }}</td>
+    <td>{{ limiten.gold|bewertung:'PUNKTE' }}</td>
   </tr>
   <tr>
     <th>Silber:</th>
-    <td>{{ limiten.silber }}</td>
+    <td>{{ limiten.silber|bewertung:'PUNKTE' }}</td>
   </tr>
   <tr>
     <th>Lorbeer:</th>
-    <td>{{ limiten.lorbeer }}</td>
+    <td>{{ limiten.lorbeer|bewertung:'PUNKTE' }}</td>
   </tr>
   <tr>
     <th>Ausser Konkurrenz:</th>

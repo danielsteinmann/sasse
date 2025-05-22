@@ -1,5 +1,6 @@
 {% extends "base_sektionsfahren.html" %}
 {% block nav_rangliste %}selected{% endblock %}
+{% load sasse %}
 {% block content %}
 <p><b>Beste Sektion</b> (<small><a target="_blank" href="{% url 'sektionsfahren_rangliste_pdf' wettkampf.jahr wettkampf.name %}">PDF</a></small>)
 | <a href="{% url 'sektionsfahren_rangliste_gruppe' wettkampf.jahr wettkampf.name %}">Beste Gruppe</a>
@@ -29,7 +30,7 @@
     <td class="rang">{{ sektion.anz_jps|default:"-" }}</td>
     <td class="rang">{{ sektion.anz_frauen|default:"-" }}</td>
     <td class="rang">{{ sektion.anz_senioren|default:"-" }}</td>
-    <td class="note"><a href="{% url 'sektionsfahren_notenblatt' wettkampf.jahr wettkampf.name sektion.name %}">{{ sektion.total }}</a></td>
+    <td class="note"><a href="{% url 'sektionsfahren_notenblatt' wettkampf.jahr wettkampf.name sektion.name %}">{{ sektion.total|bewertung:'PUNKTE' }}</a></td>
   </tr>
   {% endfor %}
 </table>

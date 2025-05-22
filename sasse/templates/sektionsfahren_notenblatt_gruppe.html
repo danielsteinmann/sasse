@@ -1,5 +1,6 @@
 {% extends "base_sektionsfahren.html" %}
 {% block nav_rangliste %}selected{% endblock %}
+{% load sasse %}
 {% block content %}
 <p>Notenblatt Gruppe <b>{{ gruppe.name }}</b>
 (<a target="_blank" href="{% url 'sektionsfahren_notenblatt_gruppe_pdf' wettkampf.jahr wettkampf.name gruppe.name %}">PDF</a>)
@@ -7,27 +8,27 @@
 <table class="display">
   <tr>
     <td>Durchschnitt Punkte:</td>
-    <td align="right">{{ gruppe.gefahren }}</td>
+    <td align="right">{{ gruppe.gefahren|bewertung:'PUNKTE' }}</td>
     <td>(Summe aller Schiffe) / {{ gruppe.anz_schiffe }}</td>
   </tr>
   <tr>
     <td>Durchschnitt Zuschläge:</td>
-    <td align="right">{{ gruppe.zuschlag }}</td>
+    <td align="right">{{ gruppe.zuschlag|bewertung:'PUNKTE' }}</td>
     <td>(2 * ({{ gruppe.anz_jps }}JP + {{ gruppe.anz_frauen }}Fr. + {{ gruppe.anz_senioren }}Sen.)) / {{ gruppe.anz_schiffe }}</td>
   </tr>
   <tr>
     <td>Abzüge Gruppentotal:</td>
-    <td align="right">{{ gruppe.abzug_gruppe }}</td>
+    <td align="right">{{ gruppe.abzug_gruppe|bewertung:'PUNKTE' }}</td>
     <td>{{ gruppe.abzug_gruppe_comment|default:""|linebreaksbr }}</td>
   </tr>
   <tr>
     <td>Total:</td>
-    <th align="right">{{ gruppe.total }}</th>
+    <th align="right">{{ gruppe.total|bewertung:'PUNKTE' }}</th>
   </tr>
 {% if gruppe.abzug_sektion %}
   <tr>
     <td>Abzüge Sektionstotal:</td>
-    <td align="right">{{ gruppe.abzug_sektion }}</td>
+    <td align="right">{{ gruppe.abzug_sektion|bewertung:'PUNKTE' }}</td>
     <td>{{ gruppe.abzug_sektion_comment|default:""|linebreaksbr }}</td>
   </tr>
 {% endif %}
