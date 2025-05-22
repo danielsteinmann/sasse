@@ -1,6 +1,12 @@
 Version 3.2.3 (22. Mai 2025)
 
+- Sektionsfahren: Abzüge auf HTML Rangliste darstellen. Somit sieht man sofort,
+  wer Abzüge hat und dann passiert der Fehler nicht mehr wie bei Wynau in
+  Bremgarten 2018, wo versehentlich 10 Punkte bei einer Gruppe (statt 1 Punkt)
+  abgezogen wurde.
+
 - Sektionsfahren: Punkte/Kommentar für Gruppen/Sektionsabzüge sind optional
+
 - Sektionsfahren: In HTML die Kommastellen als '.' und nicht ',' zeigen.
 
 

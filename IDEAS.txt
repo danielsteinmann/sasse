@@ -13,16 +13,7 @@
 
 ====
 
-1. Sektions- und Gruppenabzüge (summiert) auf Rangliste darstellen. Etwa so:
-
-    Kranz|Rang|Sektion|Gruppen|Schiffe|JP|Frauen|Senioren|Abzüge Sektion|Abzüge Gruppen|Total
-
-Somit sieht man sofort, wer Abzüge hat und dann passiert der Fehler nicht mehr
-wie bei Wynau in Bremgarten, wo versehentlich 10 Punkte bei einer Gruppe (statt
-1 Punkt) abgezogen wurde.
-
-
-2. 80% Regel, basierend auf Startliste Sektionsfahren (inkl. Reservefahrer)
+- 80% Regel, basierend auf Startliste Sektionsfahren (inkl. Reservefahrer)
    - Anzahl Reservefahrer zwischen Fahrchef und Zuschlägen eingeben
      (sind damit auch überzählige Fahrer, Kampfrichter, VL-Mitglieder gemeint?)
    - Import der Pflichtzahlen aus SPSV Datenbank; pro Wettkampf speichern
@@ -31,7 +22,7 @@ wie bei Wynau in Bremgarten, wo versehentlich 10 Punkte bei einer Gruppe (statt
    => Was ist mit WKR Kapitel 2.2.1 "Alle Teilnehmer im Einzel auch in Sektion"?
       Soll das auch automatisch geprüft werden?
 
-3. Rayonwettfahren
+- Rayonwettfahren
    - Unter Einzwelwettfahren ein Menupunkt "Sektionsrangliste" einfügen. Nur
      sichtbar, falls die Pflichtzahlen für diesen Wettkampf vorhanden sind.
      (Siehe 80% Regel)

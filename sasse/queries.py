@@ -637,6 +637,7 @@ def read_sektionsfahren_rangliste(disziplin):
         anz_frauen = 0
         anz_senioren = 0
         abzug_sektion = 0
+        abzug_gruppen = 0
         gewichtet = 0
         gruppen = list(gruppen)
         for g in gruppen:
@@ -646,6 +647,7 @@ def read_sektionsfahren_rangliste(disziplin):
             anz_frauen += g.anz_frauen()
             anz_senioren += g.anz_senioren()
             abzug_sektion += g.abzug_sektion
+            abzug_gruppen += g.abzug_gruppe
             gewichtet += g.gewichtet
         gewichtet_avg = (gewichtet / anz_schiffe).quantize(Decimal("0.001"))
         row = {
@@ -657,6 +659,7 @@ def read_sektionsfahren_rangliste(disziplin):
             'anz_frauen': anz_frauen,
             'anz_senioren': anz_senioren,
             'abzug': abzug_sektion,
+            'abzug_gruppen': abzug_gruppen,
             'gewichtet': gewichtet,
             'gewichtet_avg': gewichtet_avg,
             'total': gewichtet_avg - abzug_sektion,

@@ -18,6 +18,7 @@
     <th class="note">Gefahren</th>
     <th class="note">Zuschlag</th>
     <th class="note">Abzug</th>
+    <th class="note">Abzug Sektion</th>
     <th class="note">Total</th>
   </tr>
   {% for gruppe in rangliste %}
@@ -31,6 +32,7 @@
     <td class="note">{{ gruppe.gefahren|bewertung:'PUNKTE' }}</td>
     <td class="note">{{ gruppe.zuschlag|bewertung:'PUNKTE' }}</td>
     <td class="note">{{ gruppe.abzug_gruppe|bewertung:'PUNKTE' }}</td>
+    <td class="note">{{ gruppe.abzug_sektion|bewertung:'PUNKTE' }}</td>
     <td class="note"><a href="{% url 'sektionsfahren_notenblatt_gruppe' wettkampf.jahr wettkampf.name gruppe.name %}">{{ gruppe.total|bewertung:'PUNKTE' }}</a></td>
   </tr>
   {% endfor %}
