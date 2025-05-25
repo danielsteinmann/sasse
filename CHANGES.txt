@@ -1,3 +1,8 @@
+Version 3.2.4 (23. Mai 2025)
+
+- Sektionsfahren: Mache Werbung für ranglisten.pontonier.ch auf PDFs.
+
+
 Version 3.2.3 (22. Mai 2025)
 
 - Sektionsfahren: Abzüge auf HTML Rangliste darstellen. Somit sieht man sofort,

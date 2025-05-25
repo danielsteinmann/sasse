@@ -393,6 +393,7 @@ def write_sektionsfahren_notenblatt_header_footer(canvas, doc):
     canvas.line(3*cm, PAGE_HEIGHT-1.3*cm, PAGE_WIDTH-2*cm, PAGE_HEIGHT-1.3*cm)
     canvas.setFont('Helvetica', 8)
     canvas.drawString(3*cm, PAGE_HEIGHT-1.1*cm, "Notenblatt %s" % (doc.disziplin.disziplinart))
+    canvas.drawString(2*cm, 1*cm, "https://ranglisten.pontonier.ch")
     canvas.drawRightString(PAGE_WIDTH-2*cm, PAGE_HEIGHT-1.1*cm, "%s %d" % (doc.wettkampf.name, doc.wettkampf.jahr()))
     canvas.restoreState()
 
@@ -471,6 +472,7 @@ def write_sektionsfahren_notenblatt_gruppe_header_footer(canvas, doc):
     canvas.line(3*cm, PAGE_HEIGHT-1.3*cm, PAGE_WIDTH-2*cm, PAGE_HEIGHT-1.3*cm)
     canvas.setFont('Helvetica', 8)
     canvas.drawString(3*cm, PAGE_HEIGHT-1.1*cm, "Notenblatt %s" % (doc.disziplin.disziplinart))
+    canvas.drawString(2*cm, 1*cm, "https://ranglisten.pontonier.ch")
     canvas.drawRightString(PAGE_WIDTH-2*cm, PAGE_HEIGHT-1.1*cm, "%s %d" % (doc.wettkampf.name, doc.wettkampf.jahr()))
     canvas.restoreState()
 
