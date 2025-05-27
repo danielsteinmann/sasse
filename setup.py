@@ -25,7 +25,7 @@ class website_sdist(sdist):
 
 setup(
     name = "sasse",
-    version = "3.2.4",
+    version = "3.3.0",
     author = "Daniel Steinmann",
     author_email = "dsteinmann@acm.org",
     description = "Unterstützt das Rechnungsbüro der Pontoniere bei der Durchführung eines Wettkampfes.",

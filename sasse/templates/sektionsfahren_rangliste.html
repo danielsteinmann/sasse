@@ -32,9 +32,9 @@
     <td class="rang">{{ sektion.anz_jps|default:"-" }}</td>
     <td class="rang">{{ sektion.anz_frauen|default:"-" }}</td>
     <td class="rang">{{ sektion.anz_senioren|default:"-" }}</td>
-	<td class="note">{{ sektion.abzug_gruppen|bewertung:'PUNKTE' }}</td>
-	<td class="note">{{ sektion.abzug|bewertung:'PUNKTE' }}</td>
-    <td class="note"><a href="{% url 'sektionsfahren_notenblatt' wettkampf.jahr wettkampf.name sektion.name %}">{{ sektion.total|bewertung:'PUNKTE' }}</a></td>
+	<td class="note">{{ sektion.abzug_gruppen }}</td>
+	<td class="note">{{ sektion.abzug }}</td>
+    <td class="note"><a href="{% url 'sektionsfahren_notenblatt' wettkampf.jahr wettkampf.name sektion.name %}">{{ sektion.total }}</a></td>
   </tr>
   {% endfor %}
 </table>

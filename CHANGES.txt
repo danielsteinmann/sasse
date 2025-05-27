@@ -1,3 +1,11 @@
+Unreleased
+
+- Fix: Im Sektionsfahren werden die Punkte wieder mit 3 Stellen nach dem Komma
+  dargestellt. Mit Version 3.2.3 (93a6a46d167db93db49e9b146aa5e042d6a47739)
+  sollte einfach das Dezimaltrennzeichen ',' durch '.' ersetzt werden. Dabei
+  ist jedoch fälschlicherweise auf nur 1 Stelle nach dem Komma gerundet worden.
+
+
 Version 3.2.4 (23. Mai 2025)
 
 - Sektionsfahren: Mache Werbung für ranglisten.pontonier.ch auf PDFs.

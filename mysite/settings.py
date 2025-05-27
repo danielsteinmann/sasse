@@ -118,6 +118,11 @@ USE_I18N = True
 
 USE_TZ = True
 
+# Die Zahlen in sasse sollten im Schweizer Format immer als '.' erscheinen,
+# nicht wie das Default Schweizer Format von Django als ','.
+FORMAT_MODULE_PATH = [
+    "sasse.formats",
+]
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/

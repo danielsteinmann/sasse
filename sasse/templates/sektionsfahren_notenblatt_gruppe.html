@@ -8,27 +8,27 @@
 <table class="display">
   <tr>
     <td>Durchschnitt Punkte:</td>
-    <td align="right">{{ gruppe.gefahren|bewertung:'PUNKTE' }}</td>
+    <td align="right">{{ gruppe.gefahren }}</td>
     <td>(Summe aller Schiffe) / {{ gruppe.anz_schiffe }}</td>
   </tr>
   <tr>
     <td>Durchschnitt Zuschläge:</td>
-    <td align="right">{{ gruppe.zuschlag|bewertung:'PUNKTE' }}</td>
+    <td align="right">{{ gruppe.zuschlag }}</td>
     <td>(2 * ({{ gruppe.anz_jps }}JP + {{ gruppe.anz_frauen }}Fr. + {{ gruppe.anz_senioren }}Sen.)) / {{ gruppe.anz_schiffe }}</td>
   </tr>
   <tr>
     <td>Abzüge Gruppentotal:</td>
-    <td align="right">{{ gruppe.abzug_gruppe|bewertung:'PUNKTE' }}</td>
+    <td align="right">{{ gruppe.abzug_gruppe }}</td>
     <td>{{ gruppe.abzug_gruppe_comment|default:""|linebreaksbr }}</td>
   </tr>
   <tr>
     <td>Total:</td>
-    <th align="right">{{ gruppe.total|bewertung:'PUNKTE' }}</th>
+    <th align="right">{{ gruppe.total }}</th>
   </tr>
 {% if gruppe.abzug_sektion %}
   <tr>
     <td>Abzüge Sektionstotal:</td>
-    <td align="right">{{ gruppe.abzug_sektion|bewertung:'PUNKTE' }}</td>
+    <td align="right">{{ gruppe.abzug_sektion }}</td>
     <td>{{ gruppe.abzug_sektion_comment|default:""|linebreaksbr }}</td>
   </tr>
 {% endif %}
