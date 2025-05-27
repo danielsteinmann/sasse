@@ -1410,6 +1410,28 @@ def sektionsfahren_notenblatt_pdf(request, jahr, wettkampf, sektion_name):
     doc.build(flowables, filename=response)
     return response
 
+def sektionsfahren_notenblatt_pdf_all(request, jahr, wettkampf):
+    assert request.method == 'GET'
+    d = Disziplin.objects.select_related().get(
+            disziplinart__name="Sektionsfahren",
+            wettkampf__name=wettkampf,
+            wettkampf__von__year=jahr)
+    w = d.wettkampf
+    doc = create_sektionsfahren_notenblatt_doctemplate(w, d)
+    rangliste = read_sektionsfahren_rangliste(d)
+    rangliste = sorted(rangliste, key=lambda k: k['name'])
+    flowables = []
+    for sektion in rangliste:
+        flowables.extend(create_sektionsfahren_notenblatt_flowables(sektion))
+        for gruppe in sektion['gruppen']:
+            notenliste = read_sektionsfahren_notenblatt_gruppe(gruppe)
+            notenliste = regroup_notenliste(notenliste, gruppe.anz_schiffe())
+            flowables.extend(create_sektionsfahren_notenblatt_gruppe_flowables(gruppe, notenliste))
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = smart_str('filename=notenblaetter-sektionsfahren')
+    doc.build(flowables, filename=response)
+    return response
+
 def sektionsfahren_notenblatt_gruppe(request, jahr, wettkampf, gruppe):
     assert request.method == 'GET'
     d = Disziplin.objects.select_related().get(

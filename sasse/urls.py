@@ -112,6 +112,8 @@ sektionsfahren_patterns = [
         views.sektionsfahren_kranzlimiten, {}, "sektionsfahren_kranzlimiten"),
     re_path(r'^kranzlimiten/update/$',
         views.sektionsfahren_kranzlimiten_update, {}, "sektionsfahren_kranzlimiten_update"),
+    re_path(r'^notenblaetter-aller-sektionen/pdf$',
+        views.sektionsfahren_notenblatt_pdf_all, {}, "sektionsfahren_notenblatt_pdf_all"),
     re_path(r'^notenblatt/(?P<sektion_name>[-\w\s]+)/$',
         views.sektionsfahren_notenblatt, {}, "sektionsfahren_notenblatt"),
     re_path(r'^notenblatt/(?P<sektion_name>[-\w\s]+)/pdf$',
