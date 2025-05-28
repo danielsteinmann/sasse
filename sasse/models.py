@@ -310,12 +310,18 @@ class Schwimmer(Teilnehmer):
         alter = aktuelles_jahr - geburts_jahr
         if alter <= 14:
             return "I"
+        elif alter <= 17:
+            if self.mitglied.geschlecht == "f":
+                return "FII"
+            else:
+                return "II"
+        elif alter <= 20:
+            if self.mitglied.geschlecht == "f":
+                return "FIII"
+            else:
+                return "III"
         elif self.mitglied.geschlecht == "f":
             return "F"
-        elif alter <= 17:
-            return "II"
-        elif alter <= 20:
-            return "III"
         elif alter <= 42:
             return "C"
         else:
@@ -340,12 +346,18 @@ class Einzelschnuerer(Teilnehmer):
         alter = aktuelles_jahr - geburts_jahr
         if alter <= 14:
             return "I"
+        elif alter <= 17:
+            if self.mitglied.geschlecht == "f":
+                return "FII"
+            else:
+                return "II"
+        elif alter <= 20:
+            if self.mitglied.geschlecht == "f":
+                return "FIII"
+            else:
+                return "III"
         elif self.mitglied.geschlecht == "f":
             return "F"
-        elif alter <= 17:
-            return "II"
-        elif alter <= 20:
-            return "III"
         elif alter <= 42:
             return "C"
         else:

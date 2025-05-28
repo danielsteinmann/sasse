@@ -1,4 +1,6 @@
-Unreleased
+Version 3.3.0 (28. Mai 2025)
+
+- Schwimmen/Einzelschnüren: Einführung Kategorie FII und FIII
 
 - Fix: Disziplinen mit Umlauten, z.B. "Bootsfährenbau" und "Einzelschnüren",
   können wieder wie gehabt dazugefügt werden.
