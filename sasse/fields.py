@@ -8,6 +8,7 @@ from django.forms import Field
 from django.forms import CharField
 from django.forms import ModelChoiceField
 from django.forms import RegexField
+from django.forms import SlugField
 from django.forms import DecimalField
 from django.forms import Select
 from django.forms import TextInput
@@ -17,21 +18,16 @@ from .models import Mitglied
 from .models import Schiffeinzel
 from .widgets import ZeitInSekundenWidget
 
-unicode_slug_re = re.compile(r'^[-\w]+$', re.UNICODE)
 
-class UnicodeSlugField(RegexField):
-    """
-    Kann nicht SlugField nehmen, da dieses keine Unicode Zeichen versteht,
-    ich aber in der URL Namen wie 'Fällbaum-Cup' haben möchte.
-    (siehe django.forms.fields.SlugField)
-    """
+class UnicodeSlugField(SlugField):
+
     default_error_messages = {
         'invalid': ("Bitte nur Buchstaben und Ziffern (inklusive Bindestrich)"
                     " eingeben"),
     }
 
     def __init__(self, *args, **kwargs):
-        super(UnicodeSlugField, self).__init__(unicode_slug_re, *args, **kwargs)
+        super(UnicodeSlugField, self).__init__(allow_unicode=True, *args, **kwargs)
 
 
 class PunkteField(DecimalField):

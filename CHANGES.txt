@@ -1,5 +1,8 @@
 Unreleased
 
+- Fix: Disziplinen mit Umlauten, z.B. "Bootsfährenbau" und "Einzelschnüren",
+  können wieder wie gehabt dazugefügt werden.
+
 - Sektionsfahren: Notenblätter aller Sektionen mit einem Click drucken.
 
 - Fix: Im Sektionsfahren werden die Punkte wieder mit 3 Stellen nach dem Komma

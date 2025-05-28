@@ -187,7 +187,7 @@ class Disziplin(models.Model):
     Disziplin plus Kategorien (falls vorhanden).
     """
     wettkampf = models.ForeignKey('Wettkampf', on_delete=models.CASCADE)
-    name = models.SlugField(max_length=50)
+    name = models.SlugField(allow_unicode=True, max_length=50)
     disziplinart = models.ForeignKey('Disziplinart', on_delete=models.CASCADE, blank=False, default=1)
     kategorien = models.ManyToManyField('Kategorie', blank=True)
 
