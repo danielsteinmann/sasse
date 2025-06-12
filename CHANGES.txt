@@ -4,6 +4,9 @@ Unreleased
   Kategorie, z.B. Gruppe "Diessenhofen" in JP, "Diessenhofen-1" und
   "Diessenhofen-2" in Aktive. Vorher gab es dann ein "Diessenhofen-3" in JP.
 
+- Beste Schiffe pro Sektion: Bei Punktgleichheit (z.B. zweite/dritte Position
+  beim Glanzenburgcup 2025) erscheint die Punktzahl wieder.
+
 
 Version 3.3.0 (28. Mai 2025)
 

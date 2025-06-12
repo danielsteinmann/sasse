@@ -24,7 +24,7 @@
     <td>{{ row.fahrerpaar }}</td>
     <td class="kategorie">{{ row.kategorie }}</td>
     <td class="note"><a title="Notenblatt" href="{% url 'notenblatt' wettkampf.jahr wettkampf.name disziplin.name row.startnummer %}">{{row.punkte|bewertung:'PUNKTE'}}</a></td>
-    <td class="note">{% ifchanged row.total %}{{ row.total|bewertung:'PUNKTE' }}{% endifchanged %}</td>
+    <td class="note">{% ifchanged row.sektion %}{{ row.total|bewertung:'PUNKTE' }}{% endifchanged %}</td>
   </tr>
 {% endfor %}
 </table>
