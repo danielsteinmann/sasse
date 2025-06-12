@@ -1,3 +1,10 @@
+Unreleased
+
+- Gruppenschnüren: Nummerierung Gruppen der gleichen Sektion zusätzlich pro
+  Kategorie, z.B. Gruppe "Diessenhofen" in JP, "Diessenhofen-1" und
+  "Diessenhofen-2" in Aktive. Vorher gab es dann ein "Diessenhofen-3" in JP.
+
+
 Version 3.3.0 (28. Mai 2025)
 
 - Schwimmen/Einzelschnüren: Einführung Kategorie FII und FIII

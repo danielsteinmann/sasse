@@ -815,11 +815,13 @@ class SchnuergruppeForm(ModelForm):
         sektion = self.cleaned_data.get('sektion')
         if self.instance.id is None and sektion:
             disziplin = self.cleaned_data['disziplin']
+            kategorie = self.cleaned_data['kategorie']
             # Calculate name
             sektion_name = sektion.name
             sektion_name = sektion_name.replace(" ", "-")
             count = 0
-            for gruppe in Schnuergruppe.objects.filter(disziplin=disziplin, sektion=sektion):
+            for gruppe in Schnuergruppe.objects.filter(
+                    disziplin=disziplin, sektion=sektion, kategorie=kategorie):
                 count += 1
                 gruppe.name = "%s-%d" % (sektion_name, count)
                 gruppe.save()
