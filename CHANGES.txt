@@ -1,5 +1,10 @@
 Unreleased
 
+- Richtzeiten: In Wynau 2025 beim Posten E-G gab es zu lange Zeiten, die zu
+  sehr wenigen Punkten führten. Leider ist es nicht aufgefallen, weil es
+  tatsächlich lange Zeiten gab. Darum nun einen Link auf das Notenblatt
+  eingefügt, damit man sehr schnell die anderen Zeiten sehen kann.
+
 - Sektionsfahren: Mehrere Sektionen können nun auf der Rangliste den gleichen
   Platz einnehmen. Entspricht einer Änderung im Wettkampfreglement von November
   2024.

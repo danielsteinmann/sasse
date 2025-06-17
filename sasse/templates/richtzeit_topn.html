@@ -19,7 +19,7 @@ Die besten Zeiten für Posten <b>{{ posten.name }}</b>:
     <td>{{row.sektion}}</td>
     <td class="kategorie">{{row.kategorie}}</td>
     <td class="zeit">{{row.zeit}}</td>
-    <td class="note">{{row.note}}</td>
+    <td class="note"><a title="Notenblatt" href="{% url 'notenblatt' wettkampf.jahr wettkampf.name disziplin.name row.startnummer %}">{{row.note}}</a></td>
   </tr>
 {% endfor %}
 </table>
