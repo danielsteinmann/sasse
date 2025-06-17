@@ -7,7 +7,7 @@
     </tr>
     <tr>
       <th>Gruppe:</th>
-      <td>{{ gruppe.name }}</td>
+      <td>{{ gruppe.name }}{% if gruppe.split_name_auf_rangliste %} (vervielfacht auf Rangliste){% endif %}</td>
     </tr>
     <tr>
       <th>Fahrchef:</th>

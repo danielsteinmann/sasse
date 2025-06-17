@@ -640,6 +640,7 @@ def read_sektionsfahren_rangliste(disziplin):
         abzug_gruppen = 0
         gewichtet = 0
         gruppen = list(gruppen)
+        mehrfach_namen = []
         for g in gruppen:
             anz_gruppen += 1
             anz_schiffe += g.anz_schiffe()
@@ -649,9 +650,12 @@ def read_sektionsfahren_rangliste(disziplin):
             abzug_sektion += g.abzug_sektion
             abzug_gruppen += g.abzug_gruppe
             gewichtet += g.gewichtet
+            if g.split_name_auf_rangliste:
+                mehrfach_namen = g.name.split("-")
         gewichtet_avg = (gewichtet / anz_schiffe).quantize(Decimal("0.001"))
         row = {
             'name': sektion,
+            'mehrfach_namen': mehrfach_namen,
             'gruppen': gruppen,
             'anz_gruppen': anz_gruppen,
             'anz_schiffe': anz_schiffe,

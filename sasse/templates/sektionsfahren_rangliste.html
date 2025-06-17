@@ -28,7 +28,13 @@
   <tr class="{% cycle 'odd' 'even' %}">
     <td>{% ifchanged sektion.kranz_typ %}{{ sektion.kranz_typ }}{% endifchanged %}</td>
     <td class="rang">{{ sektion.rang }}</td>
-    <td>{{ sektion.name }}</td>
+    <td>
+    {% if sektion.mehrfach_namen %}
+      {% for n in sektion.mehrfach_namen %}{{ n }}<br/>{% endfor %}
+    {% else %}
+      {{ sektion.name }}
+    {% endif %}
+    </td>
     <td class="rang">{{ sektion.anz_gruppen }}</td>
     <td class="rang">{{ sektion.anz_schiffe }}</td>
     <td class="rang">{{ sektion.anz_jps|default:"-" }}</td>

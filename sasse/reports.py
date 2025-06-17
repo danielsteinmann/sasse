@@ -576,6 +576,7 @@ def create_sektionsfahren_rangliste_flowables(rangliste, disziplin):
         ('BOTTOMPADDING', (0,0), (-1,-1), 1),
         ('ALIGN', (0,0), (0,-1), 'LEFT'),
         ('ALIGN', (3,0), (-1,-1), 'CENTER'),
+        ('VALIGN',(0,0), (-1,-1), 'MIDDLE'),
         ]
     kranz_typ = None
     for i, row in enumerate(rangliste):
@@ -592,7 +593,10 @@ def create_sektionsfahren_rangliste_flowables(rangliste, disziplin):
         record = []
         record.append(Paragraph(row['kranz_typ'], ss['left']))
         record.append(Paragraph(str(row['rang']), ss['center']))
-        record.append(Paragraph(row['name'], ss['left']))
+        name = row['name']
+        if row['mehrfach_namen']:
+            name = "<br/>".join(row['mehrfach_namen'])
+        record.append(Paragraph(name, ss['left']))
         record.append(Paragraph(str(row['anz_gruppen']), ss['center']))
         record.append(Paragraph(str(row['anz_schiffe']), ss['center']))
         record.append(Paragraph(str(row['anz_jps']), ss['center']))

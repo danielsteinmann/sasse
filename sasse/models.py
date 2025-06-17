@@ -406,13 +406,10 @@ class SektionsfahrenGruppeManager(models.Manager):
         return result_list
 
 class Sektionsfahrengruppe(Teilnehmer):
-    """
-    Eine Schnürgruppe, eine Bootfährenbautrupp oder eine Sektion beim
-    Sektionsfahren.
-    """
     chef = models.ForeignKey('Mitglied', on_delete=models.CASCADE)
     sektion = models.ForeignKey('Sektion', on_delete=models.CASCADE)
     name = models.CharField(max_length=20) # z.B. Bremgarten I
+    split_name_auf_rangliste = models.BooleanField(default=False)
     abzug_gruppe = models.DecimalField(max_digits=6, decimal_places=1, default=0, blank=True)
     abzug_sektion = models.DecimalField(max_digits=6, decimal_places=1, default=0, blank=True)
     abzug_gruppe_comment = models.CharField(null=True, blank=True, max_length=400)
