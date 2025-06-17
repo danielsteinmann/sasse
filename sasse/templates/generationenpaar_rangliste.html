@@ -1,0 +1,32 @@
+{% extends "base_generationenpaar.html" %}
+{% block nav_rangliste %}selected{% endblock %}
+{% block content %}
+{% load sasse %}
+<p>Beste Generationenpaare
+<!--
+| <a target="_blank" href="{% url 'generationenpaar_rangliste_pdf' wettkampf.jahr wettkampf.name %}">PDF</a>
+-->
+</p>
+<table class="list">
+  <tr>
+    <th class="rang">Rang</th>
+    <th>Paar</th>
+    <th class="note">Punkte</th>
+    <th class="note">Maximum</th>
+    <th class="note">Prozent</th>
+    <th class="note">Total</th>
+  </tr>
+{% for row in page_obj %}
+  <tr class="{% ifchanged row.rang %}{% cycle "odd" "even" as rowcolors %}{% else %}{{ rowcolors }}{% endifchanged %}">
+    <td class="rang">{% ifchanged row.rang %}{{row.rang}}{% endifchanged %}</td>
+    <td>{{ row.name }}&nbsp;{{ row.vorname }}<font size="-2"> {{ row.geburtsdatum.year }}</font></td>
+	<td class="note"><a title="Notenblatt" href="{% url 'notenblatt' wettkampf.jahr wettkampf.name row.disziplin row.startnummer %}">{{row.punkte}}</a></td>
+    <td class="note">{{row.maximum}}</td>
+    <td class="note">{{row.prozent}}</td>
+    <td class="note">{% ifchanged row.rang %}{{row.total}}{% endifchanged %}</td>
+  </tr>
+{% endfor %}
+</table>
+<p></p>
+{% include "pagination.html" %}
+{% endblock %}

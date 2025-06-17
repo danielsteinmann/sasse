@@ -962,3 +962,100 @@ select p.name as posten
         result['schiff'] = row[i]; i += 1
         yield result
 
+def read_beste_generationenpaare(wettkampf, disziplin):
+    sql = """
+select *
+     , sum(Prozent) over (partition by Paar) as Total
+     , min(Geburtsdatum) over (partition by Paar) as AeltereFahrer
+  from (
+
+with einzelfahren as (
+  select d.id as disziplin_id
+       , sum(case when ba.name = 'Zeit' then 10.0 else ba.defaultwert end) as max_punkte
+    from sasse_disziplin d
+    join sasse_posten p on (p.disziplin_id = d.id)
+    join sasse_bewertungsart ba on (ba.postenart_id = p.postenart_id)
+   where 1=1
+     and d.wettkampf_id = %(wettkampf_id)d
+     and d.disziplinart_id = 1 -- Einzelfahren
+   group by d.id
+)
+
+-- Steuerfahrer
+select tn_gen.startnummer as Paar
+     , tn.startnummer as Startnummer
+     , max(d.name) as Disziplin
+     , max(hinten.name) as Name
+     , max(hinten.vorname) as Vorname
+     , max(hinten.geburtsdatum) as Geburtsdatum
+     , sum(b.note) as Punkte
+     , max(einzelfahren.max_punkte) as Maximum
+     , round(sum(b.note) / max(einzelfahren.max_punkte) * 100, 2) as Prozent
+  from einzelfahren
+  join sasse_teilnehmer tn on (tn.disziplin_id = einzelfahren.disziplin_id)
+  join sasse_schiffeinzel schiff on (schiff.teilnehmer_ptr_id = tn.id)
+  join bewertung_calc b on (b.teilnehmer_id = tn.id)
+  join sasse_kategorie kat on (kat.id = schiff.kategorie_id)
+  join sasse_sektion sektion on (sektion.id = schiff.sektion_id)
+  join sasse_mitglied vorne on (vorne.id = schiff.vorderfahrer_id)
+  join sasse_mitglied hinten on (hinten.id = schiff.steuermann_id)
+  join sasse_disziplin d on (d.id = einzelfahren.disziplin_id)
+     , sasse_generationenpaar gen
+  join sasse_teilnehmer tn_gen on (tn_gen.id = gen.teilnehmer_ptr_id)
+  join sasse_disziplin tn_d on (tn_d.id = tn_gen.disziplin_id)
+ where 1=1
+   and tn_gen.disziplin_id = %(disziplin_id)d
+   and hinten.id in (gen.mitglied_1_id, gen.mitglied_2_id)
+   and not tn.ausgeschieden and not tn.disqualifiziert
+   and not schiff.steuermann_ist_ds
+ group by tn.disziplin_id, tn.startnummer, kat.name, tn_gen.startnummer
+
+union all
+
+-- Vorderfahrer
+select tn_gen.startnummer as Paar
+     , tn.startnummer as Startnummer
+     , max(d.name) as Disziplin
+     , max(vorne.name) as Name
+     , max(vorne.vorname) as Vorname
+     , max(vorne.geburtsdatum) as Geburtsdatum
+     , sum(b.note) as Punkte
+     , max(einzelfahren.max_punkte) as Maximum
+     , round(sum(b.note) / max(einzelfahren.max_punkte) * 100, 2) as Prozent
+  from einzelfahren
+  join sasse_teilnehmer tn on (tn.disziplin_id = einzelfahren.disziplin_id)
+  join sasse_schiffeinzel schiff on (schiff.teilnehmer_ptr_id = tn.id)
+  join bewertung_calc b on (b.teilnehmer_id = tn.id)
+  join sasse_kategorie kat on (kat.id = schiff.kategorie_id)
+  join sasse_sektion sektion on (sektion.id = schiff.sektion_id)
+  join sasse_mitglied vorne on (vorne.id = schiff.vorderfahrer_id)
+  join sasse_mitglied hinten on (hinten.id = schiff.steuermann_id)
+  join sasse_disziplin d on (d.id = einzelfahren.disziplin_id)
+     , sasse_generationenpaar gen
+  join sasse_teilnehmer tn_gen on (tn_gen.id = gen.teilnehmer_ptr_id)
+  join sasse_disziplin tn_d on (tn_d.id = tn_gen.disziplin_id)
+ where 1=1
+   and tn_gen.disziplin_id = %(disziplin_id)d
+   and vorne.id in (gen.mitglied_1_id, gen.mitglied_2_id)
+   and not tn.ausgeschieden and not tn.disqualifiziert
+   and not schiff.vorderfahrer_ist_ds
+ group by tn.disziplin_id, tn.startnummer, kat.name, tn_gen.startnummer
+
+) as x
+order by Total desc, AeltereFahrer, Paar, Geburtsdatum
+"""  % {
+        'wettkampf_id': wettkampf.id,
+        'disziplin_id': disziplin.id
+        }
+    cursor = connection.cursor()
+    cursor.execute(sql)
+    data = dictfetchall(cursor)
+    rang = 0
+    paar = -1
+    for row in data:
+        if paar != row['paar']:
+            rang += 1;
+            paar = row['paar']
+        row['rang'] = rang
+    return data
+

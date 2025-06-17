@@ -50,6 +50,7 @@ from .models import Schwimmer
 from .models import Einzelschnuerer
 from .models import Schnuergruppe
 from .models import Bootfaehrengruppe
+from .models import Generationenpaar
 
 from .fields import MitgliedSearchField
 from .fields import UnicodeSlugField
@@ -903,6 +904,62 @@ class BootfaehrengruppeUpdateForm(ModelForm):
         self.fields['zuschlaege'].widget.attrs['min'] = 0
         self.fields['zuschlaege'].widget.attrs['max'] = 999
         self.fields['disziplin'].widget = HiddenInput()
+
+class GenerationenpaarForm(ModelForm):
+    mitglied_1 = MitgliedSearchField(queryset=Mitglied.objects.all())
+    mitglied_2 = MitgliedSearchField(queryset=Mitglied.objects.all())
+
+    class Meta:
+        model = Generationenpaar
+        exclude = ('disqualifiziert', 'ausgeschieden')
+
+    def __init__(self, disziplin, *args, **kwargs):
+        super(GenerationenpaarForm, self).__init__(*args, **kwargs)
+        self.data['disziplin'] = disziplin.id
+        self.fields['startnummer'].widget.attrs['min'] = 1
+        self.fields['startnummer'].widget.attrs['max'] = 999
+        if self.instance.id is not None:
+            self.initial['mitglied_1'] = self.fields['mitglied_1'].value_for_form(self.instance.mitglied_1)
+            self.initial['mitglied_2'] = self.fields['mitglied_2'].value_for_form(self.instance.mitglied_2)
+        else:
+            result = Generationenpaar.objects.filter(disziplin=disziplin).aggregate(Max('startnummer'))
+            startnr = result['startnummer__max']
+            if not startnr:
+                startnr = 1
+            else:
+                startnr = startnr + 1
+            self.initial['startnummer'] = startnr
+
+    def clean(self):
+        super(GenerationenpaarForm, self).clean()
+        for name in ('mitglied_1', 'mitglied_2'):
+            mitglied = self.cleaned_data.get(name)
+            self.data[name] = self.fields[name].value_for_form(mitglied)
+        return self.cleaned_data
+
+class GenerationenpaarUpdateForm(ModelForm):
+    mitglied_1 = MitgliedSearchField(queryset=Mitglied.objects.all())
+    mitglied_2 = MitgliedSearchField(queryset=Mitglied.objects.all())
+
+    class Meta:
+        model = Generationenpaar
+        exclude = ('disqualifiziert', 'ausgeschieden')
+
+    def __init__(self, *args, **kwargs):
+        super(GenerationenpaarUpdateForm, self).__init__(*args, **kwargs)
+        self.fields['startnummer'].widget.attrs['min'] = 1
+        self.fields['startnummer'].widget.attrs['max'] = 999
+        self.fields['disziplin'].widget = HiddenInput()
+        self.initial['mitglied_1'] = self.fields['mitglied_1'].value_for_form(self.instance.mitglied_1)
+        self.initial['mitglied_2'] = self.fields['mitglied_2'].value_for_form(self.instance.mitglied_2)
+
+    def clean(self):
+        super(GenerationenpaarUpdateForm, self).clean()
+        for name in ('mitglied_1', 'mitglied_2'):
+            mitglied = self.cleaned_data.get(name)
+            self.data[name] = self.fields[name].value_for_form(mitglied)
+        return self.cleaned_data
+
 
 class EinzelfahrenZeitUploadFileForm(Form):
     zeiten = FileField()

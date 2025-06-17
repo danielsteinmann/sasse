@@ -34,6 +34,7 @@ from .models import Einzelschnuerer
 from .models import Schnuergruppe
 from .models import Bootfaehrengruppe
 from .models import Kategorie
+from .models import Generationenpaar
 
 from .forms import DisziplinForm
 from .forms import PostenEditForm
@@ -62,6 +63,8 @@ from .forms import SchnuergruppeForm
 from .forms import SchnuergruppeUpdateForm
 from .forms import BootfaehrengruppeForm
 from .forms import BootfaehrengruppeUpdateForm
+from .forms import GenerationenpaarForm
+from .forms import GenerationenpaarUpdateForm
 from .forms import EinzelfahrenZeitUploadFileForm
 from .forms import SektionsfahrenZeitUploadForm
 from .forms import EinzelfahrenNotenUploadFileForm
@@ -90,6 +93,7 @@ from .queries import read_beste_fahrerpaare
 from .queries import read_beste_saisonpaare
 from .queries import read_einzelfahren_null_zeiten
 from .queries import read_sektionsfahren_null_zeiten
+from .queries import read_beste_generationenpaare
 
 from .reports import create_rangliste_doctemplate
 from .reports import create_rangliste_flowables
@@ -1967,7 +1971,78 @@ def bootfaehrenbau_kranzlimite_update(request, jahr, wettkampf, kategorie):
     d = _get_spezialwettkampf(jahr, wettkampf, "Bootsfährenbau")
     return _do_kranzlimite_update(request, jahr, wettkampf, d, kategorie, bootfaehrenbau_rangliste)
 
+#
+# Generationenpaar
+#
 
+def generationenpaar_get(request, jahr, wettkampf):
+    return _do_spezialwettkampf_get(request, jahr, wettkampf, "Generationenpaar")
+
+@permission_required('sasse.change_gruppe')
+def generationenpaar_eingabe(request, jahr, wettkampf):
+    d = _get_spezialwettkampf(jahr, wettkampf, "Generationenpaar")
+    if request.method == 'POST':
+        form = GenerationenpaarForm(d, request.POST.copy())
+        if form.is_valid():
+            form.save()
+            url = reverse(generationenpaar_eingabe, args=[jahr, wettkampf])
+            return HttpResponseRedirect(url)
+    else:
+        form = GenerationenpaarForm(d)
+    startliste = Generationenpaar.objects.select_related().filter(disziplin=d).order_by('-creation_date')
+    paginator = Paginator(startliste, 25)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+    return render(request, "generationenpaar_eingabe.html",
+            {'wettkampf': d.wettkampf, 'disziplin': d, 'form': form, 'page_obj': page_obj})
+
+@permission_required('sasse.change_gruppe')
+def generationenpaar_update(request, jahr, wettkampf, startnummer):
+    d = _get_spezialwettkampf(jahr, wettkampf, "Generationenpaar")
+    paar = Generationenpaar.objects.get(disziplin=d, startnummer=startnummer)
+    if request.method == 'POST':
+        form = GenerationenpaarUpdateForm(request.POST.copy(), instance=paar)
+        if form.is_valid():
+            form.save()
+            url = reverse(generationenpaar_eingabe, args=[jahr, wettkampf])
+            return HttpResponseRedirect(url)
+    else:
+        form = GenerationenpaarUpdateForm(instance=paar)
+    return render(request, "generationenpaar_update.html",
+            {'wettkampf': d.wettkampf, 'disziplin': d, 'form': form})
+
+@permission_required('sasse.change_gruppe')
+def generationenpaar_delete(request, jahr, wettkampf, startnummer):
+    d = _get_spezialwettkampf(jahr, wettkampf, "Generationenpaar")
+    paar = Generationenpaar.objects.get(disziplin=d, startnummer=startnummer)
+    if request.method == 'POST':
+        paar.delete()
+        url = reverse(generationenpaar_eingabe, args=[jahr, wettkampf])
+        return HttpResponseRedirect(url)
+    return render(request, "generationenpaar_delete.html",
+            {'wettkampf': d.wettkampf, 'disziplin': d, 'obj': paar})
+
+def generationenpaar_rangliste(request, jahr, wettkampf):
+    assert request.method == 'GET'
+    d = _get_spezialwettkampf(jahr, wettkampf, "Generationenpaar")
+    w = d.wettkampf
+    rangliste = read_beste_generationenpaare(w, d)
+    paginator = Paginator(rangliste, 25, orphans=3)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+    return render(request, 'generationenpaar_rangliste.html',
+            {'wettkampf': d.wettkampf, 'disziplin': d, 'page_obj': page_obj})
+
+def generationenpaar_rangliste_pdf(request, jahr, wettkampf):
+    assert request.method == 'GET'
+    d = _get_spezialwettkampf(jahr, wettkampf, "Generationenpaar")
+    w = d.wettkampf
+    flowables = _create_pdf_generationenpaar(d)
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = smart_str('filename=generationenpaar-%s' % w.name)
+    doc = create_rangliste_doctemplate(w)
+    doc.build(flowables, filename=response)
+    return response
 
 #
 # Hilfsfunktion fuer Ranglisten PDF

@@ -1,5 +1,7 @@
 Unreleased
 
+- Generationenpaar: Neue Disziplin, um den Generationenpreis auszuwerten.
+
 - Richtzeiten: In Wynau 2025 beim Posten E-G gab es zu lange Zeiten, die zu
   sehr wenigen Punkten führten. Leider ist es nicht aufgefallen, weil es
   tatsächlich lange Zeiten gab. Darum nun einen Link auf das Notenblatt

@@ -205,6 +205,8 @@ class Disziplin(models.Model):
             return reverse('gruppenschnueren_get', args=[str(self.wettkampf.jahr()), self.wettkampf.name])
         elif self.disziplinart.name == "Bootsfährenbau":
             return reverse('bootfaehrenbau_get', args=[str(self.wettkampf.jahr()), self.wettkampf.name])
+        elif self.disziplinart.name == "Generationenpaar":
+            return reverse('generationenpaar_get', args=[str(self.wettkampf.jahr()), self.wettkampf.name])
         else:
             return reverse('disziplin_get', args=[str(self.wettkampf.jahr()), self.wettkampf.name, self.name])
 
@@ -222,6 +224,8 @@ class Disziplin(models.Model):
             return "base_gruppenschnueren.html"
         elif art == "Bootsfährenbau":
             return "base_bootfaehrenbau.html"
+        elif art == "Generationenpaar":
+            return "base_generationenpaar.html"
         else:
             return None
 
@@ -394,6 +398,14 @@ class Bootfaehrengruppe(Teilnehmer):
     def save(self):
         self.zeit = self.einbauzeit + self.ausbauzeit + self.zuschlaege
         super(Bootfaehrengruppe, self).save()
+
+class Generationenpaar(Teilnehmer):
+    mitglied_1 = models.ForeignKey('Mitglied', related_name='mitglied_1', on_delete=models.CASCADE)
+    mitglied_2 = models.ForeignKey('Mitglied', related_name='mitglied_2', on_delete=models.CASCADE)
+    creation_date = models.DateTimeField(auto_now_add=True)
+
+    def save(self):
+        super(Generationenpaar, self).save()
 
 class SektionsfahrenGruppeManager(models.Manager):
     def with_counts(self, disziplin):

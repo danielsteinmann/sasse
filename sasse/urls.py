@@ -1,6 +1,22 @@
 from django.urls import include, path, re_path
 from . import views
 
+generationenpaar_patterns = [
+    re_path(r'^$',
+        views.generationenpaar_get, {}, "generationenpaar_get"),
+    re_path(r'^eingabe/$',
+        views.generationenpaar_eingabe, {}, "generationenpaar_eingabe"),
+    re_path(r'^update/(?P<startnummer>\d+)$',
+        views.generationenpaar_update, {}, "generationenpaar_update"),
+    re_path(r'^delete/(?P<startnummer>\d+)$',
+        views.generationenpaar_delete, {}, "generationenpaar_delete"),
+    re_path(r'^rangliste/$',
+        views.generationenpaar_rangliste, {}, "generationenpaar_rangliste"),
+    re_path(r'^rangliste/pdf/$',
+        views.generationenpaar_rangliste_pdf, {}, "generationenpaar_rangliste_pdf"),
+]
+
+
 bootfaehrenbau_patterns = [
     re_path(r'^$',
         views.bootfaehrenbau_get, {}, "bootfaehrenbau_get"),
@@ -149,6 +165,8 @@ urlpatterns = [
         include(gruppenschnueren_patterns)),
     re_path(r'^(?P<jahr>\d+)/(?P<wettkampf>[-\w]+)/bootfaehrenbau/',
         include(bootfaehrenbau_patterns)),
+    re_path(r'^(?P<jahr>\d+)/(?P<wettkampf>[-\w]+)/generationenpaar/',
+        include(generationenpaar_patterns)),
     re_path(r'^(?P<jahr>\d+)/(?P<wettkampf>[-\w]+)/doppelstarter-einzelfahren/$',
         views.doppelstarter_einzelfahren, {}, "doppelstarter_einzelfahren"),
     re_path(r'^(?P<jahr>\d+)/(?P<wettkampf>[-\w]+)/startlisten-einzelfahren-export/$',
