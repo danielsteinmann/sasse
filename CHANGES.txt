@@ -1,5 +1,9 @@
 Unreleased
 
+- Sektionsfahren: Auf Rangliste weitere Alterskategorien eingefügt:
+    18-42: Überprüfung der 80% Regel
+      ≤20: Zunft zum Giritz Wanderpreis
+
 - Ältestes Fahrerpaar: Neue Rangliste, hauptsächlich fürs Eidgenössische.
 
 - Generationenpaar: Neue Disziplin, um den Generationenpreis auszuwerten.

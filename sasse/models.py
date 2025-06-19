@@ -441,10 +441,12 @@ class Sektionsfahrengruppe(Teilnehmer):
         if counts is None:
             from .queries import read_sektionsfahren_gruppen_counts
             counts = read_sektionsfahren_gruppen_counts(self.disziplin, self)
-        anz_schiffe, anz_jps, anz_frauen, anz_senioren = counts
+        anz_schiffe, anz_jps, anz_u21, anz_18_42, anz_frauen, anz_senioren = counts
         grp = self.name
         self._anz_schiffe = anz_schiffe[grp]
         self._anz_jps = anz_jps[grp]
+        self._anz_u21 = anz_u21[grp]
+        self._anz_18_42 = anz_18_42[grp]
         self._anz_frauen = anz_frauen[grp]
         self._anz_senioren = anz_senioren[grp]
 
@@ -457,6 +459,16 @@ class Sektionsfahrengruppe(Teilnehmer):
         if not hasattr(self, '_anz_jps'):
             self._set_counts()
         return self._anz_jps
+
+    def anz_u21(self):
+        if not hasattr(self, '_anz_u21'):
+            self._set_counts()
+        return self._anz_u21
+
+    def anz_18_42(self):
+        if not hasattr(self, '_anz_18_42'):
+            self._set_counts()
+        return self._anz_18_42
 
     def anz_frauen(self):
         if not hasattr(self, '_anz_frauen'):

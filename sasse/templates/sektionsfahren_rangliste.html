@@ -20,8 +20,10 @@
     <th class="rang">JP</th>
     <th class="rang">Fr.</th>
     <th class="rang">Sen.</th>
-	<th class="note">Abzüge<br>Gruppen</th>
-	<th class="note">Abzüge<br>Sektion</th>
+    <th class="rang">≤20</th>
+    <th class="rang">18-42</th>
+    <th class="note">Abzüge<br>Gruppen</th>
+    <th class="note">Abzüge<br>Sektion</th>
     <th class="note">Total</th>
   </tr>
   {% for sektion in rangliste %}
@@ -40,8 +42,10 @@
     <td class="rang">{{ sektion.anz_jps|default:"-" }}</td>
     <td class="rang">{{ sektion.anz_frauen|default:"-" }}</td>
     <td class="rang">{{ sektion.anz_senioren|default:"-" }}</td>
-	<td class="note">{{ sektion.abzug_gruppen }}</td>
-	<td class="note">{{ sektion.abzug }}</td>
+    <td class="rang">{{ sektion.anz_u21|default:"-" }}</td>
+    <td class="rang">{{ sektion.anz_18_42|default:"-" }}</td>
+    <td class="rang">{{ sektion.abzug_gruppen|default:"-" }}</td>
+    <td class="rang">{{ sektion.abzug|default:"-" }}</td>
     <td class="note"><a href="{% url 'sektionsfahren_notenblatt' wettkampf.jahr wettkampf.name sektion.name %}">{{ sektion.total }}</a></td>
   </tr>
   {% endfor %}

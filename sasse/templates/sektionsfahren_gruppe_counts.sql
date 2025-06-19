@@ -7,6 +7,18 @@ select grp.name
          +  case when v2.geschlecht = 'm' and w.year - v2.year <= 20 then 1 else 0 end
        ) as anz_jps
      , sum(
+            case when w.year - s1.year <= 20 then 1 else 0 end
+         +  case when w.year - s2.year <= 20 then 1 else 0 end
+         +  case when w.year - v1.year <= 20 then 1 else 0 end
+         +  case when w.year - v2.year <= 20 then 1 else 0 end
+       ) as anz_u21
+     , sum(
+            case when w.year - s1.year >= 18 and w.year - s1.year <= 42 then 1 else 0 end
+         +  case when w.year - s2.year >= 18 and w.year - s2.year <= 42 then 1 else 0 end
+         +  case when w.year - v1.year >= 18 and w.year - v1.year <= 42 then 1 else 0 end
+         +  case when w.year - v2.year >= 18 and w.year - v2.year <= 42 then 1 else 0 end
+       ) as anz_18_42
+     , sum(
             case when s1.geschlecht = 'f' then 1 else 0 end
          +  case when s2.geschlecht = 'f' then 1 else 0 end
          +  case when v1.geschlecht = 'f' then 1 else 0 end

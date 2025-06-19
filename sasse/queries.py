@@ -578,15 +578,19 @@ def read_sektionsfahren_gruppen_counts(disziplin, gruppe=None):
     cursor.execute(sql, args)
     anz_schiffe = {}
     anz_jps = {}
+    anz_u21 = {}
+    anz_18_42 = {}
     anz_frauen = {}
     anz_senioren = {}
     for row in cursor.fetchall():
         grp = row[0]
         anz_schiffe[grp] = row[1]
         anz_jps[grp] = row[2]
-        anz_frauen[grp] = row[3]
-        anz_senioren[grp] = row[4]
-    return (anz_schiffe, anz_jps, anz_frauen, anz_senioren)
+        anz_u21[grp] = row[3]
+        anz_18_42[grp] = row[4]
+        anz_frauen[grp] = row[5]
+        anz_senioren[grp] = row[6]
+    return (anz_schiffe, anz_jps, anz_u21, anz_18_42, anz_frauen, anz_senioren)
 
 def read_sektionsfahren_gruppe_punkte(disziplin):
     sql = """
@@ -639,6 +643,8 @@ def read_sektionsfahren_rangliste(disziplin):
         anz_gruppen = 0
         anz_schiffe = 0
         anz_jps = 0
+        anz_u21 = 0
+        anz_18_42 = 0
         anz_frauen = 0
         anz_senioren = 0
         abzug_sektion = 0
@@ -650,6 +656,8 @@ def read_sektionsfahren_rangliste(disziplin):
             anz_gruppen += 1
             anz_schiffe += g.anz_schiffe()
             anz_jps += g.anz_jps()
+            anz_u21 += g.anz_u21()
+            anz_18_42 += g.anz_18_42()
             anz_frauen += g.anz_frauen()
             anz_senioren += g.anz_senioren()
             abzug_sektion += g.abzug_sektion
@@ -665,6 +673,8 @@ def read_sektionsfahren_rangliste(disziplin):
             'anz_gruppen': anz_gruppen,
             'anz_schiffe': anz_schiffe,
             'anz_jps': anz_jps,
+            'anz_u21': anz_u21,
+            'anz_18_42': anz_18_42,
             'anz_frauen': anz_frauen,
             'anz_senioren': anz_senioren,
             'abzug': abzug_sektion,
