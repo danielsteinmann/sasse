@@ -25,6 +25,10 @@ def zeit2str(value):
     value = '%d:%02d.%02d' % (minutes, seconds, millis)
     return value
 
+@register.filter
+def fahrerpaar_alter(td):
+    return round(td.days / 365.2425, 1)
+
 @register.simple_tag(takes_context=True)
 def query_transform(context, **kwargs):
     '''

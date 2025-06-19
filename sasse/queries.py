@@ -4,6 +4,11 @@ from decimal import Decimal
 from itertools import groupby
 from django.template.loader import render_to_string
 from django.db import connection
+from django.db.models import DurationField
+from django.db.models import ExpressionWrapper
+from django.db.models import F
+from django.db.models import Window
+from django.db.models.functions import Rank
 from .models import Bewertungsart
 from .models import Bewertung
 from .models import Schiffeinzel
@@ -1059,3 +1064,16 @@ order by Total desc, AeltereFahrer, Paar, Geburtsdatum
         row['rang'] = rang
     return data
 
+def read_aelteste_fahrerpaare(disziplin):
+    tot_expr = ExpressionWrapper(
+            (F('disziplin__wettkampf__von') - F('steuermann__geburtsdatum')) +
+            (F('disziplin__wettkampf__von') - F('vorderfahrer__geburtsdatum')),
+            output_field=DurationField())
+    rangliste = Schiffeinzel.objects.select_related(
+        ).filter(
+            disziplin=disziplin
+        ).annotate(
+            alter=tot_expr,
+            rang=Window(expression=Rank(), order_by="-alter")
+        ).order_by("-alter")
+    return rangliste

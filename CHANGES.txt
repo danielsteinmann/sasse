@@ -1,5 +1,7 @@
 Unreleased
 
+- Ältestes Fahrerpaar: Neue Rangliste, hauptsächlich fürs Eidgenössische.
+
 - Generationenpaar: Neue Disziplin, um den Generationenpreis auszuwerten.
 
 - Richtzeiten: In Wynau 2025 beim Posten E-G gab es zu lange Zeiten, die zu

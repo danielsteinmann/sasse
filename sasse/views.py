@@ -94,6 +94,7 @@ from .queries import read_beste_saisonpaare
 from .queries import read_einzelfahren_null_zeiten
 from .queries import read_sektionsfahren_null_zeiten
 from .queries import read_beste_generationenpaare
+from .queries import read_aelteste_fahrerpaare
 
 from .reports import create_rangliste_doctemplate
 from .reports import create_rangliste_flowables
@@ -909,6 +910,17 @@ def _select_wettkaempfe_beste_saisonpaare(jahr):
         if item.wettkampf not in wettkaempfe:
             wettkaempfe.append(item.wettkampf)
     return wettkaempfe
+
+def aelteste_fahrerpaare(request, jahr, wettkampf, disziplin):
+    assert request.method == 'GET'
+    w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)
+    d = Disziplin.objects.get(wettkampf=w, name=disziplin)
+    rangliste = read_aelteste_fahrerpaare(d)
+    paginator = Paginator(rangliste, 25, orphans=3)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+    return render(request, 'aelteste_fahrerpaare.html', {
+        'wettkampf': w, 'disziplin': d, 'page_obj': page_obj})
 
 def notenblatt(request, jahr, wettkampf, disziplin, startnummer=None):
     assert request.method == 'GET'

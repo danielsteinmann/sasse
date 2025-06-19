@@ -1,0 +1,29 @@
+{% extends "base_disziplin.html" %}
+{% block nav_rangliste %}selected{% endblock %}
+{% block content %}
+{% load sasse %}
+<p>Älteste Fahrerpaare</p>
+<table class="list">
+  <tr>
+    <th>Rang</th>
+    <th>Steuermann</th>
+    <th>Vorderfahrer</th>
+    <th>Sektion</th>
+    <th>Stnr</th>
+    <th class="note">Jahre</th>
+  </tr>
+{% for row in page_obj %}
+  <tr class="{% cycle "odd" "even" %}">
+    <td class="rang">{{ row.rang}}</td>
+    <td>{{row.steuermann.name}} {{row.steuermann.vorname}}<font size="-2">{% if row.steuermann_ist_ds %} (DS){% endif %} {{row.steuermann.geburtsdatum.year}}</font></td>
+    <td>{{row.vorderfahrer.name}} {{row.vorderfahrer.vorname}}<font size="-2">{% if row.vorderfahrer_ist_ds %} (DS){% endif %} {{row.vorderfahrer.geburtsdatum.year}}</font></td>
+    <td>{{row.sektion}}</td>
+    <td class="startnummer"><a href="{% url 'teilnehmer_get' wettkampf.jahr wettkampf.name disziplin.name row.startnummer %}">{{row.startnummer}}</a></td>
+    <td class="note">{{ row.alter|fahrerpaar_alter }}</td>
+  </tr>
+{% endfor %}
+</table>
+<p></p>
+{% include "pagination.html" %}
+{% endblock %}
+
