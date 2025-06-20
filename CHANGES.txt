@@ -1,5 +1,8 @@
 Unreleased
 
+- Sektionsfahren: Auf PDF Rangliste auch Striping zur besseren Lesbarkeit
+  eingeführt.
+
 - Sektionsfahren: Auf Rangliste weitere Alterskategorien eingefügt:
     18-42: Überprüfung der 80% Regel
       ≤20: Zunft zum Giritz Wanderpreis

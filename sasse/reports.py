@@ -577,6 +577,7 @@ def create_sektionsfahren_rangliste_flowables(rangliste, disziplin):
         ('ALIGN', (0,0), (0,-1), 'LEFT'),
         ('ALIGN', (3,0), (-1,-1), 'CENTER'),
         ('VALIGN',(0,0), (-1,-1), 'MIDDLE'),
+        ('ROWBACKGROUNDS', (0,1), (-1,-2), (None, colors.HexColor(0xf0f0f0))),
         ]
     kranz_typ = None
     for i, row in enumerate(rangliste):
