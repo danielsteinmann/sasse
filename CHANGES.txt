@@ -1,5 +1,8 @@
 Unreleased
 
+- Sektionsrangliste: Zeige Rayon, damit Reussbecher und Coupe Romande
+  am Eidgenössischen einfach ermittelt werden kann.
+
 - Wettkampf: Markiere die Eidgenössischen, damit man die Spezialranglisten
   auswerten kann. Zudem die durchführende Sektion eingeführt, weil das
   auch ein Spezialpreis des Eidgenössischen ist.

@@ -15,6 +15,7 @@
     <th>Kranz</th>
     <th>Rang</th>
     <th>Sektion</th>
+	<th>Rayon</th>
     <th class="rang">Gruppen</th>
     <th class="rang">Schiffe</th>
     <th class="rang">JP</th>
@@ -37,6 +38,7 @@
       {{ sektion.name }}
     {% endif %}
     </td>
+	<td><font size="-1">{{ sektion.rayon }}</font></td>
     <td class="rang">{{ sektion.anz_gruppen }}</td>
     <td class="rang">{{ sektion.anz_schiffe }}</td>
     <td class="rang">{{ sektion.anz_jps|default:"-" }}</td>

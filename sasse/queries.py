@@ -675,6 +675,7 @@ def read_sektionsfahren_rangliste(disziplin):
             'anz_jps': anz_jps,
             'anz_u21': anz_u21,
             'anz_18_42': anz_18_42,
+            'rayon': ermittle_rayon(sektion),
             'anz_frauen': anz_frauen,
             'anz_senioren': anz_senioren,
             'abzug': abzug_sektion,
@@ -705,6 +706,13 @@ def read_sektionsfahren_rangliste(disziplin):
         ausser_konkurrenz['kranz_typ'] = ''
         result.insert(0, ausser_konkurrenz)
     return result
+
+def ermittle_rayon(sektion):
+    if sektion in ('Luzern', 'Ottenbach', 'Bremgarten', 'Mellingen'):
+        return 'Reuss'
+    elif sektion in ('Bex', 'Genf'):
+        return 'Romande'
+    return ''
 
 def sort_sektionsfahren_rangliste(disziplin, rangliste):
     limiten, created = SektionsfahrenKranzlimiten.objects.get_or_create(disziplin=disziplin)
