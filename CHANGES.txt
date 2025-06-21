@@ -1,5 +1,9 @@
 Unreleased
 
+- Wettkampf: Markiere die Eidgenössischen, damit man die Spezialranglisten
+  auswerten kann. Zudem die durchführende Sektion eingeführt, weil das
+  auch ein Spezialpreis des Eidgenössischen ist.
+
 - Sektionsfahren: Auf PDF Rangliste auch Striping zur besseren Lesbarkeit
   eingeführt.
 

@@ -160,11 +160,14 @@ class Kategorie(models.Model):
 
 
 class Wettkampf(models.Model):
+    sektion = models.ForeignKey('Sektion', on_delete=models.SET(0), # SPSV
+                                help_text="Durchführende Sektion")
     name = models.CharField(max_length=50, unique_for_year='von')
     zusatz = models.CharField(max_length=100)
     von = models.DateField(help_text="Format: JJJJ-MM-DD")
     bis = models.DateField(null=True, blank=True, help_text="(optional)")
     JPSM = models.BooleanField(default=False, help_text="Ist es eine JP SM? Hat Einfluss auf die Kategoriewahl bei der Startliste")
+    EIDG = models.BooleanField(default=False, help_text="Ist es ein Eidgenössisches? Hat Einfluss auf Ranglisten")
 
     class Meta:
         ordering = ['-von']

@@ -23,6 +23,10 @@
     <td>{{ wettkampf.JPSM|yesno:"ja,nein" }}</td>
   </tr>
   <tr>
+    <th>EIDG:</th>
+    <td>{{ wettkampf.EIDG|yesno:"ja,nein" }}</td>
+  </tr>
+  <tr>
     <th>Disziplinen:</th>
     <td>
       {% for disziplin in disziplinen %}
