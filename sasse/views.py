@@ -1402,6 +1402,8 @@ def sektionsfahren_rangliste_fahrchef(request, jahr, wettkampf):
             disziplinart__name="Sektionsfahren",
             wettkampf__EIDG=True,
             wettkampf__von__year__lt=jahr).order_by("-wettkampf__von").first()
+    if vorherige_disziplin is None:
+        raise Http404("Das vorherige Eidgenössische nicht vorhanden")
     vorherige_rangliste = read_sektionsfahren_rangliste(vorherige_disziplin)
     vorherige_totals = {}
     for r in vorherige_rangliste:

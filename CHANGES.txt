@@ -1,3 +1,12 @@
+Version 3.4.1 (22. Juni 2025)
+
+- Bester Fahrchef: Basierend auf Excel von Tom die korrekten Fahrchefs
+  aller Eidgenössischen korrekt eingetragen.
+
+- Bugfix: Wenn kein vorheriges Eidgenössisches für Bester Fahrchef gefunden
+  wird, gibt es keinen Crash mehr.
+
+
 Version 3.4.0 (22. Juni 2025)
 
 - Bester Fahrchef: Neue Rangliste (General Guisan Preis). Valdierung eingebaut,
