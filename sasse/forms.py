@@ -571,8 +571,8 @@ class GruppeForm(ModelForm):
     def clean(self):
         super(GruppeForm, self).clean()
         sektion = self.cleaned_data.get('sektion')
+        disziplin = self.cleaned_data['disziplin']
         if self.instance.id is None and sektion:
-            disziplin = self.cleaned_data['disziplin']
             # Calculate name
             sektion_name = sektion.name
             sektion_name = sektion_name.replace(" ", "-")
@@ -593,6 +593,17 @@ class GruppeForm(ModelForm):
                 if max_nummer is None:
                     max_nummer = 0
                 self.cleaned_data['startnummer'] = max_nummer + 1
+        # Fahrchef muss in allen Gruppen gleich sein
+        fahrchef = self.cleaned_data.get('chef')
+        for gruppe in Sektionsfahrengruppe.objects \
+                .exclude(id=self.instance.id) \
+                .filter(disziplin=disziplin, sektion=sektion):
+            if fahrchef and fahrchef != gruppe.chef:
+                msg = "Fahrchef aller Gruppen muss gleiche Person sein: "
+                msg += "%(gruppen_name)s: %(gruppen_chef)s"
+                raise ValidationError(
+                        msg, params={"gruppen_name": gruppe.name,
+                                     "gruppen_chef": gruppe.chef})
         return self.cleaned_data
 
 

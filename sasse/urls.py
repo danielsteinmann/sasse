@@ -124,6 +124,8 @@ sektionsfahren_patterns = [
         views.sektionsfahren_rangliste_gruppe, {}, "sektionsfahren_rangliste_gruppe"),
     re_path(r'^rangliste-schiffe/$',
         views.sektionsfahren_rangliste_schiff, {}, "sektionsfahren_rangliste_schiff"),
+    re_path(r'^rangliste-fahrchef/$',
+        views.sektionsfahren_rangliste_fahrchef, {}, "sektionsfahren_rangliste_fahrchef"),
     re_path(r'^kranzlimiten/$',
         views.sektionsfahren_kranzlimiten, {}, "sektionsfahren_kranzlimiten"),
     re_path(r'^kranzlimiten/update/$',

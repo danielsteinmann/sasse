@@ -1145,6 +1145,11 @@ def sektionsfahren_startliste(request, jahr, wettkampf):
             wettkampf__von__year=jahr)
     w = d.wettkampf
     startliste = Sektionsfahrengruppe.objects.with_counts(d)
+    sort = request.GET.get('o')
+    if sort and sort == 'Startnr':
+        startliste = sorted(startliste, key=lambda k: k.startnummer)
+    elif sort and sort == 'Gruppe':
+        startliste = sorted(startliste, key=lambda k: k.name)
     return render(request, 'sektionsfahren_startliste.html', {
         'wettkampf': w, 'disziplin': d, 'startliste': startliste})
 
@@ -1385,6 +1390,45 @@ def sektionsfahren_rangliste_schiff(request, jahr, wettkampf):
     page_obj = paginator.get_page(page_number)
     return render(request, 'sektionsfahren_rangliste_schiff.html', {
         'wettkampf': w, 'disziplin': d, 'page_obj': page_obj})
+
+def sektionsfahren_rangliste_fahrchef(request, jahr, wettkampf):
+    assert request.method == 'GET'
+    d = Disziplin.objects.select_related().get(
+            disziplinart__name="Sektionsfahren",
+            wettkampf__name=wettkampf,
+            wettkampf__von__year=jahr)
+    w = d.wettkampf
+    vorherige_disziplin = Disziplin.objects.exclude(id=d.id).filter(
+            disziplinart__name="Sektionsfahren",
+            wettkampf__EIDG=True,
+            wettkampf__von__year__lt=jahr).order_by("-wettkampf__von").first()
+    vorherige_rangliste = read_sektionsfahren_rangliste(vorherige_disziplin)
+    vorherige_totals = {}
+    for r in vorherige_rangliste:
+        fahrchef = r['gruppen'][0].chef
+        total = r['total']
+        vorherige_totals[fahrchef] = total
+    aktuelle_rangliste = read_sektionsfahren_rangliste(d)
+    rangliste = []
+    for r in aktuelle_rangliste:
+        fahrchef = r['gruppen'][0].chef
+        aktuelles_total = r['total'] * 2
+        vorheriges_total = vorherige_totals.get(fahrchef)
+        if vorheriges_total:
+            rangliste.append({
+                'fahrchef': fahrchef,
+                'vorheriges_total': vorheriges_total,
+                'aktuelles_total': aktuelles_total,
+                'total': vorheriges_total + aktuelles_total,
+                })
+    rangliste = sorted(rangliste, key=lambda k: k['total'], reverse=True)
+    rang = 0
+    for r in rangliste:
+        rang += 1
+        r['rang'] = rang
+    return render(request, 'sektionsfahren_rangliste_fahrchef.html', {
+        'wettkampf': w, 'disziplin': d, 'rangliste': rangliste,
+        'vorheriger_wettkampf': vorherige_disziplin.wettkampf})
 
 def sektionsfahren_notenblatt(request, jahr, wettkampf, sektion_name):
     assert request.method == 'GET'

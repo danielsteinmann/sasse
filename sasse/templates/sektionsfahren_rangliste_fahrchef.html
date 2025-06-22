@@ -1,0 +1,24 @@
+{% extends "base_sektionsfahren.html" %}
+{% block nav_rangliste %}selected{% endblock %}
+{% load sasse %}
+{% block content %}
+<p><b>Bester Fahrchef</b> (General Guisan Wanderpreis)</p>
+<table class="list">
+  <tr>
+    <th>Rang</th>
+	<th>Fahrchef</th>
+	<th class="note"><a href="{% url 'sektionsfahren_rangliste' vorheriger_wettkampf.jahr vorheriger_wettkampf.name %}">{{ vorheriger_wettkampf.von.year }}</a></th>
+	<th class="note"><a href="{% url 'sektionsfahren_rangliste' wettkampf.jahr wettkampf.name %}">{{ wettkampf.von.year }}</a></th>
+    <th class="note">Total</th>
+  </tr>
+  {% for row in rangliste %}
+  <tr class="{% cycle 'odd' 'even' %}">
+    <td class="rang">{{ row.rang }}</td>
+    <td>{{ row.fahrchef }}</td>
+    <td class="note"><a href="{% url 'sektionsfahren_notenblatt' vorheriger_wettkampf.jahr vorheriger_wettkampf.name row.fahrchef.sektion.name %}">{{ row.vorheriges_total }}</a></td>
+    <td class="note"><a href="{% url 'sektionsfahren_notenblatt' wettkampf.jahr wettkampf.name row.fahrchef.sektion.name %}">{{ row.aktuelles_total }}</a></td>
+    <td class="note">{{ row.total }}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

@@ -5,6 +5,7 @@
 <p><b>Beste Sektion</b>
 | <a href="{% url 'sektionsfahren_rangliste_gruppe' wettkampf.jahr wettkampf.name %}">Beste Gruppe</a>
 | <a href="{% url 'sektionsfahren_rangliste_schiff' wettkampf.jahr wettkampf.name %}">Bestes Schiff</a>
+| <a href="{% url 'sektionsfahren_rangliste_fahrchef' wettkampf.jahr wettkampf.name %}">Bester Fahrchef</a>
 | <a href="{% url 'richtzeiten' wettkampf.jahr wettkampf.name disziplin.name %}">Richtzeiten</a>
 | <a href="{% url 'sektionsfahren_kranzlimiten' wettkampf.jahr wettkampf.name %}">Kranzlimiten</a>
 </p>

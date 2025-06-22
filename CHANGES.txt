@@ -1,4 +1,7 @@
-Unreleased
+Version 3.4.0 (22. Juni 2025)
+
+- Bester Fahrchef: Neue Rangliste (General Guisan Preis). Valdierung eingebaut,
+  damit für alle Gruppen einer Sektion der gleiche Fahrchef eingegeben wird.
 
 - Sektionsrangliste: Zeige Rayon, damit Reussbecher und Coupe Romande
   am Eidgenössischen einfach ermittelt werden kann.
