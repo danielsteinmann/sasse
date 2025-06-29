@@ -1,5 +1,7 @@
 Version 3.4.2 (29. Juni 2025)
 
+- Sektionsfahren: Alterskategorie 18-42 ist nicht relevant.
+
 - Sektionsfahren: Notenblatt der Sektion zeigt auch die Abzüge und Bemerkungen
   auf Stufe Gruppe und/oder Sektion.
 
