@@ -794,12 +794,9 @@ def rangliste(request, jahr, wettkampf, disziplin, kategorie=None):
     kranzlimite = read_kranzlimite(d, k)
     rangliste = read_rangliste(d, k)
     rangliste_sorted = sorted(rangliste, key=sort_rangliste)
-    paginator = Paginator(rangliste_sorted, 25, orphans=3)
-    page_number = request.GET.get("page")
-    page_obj = paginator.get_page(page_number)
     return render(request, 'rangliste.html', {'wettkampf': w, 'disziplin':
-        d, 'kategorie': k, 'kategorien': gestartete_kategorien, 'page_obj':
-        page_obj, 'kranzlimite': kranzlimite})
+        d, 'kategorie': k, 'kategorien': gestartete_kategorien, 'rangliste':
+        rangliste_sorted, 'kranzlimite': kranzlimite})
 
 def rangliste_pdf(request, jahr, wettkampf, disziplin, kategorie):
     w = Wettkampf.objects.get(von__year=jahr, name=wettkampf)

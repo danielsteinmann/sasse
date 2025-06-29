@@ -26,7 +26,7 @@
     <th class="zeit">Zeit</th>
     <th class="note">Punkte</th>
   </tr>
-{% for row in page_obj %}
+{% for row in rangliste %}
   {% ifchanged row.kranz %}{% if not forloop.first %}
   <tr><td colspan="7"><a href="{% url 'kranzlimiten' wettkampf.jahr wettkampf.name disziplin.name %}">Kranzlimite:</a> {{kranzlimite|bewertung:'PUNKTE'}} Punkte</td></tr>
   {% endif %}{% endifchanged %}
@@ -42,5 +42,4 @@
 {% endfor %}
 </table>
 <p></p>
-{% include "pagination.html" %}
 {% endblock %}
