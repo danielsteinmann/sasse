@@ -1,5 +1,8 @@
 Version 3.4.2 (29. Juni 2025)
 
+- Sektionsfahren: Notenblatt der Sektion zeigt auch die Abzüge und Bemerkungen
+  auf Stufe Gruppe und/oder Sektion.
+
 - Generationenpaar: Seitenumbruch bei gerader Zahl, damit Paare zusammen
   erscheinen.
 

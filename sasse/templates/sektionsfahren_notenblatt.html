@@ -29,8 +29,10 @@
     <th class="note">Schiffe</th>
     <th class="note">Punkte</th>
     <th class="note">Gewichtet</th>
-    <th class="note">Abzug</th>
-    <th>Bemerkung</th>
+    <th class="note">Abzug<br/>Gruppe</th>
+    <th class="note">Abzug<br/>Sektion</th>
+    <th>Bemerkung<br/>Gruppe</th>
+    <th>Bemerkung<br/>Sektion</th>
   </tr>
 {% for gruppe in sektion.gruppen %}
   <tr>
@@ -38,7 +40,9 @@
     <td class="note">{{ gruppe.anz_schiffe }}</td>
     <td class="note"><a href="{% url 'sektionsfahren_notenblatt_gruppe' wettkampf.jahr wettkampf.name gruppe.name %}">{{ gruppe.total }}</a></td>
     <td class="note">{{ gruppe.gewichtet }}</td>
+    <td class="note">{{ gruppe.abzug_gruppe }}</td>
     <td class="note">{{ gruppe.abzug_sektion }}</td>
+    <td>{{ gruppe.abzug_gruppe_comment|default:"" }}</td>
     <td>{{ gruppe.abzug_sektion_comment|default:"" }}</td>
   </tr>
 {% endfor %}
@@ -47,7 +51,9 @@
     <td class="note">{{ sektion.anz_schiffe }}</td>
     <td></td>
     <td class="note">{{ sektion.gewichtet }}</td>
+    <td></td>
     <td class="note">{{ sektion.abzug }}</td>
+    <td></td>
     <td></td>
   </tr>
 {% endblock %}
