@@ -1,17 +1,25 @@
+- Kranzlimite nicht sichbar wenn sie genau auf dem Seitenumbruch ist
+
+- 25% Limite vorschlagen bei Spezialwettkämpfen (Schwimmen, Schnüren)
+
+- Sektionsfahren Fahrchef: Muss möglich sein, den Namen des Fahrchef von beiden
+  Gruppen zu ändern. Entweder Validierung übersteuern oder beide Gruppen
+  gleichzeitig.
+
 - Noteneingabe "Abbrechen und zurück" und "Speichern und zurück" (Denise)
+
+- Streichliste Papierformular:
+  - Header klarer machen
+  - Beschreibung links statt rechts
+
+- Startliste: Nicht mehr Aktive Mitglieder nicht auswählbar.
 
 - Bei Ändern eines 'Schiffeinzel' auch alle Validierungen nochmals durchführen,
   aber übersteuern zulassen, damit z.B. die Kategorie fälschlicherweise nicht
   geändert wird oder das Doppelstart Flag nicht entfernt wird.
 
 - Kontrollvisum im UI machen und einen Prüflink für Bewertungen ohne Visum
-
-- Alle Eidgenössisches Spezialpreise automatisieren
-  - Generationenpreis: Zwei Personen als Teilnehmer eingeben
-  - Ältestes Fahrerpaar
-  - ...
-
-====
+  => Check, ob es keine Noten gibt?
 
 - 80% Regel, basierend auf Startliste Sektionsfahren (inkl. Reservefahrer)
    - Anzahl Reservefahrer zwischen Fahrchef und Zuschlägen eingeben
@@ -22,25 +30,13 @@
    => Was ist mit WKR Kapitel 2.2.1 "Alle Teilnehmer im Einzel auch in Sektion"?
       Soll das auch automatisch geprüft werden?
 
-- Rayonwettfahren
-   - Unter Einzwelwettfahren ein Menupunkt "Sektionsrangliste" einfügen. Nur
-     sichtbar, falls die Pflichtzahlen für diesen Wettkampf vorhanden sind.
-     (Siehe 80% Regel)
+- Rayonwettfahren: Unter Einzwelwettfahren ein Menupunkt "Sektionsrangliste"
+  einfügen. Nur sichtbar, falls die Pflichtzahlen für diesen Wettkampf
+  vorhanden sind.  (Siehe 80% Regel)
 
-===
-cat remove.txt | while read old new name; do sed -e "s,_OLD_,$old," -e "s,_NEW_,$new," dups_template.sql; done > delete_dups.sql
-
-===
-- Check, ob es keine Noten gibt.
-- Alles auf eigene Richtzeiten I, II, III, F, D und C damit man dies mal Testen kann bzw dies bereits möglich ist
-
-- Kategorie C/D Einzelfahren CSV Export
-   echo "\copy ($(paste -s x.sql)) to stdout with delimiter ';' csv header encoding 'latin1'" | psql -U postgres -d spsv
-
-
-http://stackoverflow.com/questions/1406025/no-pg-hba-conf-entry-for-host
-http://stackoverflow.com/questions/10454002/can-postgresql-copy-read-csv-from-a-remote-location
-===
+- Doppeltstarter optional machen. Wird beim Wettfahren 7-er Club gebraucht.
+  Dort kann einer zweimal mit einem aus einer anderen Sektion starten und wird
+  genau gleich gewertet.
 
 - Sektions Startliste Ausdruckbar machen (wie Einzelfahren), damit der Speaker
   ein sauberes Blatt hat.
@@ -50,10 +46,6 @@ http://stackoverflow.com/questions/10454002/can-postgresql-copy-read-csv-from-a-
   verwendet
 
 - Richtzeiten auf Notenblatt ausgeben
-
-- Doppeltstarter optional machen. Wird beim Wettfahren 7-er Club gebraucht.
-  Dort kann einer zweimal mit einem aus einer anderen Sektion starten und wird
-  genau gleich gewertet.
 
 - Sortierung ebenfalls in SQL machen:
 
@@ -70,8 +62,44 @@ http://stackoverflow.com/questions/10454002/can-postgresql-copy-read-csv-from-a-
      order by typ, punkt desc, zeit asc
     /
 
-- Zwei Tabellen nebeneinander:
-  http://stackoverflow.com/questions/6548880/css-positioning-tables-next-to-each-other
+- Bessere Wettfahren Struktur:
+
+  Ist nicht einfach umzusetzen, weil die URL auf einen Wettkampf an vielen
+  Orten gebraucht wird.
+
+  - sektion (durchführende Sektion)
+  - name (z.B. Fällbaum-Cup, Schweizermeisterschaft, Einzelwettfahren, JP-SM, Eidgenössisches)
+  - von
+  - bis
+  - jpsm (ja/nein)
+  - eidg (ja/nein)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                models.functions.TruncYear("von"),
+                "sektion",
+                "name",
+                name="%(app_label)s_%(class)s_unique_date",
+            ),
+        ]
+
+   Jahr  Wettkampf
+   ----  ----------------------------
+   2025  Schmerikon - Eidgenössisches
+   2025  Aarau - Adler-Cup
+   2025  Wynau - Einzelwettfahren
+   2025  Solothurn - Chnüppu-Cup
+
+   /2026/Aarau/Adler-Cup/
+   /2025/Schmerikon/Eidgenössisches/
+   /2025/Wynau/Einzelfahren/
+   /2025/Dietikon/Glanzenburg-Cup/
+   /2025/Bremgarten/Sektionsfahren/
+   /2024/Bremgarten/Reuss-Cup/
+   /2024/Ottenbach/Schweizermeisterschaft/
+   /2024/Schönenwerd/Chnüppu-Cup/
+   /2024/Dietikon/JP1-Challenge/
 
 - Neues URL Schema:
   - 2011/Faellbaumcup/einzelfahren/I
@@ -92,7 +120,7 @@ http://stackoverflow.com/questions/10454002/can-postgresql-copy-read-csv-from-a-
   - 2012/Bremgarten/sektionsfahren/startliste [POST] => Neue Gruppe
   - 2012/Bremgarten/sektionsfahren/gruppe/add?sektion=Bremgarten
   - 2012/Bremgarten/sektionsfahren/gruppe/Bremgarten/1
-  - 2012/Bremgarten/sektionsfahren/gruppe/Bremgarten/1/schiff [POST: neues Schiff, GET: brauchts nicht] 
+  - 2012/Bremgarten/sektionsfahren/gruppe/Bremgarten/1/schiff [POST: neues Schiff, GET: brauchts nicht]
   - 2012/Bremgarten/sektionsfahren/gruppe/Bremgarten/1/schiff/1
   - 2012/Bremgarten/sektionsfahren/gruppe/Bremgarten/1/schiff/1/delete
   - 2012/Bremgarten/sektionsfahren/gruppe/Bremgarten/1/update [GET: alle Schiffe editable]
@@ -112,12 +140,23 @@ http://stackoverflow.com/questions/10454002/can-postgresql-copy-read-csv-from-a-
 
               Parcours hinzufügen
 
-   Startliste exportieren/importieren
-
 
   Wettkämpfe  Fällbaucup-2011  Einzelfahren  Kat-II-III-F-D-C
   Postenliste  Startliste  Beurteilungsblätter  Bestzeiten  Notenliste
 
+===
+
+cat remove.txt | while read old new name; do sed -e "s,_OLD_,$old," -e "s,_NEW_,$new," dups_template.sql; done > delete_dups.sql
+
+Kategorie C/D Einzelfahren CSV Export
+   echo "\copy ($(paste -s x.sql)) to stdout with delimiter ';' csv header encoding 'latin1'" | psql -U postgres -d spsv
+
+- Zwei Tabellen nebeneinander:
+  http://stackoverflow.com/questions/6548880/css-positioning-tables-next-to-each-other
+
+http://stackoverflow.com/questions/1406025/no-pg-hba-conf-entry-for-host
+http://stackoverflow.com/questions/10454002/can-postgresql-copy-read-csv-from-a-remote-location
+===
 --
 from itertools import *
 from django.db import connection
