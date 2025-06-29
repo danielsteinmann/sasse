@@ -2085,7 +2085,7 @@ def generationenpaar_rangliste(request, jahr, wettkampf):
     d = _get_spezialwettkampf(jahr, wettkampf, "Generationenpaar")
     w = d.wettkampf
     rangliste = read_beste_generationenpaare(w, d)
-    paginator = Paginator(rangliste, 25, orphans=3)
+    paginator = Paginator(rangliste, 26, orphans=2)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
     return render(request, 'generationenpaar_rangliste.html',
